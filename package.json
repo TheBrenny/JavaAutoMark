@@ -1,0 +1,47 @@
+{
+  "name": "javaautomark",
+  "version": "1.0.0",
+  "description": "A web-based tool which automatically marks Java assignments.",
+  "main": "server.js",
+  "bin": {
+    "jam": "node jamSubmit.js",
+    "jamserver": "node server.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheBrenny/JavaAutoMark.git"
+  },
+  "keywords": [
+    "java",
+    "assessment",
+    "marking",
+    "assignment"
+  ],
+  "author": "TheBrenny <iam@justbrenny.me>",
+  "contributors": [
+    "Jarod Brennfleck",
+    "Ahmad Bilal",
+    "Ethan Fraser",
+    "Jack Millar",
+    "Roshan Chenginiyadan"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheBrenny/JavaAutoMark/issues"
+  },
+  "homepage": "https://github.com/TheBrenny/JavaAutoMark#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "java": "^0.12.2",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.27.4"
+  }
+}
