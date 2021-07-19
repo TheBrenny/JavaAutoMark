@@ -1,0 +1,22 @@
+# Generate class files:
+javac -sourcepath ..\assignments\*\ *.java
+
+# Run Test Harness with a specific assignment:
+java -cp ..\assignments\one\;.\ Harness
+
+#==========================================
+
+The output from the test harness is intentionally hard to read (for humans).
+
+For a computer, it's easy to read and has a very programmatic feel to it.
+
+Format                              | Example
+test                                | test
+{test ID}                           | 3
+{number of test assertions}         | 4
+{true/false of test assertions}     | true
+{true/false of test assertions}     | true
+{true/false of test assertions}     | true
+{true/false of test assertions etc} | false
+{milliseconds}ms                    | 10ms
+end                                 | end
