@@ -11,7 +11,8 @@ public class Harness {
     
     private static void test(int testID, Method testMethod) {
         sysout.println("test");
-        sysout.println(testID);
+        String testName = testMethod.getAnnotation(TestAnnotation.class).name();
+        sysout.println(testID + ":" + testName);
         
         long start = System.currentTimeMillis();
         long elapsed = 0;
@@ -35,6 +36,7 @@ public class Harness {
     }
     public static void main(String[] args) {
         System.setOut(ps);
+        
         
         int testCases = Tests.class.getAnnotation(TestAnnotation.class).tests();
         
