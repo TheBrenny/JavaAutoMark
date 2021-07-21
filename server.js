@@ -1,1 +1,38 @@
-require("./server/server.js");
+// Do config
+require("dotenv").config();
+const config = require("./config");
+const serverInfo = config.serverInfo;
+
+// Load important modules
+const path = require("path");
+const express = require("express");
+const mustache = require("mustache-express");
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
+
+// Make the app
+let app = express();
+app.use(morgan('common', config.morgan));
+app.use(helmet(config.helmet));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+
+// Start the app
+let appPath = path.join(__dirname, "app");
+
+app.set("views", path.join(appPath, "views"));
+app.engine("mst", mustache(path.join(appPath, "views", "partials"), ".mst"));
+app.set("view engine", "mst");
+
+app.use("/assets", express.static(path.join(appPath, "assets")));
+app.use(require("./app/routes/public"));
+app.use(require("./app/routes/errorRoutes"));
+
+app.listen(serverInfo.port, serverInfo.host, () => {
+    if (config.browsersyncActive) serverInfo.port = 81;
+    console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
+});
