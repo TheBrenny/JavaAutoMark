@@ -1,9 +1,9 @@
 // Do config
-require("dotenv").config();
 const config = require("./config");
 const serverInfo = config.serverInfo;
 
 // Load important modules
+const db = require("./db/db");
 const path = require("path");
 const express = require("express");
 const mustache = require("mustache-express");
@@ -20,6 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(session({
+    secret: config.session.secret,
+    resave: false,
+    saveUninitialized: false,
+    store: db.sessionStore,
+    name: config.session.sessionCookieName
+}));
 
 // Start the app
 let appPath = path.join(__dirname, "app");
@@ -30,7 +37,8 @@ app.set("view engine", "mst");
 
 app.use("/assets", express.static(path.join(appPath, "assets")));
 app.use(require("./app/routes/public"));
-app.use(require("./app/routes/errorRoutes"));
+app.use(require("./app/routes/account"));
+app.use(require("./app/routes/errors"));
 
 app.listen(serverInfo.port, serverInfo.host, () => {
     if (config.browsersyncActive) serverInfo.port = 81;
