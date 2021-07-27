@@ -1,0 +1,1 @@
+This folder will contain all the code and templates to install this tool into the app config settings.
