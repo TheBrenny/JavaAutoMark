@@ -4,12 +4,34 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/Database");
 
+router.get("/whoami", async (req, res) => {
+    let s = session(req);
+    let name = s.isAuthed() ? s.name() : "Just A Guest";
+
+    res.format({
+        "json": () => res.json({
+            name
+        }),
+        "html": () => res.render("account/whoami", {
+            name: name
+        }),
+    });
+});
+
 router.get("/login", [
     checks.isGuest,
 ], async (req, res) => {
-    res.render("login", {
-        badLogin: session(req).getBadLogin(),
+    res.format({
+        "json": () => res.json({
+            message: "POST to /login"
+        }),
+        "html": () => res.render("account/login", {
+            badLogin: session(req).getBadLogin(),
+        }),
     });
+    // res.render("login", {
+    //     badLogin: session(req).getBadLogin(),
+    // });
 });
 
 router.post("/login", [
@@ -29,7 +51,7 @@ router.post("/login", [
 
         // found user
         if (target != undefined) {
-            const passMatch = crypto.compareSync(password, target.users_password); // password == target.users_plainPassword
+            const passMatch = password == target.users_password; // crypto.compareSync(password, target.users_password);
             if (passMatch) {
                 session(req).setAccount(target.users_id, target.users_username);
             } else {

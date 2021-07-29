@@ -10,7 +10,8 @@ module.exports.db = {
 
 module.exports.session = {
     secret: process.env.SESSION_SECRET || "this is the encryption secret",
-    cookieName: process.env.SESSION_COOKIE || "session"
+    cookieName: process.env.SESSION_COOKIE || "session",
+    rememberName: process.env.REMEMBER_NAME || "remme",
 };
 
 module.exports.env = {
@@ -40,10 +41,4 @@ module.exports.morgan = {
 module.exports.serverInfo = {
     host: process.env.HOST || "localhost",
     port: process.env.PORT || 80,
-};
-
-module.exports.session = {
-    sessionCookieName: process.env.SESSION_COOKIE_NAME || "wdsSesNam",
-    rememberCookieName: process.env.REMEMBER_COOKIE_NAME || "wdsRemNam",
-    secret: process.env.SESSION_SECRET || "secret"
 };
