@@ -18,6 +18,44 @@ router.get("/whoami", async (req, res) => {
     });
 });
 
+router.get("/register", async (req, res) => {
+    res.format({
+        "json": () => res.json({
+            message: "POST to /register"
+        }),
+        "html": () => res.render("account/register", {
+            badRegister: session(req).getBadRegister()
+        })
+    });
+});
+
+router.post("/register", async (req, res) => {
+    let {
+        username,
+        password,
+    } = req.body;
+
+    let bad = false;
+    let target = (await Database.accounts.getUser(username));
+
+    // not found user
+    if (target == undefined) {
+        const passHash = crypto.hashSync(password, 12);
+        bad = !(await Database.accounts.addUser(username, passHash));
+    } else {
+        crypto.hashSync(password); // hash anyway to waste time.
+        bad = true;
+    }
+
+    if (bad) {
+        session(req).badLogin("Invalid username or password!");
+        res.status(401).redirect("/login");
+    } else {
+        // if (rm == "on") rememberme.writeCookie(req, res);
+        res.redirect("/");
+    }
+});
+
 router.get("/login", [
     checks.isGuest,
 ], async (req, res) => {
@@ -29,9 +67,6 @@ router.get("/login", [
             badLogin: session(req).getBadLogin(),
         }),
     });
-    // res.render("login", {
-    //     badLogin: session(req).getBadLogin(),
-    // });
 });
 
 router.post("/login", [
@@ -51,14 +86,14 @@ router.post("/login", [
 
         // found user
         if (target != undefined) {
-            const passMatch = password == target.users_password; // crypto.compareSync(password, target.users_password);
+            const passMatch = crypto.compareSync(password, target.users_password);
             if (passMatch) {
                 session(req).setAccount(target.users_id, target.users_username);
             } else {
                 bad = true;
             }
         } else {
-            // hashPassword(password); // hash anyway to waste time.
+            hashPassword(password); // hash anyway to waste time.
             bad = true;
         }
 
@@ -66,7 +101,7 @@ router.post("/login", [
             session(req).badLogin("Invalid username or password!");
             res.status(401).redirect("/login");
         } else {
-            if (rm == "on") rememberme.writeCookie(req, res);
+            // if (rm == "on") rememberme.writeCookie(req, res);
             res.redirect("/");
         }
     });
