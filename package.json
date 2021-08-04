@@ -46,7 +46,9 @@
     "gulp": "^4.0.2",
     "gulp-nodemon": "^2.5.0",
     "gulp-sass": "^5.0.0",
-    "nodemon": "^2.0.12"
+    "gulp-sourcemaps": "^3.0.0",
+    "nodemon": "^2.0.12",
+    "sass": "^1.37.5"
   },
   "private": "true"
 }
