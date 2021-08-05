@@ -8,10 +8,74 @@ body, html {
 }
 
 body {
-  background-color: #f3f3f4ff;
-}
-
-body h1 {
   background-color: white;
+  color: #14110fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/*# sourceMappingURL=style.css.map */
+body #login_container {
+  background-color: #f3f3f4ff;
+  font-family: neue-haas-grotesk-display, sans-serif;
+  font-style: normal;
+  font-weight: 100;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #7e7f83ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  border-radius: 5px;
+}
+body #login_container h1 {
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 20px;
+  color: #34312dff;
+}
+body #login_container form {
+  padding: 20px 50px;
+  display: flex;
+  flex-direction: column;
+}
+body #login_container form input[type=text], body #login_container form input[type=password] {
+  width: 200px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-weight: 0 !important;
+  font-family: neue-haas-grotesk-display, sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+body #login_container form input[type=submit] {
+  margin: 50px 0 20px 0;
+  padding: 10px 0;
+  background-color: #8acd6dff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.5s ease color;
+}
+body #login_container form input[type=submit]:hover {
+  background-color: #5aa739;
+  color: white;
+  cursor: pointer;
+}
+body #login_container form #forgotPass {
+  font-size: 13px;
+  margin: 3px;
+}
+body #login_container form label {
+  padding: 10px 0;
+}

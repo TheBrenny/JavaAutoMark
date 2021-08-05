@@ -4,11 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <title>JAM - Log In</title>
 
-    <link rel="stylesheet" href="partials/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.typekit.net/rfw4pei.css">
+    <link rel="stylesheet" href="../assets/css/style.css" type="text/css" />
 </head>
 <body>
-    <h1>First push - testing</h1>
+    <!--
+        THIS IS THE CONTAINER TO HOLD THE LOGIN FORM
+        INPUTS:
+            user
+            pass
+        OUTPUTS:
+            login
+            forgot password
+            
+    -->
+    <div id="login_container">
+        <h1>Log in</h1>
+        <form name="login_form" action="" method="post">
+
+            <!--<label for="user">zID:</label>-->
+            <input type="text" name="user" placeholder="zID" />
+
+            <!--<label for="pass">Password:</label>-->
+            <input type="password" name="pass" placeholder="Password" />
+            <a id="forgotPass" href="">Forgot password?</a>
+
+            <input type="submit" value="Log in" />
+
+        </form>
+    </div>
 </body>
 </html>
