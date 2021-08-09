@@ -6,7 +6,7 @@ const serverInfo = config.serverInfo;
 // Load important modules
 const path = require("path");
 const express = require("express");
-const mustache = require("mustache-express");
+const scetch = require("scetch")();
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
@@ -25,8 +25,8 @@ app.use(express.urlencoded({
 let appPath = path.join(__dirname, "app");
 
 app.set("views", path.join(appPath, "views"));
-app.engine("mst", mustache(path.join(appPath, "views", "partials"), ".mst"));
-app.set("view engine", "mst");
+app.engine("sce", scetch.engine);
+app.set("view engine", "sce");
 
 app.use("/assets", express.static(path.join(appPath, "assets")));
 app.use(require("./app/routes/public"));
