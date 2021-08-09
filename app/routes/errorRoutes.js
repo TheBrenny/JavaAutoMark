@@ -13,7 +13,7 @@ router.use((err, req, res, next) => {
 
     const statusCode = res.statusCode !== 200 ? res.statusCode : err.statusCode || 500;
     res.status(statusCode);
-    req.headers.accept = req.headers.accept.replaceAll(/\*\/\*(;q=.+?|\s+?)(,|$)/g, "");
+    req.headers.accept = req.headers.accept.replace(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // jarod don't remember what this does...
 
     let e = {
         statusCode: statusCode,
