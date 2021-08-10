@@ -3,8 +3,8 @@
     </a>
     
     <ul id="menu">
-        <a href=""><li>[[firstName]]</li></a><span></span>
-        <a href=""><li>New teacher</li></a><span></span>
+        <a href="/user"><li>[[user.firstName]]</li></a><span></span>
+        <a href="/create"><li>New teacher</li></a><span></span>
         <a href=""><li>Log out</li></a>
     </ul>
 </div>

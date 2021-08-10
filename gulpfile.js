@@ -3,7 +3,7 @@ const sass = require('gulp-sass')(require('sass'));
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
 
-const host = "jam";
+const host = "localhost";
 const port = 80;
 
 gulp.task("sass", function () {
