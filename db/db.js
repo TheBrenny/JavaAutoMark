@@ -60,7 +60,8 @@ module.exports.templateFromFile = function (filename, values) {
     Array.from(values).forEach(v => { // v is an object
         let dupe = dupeTemplate;
         for (let e of Object.entries(v)) {
-            dupe = dupe.replaceAll("${" + e[0] + "}", e[1]);
+            let r = new RegExp("\\$\\{" + e[0] + "\\}", "g"); // lucky this is only run by trusted sources using trusted sources...
+            dupe = dupe.replace(r, e[1]);
         }
         dupeArr.push(dupe);
     });
@@ -73,7 +74,7 @@ module.exports.templateFromFile = function (filename, values) {
 module.exports.compressSQL = compressSQL;
 
 function compressSQL(data) {
-    return data.replaceAll(/(\/\*(.|\s)+?\*\/|^\s*--.*?$)/gm, "").replaceAll(/\n\r/, " ").replaceAll(/\s+/, " ").trim();
+    return data.replace(/(\/\*(.|\s)+?\*\/|^\s*--.*?$)/gm, "").replace(/\n\r/, " ").replace(/\s+/, " ").trim();
 }
 
 // Returns a Promise!

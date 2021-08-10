@@ -9,6 +9,7 @@ const express = require("express");
 // const mustache = require("mustache-express");
 const scetch = require("scetch")();
 const morgan = require("morgan");
+const nonce = require("nonce-express");
 const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
@@ -16,6 +17,7 @@ const session = require("express-session");
 // Make the app
 let app = express();
 app.use(morgan('common', config.morgan));
+app.use(nonce());
 app.use(helmet(config.helmet));
 app.use(cors());
 app.use(express.json());

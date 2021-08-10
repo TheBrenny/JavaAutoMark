@@ -2,7 +2,7 @@ const router = require("express").Router();
 const checks = require("./tools/checks");
 const session = require("./tools/session");
 const crypto = require("bcrypt");
-const Database = require("../../db/Database");
+const Database = require("../../db/database");
 
 router.get("/whoami", async (req, res) => {
     let s = session(req);

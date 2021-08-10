@@ -22,15 +22,19 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
 
-module.exports.helmet = !module.exports.env.gulping ? {
+module.exports.helmet = {
     contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-            scriptSrc: ["'self'", "'unsafe-inline'"] // TODO: Change this to `nonce-`s -- you can use res.locals.nonce to have the nonce variable available in scetch
+            defaultSrc: ["'self'", "http:"],
+            scriptSrc: [
+                "'self'",
+                `'nonce-browsersync'`,
+                (req, res) => `'nonce-${res.locals.nonce}'`,
+            ],
+            upgradeInsecureRequests: null
         }
     }
-} : {
-    contentSecurityPolicy: false
 };
 
 module.exports.morgan = {

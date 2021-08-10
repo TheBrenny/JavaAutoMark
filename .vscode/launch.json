@@ -6,22 +6,33 @@
     "configurations": [
         {
             "args": [
-                "-LLLL",
                 "default"
             ],
-            "env": {},
-            "runtimeArgs": [
-                "--preserve-symlinks"
-            ],
-            "name": "default",
+            "name": "gulp default",
             "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
             "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
             ],
+            "type": "pwa-node",
+            "port": 9229,
             "console": "integratedTerminal",
-            "type": "node",
             "preLaunchTask": "startMysql"
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "just run",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "start"
+            ],
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "preLaunchTask": "startMysql"
+        }
     ]
 }

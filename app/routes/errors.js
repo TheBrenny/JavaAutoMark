@@ -18,9 +18,9 @@ router.use((err, req, res, next) => {
         return next(err);
     }
 
-    const statusCode = res.statusCode !== 200 ? res.statusCode : err.statusCode || 500;
+    const statusCode = res.statusCode !== 200 ? res.statusCode : err.code || 500;
     res.status(statusCode);
-    req.headers.accept = req.headers.accept.replaceAll(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // i can't remember what this does...
+    req.headers.accept = req.headers.accept.replace(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // i can't remember what this does...
 
     let e = {
         code: statusCode,
@@ -38,6 +38,7 @@ router.use((err, req, res, next) => {
         "html": () => res.render("error", {
             "error": e
         }),
+        "default": () => res.end()
     });
 
     // if (req.accepts("text/html")) {
