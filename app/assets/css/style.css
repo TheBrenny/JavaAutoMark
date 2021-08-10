@@ -1,0 +1,200 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+* {
+  margin: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: white;
+  color: #14110fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../img/splash.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+body #login_container {
+  background-color: #f3f3f4ff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-size: 20px;
+  border: 1px solid #7e7f83ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  border-radius: 5px;
+}
+body #login_container h1 {
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  font-size: 25px;
+  margin-top: 20px;
+  color: #34312dff;
+}
+body #login_container form {
+  padding: 20px 50px;
+  display: flex;
+  flex-direction: column;
+}
+body #login_container form input[type=text], body #login_container form input[type=password] {
+  width: 200px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-weight: 0 !important;
+  font-family: neue-haas-grotesk-display, sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+body #login_container form input[type=submit] {
+  margin: 50px 0 20px 0;
+  padding: 10px 0;
+  background-color: #8acd6dff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.2s ease color;
+}
+body #login_container form input[type=submit]:hover {
+  background-color: #5aa739ff;
+  color: white;
+  cursor: pointer;
+}
+body #login_container form #forgotPass {
+  font-size: 13px;
+  margin: 3px;
+}
+body #login_container form label {
+  padding: 10px 0;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 0 10px black;
+  height: 75px;
+  display: flex;
+  justify-content: space-between;
+}
+#header a.home {
+  background-image: url("../img/jar_coloured.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  width: 75px;
+  height: 100px;
+  margin-left: 50px;
+}
+#header #menu {
+  list-style: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+#header #menu li {
+  float: left;
+  text-transform: uppercase;
+  margin: 0 10px;
+  padding: 10px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color;
+}
+#header #menu li:hover {
+  background-color: rgba(255, 209, 71, 0.8);
+}
+#header #menu span {
+  height: 30px;
+  width: 1px;
+  background-color: #14110fff;
+}
+#header #menu a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#createUser {
+  background-color: #f3f3f4ff;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#createUser #groupNames {
+  display: flex;
+  flex-direction: row;
+}
+#createUser #groupNames .name {
+  display: flex;
+  flex-direction: column;
+}
+#createUser #groupNames .first {
+  margin-right: 10px;
+}
+#createUser #groupNames input {
+  width: 150px;
+}
+#createUser input[type=text], #createUser input[type=password] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin-top: 20px;
+  border-color: #8f8f8f;
+  color: #34312dff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+#createUser input[type=submit] {
+  margin: 20px 0 10px 0;
+  padding: 10px 0;
+  background-color: #8acd6dff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.2s ease color;
+}
+#createUser label[for=pass] {
+  color: #7e7f83ff;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#createUser h3 {
+  font-weight: 400;
+  margin-left: 10px;
+}
+#createUser input[type=submit]:hover {
+  background-color: #5aa739ff;
+  color: white;
+  cursor: pointer;
+}
