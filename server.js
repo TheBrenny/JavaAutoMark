@@ -6,7 +6,6 @@ const serverInfo = config.serverInfo;
 const db = require("./db/db");
 const path = require("path");
 const express = require("express");
-// const mustache = require("mustache-express");
 const scetch = require("scetch")();
 const morgan = require("morgan");
 const nonce = require("nonce-express");
@@ -36,7 +35,6 @@ app.use(session({
 let appPath = path.join(__dirname, "app");
 
 app.set("views", path.join(appPath, "views"));
-// app.engine("mst", mustache(path.join(appPath, "views", "partials"), ".mst"));
 app.engine("sce", scetch.engine);
 app.set("view engine", "sce");
 

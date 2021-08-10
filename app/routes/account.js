@@ -4,36 +4,45 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 
-router.get("/whoami", async (req, res) => {
+// router.get("/whoami", async (req, res) => {
+//     let s = session(req);
+//     let name = s.isAuthed() ? s.name() : "Just A Guest";
+
+//     res.format({
+//         "json": () => res.json({
+//             name
+//         }),
+//         "html": () => res.render("account/whoami", {
+//             name: name
+//         }),
+//     });
+// });
+
+// router.get("/register", async (req, res) => {
+//     res.format({
+//         "json": () => res.json({
+//             message: "POST to /register"
+//         }),
+//         "html": () => res.render("account/register", {
+//             badRegister: session(req).getBadRegister()
+//         })
+//     });
+// });
+
+router.get(["/create"], checks.isAuthed, (req, res) => {
     let s = session(req);
-    let name = s.isAuthed() ? s.name() : "Just A Guest";
+    let name = s.isAuthed() ? s.name() : null;
 
-    res.format({
-        "json": () => res.json({
-            name
-        }),
-        "html": () => res.render("account/whoami", {
-            name: name
-        }),
+    res.render("createuser", {
+        name: name
     });
 });
 
-router.get("/register", async (req, res) => {
-    res.format({
-        "json": () => res.json({
-            message: "POST to /register"
-        }),
-        "html": () => res.render("account/register", {
-            badRegister: session(req).getBadRegister()
-        })
-    });
-});
-
-router.post("/register", async (req, res) => {
-    let {
-        username,
-        password,
-    } = req.body;
+router.post("/create", async (req, res) => {
+    let username = req.body.zID;
+    let fname = req.body.fName;
+    let lname = req.body.lName;
+    let password = req.body.pass;
 
     let bad = false;
     let target = (await Database.accounts.getUser(username));
@@ -56,6 +65,11 @@ router.post("/register", async (req, res) => {
     }
 });
 
+router.get("/logout", async (req, res) => {
+    session(req).setAccount(null);
+    res.redirect("/");
+});
+
 router.get("/login", [
     checks.isGuest,
 ], async (req, res) => {
@@ -63,48 +77,48 @@ router.get("/login", [
         "json": () => res.json({
             message: "POST to /login"
         }),
-        "html": () => res.render("account/login", {
+        "html": () => res.render("login", {
             badLogin: session(req).getBadLogin(),
         }),
     });
 });
 
-router.post("/login", [
-        checks.isGuest,
-    ],
-    async (req, res) => {
-        let {
-            username,
-            password,
-        } = req.body;
-        let rm = req.body.rememberme;
+router.post("/login", checks.isGuest, async (req, res) => {
+    let username = req.body.user;
+    let password = req.body.pass;
 
-        session(req).loginAttempt();
+    let rm = req.body.rememberme;
 
-        let bad = false;
-        let target = (await Database.accounts.getUser(username));
+    session(req).loginAttempt();
 
-        // found user
-        if (target != undefined) {
-            const passMatch = crypto.compareSync(password, target.users_password);
-            if (passMatch) {
-                session(req).setAccount(target.users_id, target.users_username);
-            } else {
-                bad = true;
-            }
+    let bad = false;
+    let target = (await Database.accounts.getUser(username));
+
+    // found user
+    if (target != undefined) {
+        const passMatch = crypto.compareSync(password, target.users_password);
+        if (passMatch) {
+            session(req).setAccount(target.users_id, target.users_username);
         } else {
-            hashPassword(password); // hash anyway to waste time.
             bad = true;
         }
+    } else {
+        hashPassword(password); // hash anyway to waste time.
+        bad = true;
+    }
 
-        if (bad) {
-            session(req).badLogin("Invalid username or password!");
-            res.status(401).redirect("/login");
-        } else {
-            // if (rm == "on") rememberme.writeCookie(req, res);
-            res.redirect("/");
-        }
-    });
+    if (bad) {
+        session(req).badLogin("Invalid username or password!");
+        res.status(401).redirect("/login");
+    } else {
+        // if (rm == "on") rememberme.writeCookie(req, res);
+        res.redirect("/");
+    }
+});
 
+
+function hashPassword(p) {
+    crypto.hashSync(p, 12);
+}
 
 module.exports = router;
