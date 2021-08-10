@@ -1,3 +1,4 @@
-[[i= partials/header ]]
+[[i= partials/meta ]]
+[[i= partials/header]]
     <h1>[[username]]</h1>
 [[i= partials/footer ]]

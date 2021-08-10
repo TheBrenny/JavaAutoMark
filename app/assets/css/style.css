@@ -13,6 +13,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("../img/splash.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 body #login_container {
   background-color: #f3f3f4ff;
@@ -65,10 +68,10 @@ body #login_container form input[type=submit] {
   font-family: roboto-slab, serif;
   font-weight: 400;
   font-style: normal;
-  transition: 0.5s ease background-color, 0.5s ease color;
+  transition: 0.5s ease background-color, 0.2s ease color;
 }
 body #login_container form input[type=submit]:hover {
-  background-color: #5aa739;
+  background-color: #5aa739ff;
   color: white;
   cursor: pointer;
 }
@@ -78,4 +81,22 @@ body #login_container form #forgotPass {
 }
 body #login_container form label {
   padding: 10px 0;
+}
+
+#header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 0 10px black;
+  height: 75px;
+}
+#header a.home {
+  background-image: url("../img/jar_coloured.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  width: 75px;
+  height: 100px;
+  margin-left: 50px;
 }
