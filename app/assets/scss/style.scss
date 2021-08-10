@@ -10,9 +10,9 @@ $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
 
 @mixin content-font {
-    font-family: neue-haas-grotesk-display, sans-serif;
+    font-family: roboto, sans-serif;
+    font-weight: 400;
     font-style: normal;
-    font-weight: 100;
 }
 
 @mixin header-font {
@@ -20,6 +20,8 @@ $cultured: #f3f3f4ff;
     font-weight: 400;
     font-style: normal;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     margin: 0;
@@ -117,6 +119,8 @@ body {
     background-color: $cultured;
     box-shadow: 0 0 10px black;
     height:75px;
+    display: flex;
+    justify-content: space-between;
 
     a.home {
         background-image: url('../img/jar_coloured.svg');
@@ -126,5 +130,111 @@ body {
         width: 75px;
         height: 100px;
         margin-left: 50px;
+    }
+
+    #menu {
+        list-style: none;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        li {
+            float: left;
+            text-transform: uppercase;
+            margin: 0 10px;
+            padding: 10px;
+            @include content-font();
+            transition: 0.5s ease background-color;
+        }
+
+        li:hover {
+            background-color: rgba(255, 209, 71, 0.8);
+        }
+
+        span {
+            height: 30px;
+            width: 1px;
+            background-color: $smoky-black;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+}
+
+#createUser {
+    background-color: $cultured;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0 5px 10px black;
+    border-radius: 10px;
+    //width: 400px;
+    font-family: 'Roboto', sans-serif;
+
+    #groupNames {
+        
+        display: flex;
+        flex-direction: row;
+        
+        .name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .first {
+            margin-right: 10px;
+        }
+
+        input {
+            width: 150px;
+        }
+    }
+
+    input[type="text"], input[type="password"] {
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid $gray-web;
+        margin-top: 20px;
+        border-color: #8f8f8f;
+        color: $jet;
+        @include content-font();
+        letter-spacing: 1px;
+        font-style: normal;
+        
+    }
+    
+    input[type="submit"] {
+        margin: 20px 0 10px 0;
+        padding: 10px 0;
+        background-color: $pistachio;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-size: 15px;
+        @include header-font();
+        transition: .5s ease background-color, 0.2s ease color;
+    }
+
+    label[for="pass"] {
+        color: $gray-web;
+        margin-left: 10px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    h3 {
+        font-weight: 400;
+        margin-left: 10px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: $highlighted-pistachio;
+        color: white;
+        cursor: pointer;
     }
 }

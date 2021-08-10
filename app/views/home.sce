@@ -1,4 +1,4 @@
 [[i= partials/meta ]]
 [[i= partials/header]]
-    <h1>[[username]]</h1>
+    <h1>Home page</h1>
 [[i= partials/footer ]]

@@ -13,7 +13,7 @@
     -->
     <div id="login_container">
         <h1>Log in</h1>
-        <form name="login_form" action="" method="post">
+        <form name="login_form" action="/login" method="post">
 
             <!--<label for="user">zID:</label>-->
             <input type="text" name="user" placeholder="zID" />

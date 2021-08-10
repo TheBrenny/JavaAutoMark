@@ -3,12 +3,18 @@ const router = require("express").Router();
 router.get(["/", "/home"], (req, res) => {
     res.render("home", {
         time: new Date().toLocaleString(),
-        username: "Home page"
+        firstName: "Ethan"
     });
 });
 
 router.get(["/login"], (req, res) => {
     res.render("login", {
+        
+    });
+});
+
+router.get(["/create"], (req, res) => {
+    res.render("createuser", {
         
     });
 });
