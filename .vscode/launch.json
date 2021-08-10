@@ -13,7 +13,7 @@
             "runtimeArgs": [
                 "--preserve-symlinks"
             ],
-            "name": "gulp default",
+            "name": "default",
             "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
             "request": "launch",
             "skipFiles": [
@@ -23,20 +23,5 @@
             "type": "node",
             "preLaunchTask": "startMysql"
         },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "just run",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run-script",
-                "start"
-            ],
-            "port": 9229,
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "preLaunchTask": "startMysql"
-        }
     ]
 }
