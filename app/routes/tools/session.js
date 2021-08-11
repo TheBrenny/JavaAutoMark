@@ -1,6 +1,7 @@
 const sessionSchema = {
     account: {
-        name: "",
+        fname: "",
+        lname: "",
         id: -1,
         authed: false,
         badLogin: false,
@@ -23,12 +24,13 @@ const account = {
         if (this.account === undefined) this.account = Object.assign({}, sessionSchema.account);
         return this.account;
     },
-    setAccount(id, name) {
+    setAccount(id, fname, lname) {
         if (id < 0 || id == null) {
             this.account = Object.assign({}, sessionSchema.account);
         } else {
             this.getAccount().id = id;
-            this.getAccount().name = name;
+            this.getAccount().fname = fname;
+            this.getAccount().lname = lname;
             this.getAccount().authed = true;
             this.getAccount().badLogin = false;
             this.getAccount().badRegister = false;
@@ -36,7 +38,7 @@ const account = {
         }
     },
     name() {
-        return this.getAccount().name;
+        return this.getAccount().fname;
     },
     isAuthed() {
         return this.getAccount().authed;
