@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>scetch - the newest templating engine!</title>
-</head>
-<body>
+[[i= partials/meta ]]
+[[i= partials/header ]]
 <h1>[[error.code]] - [[error.name]]</h1>
 <p>[[error.message]]</p>
 [[?= error.stack ]]
 <code>[[error.stack]]</code>
 [[?==]]
-</body>
-</html>
+[[i= partials/footer]]
