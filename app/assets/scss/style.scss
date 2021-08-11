@@ -121,13 +121,19 @@ body {
     justify-content: space-between;
 
     a.home {
-        background-image: url('../img/jar_coloured.svg');
+        background-image: url("../img/jam_jar_coloured.svg");
         background-repeat: no-repeat;
-        background-position: center;
+        background-position-x: -70px;
         display: inline-block;
-        width: 75px;
+        background-size: 400px 90px;
+        width: 80px;
         height: 100px;
         margin-left: 50px;
+        transition: 0.5s ease width;
+    }
+
+    a.home:hover {
+        width: 200px;
     }
 
     #menu {
