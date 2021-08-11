@@ -48,8 +48,7 @@ gulp.task("nodemon", function (cb) {
         script: 'server.js',
         exec: "node --inspect=9229",
         env: {
-            "NODE_ENV": 'dev',
-            "GULPING": true,
+            "NODE_ENV": 'development',
             "HOST": host,
             "PORT": port
         },

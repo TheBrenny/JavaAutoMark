@@ -16,8 +16,6 @@ module.exports.session = {
 
 module.exports.env = {
     node: process.env.NODE_ENV || "production",
-    deploy: process.env.DEPLOY || "local",
-    gulping: process.env.GULPING == "true",
     isDev: forceDev
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
@@ -29,7 +27,7 @@ module.exports.helmet = {
             defaultSrc: ["'self'", "http:"],
             scriptSrc: [
                 "'self'",
-                `'nonce-browsersync'`,
+                module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],
             upgradeInsecureRequests: null
