@@ -4,37 +4,19 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 
-// router.get("/whoami", async (req, res) => {
-//     let s = session(req);
-//     let name = s.isAuthed() ? s.name() : "Just A Guest";
+router.get(["/user"], (req, res) => {
+    let s = session(req);
 
-//     res.format({
-//         "json": () => res.json({
-//             name
-//         }),
-//         "html": () => res.render("account/whoami", {
-//             name: name
-//         }),
-//     });
-// });
-
-// router.get("/register", async (req, res) => {
-//     res.format({
-//         "json": () => res.json({
-//             message: "POST to /register"
-//         }),
-//         "html": () => res.render("account/register", {
-//             badRegister: session(req).getBadRegister()
-//         })
-//     });
-// });
+    res.render("viewuser", {
+        user: s.getAccount()
+    });
+});
 
 router.get(["/create"], checks.isAuthed, (req, res) => {
     let s = session(req);
-    let name = s.isAuthed() ? s.name() : null;
 
     res.render("createuser", {
-        name: name
+        user: s.getAccount()
     });
 });
 

@@ -18,7 +18,6 @@ function isAuthed(req, res, next) {
             success: false,
             message: "You need to be authenticated to do this."
         });
-
     }
 }
 

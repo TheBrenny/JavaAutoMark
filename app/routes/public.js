@@ -4,26 +4,18 @@ const router = require("express").Router();
 const checks = require("./tools/checks");
 const session = require("./tools/session");
 
+router.use((req, res, next) => {
+    if(req.path === "/login") next();
+    else checks.isAuthed(req,res,next);
+});
+
 router.get(["/", "/home"], (req, res) => {
     let s = session(req);
-    let name = s.isAuthed() ? s.name() : null;
 
     res.render("home", {
         time: new Date().toLocaleString(),
-        name
+        user: s.getAccount()
     });
 });
-
-// router.get(["/login"], (req, res) => {
-//     res.render("login", {
-//         firstName: "Ethan"
-//     });
-// });
-
-// router.get(["/create"], (req, res) => {
-//     res.render("createuser", {
-//         firstName: "Ethan"
-//     });
-// });
 
 module.exports = router;
