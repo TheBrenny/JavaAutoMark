@@ -73,9 +73,7 @@ body {
                 border: 1px solid $gray-web;
                 margin: 5px 0;
                 border-color: #8f8f8f;
-                font-weight: 0 !important;
-                font-family: neue-haas-grotesk-display, sans-serif;                
-                font-weight: 300;
+                @include content-font();
                 letter-spacing: 2px;
                 font-style: normal;
                 
@@ -123,13 +121,19 @@ body {
     justify-content: space-between;
 
     a.home {
-        background-image: url('../img/jar_coloured.svg');
+        background-image: url("../img/jam_jar_coloured.svg");
         background-repeat: no-repeat;
-        background-position: center;
+        background-position-x: -70px;
         display: inline-block;
-        width: 75px;
+        background-size: 400px 90px;
+        width: 80px;
         height: 100px;
         margin-left: 50px;
+        transition: 0.5s ease width;
+    }
+
+    a.home:hover {
+        width: 200px;
     }
 
     #menu {
@@ -171,7 +175,6 @@ body {
     padding: 30px;
     box-shadow: 0 5px 10px black;
     border-radius: 10px;
-    //width: 400px;
     font-family: 'Roboto', sans-serif;
 
     #groupNames {
@@ -236,5 +239,39 @@ body {
         background-color: $highlighted-pistachio;
         color: white;
         cursor: pointer;
+    }
+}
+
+#viewUser {
+    background-color: $cultured;
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+    color: $gray-web;
+    @include content-font();
+    box-shadow: 0 5px 10px black;
+    border-radius: 10px;
+    padding: 20px;
+
+    h2 {
+        text-align: center;
+        margin: 10px 0;
+        color: $jet;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        letter-spacing: 1px;
+        margin: 10px 20px;
+
+        .detail {
+            font-weight: normal;
+        }
+
+        h3 {
+            font-weight: 600;
+        }
     }
 }
