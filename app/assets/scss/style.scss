@@ -27,7 +27,7 @@ $cultured: #f3f3f4ff;
     margin: 0;
 }
 
-body, html {
+html {
     width: 100%;
     height: 100%;
 }
@@ -44,6 +44,7 @@ body {
     background-repeat: no-repeat;
 
     #login_container {
+        margin-top: calc(50vh - 159px);
         background-color: $cultured;
         @include content-font();
         letter-spacing: 1px;
@@ -65,7 +66,8 @@ body {
             display: flex;
             flex-direction: column;
 
-            input[type="text"], input[type="password"] {
+            input[type="text"],
+            input[type="password"] {
                 width: 200px;
                 font-size: 20px;
                 padding: 5px;
@@ -76,7 +78,7 @@ body {
                 @include content-font();
                 letter-spacing: 2px;
                 font-style: normal;
-                
+
             }
 
             input[type="submit"] {
@@ -111,12 +113,15 @@ body {
 }
 
 #header {
+    $header-height: 75px;
+    $header-buffer: 30px;
+
     position: fixed;
     top: 0;
     width: 100%;
     background-color: $cultured;
     box-shadow: 0 0 10px black;
-    height:75px;
+    height: $header-height;
     display: flex;
     justify-content: space-between;
 
@@ -166,6 +171,10 @@ body {
             color: inherit;
         }
     }
+
+    +* {
+        margin-top: $header-height+$header-buffer;
+    }
 }
 
 #createUser {
@@ -178,10 +187,10 @@ body {
     font-family: 'Roboto', sans-serif;
 
     #groupNames {
-        
+
         display: flex;
         flex-direction: row;
-        
+
         .name {
             display: flex;
             flex-direction: column;
@@ -196,7 +205,8 @@ body {
         }
     }
 
-    input[type="text"], input[type="password"] {
+    input[type="text"],
+    input[type="password"] {
         font-size: 15px;
         padding: 10px;
         border-radius: 5px;
@@ -207,9 +217,9 @@ body {
         @include content-font();
         letter-spacing: 1px;
         font-style: normal;
-        
+
     }
-    
+
     input[type="submit"] {
         margin: 20px 0 10px 0;
         padding: 10px 0;
@@ -288,13 +298,14 @@ body {
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 5px 10px $gray-web;
-        margin-bottom: 50px;
+        margin-bottom: 35px;
 
         label {
             @include content-font();
         }
 
-        input[type="text"], select{
+        input[type="text"],
+        select {
             width: 200px;
             font-size: 20px;
             padding: 5px;
@@ -307,7 +318,7 @@ body {
             letter-spacing: 2px;
             font-style: normal;
         }
-           
+
     }
 
     div.task {
@@ -326,6 +337,64 @@ body {
             margin-bottom: 20px;
         }
 
+        // .instr {
+        //     display: flex;
+        //     flex-direction: row;
+        //     justify-content: space-between;
+        //     align-items: center;
+        //     background-color: $almond;
+        //     border-radius: 10px;
+        //     margin-bottom: 15px;
+
+        //     ul {
+        //         list-style: none;
+        //         //margin-left: 5px;
+        //         border-top-left-radius: 10px;
+        //         border-bottom-left-radius: 10px;
+        //         padding: 0;
+        //         width: 50px;
+        //         background-color: #4b7ce6;
+        //         color: white;
+        //         text-align: center;
+        //         margin-right: 10px;
+        //         height: 60px;
+
+        //         li {
+        //             margin: 0;
+        //             padding: 0;
+        //             border-bottom: 1px solid #efefef;
+        //             border-top: 1px solid #efefef;
+        //         }
+        //     }
+
+        //     a {
+        //         height: 35px;
+        //         width: 35px;
+        //         background-color: $tomato;
+        //         border-radius: 5px;
+        //         margin: 5px 15px;
+        //         transition: 1s ease background-color;
+        //     }
+
+        //     a:hover {
+        //         background-color: $highlighted-tomato;
+        //     }
+
+        //     input[type="text"] {
+        //         flex-grow: 4;
+        //         font-size: 20px;
+        //         padding: 5px;
+        //         border-radius: 5px;
+        //         border: 1px solid $gray-web;
+        //         border-color: #8f8f8f;
+        //         @include content-font();
+        //         font-weight: 200;
+        //         letter-spacing: 2px;
+        //         font-style: normal;
+        //     }
+        // }
+
+        .test,
         .instr {
             display: flex;
             flex-direction: row;
@@ -336,64 +405,7 @@ body {
             margin-bottom: 15px;
 
             ul {
-                list-style: none;
-                //margin-left: 5px;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-                padding: 0;
-                width: 50px;
-                background-color: #4b7ce6;
-                color: white;
-                text-align: center;
-                margin-right: 10px;
-                height: 60px;
-                
-                li {
-                    margin: 0;
-                    padding: 0;
-                    border-bottom: 1px solid #efefef;
-                    border-top: 1px solid #efefef;
-                }
-            }
-
-            a {
-                height: 35px;
-                width: 35px;
-                background-color: $tomato;
-                border-radius: 5px;
-                margin: 5px 15px;
-                transition: 1s ease background-color;
-            }
-
-            a:hover {
-                background-color: $highlighted-tomato;
-            }
-
-            input[type="text"] {
-                flex-grow: 4;
-                font-size: 20px;
-                padding: 5px;
-                border-radius: 5px;
-                border: 1px solid $gray-web;
-                border-color: #8f8f8f;
-                @include content-font();
-                font-weight: 200;
-                letter-spacing: 2px;
-                font-style: normal;
-            }
-        }
-
-        .test {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            background-color: $almond;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            height: 100px;
-
-            ul {
+                align-self: stretch;
                 list-style: none;
                 border-top-left-radius: 10px;
                 border-bottom-left-radius: 10px;
@@ -403,10 +415,9 @@ body {
                 color: white;
                 text-align: center;
                 margin-right: 10px;
-                height: 100%;
                 display: flex;
                 flex-direction: column;
-                
+
                 li {
                     display: flex;
                     margin: 0;
@@ -416,6 +427,14 @@ body {
                     flex-grow: 1;
                     align-items: center;
                     justify-content: center;
+
+                    &:first-of-type {
+                        border-top: 0px;
+                    }
+
+                    &:last-of-type {
+                        border-bottom: 0px;
+                    }
                 }
             }
 
@@ -425,7 +444,7 @@ body {
                 background-color: $tomato;
                 border-radius: 5px;
                 margin: 5px 15px;
-                transition: 1s ease background-color;
+                transition: 0.3s ease background-color;
             }
 
             a:hover {
@@ -438,7 +457,7 @@ body {
                 flex-wrap: wrap;
                 width: 535px;
                 justify-content: space-between;
-                
+
                 .case {
                     flex-grow: 2;
                 }
@@ -466,7 +485,7 @@ body {
             }
 
             input[type="text"] {
-                font-size: 20px;
+                font-size: 1em;
                 padding: 5px;
                 border-radius: 5px;
                 border: 1px solid $gray-web;
