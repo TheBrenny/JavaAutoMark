@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../img/splash.svg");
+  background-image: url("/assets/img/splash.svg");
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -95,7 +95,7 @@ body #login_container form label {
   justify-content: space-between;
 }
 #header a.home {
-  background-image: url("../img/jam_jar_coloured.svg");
+  background-image: url("/assets/img/jam_jar_coloured.svg");
   background-repeat: no-repeat;
   background-position-x: -70px;
   display: inline-block;
@@ -235,3 +235,171 @@ body #login_container form label {
 #viewUser .container h3 {
   font-weight: 600;
 }
+
+#newassignment {
+  width: 700px;
+  background-color: aqua;
+}
+#newassignment div#details {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 50px;
+}
+#newassignment div#details label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#newassignment div#details input[type=text], #newassignment div#details select {
+  width: 200px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+#newassignment div.task {
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+#newassignment div.task .taskHead {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+#newassignment div.task .instr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9c5b2ff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+#newassignment div.task .instr ul {
+  list-style: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 0;
+  width: 50px;
+  background-color: #4b7ce6;
+  color: white;
+  text-align: center;
+  margin-right: 10px;
+  height: 60px;
+}
+#newassignment div.task .instr ul li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #efefef;
+  border-top: 1px solid #efefef;
+}
+#newassignment div.task .instr a {
+  height: 35px;
+  width: 35px;
+  background-color: #fe6448ff;
+  border-radius: 5px;
+  margin: 5px 15px;
+  transition: 1s ease background-color;
+}
+#newassignment div.task .instr a:hover {
+  background-color: #f42601ff;
+}
+#newassignment div.task .instr input[type=text] {
+  flex-grow: 4;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+#newassignment div.task .test {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9c5b2ff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  height: 100px;
+}
+#newassignment div.task .test ul {
+  list-style: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 0;
+  width: 50px;
+  background-color: #4b7ce6;
+  color: white;
+  text-align: center;
+  margin-right: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#newassignment div.task .test ul li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #efefef;
+  border-top: 1px solid #efefef;
+  flex-grow: 1;
+}
+#newassignment div.task .test a {
+  height: 35px;
+  width: 35px;
+  background-color: #fe6448ff;
+  border-radius: 5px;
+  margin: 5px 15px;
+  transition: 1s ease background-color;
+}
+#newassignment div.task .test a:hover {
+  background-color: #f42601ff;
+}
+#newassignment div.task .test .testCenter {
+  display: flex;
+  flex-direction: column;
+}
+#newassignment div.task .test .testCenter .testRemarks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#newassignment div.task .test .testCenter .testRemarks input[type=text] {
+  flex-basis: 40%;
+}
+#newassignment div.task .test input[type=text] {
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+/*# sourceMappingURL=style.css.map */

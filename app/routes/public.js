@@ -18,4 +18,13 @@ router.get(["/", "/home"], (req, res) => {
     });
 });
 
+router.get(["/newassignment"], (req, res) => {
+    let s = session(req);
+
+    res.render("newassignment", {
+        user: s.getAccount()
+    });
+});
+
+
 module.exports = router;

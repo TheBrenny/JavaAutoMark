@@ -275,3 +275,186 @@ body {
         }
     }
 }
+
+#newassignment {
+    width: 700px;
+    background-color: aqua;
+
+    div#details {
+        display: flex;
+        justify-content: space-between;
+
+        background-color: $cultured;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 50px;
+
+        label {
+            @include content-font();
+        }
+
+        input[type="text"], select{
+            width: 200px;
+            font-size: 20px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-style: normal;
+        }
+           
+    }
+
+    div.task {
+        background-color: $cultured;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 50px;
+
+        display: flex;
+        flex-direction: column;
+
+        .taskHead {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .instr {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $almond;
+            border-radius: 10px;
+            margin-bottom: 15px;
+
+            ul {
+                list-style: none;
+                //margin-left: 5px;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 0;
+                width: 50px;
+                background-color: #4b7ce6;
+                color: white;
+                text-align: center;
+                margin-right: 10px;
+                height: 60px;
+                
+                li {
+                    margin: 0;
+                    padding: 0;
+                    border-bottom: 1px solid #efefef;
+                    border-top: 1px solid #efefef;
+                }
+            }
+
+            a {
+                height: 35px;
+                width: 35px;
+                background-color: $tomato;
+                border-radius: 5px;
+                margin: 5px 15px;
+                transition: 1s ease background-color;
+            }
+
+            a:hover {
+                background-color: $highlighted-tomato;
+            }
+
+            input[type="text"] {
+                flex-grow: 4;
+                font-size: 20px;
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid $gray-web;
+                border-color: #8f8f8f;
+                @include content-font();
+                font-weight: 200;
+                letter-spacing: 2px;
+                font-style: normal;
+            }
+        }
+
+        .test {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $almond;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            height: 100px;
+
+            ul {
+                list-style: none;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 0;
+                width: 50px;
+                background-color: #4b7ce6;
+                color: white;
+                text-align: center;
+                margin-right: 10px;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                
+                li {
+                    margin: 0;
+                    padding: 0;
+                    border-bottom: 1px solid #efefef;
+                    border-top: 1px solid #efefef;
+                    flex-grow: 1;
+                }
+            }
+
+            a {
+                height: 35px;
+                width: 35px;
+                background-color: $tomato;
+                border-radius: 5px;
+                margin: 5px 15px;
+                transition: 1s ease background-color;
+            }
+
+            a:hover {
+                background-color: $highlighted-tomato;
+            }
+
+            .testCenter {
+                display: flex;
+                flex-direction: column;
+                
+                .testRemarks {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    
+                    input[type="text"] {
+                        flex-basis: 40%;
+                    }
+                }
+            }
+
+            input[type="text"] {
+                font-size: 20px;
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid $gray-web;
+                border-color: #8f8f8f;
+                @include content-font();
+                font-weight: 200;
+                letter-spacing: 2px;
+                font-style: normal;
+            }
+        }
+    }
+}
