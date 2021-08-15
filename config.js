@@ -27,6 +27,7 @@ module.exports.helmet = {
             defaultSrc: ["'self'", "http:"],
             scriptSrc: [
                 "'self'",
+                "cdnjs.cloudflare.com",
                 module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],

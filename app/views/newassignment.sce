@@ -28,7 +28,7 @@
             <h3>Task 1</h3>
             <a href="#" alt="close">close</a>
         </span>
-        
+
         <div class="instr">
             <ul>
                 <li>up</li>
@@ -49,7 +49,7 @@
                 <input class="outer case" type="text" name="" placeholder="Provide a test case" />
                 <input class="outer margin small" type="text" name="" placeholder="Expected output" />
                 <input class="outer small mark" type="text" name="" placeholder="Marks" />
-                
+
                 <input class="lower" type="text" name="" placeholder="Provide pass feedback" />
                 <input class="lower" type="text" name="" placeholder="Provide fail feedback" />
             </div>
@@ -58,4 +58,5 @@
     </div>
 </form>
 
+[[i= partials/editors]]
 [[i= partials/footer]]
