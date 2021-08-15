@@ -432,15 +432,18 @@ body {
             .testCenter {
                 display: flex;
                 flex-direction: column;
+                width: 535px;
                 
                 .testRemarks {
-                    display: flex;
-                    flex-direction: row;
+                    display: inline-flex;
+                    flex-direction: row; 
                     justify-content: space-between;
-                    
-                    input[type="text"] {
-                        flex-basis: 40%;
-                    }
+                    margin-top: 10px;
+
+                    input {
+                        display: inline;
+                        width: 240px;
+                    }               
                 }
             }
 

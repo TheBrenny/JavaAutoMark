@@ -380,14 +380,17 @@ body #login_container form label {
 #newassignment div.task .test .testCenter {
   display: flex;
   flex-direction: column;
+  width: 535px;
 }
 #newassignment div.task .test .testCenter .testRemarks {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 10px;
 }
-#newassignment div.task .test .testCenter .testRemarks input[type=text] {
-  flex-basis: 40%;
+#newassignment div.task .test .testCenter .testRemarks input {
+  display: inline;
+  width: 240px;
 }
 #newassignment div.task .test input[type=text] {
   font-size: 20px;
