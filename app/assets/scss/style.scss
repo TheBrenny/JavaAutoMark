@@ -337,8 +337,7 @@ body {
             margin-bottom: 20px;
         }
 
-        .test,
-        .instr {
+        .test, .instr {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -350,6 +349,7 @@ body {
             .editor {
                 flex-grow: 1;
                 align-self: stretch;
+                margin: 10px 0;
             }
 
             ul {
@@ -443,6 +443,10 @@ body {
                 letter-spacing: 2px;
                 font-style: normal;
             }
+        }
+
+        .test {
+            height: 80px;
         }
     }
 }

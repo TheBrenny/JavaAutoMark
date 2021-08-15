@@ -2,6 +2,7 @@
 [[i= partials/editors]]
 [[i= partials/header]]
 
+
 <form id="newassignment" method="POST" action="newassignment">
 
     <!--THIS DIV HANDLES THE UNIVERSAL DETAILS OF THE ASSIGNMENT-->
@@ -24,7 +25,7 @@
     </div>
 
     <!--THIS TYPE OF DIV WILL HANDLE TASKS-->
-    <div class="task">
+    <!-- <div class="task" id="task0">
         <span class="taskHead">
             <h3>Task 1</h3>
             <a href="#" alt="close">close</a>
@@ -36,7 +37,6 @@
                 <li>Instr</li>
                 <li>down</li>
             </ul>
-            <!-- <input type="text" name="" placeholder="Provide an instruction" /> -->
             <div class="editor"></div>
             <a href="#" class="del">del</a>
         </div>
@@ -44,7 +44,7 @@
         <div class="test">
             <ul>
                 <li>up</li>
-                <li>Instr</li>
+                <li>Test</li>
                 <li>down</li>
             </ul>
             <div class="testCenter">
@@ -57,7 +57,7 @@
             </div>
             <a href="#" class="del">del</a>
         </div>
-    </div>
+    </div> -->
 </form>
 
 <script nonce="[[nonce]]">
@@ -68,5 +68,6 @@
         });
     });
 </script>
+<script src="../assets/js/assignment.js"></script>
 
 [[i= partials/footer]]

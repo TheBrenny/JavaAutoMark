@@ -56,3 +56,10 @@ function createEditor(selector, type) {
 
     return editor;
 }
+
+function makeEditors() {
+    let editors = $$(".editor");
+    editors.forEach(function (editor) {
+        createEditor(editor);
+    });
+};

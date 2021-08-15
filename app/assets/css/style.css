@@ -290,8 +290,7 @@ body #login_container form label {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-#newassignment div.task .test,
-#newassignment div.task .instr {
+#newassignment div.task .test, #newassignment div.task .instr {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -300,13 +299,12 @@ body #login_container form label {
   border-radius: 10px;
   margin-bottom: 15px;
 }
-#newassignment div.task .test .editor,
-#newassignment div.task .instr .editor {
+#newassignment div.task .test .editor, #newassignment div.task .instr .editor {
   flex-grow: 1;
   align-self: stretch;
+  margin: 10px 0;
 }
-#newassignment div.task .test ul,
-#newassignment div.task .instr ul {
+#newassignment div.task .test ul, #newassignment div.task .instr ul {
   align-self: stretch;
   list-style: none;
   border-top-left-radius: 10px;
@@ -320,8 +318,7 @@ body #login_container form label {
   display: flex;
   flex-direction: column;
 }
-#newassignment div.task .test ul li,
-#newassignment div.task .instr ul li {
+#newassignment div.task .test ul li, #newassignment div.task .instr ul li {
   display: flex;
   margin: 0;
   padding: 0;
@@ -331,16 +328,13 @@ body #login_container form label {
   align-items: center;
   justify-content: center;
 }
-#newassignment div.task .test ul li:first-of-type,
-#newassignment div.task .instr ul li:first-of-type {
+#newassignment div.task .test ul li:first-of-type, #newassignment div.task .instr ul li:first-of-type {
   border-top: 0px;
 }
-#newassignment div.task .test ul li:last-of-type,
-#newassignment div.task .instr ul li:last-of-type {
+#newassignment div.task .test ul li:last-of-type, #newassignment div.task .instr ul li:last-of-type {
   border-bottom: 0px;
 }
-#newassignment div.task .test a,
-#newassignment div.task .instr a {
+#newassignment div.task .test a, #newassignment div.task .instr a {
   height: 35px;
   width: 35px;
   background-color: #fe6448ff;
@@ -348,45 +342,36 @@ body #login_container form label {
   margin: 5px 15px;
   transition: 0.3s ease background-color;
 }
-#newassignment div.task .test a:hover,
-#newassignment div.task .instr a:hover {
+#newassignment div.task .test a:hover, #newassignment div.task .instr a:hover {
   background-color: #f42601ff;
 }
-#newassignment div.task .test .testCenter,
-#newassignment div.task .instr .testCenter {
+#newassignment div.task .test .testCenter, #newassignment div.task .instr .testCenter {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 535px;
   justify-content: space-between;
 }
-#newassignment div.task .test .testCenter .case,
-#newassignment div.task .instr .testCenter .case {
+#newassignment div.task .test .testCenter .case, #newassignment div.task .instr .testCenter .case {
   flex-grow: 2;
 }
-#newassignment div.task .test .testCenter .margin,
-#newassignment div.task .instr .testCenter .margin {
+#newassignment div.task .test .testCenter .margin, #newassignment div.task .instr .testCenter .margin {
   margin: 0 10px;
 }
-#newassignment div.task .test .testCenter .outer,
-#newassignment div.task .instr .testCenter .outer {
+#newassignment div.task .test .testCenter .outer, #newassignment div.task .instr .testCenter .outer {
   width: 250px;
   margin-bottom: 10px;
 }
-#newassignment div.task .test .testCenter .small,
-#newassignment div.task .instr .testCenter .small {
+#newassignment div.task .test .testCenter .small, #newassignment div.task .instr .testCenter .small {
   width: 100px;
 }
-#newassignment div.task .test .testCenter .lower,
-#newassignment div.task .instr .testCenter .lower {
+#newassignment div.task .test .testCenter .lower, #newassignment div.task .instr .testCenter .lower {
   width: 240px;
 }
-#newassignment div.task .test .testCenter .mark,
-#newassignment div.task .instr .testCenter .mark {
+#newassignment div.task .test .testCenter .mark, #newassignment div.task .instr .testCenter .mark {
   width: 50px;
 }
-#newassignment div.task .test input[type=text],
-#newassignment div.task .instr input[type=text] {
+#newassignment div.task .test input[type=text], #newassignment div.task .instr input[type=text] {
   font-size: 1em;
   padding: 5px;
   border-radius: 5px;
@@ -398,5 +383,8 @@ body #login_container form label {
   font-weight: 200;
   letter-spacing: 2px;
   font-style: normal;
+}
+#newassignment div.task .test {
+  height: 80px;
 }
 /*# sourceMappingURL=style.css.map */
