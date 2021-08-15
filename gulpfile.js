@@ -1,11 +1,12 @@
+require("dotenv").config();
 const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
 
-const host = "localhost";
-const port = 80;
+const host = process.env.HOST || "localhost";
+const port = process.env.PORT || 80;
 
 gulp.task("sass", function () {
     return gulp.src("app/assets/scss/**/*.scss")
