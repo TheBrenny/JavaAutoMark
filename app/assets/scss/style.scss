@@ -408,11 +408,14 @@ body {
                 flex-direction: column;
                 
                 li {
+                    display: flex;
                     margin: 0;
                     padding: 0;
                     border-bottom: 1px solid #efefef;
                     border-top: 1px solid #efefef;
                     flex-grow: 1;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
 
@@ -431,19 +434,34 @@ body {
 
             .testCenter {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
                 width: 535px;
+                justify-content: space-between;
                 
-                .testRemarks {
-                    display: inline-flex;
-                    flex-direction: row; 
-                    justify-content: space-between;
-                    margin-top: 10px;
+                .case {
+                    flex-grow: 2;
+                }
 
-                    input {
-                        display: inline;
-                        width: 240px;
-                    }               
+                .margin {
+                    margin: 0 10px;
+                }
+
+                .outer {
+                    width: 250px;
+                    margin-bottom: 10px;
+                }
+
+                .small {
+                    width: 100px;
+                }
+
+                .lower {
+                    width: 240px;
+                }
+
+                .mark {
+                    width: 50px;
                 }
             }
 

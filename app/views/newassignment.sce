@@ -46,11 +46,12 @@
                 <li>down</li>
             </ul>
             <div class="testCenter">
-                <input type="text" name="" placeholder="Provide an instruction" />
-                <div class="testRemarks">
-                    <input type="text" name="" placeholder="Provide pass feedback" />
-                    <input type="text" name="" placeholder="Provide fail feedback" />
-                </div>
+                <input class="outer case" type="text" name="" placeholder="Provide a test case" />
+                <input class="outer margin small" type="text" name="" placeholder="Expected output" />
+                <input class="outer small mark" type="text" name="" placeholder="Marks" />
+                
+                <input class="lower" type="text" name="" placeholder="Provide pass feedback" />
+                <input class="lower" type="text" name="" placeholder="Provide fail feedback" />
             </div>
             <a href="#" class="del">del</a>
         </div>

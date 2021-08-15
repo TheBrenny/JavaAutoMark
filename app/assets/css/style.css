@@ -360,11 +360,14 @@ body #login_container form label {
   flex-direction: column;
 }
 #newassignment div.task .test ul li {
+  display: flex;
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #efefef;
   border-top: 1px solid #efefef;
   flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 #newassignment div.task .test a {
   height: 35px;
@@ -379,18 +382,29 @@ body #login_container form label {
 }
 #newassignment div.task .test .testCenter {
   display: flex;
-  flex-direction: column;
-  width: 535px;
-}
-#newassignment div.task .test .testCenter .testRemarks {
-  display: inline-flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  width: 535px;
   justify-content: space-between;
-  margin-top: 10px;
 }
-#newassignment div.task .test .testCenter .testRemarks input {
-  display: inline;
+#newassignment div.task .test .testCenter .case {
+  flex-grow: 2;
+}
+#newassignment div.task .test .testCenter .margin {
+  margin: 0 10px;
+}
+#newassignment div.task .test .testCenter .outer {
+  width: 250px;
+  margin-bottom: 10px;
+}
+#newassignment div.task .test .testCenter .small {
+  width: 100px;
+}
+#newassignment div.task .test .testCenter .lower {
   width: 240px;
+}
+#newassignment div.task .test .testCenter .mark {
+  width: 50px;
 }
 #newassignment div.task .test input[type=text] {
   font-size: 20px;
