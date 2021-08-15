@@ -6,4 +6,5 @@ Things that we need to think about when creating the install pages and methods:
  - Location of assignment uploads
    - Amazon S3 credentials, OR
    - Google Cloud Storage creds
+   - https://github.com/ItalyPaleAle/SMCloudStore -- Use this to upload files, or write our own custom multi-service manager thing.
  - uuhhm... and more?
