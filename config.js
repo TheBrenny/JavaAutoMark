@@ -31,6 +31,7 @@ module.exports.helmet = {
                 module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],
+            workerSrc: ["'self'", "blob:"],
             upgradeInsecureRequests: null
         }
     }

@@ -1,4 +1,5 @@
 [[i= partials/meta]]
+[[i= partials/editors]]
 [[i= partials/header]]
 
 <form id="newassignment" method="POST" action="newassignment">
@@ -35,7 +36,8 @@
                 <li>Instr</li>
                 <li>down</li>
             </ul>
-            <input type="text" name="" placeholder="Provide an instruction" />
+            <!-- <input type="text" name="" placeholder="Provide an instruction" /> -->
+            <div class="editor"></div>
             <a href="#" class="del">del</a>
         </div>
 
@@ -58,5 +60,13 @@
     </div>
 </form>
 
-[[i= partials/editors]]
+<script nonce="[[nonce]]">
+    load(function () {
+        let editors = $$(".editor");
+        editors.forEach(function (editor) {
+            createEditor(editor);
+        });
+    });
+</script>
+
 [[i= partials/footer]]

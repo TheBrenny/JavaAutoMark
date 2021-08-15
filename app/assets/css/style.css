@@ -300,6 +300,11 @@ body #login_container form label {
   border-radius: 10px;
   margin-bottom: 15px;
 }
+#newassignment div.task .test .editor,
+#newassignment div.task .instr .editor {
+  flex-grow: 1;
+  align-self: stretch;
+}
 #newassignment div.task .test ul,
 #newassignment div.task .instr ul {
   align-self: stretch;
