@@ -10,9 +10,10 @@ function createEditor(selector, type) {
 
     const width = selector.clientWidth;
     const minHeight = selector.clientHeight;
-
+    const value = selector.innerText;
+    selector.innerText = "";
     let editor = monaco.editor.create(selector, {
-        value: `System.out.println("Enter valid code here");`,
+        value,
         language: 'java',
         minimap: {
             enabled: false
@@ -39,7 +40,7 @@ function createEditor(selector, type) {
     let ignoreEvent = false;
     const updateHeight = () => {
         const contentHeight = Math.min(1000, Math.max(minHeight, editor.getContentHeight()));
-        selector.style.width = `${width}px`;
+        selector.style.width = `${selector.clientWidth}px`;
         selector.style.height = `${contentHeight}px`;
         try {
             ignoreEvent = true;
@@ -58,8 +59,9 @@ function createEditor(selector, type) {
 }
 
 function makeEditors() {
-    let editors = $$(".editor");
+    let editors = $$(".editor:not(.initialised)");
     editors.forEach(function (editor) {
         createEditor(editor);
+        editor.classList.toggle("initialised");
     });
-};
+}

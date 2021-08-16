@@ -7,12 +7,10 @@
 
     <!--THIS DIV HANDLES THE UNIVERSAL DETAILS OF THE ASSIGNMENT-->
     <div id="details">
-
         <span>
             <label for="assName">Assignment title:</label>
             <input type="text" name="assName" />
         </span>
-
         <span>
             <label for="class">Choose class:</label>
             <select id="class" name="class">
@@ -23,6 +21,8 @@
             </select>
         </span>
     </div>
+
+    [[c= components/task || taskID="1" ]]
 
     <!--THIS TYPE OF DIV WILL HANDLE TASKS-->
     <!-- <div class="task" id="task0">
@@ -61,13 +61,12 @@
 </form>
 
 <script nonce="[[nonce]]">
-    load(function () {
-        let editors = $$(".editor");
-        editors.forEach(function (editor) {
-            createEditor(editor);
-        });
-    });
+    
 </script>
+
+[[l= components/task]]
+[[l= components/test]]
+[[l= components/instr]]
 <script src="../assets/js/assignment.js"></script>
 
 [[i= partials/footer]]
