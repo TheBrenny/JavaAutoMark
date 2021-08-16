@@ -22,7 +22,7 @@
         </span>
     </div>
 
-    [[c= components/task || taskID="1" ]]
+    <!-- [[c= components/task || taskID="1" ]] -->
 
     <!--THIS TYPE OF DIV WILL HANDLE TASKS-->
     <!-- <div class="task" id="task0">

@@ -42,7 +42,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
-    "scetch": "^1.4.0"
+    "scetch": "^1.4.1"
   },
   "devDependencies": {
     "browser-sync": "^2.27.5",

@@ -1,3 +1,23 @@
+//This array will store the tasks and their components
+let taskArray = [["Assignment"]];
+
+//Objects that will be used in array
+let instr = {
+    taskID: null,
+    order: null,
+    code: `// Add instruction code here`
+}
+
+let test = {
+    taskID: null,
+    order: null,
+    code: `// Add test code here`,
+    expected: ``,
+    description: ``,
+    marks: 1,
+    testID: null
+}
+
 // The following gets the sorted order of instructions and tests based on the order css style:
 function sortTask(task) {
     return Array.from(task.querySelectorAll(".test, .instr")).sort((a, b) => a.dataset.order - b.dataset.order);
@@ -16,12 +36,15 @@ function addTask() {
     });
     makeEditors();
 
-    // addInstruction(task); // this is commented out because the task scetch loads the instruction code
+    taskArray.push([]);
+
+    addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
 
     return task;
 }
 
 function addInstruction(task) {
+    taskArray[task].push(instr);
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
 
     let order = Math.max(Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
@@ -36,6 +59,7 @@ function addInstruction(task) {
 }
 
 function addTest(task) {
+    taskArray[task].push(test);
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
 
     let order = Math.max(Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
@@ -56,5 +80,6 @@ function addTest(task) {
 
 // === Edit Tasks and stuff ===
 load(function () {
+    addTask();
     makeEditors();
 });
