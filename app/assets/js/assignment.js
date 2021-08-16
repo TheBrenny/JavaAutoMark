@@ -16,7 +16,7 @@ function addTask() {
     });
     makeEditors();
 
-    // addInstruction(task);
+    // addInstruction(task); // this is commented out because the task scetch loads the instruction code
 
     return task;
 }
