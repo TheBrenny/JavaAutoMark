@@ -1,6 +1,6 @@
 // The following gets the sorted order of instructions and tests based on the order css style:
-function getSortedTasks() {
-    return Array.from($$(".test, .instr")).sort((a, b) => a.dataset.order - b.dataset.order).map(e => e.innerText);
+function sortTask(task) {
+    return Array.from(task.querySelectorAll(".test, .instr")).sort((a, b) => a.dataset.order - b.dataset.order);
 }
 
 // === New Tasks and stuff ===
