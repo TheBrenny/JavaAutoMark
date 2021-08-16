@@ -31,6 +31,9 @@
   },
   "homepage": "https://github.com/TheBrenny/JavaAutoMark#readme",
   "dependencies": {
+    "@smcloudstore/aws-s3": "^0.2.1",
+    "@smcloudstore/azure-storage": "^0.2.0",
+    "@smcloudstore/google-cloud-storage": "^0.2.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -42,7 +45,9 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
-    "scetch": "^1.4.0"
+    "scetch": "^1.4.0",
+    "smcloudstore": "^0.2.1",
+    "smcloudstore-localstorage": "^0.1.0"
   },
   "devDependencies": {
     "browser-sync": "^2.27.5",
