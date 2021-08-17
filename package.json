@@ -46,7 +46,7 @@
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
     "scetch": "^1.4.0",
-    "smcloudstore": "^0.2.1",
+    "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/3b27a9883a9bb31403c7bfd46bc5bf46d499926b",
     "smcloudstore-localstorage": "^0.1.0"
   },
   "devDependencies": {
