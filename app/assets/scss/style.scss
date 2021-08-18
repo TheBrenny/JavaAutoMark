@@ -290,6 +290,7 @@ body {
 #newassignment {
     width: 700px;
     background-color: aqua;
+    @include content-font();
 
     div#details {
         display: flex;
@@ -405,17 +406,24 @@ body {
                 }
             }
 
-            a {
+            .del {
                 height: 35px;
                 width: 35px;
                 background-color: $tomato;
                 border-radius: 5px;
                 margin: 5px 15px;
-                transition: 0.3s ease background-color;
+                transition: 0.3s ease background-color, 0.3s ease box-shadow;
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 5px $jet;
             }
 
-            a:hover {
+            .del:hover {
                 background-color: $highlighted-tomato;
+            }
+
+            .del:active {
+                box-shadow: 0 0 5px $jet;
             }
 
             .testCenter {
@@ -435,23 +443,22 @@ body {
                 }
 
                 .testDeets {
-                    display: inline-flex;
-                    flex-grow: 0;
-                    align-self: stretch;
-                    align-items: flex-start;
-                    justify-content: left;
+                    display: flex;
 
                     .small {
-                        flex-grow: 2;
                         margin-right: 15px;
                     }
 
                     .num {
-                        flex: 1;
+                        max-width: 60px;
+                    }
+
+                    .out {
+                        max-width: 120px;
                     }
 
                     .desc {
-                        flex-grow: 3;
+                        flex-grow: 1;
                     }
                 }
             }
@@ -485,9 +492,15 @@ body {
                 font-weight: bold;
                 letter-spacing: 1px;
                 font-size: 15px;
-                @include header-font();
+                @include content-font();
                 transition: .5s ease background-color, 0.2s ease color;
                 cursor: pointer;
+            }
+
+            input[type="button"]:hover {
+                background-color: $highlighted-pistachio;
+                color: white;
+                font-weight: 400;
             }
         }
     }

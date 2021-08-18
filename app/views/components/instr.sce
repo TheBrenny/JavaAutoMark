@@ -7,5 +7,5 @@
     <div class="editor">
         [[code]]
     </div>
-    <a href="#" class="del">del</a>
+    <input type="button" name="Delete" class="del" />
 </div>
