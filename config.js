@@ -46,3 +46,10 @@ module.exports.serverInfo = {
     host: process.env.HOST || "localhost",
     port: process.env.PORT || 80,
 };
+
+module.exports.storage = {
+    provider: process.env.STORAGE || "localstorage",
+    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : {
+        path: "storage/data"
+    }
+};
