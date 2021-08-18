@@ -126,4 +126,6 @@ function deleteItem(task, order) {
 // === Edit Tasks and stuff ===
 load(function () {
     addTask();
+
+    $("#addTask").addEventListener("click", addTask.bind(this));
 });

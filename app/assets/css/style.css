@@ -357,13 +357,18 @@ body #login_container form label {
   background-color: #fe6448ff;
   border-radius: 5px;
   margin: 5px 15px;
-  transition: 0.3s ease background-color, 0.3s ease box-shadow;
+  transition: 0.3s ease background-color, 0.3s ease box-shadow, 0.3s ease background-image;
   cursor: pointer;
   border: none;
   box-shadow: 0 2px 5px #34312dff;
+  background-image: url("../img/cross_white.svg");
+  background-size: 60% 60%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #newassignment div.task .test .del:hover, #newassignment div.task .instr .del:hover {
   background-color: #f42601ff;
+  background-image: url("../img/cross_grey.svg");
 }
 #newassignment div.task .test .del:active, #newassignment div.task .instr .del:active {
   box-shadow: 0 0 5px #34312dff;

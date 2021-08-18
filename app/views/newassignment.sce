@@ -22,6 +22,11 @@
         </span>
     </div>
     
+    <div id="assignmentFooter">
+        <input type="button" value="Add task" id="addTask" />
+
+        <input type="button" value="Submit assignment" id="subAssignment"/>
+    </div>
 </form>
 
 <script nonce="[[nonce]]">
