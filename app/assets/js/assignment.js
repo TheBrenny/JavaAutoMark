@@ -1,14 +1,21 @@
 //This array will store the tasks and their components
 let taskArray = [["Assignment"]];
 
+function moveInstr(task, instr, dir) {
+    let stolen = taskArray[task].splice(instr, 1)[0];
+    taskArray[task].splice(instr + dir, 0, stolen);
+}
+
+
+
 //Objects that will be used in array
-let instr = {
+let instrBox = {
     taskID: null,
     order: null,
     code: `// Add instruction code here`
 }
 
-let test = {
+let testBox = {
     taskID: null,
     order: null,
     code: `// Add test code here`,
@@ -39,18 +46,43 @@ function addTask() {
     taskArray.push([]);
 
     addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
+    // Add handlers to the add buttons
+    task.querySelectorAll(".addInstruction").forEach(btn => {
+        btn.addEventListener("click", () => addInstruction(task));
+    });
+    task.querySelectorAll(".addTest").forEach(btn => {
+        btn.addEventListener("click", () => addTest(task));
+    });
 
     return task;
 }
 
 function addInstruction(task) {
-    taskArray[task].push(instr);
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
+    taskArray[task.dataset.taskid].push(Object.assign({}, instrBox));
 
-    let order = Math.max(Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
+
+    let order = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, {
         order,
         code: `// Add instruction code here`
+    });
+
+    task.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            let theDiv = e.target.parentElement.parentElement;
+            let dir = e.target.classList.contains("moveUp") ? -1 : 1;
+
+            let o = parseInt(theDiv.dataset.order);
+            if (o > 1) {
+                moveInstr(task.dataset.taskid, o - 1, dir);
+                let swapper = task.querySelector(`[data-order="${o + dir}"]`);
+                theDiv.style.order = o + dir;
+                theDiv.dataset.order = o + dir;
+                swapper.style.order = o;
+                swapper.dataset.order = o;
+            }
+        });
     });
 
     createEditor(instruction.querySelector(".editor"));
@@ -59,8 +91,8 @@ function addInstruction(task) {
 }
 
 function addTest(task) {
-    taskArray[task].push(test);
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
+    taskArray[task.dataset.taskid].push(Object.assign({}, testBox));
 
     let order = Math.max(Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
     let testID = Math.max(Array.from(task.querySelectorAll(".test")).map(e => e.dataset.testid)) + 1;
@@ -81,5 +113,5 @@ function addTest(task) {
 // === Edit Tasks and stuff ===
 load(function () {
     addTask();
-    makeEditors();
+    //makeEditors();
 });
