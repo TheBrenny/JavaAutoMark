@@ -4,10 +4,6 @@ function sortTask(task) {
 }
 
 function moveInstrAndTest(task, event) {
-    console.log(event);
-    event.preventDefault();
-    event.stopPropagation();
-    event.cancelBubble = true;
 
     let theDiv = event.target.parentElement.parentElement;
     let dir = event.target.classList.contains("moveUp") ? -1 : 1;
@@ -44,7 +40,7 @@ function addTask() {
     });
     makeEditors();
 
-    addTest(taskNum); // this is commented out because the task scetch loads the instruction code
+    addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
     // Add handlers to the add buttons
     task.querySelectorAll(".addInstruction").forEach(btn => {
         btn.addEventListener("click", () => addInstruction(task));
@@ -68,6 +64,10 @@ function addInstruction(task) {
 
     instruction.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
         btn.addEventListener("click", moveInstrAndTest.bind(this, task));
+    });
+
+    instruction.querySelectorAll(".del").forEach(btn => {
+        btn.addEventListener("click", deleteItem.bind(this, task, order));
     });
 
     createEditor(instruction.querySelector(".editor"));
@@ -94,13 +94,36 @@ function addTest(task) {
         btn.addEventListener("click", moveInstrAndTest.bind(this, task));
     });
 
+    test.querySelectorAll(".del").forEach(btn => {
+        btn.addEventListener("click", deleteItem.bind(this, task, order));
+    });
+
     createEditor(test.querySelector(".editor"));
 
     return test;
 }
 
+function deleteItem(task, order) {
+    if (["number", "string"].includes(typeof task)) task = $("#task" + task);
+    let maxItem = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order)));
+    let toDelete = task.querySelector(`[data-order="${order}"]`);
+    
+    toDelete.remove();
+
+    for(var i = order + 1; i <= maxItem; i++) {
+        let toMove = task.querySelector(`[data-order="${i}"]`);
+        
+        toMove.dataset.order--;
+        toMove.style.order = toMove.dataset.order;
+
+        if(toDelete.classList.contains("test") && toMove.classList.contains("test") ) {
+            toMove.dataset.testid--;
+            toMove.querySelector(".testID").innerHTML = "Test " + toMove.dataset.testid;
+        }
+    }
+}
+
 // === Edit Tasks and stuff ===
 load(function () {
     addTask();
-    //makeEditors();
 });

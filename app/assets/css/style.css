@@ -246,6 +246,9 @@ body #login_container form label {
 #newassignment {
   width: 700px;
   background-color: aqua;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 #newassignment div#details {
   display: flex;
@@ -348,16 +351,22 @@ body #login_container form label {
   align-items: flex-end;
   padding-bottom: 10px;
 }
-#newassignment div.task .test a, #newassignment div.task .instr a {
+#newassignment div.task .test .del, #newassignment div.task .instr .del {
   height: 35px;
   width: 35px;
   background-color: #fe6448ff;
   border-radius: 5px;
   margin: 5px 15px;
-  transition: 0.3s ease background-color;
+  transition: 0.3s ease background-color, 0.3s ease box-shadow;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 5px #34312dff;
 }
-#newassignment div.task .test a:hover, #newassignment div.task .instr a:hover {
+#newassignment div.task .test .del:hover, #newassignment div.task .instr .del:hover {
   background-color: #f42601ff;
+}
+#newassignment div.task .test .del:active, #newassignment div.task .instr .del:active {
+  box-shadow: 0 0 5px #34312dff;
 }
 #newassignment div.task .test .testCenter, #newassignment div.task .instr .testCenter {
   display: flex;
@@ -374,21 +383,19 @@ body #login_container form label {
   height: 60px;
 }
 #newassignment div.task .test .testCenter .testDeets, #newassignment div.task .instr .testCenter .testDeets {
-  display: inline-flex;
-  flex-grow: 0;
-  align-self: stretch;
-  align-items: flex-start;
-  justify-content: left;
+  display: flex;
 }
 #newassignment div.task .test .testCenter .testDeets .small, #newassignment div.task .instr .testCenter .testDeets .small {
-  flex-grow: 2;
   margin-right: 15px;
 }
 #newassignment div.task .test .testCenter .testDeets .num, #newassignment div.task .instr .testCenter .testDeets .num {
-  flex: 1;
+  max-width: 60px;
+}
+#newassignment div.task .test .testCenter .testDeets .out, #newassignment div.task .instr .testCenter .testDeets .out {
+  max-width: 120px;
 }
 #newassignment div.task .test .testCenter .testDeets .desc, #newassignment div.task .instr .testCenter .testDeets .desc {
-  flex-grow: 3;
+  flex-grow: 1;
 }
 #newassignment div.task .test input[type=text], #newassignment div.task .test input[type=number], #newassignment div.task .instr input[type=text], #newassignment div.task .instr input[type=number] {
   padding: 5px;
@@ -419,10 +426,15 @@ body #login_container form label {
   font-weight: bold;
   letter-spacing: 1px;
   font-size: 15px;
-  font-family: roboto-slab, serif;
+  font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
   transition: 0.5s ease background-color, 0.2s ease color;
   cursor: pointer;
+}
+#newassignment div.task #taskFoot input[type=button]:hover {
+  background-color: #5aa739ff;
+  color: white;
+  font-weight: 400;
 }
 /*# sourceMappingURL=style.css.map */
