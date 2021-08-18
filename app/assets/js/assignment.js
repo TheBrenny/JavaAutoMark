@@ -29,7 +29,9 @@ function moveInstrAndTest(task, event) {
 
 // === New Tasks and stuff ===
 function addTask() {
-    let lastTask = $(".task:last-of-type"); // $ is referenced in app/assets/js/script.js which is included in the meta partial
+    let tasks = Array.from($("#newassignment").querySelectorAll(".task"));
+    let lastTask = (tasks.length > 0) ? tasks[tasks.length - 1] : null;
+
     let taskNum = 1;
     if (lastTask === null)
         lastTask = $("#newassignment>#details");

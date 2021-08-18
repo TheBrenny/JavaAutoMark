@@ -5,6 +5,8 @@ $pistachio: #8acd6dff;
 $highlighted-pistachio: #5aa739ff;
 $tomato: #fe6448ff;
 $highlighted-tomato: #f42601ff;
+$button-blue: #4b7ce6ff;
+$highlighted-button-blue: #3559a7ff;
 $gray-web: #7e7f83ff;
 $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
@@ -289,8 +291,8 @@ body {
 
 #newassignment {
     width: 700px;
-    background-color: aqua;
     @include content-font();
+    margin-bottom: 50px;
 
     div#details {
         display: flex;
@@ -354,6 +356,7 @@ body {
                 flex-grow: 1;
                 align-self: stretch;
                 margin: 10px 0;
+                min-height: 50px;
             }
 
             ul {
@@ -363,7 +366,7 @@ body {
                 border-bottom-left-radius: 10px;
                 padding: 0;
                 width: 50px;
-                background-color: #4b7ce6;
+                background-color: $button-blue;
                 color: white;
                 text-align: center;
                 margin-right: 10px;
@@ -379,6 +382,8 @@ body {
                     flex-grow: 1;
                     align-items: center;
                     justify-content: center;
+                    transition: 0.5s ease background-color;
+                    cursor: pointer;
 
                     &:first-of-type {
                         border-top: 0px;
@@ -397,15 +402,34 @@ body {
                 .moveUp {
                     align-items: flex-start;
                     padding-top: 10px;
+                    border-top-left-radius: 10px;
+                    background-image: url('../img/arrow_up_grey.svg');
+                    background-size: 60% 60%;
+                    background-repeat: no-repeat;
+                    background-position: center;
                 }
                 
-    
+                .moveUp:hover {
+                    background-image: url('../img/arrow_up_white.svg');
+                    background-color: $highlighted-button-blue;
+                }
+                
                 .moveDown {
+                    border-bottom-left-radius: 10px;
                     align-items: flex-end;
                     padding-bottom: 10px;
+                    background-image: url('../img/arrow_down_grey.svg');
+                    background-size: 60% 60%;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+
+                .moveDown:hover {
+                    background-image: url('../img/arrow_down_white.svg');
+                    background-color: $highlighted-button-blue;
                 }
             }
-
+            
             .del {
                 height: 35px;
                 width: 35px;
@@ -507,6 +531,37 @@ body {
                 color: white;
                 font-weight: 400;
             }
+        }
+    }
+
+    #assignmentFooter {
+        display: flex;
+        justify-content: space-around;
+
+        input[type="button"] {
+            margin: 20px 0 10px 0;
+            padding: 15px 20px;
+            width: 250px;
+            background-color: $pistachio;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 15px;
+            @include content-font();
+            transition: .5s ease background-color, 0.2s ease color;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 5px 10px $gray-web;
+        }
+
+        input[type="button"]:hover {
+            background-color: $highlighted-pistachio;
+            color: white;
+            font-weight: 400;
+            box-shadow: 0 0px 5px $gray-web;
         }
     }
 }

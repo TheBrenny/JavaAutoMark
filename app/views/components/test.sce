@@ -1,8 +1,8 @@
 <div class="test" data-order="[[order]]" data-testid="[[testID]]">
     <ul>
-        <li class="moveUp">up</li>
+        <li class="moveUp"></li>
         <li class="testID">Test [[testID]]</li>
-        <li class="moveDown">down</li>
+        <li class="moveDown"></li>
     </ul>
     <div class="testCenter">
         <div class="editor">[[code]]</div>

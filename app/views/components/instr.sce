@@ -1,8 +1,8 @@
 <div class="instr" data-order="[[order]]">
     <ul>
-        <li class="moveUp">up</li>
+        <li class="moveUp"></li>
         <li>Instr</li>
-        <li class="moveDown">down</li>
+        <li class="moveDown"></li>
     </ul>
     <div class="editor">
         [[code]]
