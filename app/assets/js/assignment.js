@@ -1,33 +1,34 @@
-//This array will store the tasks and their components
-let taskArray = [["Assignment"]];
-
-function moveInstr(task, instr, dir) {
-    let stolen = taskArray[task].splice(instr, 1)[0];
-    taskArray[task].splice(instr + dir, 0, stolen);
-}
-
-
-
-//Objects that will be used in array
-let instrBox = {
-    taskID: null,
-    order: null,
-    code: `// Add instruction code here`
-}
-
-let testBox = {
-    taskID: null,
-    order: null,
-    code: `// Add test code here`,
-    expected: ``,
-    description: ``,
-    marks: 1,
-    testID: null
-}
-
 // The following gets the sorted order of instructions and tests based on the order css style:
 function sortTask(task) {
     return Array.from(task.querySelectorAll(".test, .instr")).sort((a, b) => a.dataset.order - b.dataset.order);
+}
+
+function moveInstrAndTest(task, event) {
+    console.log(event);
+    event.preventDefault();
+    event.stopPropagation();
+    event.cancelBubble = true;
+
+    let theDiv = event.target.parentElement.parentElement;
+    let dir = event.target.classList.contains("moveUp") ? -1 : 1;
+    let maxInstruction = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order)));
+    
+    let o = parseInt(theDiv.dataset.order);
+    if (o + dir > 0 && o + dir <= maxInstruction) {
+        let swapper = task.querySelector(`[data-order="${o + dir}"]`);
+        theDiv.style.order = o + dir;
+        theDiv.dataset.order = o + dir;
+        swapper.style.order = o;
+        swapper.dataset.order = o;
+
+        if(theDiv.classList.contains("test") && swapper.classList.contains("test") ) {
+            let tmp= theDiv.dataset.testid;
+            theDiv.querySelector(".testID").innerHTML = "Test" + swapper.dataset.testid;
+            theDiv.dataset.testid = swapper.dataset.testid;
+            swapper.querySelector(".testID").innerHTML = "Test" + tmp;
+            swapper.dataset.testid = tmp;
+        }
+    }
 }
 
 // === New Tasks and stuff ===
@@ -43,9 +44,7 @@ function addTask() {
     });
     makeEditors();
 
-    taskArray.push([]);
-
-    addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
+    addTest(taskNum); // this is commented out because the task scetch loads the instruction code
     // Add handlers to the add buttons
     task.querySelectorAll(".addInstruction").forEach(btn => {
         btn.addEventListener("click", () => addInstruction(task));
@@ -59,30 +58,16 @@ function addTask() {
 
 function addInstruction(task) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
-    taskArray[task.dataset.taskid].push(Object.assign({}, instrBox));
-
 
     let order = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, {
         order,
         code: `// Add instruction code here`
     });
+    instruction.style.order = order;
 
-    task.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            let theDiv = e.target.parentElement.parentElement;
-            let dir = e.target.classList.contains("moveUp") ? -1 : 1;
-
-            let o = parseInt(theDiv.dataset.order);
-            if (o > 1) {
-                moveInstr(task.dataset.taskid, o - 1, dir);
-                let swapper = task.querySelector(`[data-order="${o + dir}"]`);
-                theDiv.style.order = o + dir;
-                theDiv.dataset.order = o + dir;
-                swapper.style.order = o;
-                swapper.dataset.order = o;
-            }
-        });
+    instruction.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
+        btn.addEventListener("click", moveInstrAndTest.bind(this, task));
     });
 
     createEditor(instruction.querySelector(".editor"));
@@ -92,10 +77,9 @@ function addInstruction(task) {
 
 function addTest(task) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
-    taskArray[task.dataset.taskid].push(Object.assign({}, testBox));
 
-    let order = Math.max(Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
-    let testID = Math.max(Array.from(task.querySelectorAll(".test")).map(e => e.dataset.testid)) + 1;
+    let order = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
+    let testID = Math.max(0, ...Array.from(task.querySelectorAll(".test")).map(e => e.dataset.testid)) + 1;
     let test = scetchInsert(task, "beforeEnd", scetch.test, {
         order,
         code: `// Add test code here`,
@@ -103,6 +87,11 @@ function addTest(task) {
         description: ``,
         marks: 1,
         testID
+    });
+    test.style.order = order;
+
+    test.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
+        btn.addEventListener("click", moveInstrAndTest.bind(this, task));
     });
 
     createEditor(test.querySelector(".editor"));

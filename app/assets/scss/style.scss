@@ -347,6 +347,7 @@ body {
             background-color: $almond;
             border-radius: 10px;
             margin-bottom: 15px;
+            
 
             .editor {
                 flex-grow: 1;
@@ -386,6 +387,22 @@ body {
                         border-bottom: 0px;
                     }
                 }
+
+                .testID {
+                    flex-grow: 0;
+                    padding: 10px 0;
+                }
+    
+                .moveUp {
+                    align-items: flex-start;
+                    padding-top: 10px;
+                }
+                
+    
+                .moveDown {
+                    align-items: flex-end;
+                    padding-bottom: 10px;
+                }
             }
 
             a {
@@ -403,52 +420,75 @@ body {
 
             .testCenter {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 flex-wrap: wrap;
-                width: 535px;
                 justify-content: space-between;
-
+                flex-grow: 2;
+                margin-bottom: 15px;
+                
                 .case {
                     flex-grow: 2;
                 }
 
-                .margin {
-                    margin: 0 10px;
+                .editor {
+                    height: 60px;
                 }
 
-                .outer {
-                    width: 250px;
-                    margin-bottom: 10px;
-                }
+                .testDeets {
+                    display: inline-flex;
+                    flex-grow: 0;
+                    align-self: stretch;
+                    align-items: flex-start;
+                    justify-content: left;
 
-                .small {
-                    width: 100px;
-                }
+                    .small {
+                        flex-grow: 2;
+                        margin-right: 15px;
+                    }
 
-                .lower {
-                    width: 240px;
-                }
+                    .num {
+                        flex: 1;
+                    }
 
-                .mark {
-                    width: 50px;
+                    .desc {
+                        flex-grow: 3;
+                    }
                 }
             }
 
-            input[type="text"] {
-                font-size: 1em;
+            input[type="text"], input[type="number"] {
                 padding: 5px;
                 border-radius: 5px;
                 border: 1px solid $gray-web;
                 border-color: #8f8f8f;
                 @include content-font();
                 font-weight: 200;
-                letter-spacing: 2px;
+                letter-spacing: 1px;
                 font-style: normal;
+                width: auto;
             }
         }
 
-        .test {
-            height: 80px;
+        #taskFoot {
+            order: 9999999999;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+
+            input[type="button"] {
+                margin: 20px 0 10px 0;
+                padding: 10px 20px;
+                width: 180px;
+                background-color: $pistachio;
+                border: none;
+                border-radius: 5px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                font-size: 15px;
+                @include header-font();
+                transition: .5s ease background-color, 0.2s ease color;
+                cursor: pointer;
+            }
         }
     }
 }
