@@ -3,5 +3,6 @@
     "files.associations": {
         "*.sce": "html"
     },
-    "git.rebaseWhenSync": true
+    "git.rebaseWhenSync": true,
+	"debug.onTaskErrors": "debugAnyway"
 }
