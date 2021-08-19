@@ -13,7 +13,7 @@ module.exports.getProvider = (provider) => module.exports[provider]();
 
 module.exports.createOptions = function createOptions(provider, opts) {
     if (provider == "aws") {
-        return module.exports.createOptions.awsS3(opts.accessID, opts.secret);
+        return module.exports.createOptions.aws(opts.accessID, opts.secret);
     } else if (provider == "azure") {
         return module.exports.createOptions.azure(opts.accessID, opts.secret);
     } else if (provider == "gcs") {
@@ -24,7 +24,7 @@ module.exports.createOptions = function createOptions(provider, opts) {
         throw new Error("Unsupported provider: " + provider);
     }
 };
-module.exports.createOptions.awsS3 = function (accessKeyId, secretAccessKey) {
+module.exports.createOptions.aws = function (accessKeyId, secretAccessKey) {
     return {
         accessKeyId,
         secretAccessKey
