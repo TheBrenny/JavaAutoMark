@@ -40,6 +40,7 @@ app.engine("sce", scetch.engine);
 app.set("view engine", "sce");
 
 app.use("/assets", express.static(path.join(appPath, "assets")));
+app.use(require("./app/routes/publicUrls"));
 app.use(require("./app/routes/public"));
 app.use(require("./app/routes/account"));
 app.use(require("./app/routes/errors"));

@@ -4,7 +4,7 @@ const SMCloudStore = require('smcloudstore');
 const Database = require('../db/database');
 const db = require("../db/db");
 
-const localStorageTableName = "public_urls";
+const localStorageTableName = Database.publicUrls.tableName;
 
 const storageProviders = {
     "aws": {
@@ -32,14 +32,13 @@ const storageProviders = {
 // Signing function
 async function localStorageSigningFunction(method, path, ttl) {
     let token;
-    let curUrl = await Database.PublicUrls.get(method, path);
-    if (curUrl !== null) {
-        token = curUrl.token;
-        await Database.PublicUrls.update(method, path, token, Date.now() + (ttl * 1000));
-    } else {
-        token = storage.client.generateRandomUid();
-        await Database.PublicUrls.put(method, path, token, Date.now() + (ttl * 1000));
+    let curUrl = await Database.publicUrls.getUrl(method, path);
+    if (curUrl != undefined) {
+        if (curUrl.expires > Date.now()) token = curUrl.token;
+        await Database.publicUrls.removeUrl(method, path);
     }
+    token = token || storage.client.generateRandomUid();
+    await Database.publicUrls.addUrl(method, path, token, Date.now() + (ttl * 1000));
     return token;
 }
 
