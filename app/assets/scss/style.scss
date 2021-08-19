@@ -11,6 +11,12 @@ $gray-web: #7e7f83ff;
 $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
 
+@function ease($property) {
+    $transition: "0.3s ease" + $property;
+
+    @return $transition;
+}
+
 @mixin content-font {
     font-family: roboto, sans-serif;
     font-weight: 400;
@@ -383,7 +389,6 @@ body {
                     align-items: center;
                     justify-content: center;
                     transition: 0.5s ease background-color;
-                    cursor: pointer;
 
                     &:first-of-type {
                         border-top: 0px;
@@ -407,6 +412,7 @@ body {
                     background-size: 60% 60%;
                     background-repeat: no-repeat;
                     background-position: center;
+                    cursor: pointer;
                 }
                 
                 .moveUp:hover {
@@ -418,15 +424,16 @@ body {
                     border-bottom-left-radius: 10px;
                     align-items: flex-end;
                     padding-bottom: 10px;
-                    background-image: url('../img/arrow_down_grey.svg');
-                    background-size: 60% 60%;
-                    background-repeat: no-repeat;
-                    background-position: center;
+                    transition: 0.3s ease ;
+                    svg {
+                        width: 20px;
+                    }
                 }
 
                 .moveDown:hover {
-                    background-image: url('../img/arrow_down_white.svg');
-                    background-color: $highlighted-button-blue;
+                    .cls-1 {
+                        fill: #fff;
+                    }
                 }
             }
             
@@ -515,7 +522,7 @@ body {
                 margin: 20px 0 10px 0;
                 padding: 10px 20px;
                 width: 180px;
-                background-color: $pistachio;
+                background-color: #c4c4c4;
                 border: none;
                 border-radius: 5px;
                 font-weight: bold;
@@ -527,7 +534,7 @@ body {
             }
 
             input[type="button"]:hover {
-                background-color: $highlighted-pistachio;
+                background-color: #888890;
                 color: white;
                 font-weight: 400;
             }
@@ -549,11 +556,10 @@ body {
             letter-spacing: 1px;
             font-size: 15px;
             @include content-font();
-            transition: .5s ease background-color, 0.2s ease color;
+            transition: .5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
             cursor: pointer;
             text-transform: uppercase;
             font-size: 1em;
-            font-weight: bold;
             box-shadow: 0 5px 10px $gray-web;
         }
 
@@ -561,6 +567,12 @@ body {
             background-color: $highlighted-pistachio;
             color: white;
             font-weight: 400;
+            letter-spacing: 1.5px;
+            text-align: center;
+            box-shadow: 0 5px 5px $gray-web;
+        }
+
+        input[type="button"]:active {
             box-shadow: 0 0px 5px $gray-web;
         }
     }

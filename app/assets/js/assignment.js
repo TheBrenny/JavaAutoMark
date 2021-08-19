@@ -40,7 +40,6 @@ function addTask() {
     let task = scetchInsert(lastTask, "afterEnd", scetch.task, {
         taskID: taskNum
     });
-    makeEditors();
 
     addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
     // Add handlers to the add buttons
@@ -65,11 +64,11 @@ function addInstruction(task) {
     instruction.style.order = order;
 
     instruction.querySelectorAll(".moveUp, .moveDown").forEach(btn => {
-        btn.addEventListener("click", moveInstrAndTest.bind(this, task));
+        btn.addEventListener("click", (e) => moveInstrAndTest(task, e));
     });
 
     instruction.querySelectorAll(".del").forEach(btn => {
-        btn.addEventListener("click", deleteItem.bind(this, task, order));
+        btn.addEventListener("click", (e) => deleteItem(task, e.target.parentElement.dataset.order));
     });
 
     createEditor(instruction.querySelector(".editor"));
