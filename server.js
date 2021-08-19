@@ -12,7 +12,7 @@ const nonce = require("nonce-express");
 const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
-const storage = require("./storage/storage")(config.storage.provider, config.storage.options);
+const storage = require("./storage/storage");
 
 // Make the app
 let app = express();
