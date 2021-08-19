@@ -5,7 +5,7 @@
     <ul id="menu">
         <a href="/user"><li>[[user.fname]]</li></a><span></span><span></span>
         <a href="/newassignment"><li>New Assignment</li></a><span></span>
-        <a href="/create"><li>New teacher</li></a><span></span>
+        <a href="/admin"><li>Admin</li></a><span></span>
         <a href="/logout"><li>Log out</li></a>
     </ul>
 </div>

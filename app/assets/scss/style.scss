@@ -584,3 +584,38 @@ body {
         }
     }
 }
+
+#adminContainer {
+    display: flex;
+
+    .column {
+        // margin: 50px;
+
+        .tile {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-transform: uppercase;
+            text-align: center;
+            background-color: $cultured;
+            box-shadow: 5px 5px 10px $gray-web;
+            border-radius: 10px;
+            margin: 50px;
+            padding: 25px;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    }
+
+    .separator {
+        width: 1px;
+        background-color: $gray-web;
+        margin: 25px 0;
+    }
+}

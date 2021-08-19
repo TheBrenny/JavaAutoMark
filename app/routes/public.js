@@ -26,5 +26,13 @@ router.get(["/newassignment"], (req, res) => {
     });
 });
 
+router.get(["/admin"], (req, res) => {
+    let s = session(req);
+
+    res.render("admin", {
+        user: s.getAccount()
+    });
+});
+
 
 module.exports = router;
