@@ -349,26 +349,25 @@ body #login_container form label {
   align-items: flex-start;
   padding-top: 10px;
   border-top-left-radius: 10px;
-  background-image: url("../img/arrow_up_grey.svg");
-  background-size: 60% 60%;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-}
-#newassignment div.task .test ul .moveUp:hover, #newassignment div.task .instr ul .moveUp:hover {
-  background-image: url("../img/arrow_up_white.svg");
-  background-color: #3559a7ff;
+  padding: 5px 0;
 }
 #newassignment div.task .test ul .moveDown, #newassignment div.task .instr ul .moveDown {
   border-bottom-left-radius: 10px;
   align-items: flex-end;
   padding-bottom: 10px;
-  transition: 0.3s ease;
+  padding: 5px 0;
 }
-#newassignment div.task .test ul .moveDown svg, #newassignment div.task .instr ul .moveDown svg {
+#newassignment div.task .test ul .moveButton, #newassignment div.task .instr ul .moveButton {
+  cursor: pointer;
+  transition: "0.3s easebackground-color";
+}
+#newassignment div.task .test ul .moveButton svg, #newassignment div.task .instr ul .moveButton svg {
   width: 20px;
 }
-#newassignment div.task .test ul .moveDown:hover .cls-1, #newassignment div.task .instr ul .moveDown:hover .cls-1 {
+#newassignment div.task .test ul .moveButton:hover, #newassignment div.task .instr ul .moveButton:hover {
+  background-color: #3559a7ff;
+}
+#newassignment div.task .test ul .moveButton:hover .cls-1, #newassignment div.task .instr ul .moveButton:hover .cls-1 {
   fill: #fff;
 }
 #newassignment div.task .test .del, #newassignment div.task .instr .del {

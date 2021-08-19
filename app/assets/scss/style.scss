@@ -408,32 +408,30 @@ body {
                     align-items: flex-start;
                     padding-top: 10px;
                     border-top-left-radius: 10px;
-                    background-image: url('../img/arrow_up_grey.svg');
-                    background-size: 60% 60%;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    cursor: pointer;
-                }
-                
-                .moveUp:hover {
-                    background-image: url('../img/arrow_up_white.svg');
-                    background-color: $highlighted-button-blue;
+                    padding: 5px 0;
                 }
                 
                 .moveDown {
                     border-bottom-left-radius: 10px;
                     align-items: flex-end;
                     padding-bottom: 10px;
-                    transition: 0.3s ease ;
+                    padding: 5px 0;
+                }
+                
+                .moveButton {
+                    cursor: pointer;
+                    transition: ease(background-color) ;
                     svg {
                         width: 20px;
                     }
                 }
 
-                .moveDown:hover {
+                .moveButton:hover {
                     .cls-1 {
                         fill: #fff;
                     }
+
+                    background-color: $highlighted-button-blue;
                 }
             }
             
