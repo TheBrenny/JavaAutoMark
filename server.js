@@ -43,7 +43,11 @@ app.use("/assets", express.static(path.join(appPath, "assets")));
 app.use(require("./app/routes/publicUrls"));
 app.use(require("./app/routes/public"));
 app.use(require("./app/routes/account"));
-app.use(require("./app/routes/errors"));
+
+// Error handling -- scoped to the root layer!
+const errRoutes = require("./app/routes/errors");
+app.all("/*", errRoutes.notFound);
+app.use(errRoutes.handler);
 
 app.listen(serverInfo.port, serverInfo.host, () => {
     if (config.browsersyncActive) serverInfo.port = 81;

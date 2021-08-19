@@ -12,9 +12,9 @@ class PublicUrlModel {
         let sql = `SELECT * FROM public_urls WHERE method=? AND path=?`;
         return this.db.query(sql, method, path).then(this.db.firstRecord);
     }
-    async getUrlFromToken(token) {
-        let sql = `SELECT * FROM public_urls WHERE token=?`;
-        return this.db.query(sql, token).then(this.db.firstRecord);
+    async getUrlFromToken(method, token) {
+        let sql = `SELECT * FROM public_urls WHERE method=? AND token=?`;
+        return this.db.query(sql, method.toLowerCase(), token).then(this.db.firstRecord);
     }
 
     async updateUrl(method, path, token, expires) {

@@ -1,17 +1,14 @@
-const express = require('express');
-const router = express.Router();
 const isProd = !(require("../../config").env.isDev);
+const errors = require("./errors/generic").errors;
+
+module.exports = {};
 
 // 404
-router.use((req, res, _) => {
-    throw {
-        code: 404,
-        name: "Not Found",
-        message: `Could not ${req.method.toUpperCase()} ${req.url}`
-    };
+module.exports.notFound = ((req, res, _) => {
+    throw errors[404].fromReq(req);
 });
-
-router.use((err, req, res, next) => {
+// Catches errors
+module.exports.handler = ((err, req, res, next) => {
     console.error(err);
 
     if (res.headersSent) {
@@ -40,14 +37,4 @@ router.use((err, req, res, next) => {
         }),
         "default": () => res.end()
     });
-
-    // if (req.accepts("text/html")) {
-    //     res.render("error", {
-    //         error: e
-    //     });
-    // } else if (req.accepts("application/json")) {
-    //     res.json(e);
-    // } else res.end();
 });
-
-module.exports = router;
