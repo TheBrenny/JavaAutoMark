@@ -50,7 +50,10 @@ router.get("/getUploadLink/*", checks.isAuthed, async (req, res) => {
 
 router.get("/getDownloadLink/*", async (req, res) => {
     let path = req.path.substring("/getUploadLink/".length);
-
+    let token = await storage.presignedGetUrl("", path);
+    res.json({
+        token
+    });
 });
 
 module.exports = router;
