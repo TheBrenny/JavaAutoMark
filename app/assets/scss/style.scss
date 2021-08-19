@@ -12,7 +12,7 @@ $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
 
 @function ease($property) {
-    $transition: "0.3s ease" + $property;
+    $transition: 0.3s ease $property;
 
     @return $transition;
 }
@@ -436,24 +436,33 @@ body {
             }
             
             .del {
-                height: 35px;
-                width: 35px;
+                height: 30px;
+                width: 30px;
+                margin: 5px;
                 background-color: $tomato;
                 border-radius: 5px;
                 margin: 5px 15px;
-                transition: 0.3s ease background-color, 0.3s ease box-shadow, 0.3s ease background-image;
+                transition: ease(background-color), ease(box-shadow);
                 cursor: pointer;
                 border: none;
                 box-shadow: 0 2px 5px $jet;
-                background-image: url('../img/cross_white.svg');
-                background-size: 60% 60%;
-                background-position: center;
-                background-repeat: no-repeat;
+                text-align: center;
+                svg {
+                    width: 98%;
+                    height: 100%;
+                }
+
+                .cls-2 {
+                    transition: ease(fill);
+                }
             }
 
             .del:hover {
-                background-color: $highlighted-tomato;                
-                background-image: url('../img/cross_grey.svg');
+                background-color: $highlighted-tomato;
+                .cls-2 {
+                    fill: #e6e6e6;
+                }
+
             }
 
             .del:active {
