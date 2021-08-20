@@ -1,9 +1,9 @@
-const Database = require("./db/database");
+const Database = require("../database");
 const fs = require("fs");
 const path = require("path");
-const config = require("./config");
+const config = require("../../config");
 
-let dbScripts = path.join(__dirname, "db", "scripts");
+let dbScripts = path.resolve(__dirname, "..", "scripts");
 let readScript = (s, vars) => {
     let sql = fs.readFileSync(path.join(dbScripts, s)).toString();
     vars = vars || {};
