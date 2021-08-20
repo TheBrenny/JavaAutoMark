@@ -7,7 +7,7 @@
     "jam": "node server.js"
   },
   "scripts": {
-    "heroku-postbuild": "cat ./db/scripts/clean.sql | sqlcli $MYSQL_URL && cat ./db/scripts/install.sql | sqlcli $MYSQL_URL && cat ./db/scripts/demo.sql | sqlcli $MYSQL_URL"
+    "heroku-postbuild": "node ./db/tools/installDB.js cleanDB installDB demoDB"
   },
   "repository": {
     "type": "git",
