@@ -147,21 +147,13 @@ gulp.task("sass", function () {
         .pipe(sass().on("error", sass.logError))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest("app/assets/css/"))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(browserSync.stream());
 });
 
 gulp.task("browserSync", function (cb) {
     return browserSync.init({
+        injectChanges: true,
         proxy: "http://" + host + "/",
-        files: [{
-            match: ["app/assets/**/*.*", "app/views/**/*.*"],
-            fn: function (e, f) {
-                this.reload();
-            }
-        }],
-        ignore: ["app/assets/scss/**/*.*"],
         open: false,
         port: port + 1,
         snippetOptions: {
