@@ -4,5 +4,6 @@
         "*.sce": "html"
     },
     "git.rebaseWhenSync": true,
+    "git.autoStash": true,
 	"debug.onTaskErrors": "debugAnyway"
 }
