@@ -6,7 +6,9 @@
   "bin": {
     "jam": "node server.js"
   },
-  "scripts": {},
+  "scripts": {
+    "heroku-postbuild": "cat ./db/scripts/clean.sql | sqlcli $MYSQL_URL && cat ./db/scripts/install.sql | sqlcli $MYSQL_URL && cat ./db/scripts/demo.sql | sqlcli $MYSQL_URL"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TheBrenny/JavaAutoMark.git"
@@ -58,7 +60,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "nodemon": "^2.0.12",
     "sass": "^1.37.5",
-    "sql-cli-repl": "^1.1.2"
+    "sql-cli-repl": "^1.2.0"
   },
   "private": "true"
 }
