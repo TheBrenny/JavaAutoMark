@@ -29,11 +29,7 @@ router.put("/upload/:id", bodyParser.raw({
     let token = await Database.publicUrls.getUrlFromToken("put", id);
 
     if (token == undefined) {
-        throw ({
-            code: 404,
-            name: "Not Found",
-            message: `Could not ${req.method.toUpperCase()} ${req.url}`
-        });
+        throw errors[404].fromReq(req);
     } else {
         let prom = await storage.putObject("", token.public_urls_path, req.body);
         res.send("done").end();
