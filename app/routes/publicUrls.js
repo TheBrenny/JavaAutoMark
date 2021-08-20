@@ -13,8 +13,7 @@ router.get("/download/:id", async (req, res, next) => {
     let blob = (await Database.publicUrls.getUrlFromToken("get", id));
 
     if (blob == undefined) {
-        // FIXME: This isn't redirecting to the 404 as expected!!
-        throw errors[404].fromReq(req);
+        throw errors[404].fromReq(req); // fixed
     } else {
         let stream = await storage.getObject("", blob.public_urls_path);
         stream.on("end", () => res.end());

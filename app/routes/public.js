@@ -1,4 +1,5 @@
-// TODO: Allow scetch to automatically add variables to each response!
+// Allow scetch to automatically add variables to each response!
+// SOLVED: USE res.locals.* to add things to a scetch page that are always going to be there!!!
 
 const router = require("express").Router();
 const checks = require("./tools/checks");
