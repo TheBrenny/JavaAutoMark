@@ -1,46 +1,48 @@
  -- Create Teacher Table
  create table Teacher (
-     zID int,
-     email varchar(100) not null,
-     teacher_name varchar(100) not null,
-     teacher_password varchar(100) not null,
+     zID mediumint unique,
+     email varchar(320) not null,
+     teacher_name varchar(50) not null,
+     teacher_password char(60) not null,
      primary key (zID)
  );
 
 -- Create Course Table
  create table Course (
-     course_ID varchar(100),
+     course_uuid int auto_increment unique,
+     course_ID char(8) not null,
      course_name varchar(100) not null,
-     primary key  (course_ID)
+     running_year smallint not null,
+     primary key  (course_ID, running_year)
  );
 
 -- Create Assignmnet Table
  create table Assignment (
-     assignment_ID int,
-     course_ID varchar(100),
-     code_location varchar(100) not null,
-     primary key  (assignment_ID)
-     foreign key (course_ID) references Course(course_ID)
+     assignment_ID int auto_increment unique,
+     course_uuid int not null,
+     test_code blob default "{}",
+     primary key  (assignment_ID),
+     foreign key (course_uuid) references Course(course_uuid)
  );
 
 -- Create TestCase Table
- create table TestCase (
-     test_ID int,
-     expectation varchar(250) not null,
-     test_code_location varchar(100) not null,
-     assignment_ID int not null,
-     primary key  (test_ID)
-     foreign key (assignment_ID) references Assignment(assignment_ID)
- );
+--  create table TestCase (
+--      test_ID int,
+--      expectation varchar(250) not null,
+--      test_code_location varchar(100) not null,
+--      assignment_ID int not null,
+--      primary key  (test_ID)
+--      foreign key (assignment_ID) references Assignment(assignment_ID)
+--  );
 
 -- Create Report Table 
  create table Report (
-     report_ID int,
-     zID int not null,
-     student_name varchar(100) not null,
-     report_location varchar(100) not null,
+     report_ID int auto_increment unique,
+     zID mediumint not null,
+     student_name varchar(50) not null,
+     report_results blob default "{}",
      assignment_ID int not null,
-     primary key  (report_ID)
+     primary key  (zID, assignment_ID),
      foreign key (assignment_ID) references Assignment(assignment_ID)
  );
 
