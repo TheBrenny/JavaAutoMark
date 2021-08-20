@@ -12,7 +12,7 @@
         </div>
 
         <div class="tile" id="newTeach">
-            <a href="/create">
+            <a href="/createteacher">
                 <i class="fas fa-user-plus fa-6x"></i>
                 <h1>new teach</h1>
             </a>

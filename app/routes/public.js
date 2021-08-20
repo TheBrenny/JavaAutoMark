@@ -6,8 +6,13 @@ const checks = require("./tools/checks");
 const session = require("./tools/session");
 
 router.use((req, res, next) => {
-    if(req.path === "/login") next();
-    else checks.isAuthed(req,res,next);
+    if (req.path === "/login") next();
+    else checks.isAuthed(req, res, next);
+});
+router.use((req, res, next) => {
+    let s = session(req);
+    res.locals.user = s.getAccount();
+    next();
 });
 
 router.get(["/", "/home"], (req, res) => {
@@ -15,7 +20,6 @@ router.get(["/", "/home"], (req, res) => {
 
     res.render("home", {
         time: new Date().toLocaleString(),
-        user: s.getAccount()
     });
 });
 
@@ -23,24 +27,20 @@ router.get(["/newassignment"], (req, res) => {
     let s = session(req);
 
     res.render("newassignment", {
-        user: s.getAccount()
+
     });
 });
 
 router.get(["/admin"], (req, res) => {
     let s = session(req);
 
-    res.render("admin", {
-        user: s.getAccount()
-    });
+    res.render("admin", {});
 });
 
 router.get(["/viewteacher"], (req, res) => {
     let s = session(req);
 
-    res.render("viewteacher", {
-        user: s.getAccount()
-    });
+    res.render("viewteacher", {});
 });
 
 

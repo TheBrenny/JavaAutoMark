@@ -3,9 +3,9 @@ class TeacherModel {
         this.db = databaseModel;
     }
 
-    async addUser(username, password) {
-        let sql = `INSERT INTO ${this.table} (username, password) VALUES (?, ?)`;
-        return this.db.query(sql, username, password).then(this.db.changedResponse).then(r => r.success);
+    async addUser(zid, email, fname, lname, password) {
+        let sql = `INSERT INTO ${this.table} (zid, email, fname, lname, password) VALUES (?, ?, ?, ?, ?)`;
+        return this.db.query(sql, zid, email, fname, lname, password).then(this.db.changedResponse).then(r => r.success);
     }
 
     async getUser(zid) {

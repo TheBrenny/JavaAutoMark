@@ -8,22 +8,21 @@ router.get(["/user"], (req, res) => {
     let s = session(req);
 
     res.render("viewuser", {
-        user: s.getAccount()
     });
 });
 
-router.get(["/create"], checks.isAuthed, (req, res) => {
+router.get("/createteacher", checks.isAuthed, (req, res) => {
     let s = session(req);
 
     res.render("createuser", {
-        user: s.getAccount()
     });
 });
 
-router.post("/create", async (req, res) => {
+router.post("/createteacher", async (req, res) => {
     let zid = req.body.zID;
     let fname = req.body.fName;
     let lname = req.body.lName;
+    let email = req.body.email;
     let password = req.body.pass;
 
     let bad = false;
@@ -32,18 +31,15 @@ router.post("/create", async (req, res) => {
     // not found user
     if (target == undefined) {
         const passHash = crypto.hashSync(password, 12);
-        bad = !(await Database.teachers.addUser(zid, passHash));
+        bad = !(await Database.teachers.addUser(zid, email, fname, lname, passHash));
     } else {
-        crypto.hashSync(password); // hash anyway to waste time.
         bad = true;
     }
 
     if (bad) {
-        session(req).badLogin("Invalid username or password!");
-        res.status(401).redirect("/login");
+        res.status(401).redirect("/createteacher");
     } else {
-        // if (rm == "on") rememberme.writeCookie(req, res);
-        res.redirect("/");
+        res.redirect("/admin");
     }
 });
 
