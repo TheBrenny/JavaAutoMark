@@ -4,7 +4,7 @@ const SMCloudStore = require('smcloudstore');
 const Database = require('../db/database');
 const db = require("../db/db");
 
-const localStorageTableName = Database.publicUrls.tableName;
+const localStorageTableName = Database.publicUrls.table;
 
 const storageProviders = {
     "aws": {

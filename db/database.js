@@ -4,7 +4,7 @@ class Database {
     constructor() {
         this.db = db;
         this.teachers = new(require("./models/teachers"))(this);
-        this.publicUrl = new(require("./models/publicUrls"))(this);
+        this.publicUrls = new(require("./models/publicUrls"))(this);
     }
 
     async query(query, ...args) {
