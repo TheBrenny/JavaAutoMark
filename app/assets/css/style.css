@@ -101,14 +101,14 @@ body #login_container form label {
   background-image: url("/assets/img/jam_jar_coloured.png");
   background-repeat: no-repeat;
   display: inline-block;
-  background-size: 200px;
+  background-size: 250px 90px;
   width: 80px;
   height: 100px;
   margin-left: 50px;
   transition: 0.5s ease width;
 }
 #header a.home:hover {
-  width: 200px;
+  width: 220px;
 }
 #header #menu {
   list-style: none;
@@ -560,6 +560,9 @@ body #login_container form label {
 
 #adminContainer {
   display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 #adminContainer .column .tile {
   width: 150px;

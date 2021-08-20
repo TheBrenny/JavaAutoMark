@@ -140,7 +140,7 @@ body {
         background-image: url("/assets/img/jam_jar_coloured.png");
         background-repeat: no-repeat;
         display: inline-block;
-        background-size: 200px;
+        background-size: 250px 90px;
         width: 80px;
         height: 100px;
         margin-left: 50px;
@@ -148,7 +148,7 @@ body {
     }
 
     a.home:hover {
-        width: 200px;
+        width: 220px;
     }
 
     #menu {
@@ -637,9 +637,9 @@ body {
 
 #adminContainer {
     display: flex;
+    @include content-font();
 
     .column {
-        // margin: 50px;
 
         .tile {
             width: 150px;

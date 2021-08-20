@@ -5,7 +5,7 @@
 <div id="adminContainer">
     <div class="column"  id="teachCon">
         <div class="tile" id="viewTeach">
-            <a href="/">
+            <a href="/viewteacher">
                 <h1>view teach</h1>
             </a>
         </div>

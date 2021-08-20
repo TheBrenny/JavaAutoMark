@@ -34,5 +34,13 @@ router.get(["/admin"], (req, res) => {
     });
 });
 
+router.get(["/viewteacher"], (req, res) => {
+    let s = session(req);
+
+    res.render("viewteacher", {
+        user: s.getAccount()
+    });
+});
+
 
 module.exports = router;
