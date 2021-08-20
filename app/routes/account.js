@@ -19,7 +19,7 @@ router.get("/createteacher", checks.isAuthed, (req, res) => {
 });
 
 router.post("/createteacher", async (req, res) => {
-    let zid = req.body.zID;
+    let zid = req.body.zID.replace(/^z/g, "");
     let fname = req.body.fName;
     let lname = req.body.lName;
     let email = req.body.email;
