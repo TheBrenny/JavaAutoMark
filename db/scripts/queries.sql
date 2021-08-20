@@ -1,9 +1,10 @@
  -- Create Teacher Table
  create table Teacher (
-     zID mediumint unique,
+     zID mediumint unique not null,
      email varchar(320) not null,
-     teacher_name varchar(50) not null,
-     teacher_password char(60) not null,
+     fname varchar(25) not null,
+     lname varchar(25) not null,
+     password char(60) not null,
      primary key (zID)
  );
 
@@ -20,7 +21,7 @@
  create table Assignment (
      assignment_ID int auto_increment unique,
      course_uuid int not null,
-     test_code blob default "{}",
+     code_location varchar(255) not null,
      primary key  (assignment_ID),
      foreign key (course_uuid) references Course(course_uuid)
  );
@@ -38,17 +39,17 @@
 -- Create Report Table 
  create table Report (
      report_ID int auto_increment unique,
-     zID mediumint not null,
+     zID mediumint unique not null,
      student_name varchar(50) not null,
-     report_results blob default "{}",
+     report_location varchar(255) not null,
      assignment_ID int not null,
      primary key  (zID, assignment_ID),
      foreign key (assignment_ID) references Assignment(assignment_ID)
  );
 
 -- Insert teacher into Teacher Table
-insert into Teacher (zID, email, teacher_name, teacher_password,)
- values();
+INSERT INTO Teacher (`zID`, `email`, `fname`, `lname`, `password`) VALUES       
+    (5217759, 'z5217759@ad.unsw.edu.au', 'Jarod', 'Brennfleck', '$2b$12$nBqcI4CEVdSEam8iELnJf.jXvM.oXV7BU0Zb7OAnJdrXHAAfDoY4q'); -- Password is Brennfleck
 
 -- Insert Course into Course table
 insert into Course(course_ID, course_name)
