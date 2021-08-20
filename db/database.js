@@ -3,8 +3,8 @@ const db = require("./db");
 class Database {
     constructor() {
         this.db = db;
-        this.accounts = new(require("./models/account"))(this);
-        this.publicUrls = new(require("./models/publicUrls"))(this);
+        this.teachers = new(require("./models/teachers"))(this);
+        this.publicUrl = new(require("./models/publicUrls"))(this);
     }
 
     async query(query, ...args) {
@@ -27,6 +27,16 @@ class Database {
     }
     async firstRecord(results) {
         return results[0];
+    }
+
+    toObject(table, obj, fields) {
+        let ret = {
+            from: table
+        };
+        for(let f of fields) {
+            ret[f] = obj[table + "_" + f];
+        }
+        return ret;
     }
 }
 

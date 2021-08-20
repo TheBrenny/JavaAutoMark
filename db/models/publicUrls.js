@@ -4,34 +4,34 @@ class PublicUrlModel {
     }
 
     async addUrl(method, path, token, expires) {
-        let sql = `INSERT INTO public_urls (method, path, token, expires) VALUES (?, ?, ?, ?)`;
+        let sql = `INSERT INTO ${this.table} (method, path, token, expires) VALUES (?, ?, ?, ?)`;
         return this.db.query(sql, method, path, token, expires).then(this.db.changedResponse);
     }
 
     async getUrl(method, path) {
-        let sql = `SELECT * FROM public_urls WHERE method=? AND path=?`;
+        let sql = `SELECT * FROM ${this.table} WHERE method=? AND path=?`;
         return this.db.query(sql, method, path).then(this.db.firstRecord);
     }
     async getUrlFromToken(method, token) {
-        let sql = `SELECT * FROM public_urls WHERE method=? AND token=?`;
+        let sql = `SELECT * FROM ${this.table} WHERE method=? AND token=?`;
         return this.db.query(sql, method.toLowerCase(), token).then(this.db.firstRecord);
     }
 
     async updateUrl(method, path, token, expires) {
-        let sql = `UPDATE public_urls SET token=?, expires=? WHERE method=? AND path=?`;
+        let sql = `UPDATE ${this.table} SET token=?, expires=? WHERE method=? AND path=?`;
         return this.db.query(sql, token, expires, method, path).then(this.db.changedResponse);
     }
 
     async removeUrl(method, path) {
-        let sql = `DELETE FROM public_urls WHERE method=? AND path=?`;
+        let sql = `DELETE FROM ${this.table} WHERE method=? AND path=?`;
         return this.db.query(sql, method, path).then(this.db.changedResponse);
     }
 
-    get tableName() {
-        return PublicUrlModel.tableName;
+    get table() {
+        return PublicUrlModel.table;
     }
 
-    static get tableName() {
+    static get table() {
         return "public_urls";
     }
 }

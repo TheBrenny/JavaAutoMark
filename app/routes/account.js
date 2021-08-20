@@ -21,18 +21,18 @@ router.get(["/create"], checks.isAuthed, (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-    let username = req.body.zID;
+    let zid = req.body.zID;
     let fname = req.body.fName;
     let lname = req.body.lName;
     let password = req.body.pass;
 
     let bad = false;
-    let target = (await Database.accounts.getUser(username));
+    let target = (await Database.teachers.getUser(zid));
 
     // not found user
     if (target == undefined) {
         const passHash = crypto.hashSync(password, 12);
-        bad = !(await Database.accounts.addUser(username, passHash));
+        bad = !(await Database.teachers.addUser(zid, passHash));
     } else {
         crypto.hashSync(password); // hash anyway to waste time.
         bad = true;
@@ -66,21 +66,19 @@ router.get("/login", [
 });
 
 router.post("/login", checks.isGuest, async (req, res) => {
-    let username = req.body.user;
+    let zid = req.body.user;
     let password = req.body.pass;
-
-    let rm = req.body.rememberme;
 
     session(req).loginAttempt();
 
     let bad = false;
-    let target = (await Database.accounts.getUser(username));
+    let target = (await Database.teachers.getUser(zid));
 
     // found user
     if (target != undefined) {
-        const passMatch = crypto.compareSync(password, target.users_password);
+        const passMatch = crypto.compareSync(password, target.teachers_password);
         if (passMatch) {
-            session(req).setAccount(target.users_id, target.users_username);
+            session(req).setAccount(target.teachers_id, target.teachers_username);
         } else {
             bad = true;
         }

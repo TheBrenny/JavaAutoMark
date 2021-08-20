@@ -4,7 +4,7 @@ CREATE TABLE `teachers` (
   `email` VARCHAR(320) NOT NULL,
   `fname` VARCHAR(25) NOT NULL,
   `lname` VARCHAR(25) NOT NULL,
-  password CHAR(60) NOT NULL,
+  `password` CHAR(60) NOT NULL,
   PRIMARY KEY (`zid`)
 );
 
