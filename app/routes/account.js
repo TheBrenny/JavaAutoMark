@@ -66,7 +66,7 @@ router.get("/login", [
 });
 
 router.post("/login", checks.isGuest, async (req, res) => {
-    let zid = req.body.user;
+    let zid = req.body.user.replace(/^z/g, "");
     let password = req.body.pass;
 
     session(req).loginAttempt();
@@ -78,7 +78,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
     if (target != undefined) {
         const passMatch = crypto.compareSync(password, target.teachers_password);
         if (passMatch) {
-            session(req).setAccount(target.teachers_id, target.teachers_username);
+            session(req).setAccount(target.teachers_zid, target.teachers_fname, target.teachers_lname);
         } else {
             bad = true;
         }
