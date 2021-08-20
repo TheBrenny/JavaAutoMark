@@ -18,7 +18,7 @@ function ready(fn) {
     }
 }
 
-function wrongPassword(element) {
-    element.innerHTML = "Incorrect username or password";
+function wrongPassword(element, message) {
+    element.innerHTML = message || "Something went wrong!";
     element.style.animation = ".5s shake";
 }

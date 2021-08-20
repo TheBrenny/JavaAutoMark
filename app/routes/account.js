@@ -84,7 +84,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
     }
 
     if (bad) {
-        session(req).badLogin("Invalid username or password!");
+        session(req).badLogin("Invalid id or password!");
         res.status(401).redirect("/login");
     } else {
         // if (rm == "on") rememberme.writeCookie(req, res);
