@@ -170,15 +170,17 @@ body {
             background-color: rgba(255, 209, 71, 0.8);
         }
 
-        span {
-            height: 30px;
-            width: 1px;
-            background-color: $smoky-black;
-        }
+        // span {
+        //     height: 30px;
+        //     width: 1px;
+        //     background-color: $smoky-black;
+        // }
 
         a {
             text-decoration: none;
             color: inherit;
+            border-right: 1px solid $smoky-black;
+            display: inline-block;
         }
     }
 
