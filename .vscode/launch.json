@@ -17,7 +17,11 @@
             "type": "pwa-node",
             "port": 9229,
             "console": "integratedTerminal",
-            "preLaunchTask": "startMysql"
+            "preLaunchTask": "startMysql",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
         },
         {
             "type": "node",
@@ -32,7 +36,11 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "preLaunchTask": "startMysql"
+            "preLaunchTask": "startMysql",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
         }
     ]
 }

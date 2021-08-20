@@ -53,3 +53,7 @@ module.exports.storage = {
         path: "storage/data"
     }
 };
+// If non-local storage is used, add a default value for the container
+if (module.exports.storage.provider !== "localstorage" && module.exports.storage.options.container == undefined) {
+    module.exports.storage.options.path = "storage/data";
+}

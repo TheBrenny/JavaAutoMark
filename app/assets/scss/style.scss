@@ -10,6 +10,8 @@ $highlighted-button-blue: #3559a7ff;
 $gray-web: #7e7f83ff;
 $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
+$task-button: #c4c4c4ff;
+$highlighted-task-button: #888890ff;
 
 @function ease($property) {
     $transition: 0.3s ease $property;
@@ -135,11 +137,10 @@ body {
     z-index: 10;
 
     a.home {
-        background-image: url("/assets/img/jam_jar_coloured.svg");
+        background-image: url("/assets/img/jam_jar_coloured.png");
         background-repeat: no-repeat;
-        background-position-x: -70px;
         display: inline-block;
-        background-size: 400px 90px;
+        background-size: 200px;
         width: 80px;
         height: 100px;
         margin-left: 50px;
@@ -295,20 +296,62 @@ body {
     }
 }
 
-#newassignment {
+.block {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: $cultured;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px $gray-web;
+    margin-bottom: 35px;
+}
+
+.wrap {
     width: 700px;
     @include content-font();
     margin-bottom: 50px;
+}
+
+#error {
+    @extend .block;
+    @extend .wrap;
+    flex-direction: column;
+
+    .preWrap {
+        background: #c4c4c4ff;
+        border-radius: 0.5em;
+        box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+        padding-bottom: 0.6em;
+
+        pre {
+            overflow-x: scroll;
+            padding: 1em;
+
+            &::-webkit-scrollbar {
+                width: 0.5em;
+                height: 0.5em;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $highlighted-task-button;
+                border-radius: 10em;
+                margin: 2em;
+            }
+
+            &::-webkit-scrollbar-button {
+                background: transparent;
+                width: 1em;
+            }
+        }
+    }
+}
+
+#newassignment {
+    @extend .wrap;
 
     div#details {
-        display: flex;
-        justify-content: space-between;
-
-        background-color: $cultured;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 5px 10px $gray-web;
-        margin-bottom: 35px;
+        @extend .block;
 
         label {
             @include content-font();
@@ -347,7 +390,8 @@ body {
             margin-bottom: 20px;
         }
 
-        .test, .instr {
+        .test,
+        .instr {
             display: flex;
             order: attr(data-order);
             flex-direction: row;
@@ -356,7 +400,7 @@ body {
             background-color: $almond;
             border-radius: 10px;
             margin-bottom: 15px;
-            
+
 
             .editor {
                 flex-grow: 1;
@@ -403,24 +447,25 @@ body {
                     flex-grow: 0;
                     padding: 10px 0;
                 }
-    
+
                 .moveUp {
                     align-items: flex-start;
                     padding-top: 10px;
                     border-top-left-radius: 10px;
                     padding: 5px 0;
                 }
-                
+
                 .moveDown {
                     border-bottom-left-radius: 10px;
                     align-items: flex-end;
                     padding-bottom: 10px;
                     padding: 5px 0;
                 }
-                
+
                 .moveButton {
                     cursor: pointer;
-                    transition: ease(background-color) ;
+                    transition: ease(background-color);
+
                     svg {
                         width: 20px;
                     }
@@ -434,7 +479,7 @@ body {
                     background-color: $highlighted-button-blue;
                 }
             }
-            
+
             .del {
                 height: 30px;
                 width: 30px;
@@ -447,6 +492,7 @@ body {
                 border: none;
                 box-shadow: 0 2px 5px $jet;
                 text-align: center;
+
                 svg {
                     width: 98%;
                     height: 100%;
@@ -459,6 +505,7 @@ body {
 
             .del:hover {
                 background-color: $highlighted-tomato;
+
                 .cls-2 {
                     fill: #e6e6e6;
                 }
@@ -476,7 +523,7 @@ body {
                 justify-content: space-between;
                 flex-grow: 2;
                 margin-bottom: 15px;
-                
+
                 .case {
                     flex-grow: 2;
                 }
@@ -506,7 +553,8 @@ body {
                 }
             }
 
-            input[type="text"], input[type="number"] {
+            input[type="text"],
+            input[type="number"] {
                 padding: 5px;
                 border-radius: 5px;
                 border: 1px solid $gray-web;
@@ -529,7 +577,7 @@ body {
                 margin: 20px 0 10px 0;
                 padding: 10px 20px;
                 width: 180px;
-                background-color: #c4c4c4;
+                background-color: $task-button;
                 border: none;
                 border-radius: 5px;
                 font-weight: bold;
@@ -541,7 +589,7 @@ body {
             }
 
             input[type="button"]:hover {
-                background-color: #888890;
+                background-color: $highlighted-task-button;
                 color: white;
                 font-weight: 400;
             }

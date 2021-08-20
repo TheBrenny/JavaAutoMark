@@ -98,11 +98,10 @@ body #login_container form label {
   z-index: 10;
 }
 #header a.home {
-  background-image: url("/assets/img/jam_jar_coloured.svg");
+  background-image: url("/assets/img/jam_jar_coloured.png");
   background-repeat: no-repeat;
-  background-position-x: -70px;
   display: inline-block;
-  background-size: 400px 90px;
+  background-size: 200px;
   width: 80px;
   height: 100px;
   margin-left: 50px;
@@ -243,14 +242,7 @@ body #login_container form label {
   font-weight: 600;
 }
 
-#newassignment {
-  width: 700px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  margin-bottom: 50px;
-}
-#newassignment div#details {
+.block, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -259,6 +251,42 @@ body #login_container form label {
   box-shadow: 0 5px 10px #7e7f83ff;
   margin-bottom: 35px;
 }
+
+.wrap, #newassignment, #error {
+  width: 700px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 50px;
+}
+
+#error {
+  flex-direction: column;
+}
+#error .preWrap {
+  background: #c4c4c4ff;
+  border-radius: 0.5em;
+  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+  padding-bottom: 0.6em;
+}
+#error .preWrap pre {
+  overflow-x: scroll;
+  padding: 1em;
+}
+#error .preWrap pre::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb {
+  background-color: #888890ff;
+  border-radius: 10em;
+  margin: 2em;
+}
+#error .preWrap pre::-webkit-scrollbar-button {
+  background: transparent;
+  width: 1em;
+}
+
 #newassignment div#details label {
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -294,7 +322,8 @@ body #login_container form label {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-#newassignment div.task .test, #newassignment div.task .instr {
+#newassignment div.task .test,
+#newassignment div.task .instr {
   display: flex;
   order: attr(data-order);
   flex-direction: row;
@@ -304,13 +333,15 @@ body #login_container form label {
   border-radius: 10px;
   margin-bottom: 15px;
 }
-#newassignment div.task .test .editor, #newassignment div.task .instr .editor {
+#newassignment div.task .test .editor,
+#newassignment div.task .instr .editor {
   flex-grow: 1;
   align-self: stretch;
   margin: 10px 0;
   min-height: 50px;
 }
-#newassignment div.task .test ul, #newassignment div.task .instr ul {
+#newassignment div.task .test ul,
+#newassignment div.task .instr ul {
   align-self: stretch;
   list-style: none;
   border-top-left-radius: 10px;
@@ -324,7 +355,8 @@ body #login_container form label {
   display: flex;
   flex-direction: column;
 }
-#newassignment div.task .test ul li, #newassignment div.task .instr ul li {
+#newassignment div.task .test ul li,
+#newassignment div.task .instr ul li {
   display: flex;
   margin: 0;
   padding: 0;
@@ -335,42 +367,52 @@ body #login_container form label {
   justify-content: center;
   transition: 0.5s ease background-color;
 }
-#newassignment div.task .test ul li:first-of-type, #newassignment div.task .instr ul li:first-of-type {
+#newassignment div.task .test ul li:first-of-type,
+#newassignment div.task .instr ul li:first-of-type {
   border-top: 0px;
 }
-#newassignment div.task .test ul li:last-of-type, #newassignment div.task .instr ul li:last-of-type {
+#newassignment div.task .test ul li:last-of-type,
+#newassignment div.task .instr ul li:last-of-type {
   border-bottom: 0px;
 }
-#newassignment div.task .test ul .testID, #newassignment div.task .instr ul .testID {
+#newassignment div.task .test ul .testID,
+#newassignment div.task .instr ul .testID {
   flex-grow: 0;
   padding: 10px 0;
 }
-#newassignment div.task .test ul .moveUp, #newassignment div.task .instr ul .moveUp {
+#newassignment div.task .test ul .moveUp,
+#newassignment div.task .instr ul .moveUp {
   align-items: flex-start;
   padding-top: 10px;
   border-top-left-radius: 10px;
   padding: 5px 0;
 }
-#newassignment div.task .test ul .moveDown, #newassignment div.task .instr ul .moveDown {
+#newassignment div.task .test ul .moveDown,
+#newassignment div.task .instr ul .moveDown {
   border-bottom-left-radius: 10px;
   align-items: flex-end;
   padding-bottom: 10px;
   padding: 5px 0;
 }
-#newassignment div.task .test ul .moveButton, #newassignment div.task .instr ul .moveButton {
+#newassignment div.task .test ul .moveButton,
+#newassignment div.task .instr ul .moveButton {
   cursor: pointer;
   transition: 0.3s ease background-color;
 }
-#newassignment div.task .test ul .moveButton svg, #newassignment div.task .instr ul .moveButton svg {
+#newassignment div.task .test ul .moveButton svg,
+#newassignment div.task .instr ul .moveButton svg {
   width: 20px;
 }
-#newassignment div.task .test ul .moveButton:hover, #newassignment div.task .instr ul .moveButton:hover {
+#newassignment div.task .test ul .moveButton:hover,
+#newassignment div.task .instr ul .moveButton:hover {
   background-color: #3559a7ff;
 }
-#newassignment div.task .test ul .moveButton:hover .cls-1, #newassignment div.task .instr ul .moveButton:hover .cls-1 {
+#newassignment div.task .test ul .moveButton:hover .cls-1,
+#newassignment div.task .instr ul .moveButton:hover .cls-1 {
   fill: #fff;
 }
-#newassignment div.task .test .del, #newassignment div.task .instr .del {
+#newassignment div.task .test .del,
+#newassignment div.task .instr .del {
   height: 30px;
   width: 30px;
   margin: 5px;
@@ -383,23 +425,29 @@ body #login_container form label {
   box-shadow: 0 2px 5px #34312dff;
   text-align: center;
 }
-#newassignment div.task .test .del svg, #newassignment div.task .instr .del svg {
+#newassignment div.task .test .del svg,
+#newassignment div.task .instr .del svg {
   width: 98%;
   height: 100%;
 }
-#newassignment div.task .test .del .cls-2, #newassignment div.task .instr .del .cls-2 {
+#newassignment div.task .test .del .cls-2,
+#newassignment div.task .instr .del .cls-2 {
   transition: 0.3s ease fill;
 }
-#newassignment div.task .test .del:hover, #newassignment div.task .instr .del:hover {
+#newassignment div.task .test .del:hover,
+#newassignment div.task .instr .del:hover {
   background-color: #f42601ff;
 }
-#newassignment div.task .test .del:hover .cls-2, #newassignment div.task .instr .del:hover .cls-2 {
+#newassignment div.task .test .del:hover .cls-2,
+#newassignment div.task .instr .del:hover .cls-2 {
   fill: #e6e6e6;
 }
-#newassignment div.task .test .del:active, #newassignment div.task .instr .del:active {
+#newassignment div.task .test .del:active,
+#newassignment div.task .instr .del:active {
   box-shadow: 0 0 5px #34312dff;
 }
-#newassignment div.task .test .testCenter, #newassignment div.task .instr .testCenter {
+#newassignment div.task .test .testCenter,
+#newassignment div.task .instr .testCenter {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -407,28 +455,38 @@ body #login_container form label {
   flex-grow: 2;
   margin-bottom: 15px;
 }
-#newassignment div.task .test .testCenter .case, #newassignment div.task .instr .testCenter .case {
+#newassignment div.task .test .testCenter .case,
+#newassignment div.task .instr .testCenter .case {
   flex-grow: 2;
 }
-#newassignment div.task .test .testCenter .editor, #newassignment div.task .instr .testCenter .editor {
+#newassignment div.task .test .testCenter .editor,
+#newassignment div.task .instr .testCenter .editor {
   height: 60px;
 }
-#newassignment div.task .test .testCenter .testDeets, #newassignment div.task .instr .testCenter .testDeets {
+#newassignment div.task .test .testCenter .testDeets,
+#newassignment div.task .instr .testCenter .testDeets {
   display: flex;
 }
-#newassignment div.task .test .testCenter .testDeets .small, #newassignment div.task .instr .testCenter .testDeets .small {
+#newassignment div.task .test .testCenter .testDeets .small,
+#newassignment div.task .instr .testCenter .testDeets .small {
   margin-right: 15px;
 }
-#newassignment div.task .test .testCenter .testDeets .num, #newassignment div.task .instr .testCenter .testDeets .num {
+#newassignment div.task .test .testCenter .testDeets .num,
+#newassignment div.task .instr .testCenter .testDeets .num {
   max-width: 60px;
 }
-#newassignment div.task .test .testCenter .testDeets .out, #newassignment div.task .instr .testCenter .testDeets .out {
+#newassignment div.task .test .testCenter .testDeets .out,
+#newassignment div.task .instr .testCenter .testDeets .out {
   max-width: 120px;
 }
-#newassignment div.task .test .testCenter .testDeets .desc, #newassignment div.task .instr .testCenter .testDeets .desc {
+#newassignment div.task .test .testCenter .testDeets .desc,
+#newassignment div.task .instr .testCenter .testDeets .desc {
   flex-grow: 1;
 }
-#newassignment div.task .test input[type=text], #newassignment div.task .test input[type=number], #newassignment div.task .instr input[type=text], #newassignment div.task .instr input[type=number] {
+#newassignment div.task .test input[type=text],
+#newassignment div.task .test input[type=number],
+#newassignment div.task .instr input[type=text],
+#newassignment div.task .instr input[type=number] {
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #7e7f83ff;
@@ -451,7 +509,7 @@ body #login_container form label {
   margin: 20px 0 10px 0;
   padding: 10px 20px;
   width: 180px;
-  background-color: #c4c4c4;
+  background-color: #c4c4c4ff;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -464,7 +522,7 @@ body #login_container form label {
   cursor: pointer;
 }
 #newassignment div.task #taskFoot input[type=button]:hover {
-  background-color: #888890;
+  background-color: #888890ff;
   color: white;
   font-weight: 400;
 }
