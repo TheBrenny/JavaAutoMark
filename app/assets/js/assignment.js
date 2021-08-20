@@ -31,7 +31,7 @@ function moveInstrAndTest(task, event) {
 function addTask() {
     let tasks = Array.from($("#newassignment").querySelectorAll(".task"));
     let lastTask = (tasks.length > 0) ? tasks[tasks.length - 1] : null;
-
+    
     let taskNum = 1;
     if (lastTask === null)
         lastTask = $("#newassignment>#details");
@@ -41,8 +41,9 @@ function addTask() {
         taskID: taskNum
     });
 
-    addInstruction(taskNum); // this is commented out because the task scetch loads the instruction code
-    // Add handlers to the add buttons
+    addInstruction(taskNum);
+
+    // Add handlers to the buttons
     task.querySelectorAll(".addInstruction").forEach(btn => {
         btn.addEventListener("click", () => addInstruction(task));
     });
@@ -104,6 +105,10 @@ function addTest(task) {
     return test;
 }
 
+function deleteTask(task) {
+
+}
+
 function deleteItem(task, order) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
     let maxItem = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order)));
@@ -128,5 +133,5 @@ function deleteItem(task, order) {
 load(function () {
     addTask();
 
-    $("#addTask").addEventListener("click", addTask.bind(this));
+    $("#addTask").addEventListener("click", () => addTask());
 });

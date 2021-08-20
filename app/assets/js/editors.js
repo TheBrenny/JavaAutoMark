@@ -4,6 +4,10 @@ var require = {
     }
 };
 
+function getAllUninitialisedEditors() {
+    return $$(".editor:not(.initialised)");
+}
+
 function createEditor(selector, type) {
     if (!(selector instanceof HTMLElement)) selector = document.querySelector(selector);
     selector.style.border = "1px solid #7e7f83ff";
@@ -54,14 +58,14 @@ function createEditor(selector, type) {
     };
     editor.onDidContentSizeChange(updateHeight);
     updateHeight();
+    selector.classList.toggle("initialised");
 
     return editor;
 }
 
 function makeEditors() {
-    let editors = $$(".editor:not(.initialised)");
+    let editors = getAllUninitialisedEditors();
     editors.forEach(function (editor) {
         createEditor(editor);
-        editor.classList.toggle("initialised");
     });
 }
