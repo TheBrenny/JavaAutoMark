@@ -146,8 +146,7 @@ gulp.task("sass", function () {
         .pipe(sourcemaps.init())
         .pipe(sass().on("error", sass.logError))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest("app/assets/css/"))
-        .pipe(browserSync.stream());
+        .pipe(gulp.dest("app/assets/css/"));
 });
 
 gulp.task("browserSync", function (cb) {
@@ -195,7 +194,16 @@ gulp.task("nodemon", function (cb) {
 
 gulp.task("watch", gulp.series("sass", function (cb) {
     gulp.watch("app/assets/scss/**/*.scss", gulp.series("sass"));
+
+    // Catch and stream changes
+    gulp.watch(["app/assets/**/*.*", "!**/*.map", "!app/assets/scss/**"]).on("all", streamFileChanges);
+    // gulp.watch("app/assets/js/**/*.js").on("all", streamFileChanges);
+    // gulp.watch("app/assets/img/**/*.*").on("all", streamFileChanges);
     cb();
 }));
+
+function streamFileChanges(event, path) {
+    gulp.src(path).pipe(browserSync.stream());
+}
 
 gulp.task("default", gulp.series("nodemon", "browserSync", "watch"));

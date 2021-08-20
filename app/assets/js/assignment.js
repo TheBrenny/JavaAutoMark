@@ -8,7 +8,7 @@ function moveInstrAndTest(task, event) {
     let theDiv = event.target.parentElement.parentElement;
     let dir = event.target.classList.contains("moveUp") ? -1 : 1;
     let maxInstruction = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order)));
-    
+
     let o = parseInt(theDiv.dataset.order);
     if (o + dir > 0 && o + dir <= maxInstruction) {
         let swapper = task.querySelector(`[data-order="${o + dir}"]`);
@@ -17,8 +17,8 @@ function moveInstrAndTest(task, event) {
         swapper.style.order = o;
         swapper.dataset.order = o;
 
-        if(theDiv.classList.contains("test") && swapper.classList.contains("test") ) {
-            let tmp= theDiv.dataset.testid;
+        if (theDiv.classList.contains("test") && swapper.classList.contains("test")) {
+            let tmp = theDiv.dataset.testid;
             theDiv.querySelector(".testID").innerHTML = "Test" + swapper.dataset.testid;
             theDiv.dataset.testid = swapper.dataset.testid;
             swapper.querySelector(".testID").innerHTML = "Test" + tmp;
@@ -31,7 +31,7 @@ function moveInstrAndTest(task, event) {
 function addTask() {
     let tasks = Array.from($("#newassignment").querySelectorAll(".task"));
     let lastTask = (tasks.length > 0) ? tasks[tasks.length - 1] : null;
-    
+
     let taskNum = 1;
     if (lastTask === null)
         lastTask = $("#newassignment>#details");
@@ -49,6 +49,9 @@ function addTask() {
     });
     task.querySelectorAll(".addTest").forEach(btn => {
         btn.addEventListener("click", () => addTest(task));
+    });
+    task.querySelectorAll(".del").forEach(btn => {
+        btn.addEventListener("click", (e) => deleteTask(task));
     });
 
     return task;
@@ -106,23 +109,35 @@ function addTest(task) {
 }
 
 function deleteTask(task) {
+    if (["number", "string"].includes(typeof task)) task = $("#task" + task);
+    // let maxItem = Math.max(0, ...Array.from($$(".task")).map(e => parseInt(e.dataset.taskid)));
 
+    task.remove();
+
+    // decrement each .task's taskid data attribute by 1 if it is greater than the deleted task
+    $$(".task").forEach(e => {
+        let taskID = parseInt(e.dataset.taskid);
+        if (taskID > parseInt(task.dataset.taskid)) {
+            e.dataset.taskid = taskID - 1;
+            e.id = "task" + (taskID - 1);
+        }
+    });
 }
 
 function deleteItem(task, order) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
     let maxItem = Math.max(0, ...Array.from(task.querySelectorAll(".test, .instr")).map(e => parseInt(e.dataset.order)));
     let toDelete = task.querySelector(`[data-order="${order}"]`);
-    
+
     toDelete.remove();
 
-    for(var i = order + 1; i <= maxItem; i++) {
+    for (var i = order + 1; i <= maxItem; i++) {
         let toMove = task.querySelector(`[data-order="${i}"]`);
-        
+
         toMove.dataset.order--;
         toMove.style.order = toMove.dataset.order;
 
-        if(toDelete.classList.contains("test") && toMove.classList.contains("test") ) {
+        if (toDelete.classList.contains("test") && toMove.classList.contains("test")) {
             toMove.dataset.testid--;
             toMove.querySelector(".testID").innerHTML = "Test " + toMove.dataset.testid;
         }
