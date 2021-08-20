@@ -17,3 +17,8 @@ function ready(fn) {
         document.addEventListener('DOMContentLoaded', fn);
     }
 }
+
+function wrongPassword(element) {
+    element.innerHTML = "Incorrect username or password";
+    element.style.animation = ".5s shake";
+}

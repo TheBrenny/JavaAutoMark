@@ -31,6 +31,25 @@ $highlighted-task-button: #888890ff;
     font-style: normal;
 }
 
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+  
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
@@ -72,14 +91,14 @@ body {
         }
 
         form {
-            padding: 20px 50px;
+            padding: 20px 30px;
             display: flex;
             flex-direction: column;
 
             input[type="text"],
             input[type="password"] {
-                width: 200px;
-                font-size: 20px;
+                width: 225px;
+                font-size: 18px;
                 padding: 5px;
                 border-radius: 5px;
                 border: 1px solid $gray-web;
@@ -110,9 +129,10 @@ body {
                 cursor: pointer;
             }
 
-            #forgotPass {
+            .error {
                 font-size: 13px;
                 margin: 3px;
+                color: red;
             }
 
             label {
