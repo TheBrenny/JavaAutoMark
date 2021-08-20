@@ -390,6 +390,39 @@ body {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+
+            .del {
+                height: 30px;
+                width: 30px;
+                margin: 5px;
+                background-color: $tomato;
+                border-radius: 5px;
+                margin: 5px 15px;
+                transition: ease(background-color), ease(box-shadow);
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 5px $jet;
+                text-align: center;
+
+                img {
+                    width: 98%;
+                    height: 100%;
+                    transition: ease(filter);
+                }
+            }
+
+            .del:hover {
+                background-color: $highlighted-tomato;
+
+                img {
+                    filter: brightness(2);
+                }
+
+            }
+
+            .del:active {
+                box-shadow: 0 0 5px $jet;
+            }
         }
 
         .test,
@@ -468,14 +501,15 @@ body {
                     cursor: pointer;
                     transition: ease(background-color);
 
-                    svg {
+                    img {
                         width: 20px;
+                        transition: ease(filter);
                     }
                 }
 
                 .moveButton:hover {
-                    .cls-1 {
-                        fill: #fff;
+                    img {
+                        filter: brightness(2);
                     }
 
                     background-color: $highlighted-button-blue;
@@ -495,21 +529,18 @@ body {
                 box-shadow: 0 2px 5px $jet;
                 text-align: center;
 
-                svg {
+                img {
                     width: 98%;
                     height: 100%;
-                }
-
-                .cls-2 {
-                    transition: ease(fill);
+                    transition: ease(filter);
                 }
             }
 
             .del:hover {
                 background-color: $highlighted-tomato;
 
-                .cls-2 {
-                    fill: #e6e6e6;
+                img {
+                    filter: brightness(2);
                 }
 
             }
