@@ -22,7 +22,7 @@ CREATE TABLE `assignments` (
   `assignment_id` INTEGER AUTO_INCREMENT UNIQUE,
   `course_uuid` INTEGER NOT NULL,
   `code_location` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`assignment_id`),
   FOREIGN KEY (`course_uuid`) REFERENCES `courses` (`uuid`)
 );
 
