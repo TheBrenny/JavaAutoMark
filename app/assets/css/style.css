@@ -583,6 +583,9 @@ body #login_container form label {
   text-decoration: none;
   color: inherit;
 }
+#adminContainer .column .tile h1 {
+  padding-top: 0.5em;
+}
 #adminContainer .separator {
   width: 1px;
   background-color: #7e7f83ff;

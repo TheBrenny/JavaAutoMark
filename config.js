@@ -28,6 +28,7 @@ module.exports.helmet = {
             scriptSrc: [
                 "'self'",
                 "cdnjs.cloudflare.com",
+                "kit.fontawesome.com",
                 module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],
