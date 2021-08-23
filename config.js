@@ -1,17 +1,18 @@
 require("dotenv").config();
 
+const appConfig = require("./config/config.json");
+
 const forceDev = false;
 
 module.exports = {};
 
 module.exports.db = {
-    url: new URL(process.env.MYSQL_URL) || undefined
+    url: new URL(process.env.MYSQL_URL) || new URL(appConfig.sql.url) || undefined
 };
 
 module.exports.session = {
-    secret: process.env.SESSION_SECRET || "this is the encryption secret",
-    cookieName: process.env.SESSION_COOKIE || "session",
-    rememberName: process.env.REMEMBER_NAME || "remme",
+    secret: process.env.SESSION_SECRET || appConfig.session.secret || "this is the encryption secret",
+    cookieName: process.env.SESSION_COOKIE || appConfig.session.cookieName || "session",
 };
 
 module.exports.env = {
@@ -42,19 +43,14 @@ module.exports.morgan = {
     stream: process.stdout
 };
 
-
 module.exports.serverInfo = {
     host: process.env.HOST || "localhost",
     port: process.env.PORT || 80,
 };
 
 module.exports.storage = {
-    provider: process.env.STORAGE || "localstorage",
-    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : {
+    provider: process.env.STORAGE || appConfig.storage.provider || "localstorage",
+    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : appConfig.storage.options || {
         path: "storage/data"
     }
 };
-// If non-local storage is used, add a default value for the container
-if (module.exports.storage.provider !== "localstorage" && module.exports.storage.options.container == undefined) {
-    module.exports.storage.options.path = "storage/data";
-}

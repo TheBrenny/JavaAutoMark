@@ -44,10 +44,13 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.12.1",
     "helmet": "^4.6.0",
+    "inquirer": "^8.1.2",
+    "inquirer-file-tree-selection-prompt": "^1.0.12",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
     "scetch": "^1.4.0",
+    "semver": "^7.3.5",
     "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/dist",
     "smcloudstore-localstorage": "https://github.com/TheBrenny/smcloudstore-localstorage/tarball/main"
   },
