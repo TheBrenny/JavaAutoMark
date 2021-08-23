@@ -20,7 +20,7 @@
 
         <!--<label for="pass">Password:</label>-->
         <input type="password" name="pass" placeholder="Password" />
-        <p class="error" id="wrongPassword" href=""></p>
+        <p class="error" id="wrongPassword"></p>
 
         <input type="submit" value="Log in" />
 

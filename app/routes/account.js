@@ -4,50 +4,6 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 
-router.get(["/user"], (req, res) => {
-    let s = session(req);
-
-    res.render("viewuser", {
-    });
-});
-
-router.get("/createteacher", checks.isAuthed, (req, res) => {
-    let s = session(req);
-
-    res.render("createuser", {
-    });
-});
-
-router.post("/createteacher", async (req, res) => {
-    let zid = req.body.zID.replace(/^z/g, "");
-    let fname = req.body.fName;
-    let lname = req.body.lName;
-    let email = req.body.email;
-    let password = req.body.pass;
-
-    let bad = false;
-    let target = (await Database.teachers.getUser(zid));
-
-    // not found user
-    if (target == undefined) {
-        const passHash = crypto.hashSync(password, 12);
-        bad = !(await Database.teachers.addUser(zid, email, fname, lname, passHash));
-    } else {
-        bad = true;
-    }
-
-    if (bad) {
-        res.status(401).redirect("/createteacher");
-    } else {
-        res.redirect("/admin");
-    }
-});
-
-router.get("/logout", async (req, res) => {
-    session(req).setAccount(null);
-    res.redirect("/");
-});
-
 router.get("/login", [
     checks.isGuest,
 ], async (req, res) => {
@@ -58,6 +14,36 @@ router.get("/login", [
         "html": () => res.render("login", {
             badLogin: session(req).getBadLogin(),
         }),
+    });
+});
+
+router.get("/logout", async (req, res) => {
+    session(req).setAccount(null);
+    res.redirect("/");
+});
+
+router.get("/user", (req, res) => {
+    res.redirect("/teachers/" + session(req).getAccount().id);
+});
+
+router.get("/teachers/view", async (req, res) => {
+    // TODO: IMPLEMENT THIS!
+    return res.status(501).send("not implemented").end();
+
+    let teachers = await Database.teachers.getAll();
+    teachers = Database.teachers.toObject(teachers);
+    res.render("allteachers", {
+        teachers: teachers,
+    });
+});
+
+router.get("/teachers/:id", async (req, res) => {
+    let id = req.params.id;
+    let t = await Database.teachers.getUser(id);
+    t = Database.teachers.toObject(t);
+
+    res.render("viewuser", {
+        teacher: t
     });
 });
 
@@ -91,7 +77,6 @@ router.post("/login", checks.isGuest, async (req, res) => {
         res.redirect("/");
     }
 });
-
 
 function hashPassword(p) {
     crypto.hashSync(p, 12);

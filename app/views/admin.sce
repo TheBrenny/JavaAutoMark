@@ -3,16 +3,16 @@
 [[i= partials/header]]
 
 <div id="adminContainer">
-    <div class="column"  id="teachCon">
+    <div class="column" id="teachCon">
         <div class="tile" id="viewTeach">
-            <a href="/viewteacher">
+            <a href="/teachers/view">
                 <i class="fas fa-users fa-6x"></i>
                 <h1>view teach</h1>
             </a>
         </div>
 
         <div class="tile" id="newTeach">
-            <a href="/createteacher">
+            <a href="/admin/teachers/create">
                 <i class="fas fa-user-plus fa-6x"></i>
                 <h1>new teach</h1>
             </a>

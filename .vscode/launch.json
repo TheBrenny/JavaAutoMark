@@ -15,7 +15,6 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node",
-            "port": 9229,
             "console": "integratedTerminal",
             "preLaunchTask": "startMysql",
             "resolveSourceMapLocations": [
@@ -32,7 +31,7 @@
                 "run-script",
                 "start"
             ],
-            "port": 9229,
+            "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
             ],

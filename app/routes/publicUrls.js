@@ -9,11 +9,10 @@ const errors = require("./errors/generic").errors;
 router.get("/download/:id", async (req, res, next) => {
     let id = req.params.id;
 
-    // if id isn't available for download:
     let blob = (await Database.publicUrls.getUrlFromToken("get", id));
 
     if (blob == undefined) {
-        throw errors[404].fromReq(req); // fixed
+        throw errors[404].fromReq(req);
     } else {
         let stream = await storage.getObject("", blob.public_urls_path);
         stream.on("end", () => res.end());
