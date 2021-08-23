@@ -27,6 +27,7 @@ class TeacherModel {
     }
 
     toObject(obj) {
+        if (Array.isArray(obj)) return Array.from(obj).map(o => this.toObject(o));
         let fields = ["zid", "email", "fname", "lname", "password"];
         return this.db.toObject(this.table, obj, fields);
     }
