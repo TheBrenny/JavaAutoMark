@@ -14,7 +14,7 @@ router.get("/download/:id", async (req, res, next) => {
     if (blob == undefined) {
         throw errors[404].fromReq(req);
     } else {
-        let stream = await storage.getObject("", blob.public_urls_path);
+        let stream = await storage.getObject(storage.container, blob.public_urls_path);
         stream.on("end", () => res.end());
         stream.pipe(res);
     }
@@ -29,14 +29,14 @@ router.put("/upload/:id", bodyParser.raw({
     if (token == undefined) {
         throw errors[404].fromReq(req);
     } else {
-        let prom = await storage.putObject("", token.public_urls_path, req.body);
+        let prom = await storage.putObject(storage.container, token.public_urls_path, req.body);
         res.send("done").end();
     }
 });
 
 router.get("/getUploadLink/*", checks.isAuthed, async (req, res) => {
     let path = req.path.substring("/getUploadLink/".length);
-    let token = await storage.presignedPutUrl("", path);
+    let token = await storage.presignedPutUrl(storage.container, path);
     res.json({
         token
     });
@@ -44,7 +44,7 @@ router.get("/getUploadLink/*", checks.isAuthed, async (req, res) => {
 
 router.get("/getDownloadLink/*", async (req, res) => {
     let path = req.path.substring("/getDownloadLink/".length);
-    let token = await storage.presignedGetUrl("", path);
+    let token = await storage.presignedGetUrl(storage.container, path);
     res.json({
         token
     });
