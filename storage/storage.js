@@ -78,3 +78,6 @@ module.exports = (function () {
 })();
 
 module.exports.storageProviders = storageProviders;
+Object.defineProperty(module.exports, "container", {
+    get: () => config.storage.options.container
+});

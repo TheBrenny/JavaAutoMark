@@ -47,20 +47,22 @@ async function install() {
         config.storage.provider = (await askList("What storage provider do you want to use?", providers, 0));
 
         let pIndex = ["aws", "gcs", "azure"].indexOf(config.storage.provider);
+        let pName = (["AWS", "GCS", "Azure"])[pIndex];
         let accessIDName = (["Access Key ID", "Project ID", "Storage Account"])[pIndex];
         let secretName = (["Secret Access Key", "Key Filename", "Storage Access Key"])[pIndex];
         let containerName = (["Bucket", "Bucket", "Container"])[pIndex];
 
+        config.storage.options = {};
         if (config.storage.provider === "localstorage") {
-            config.storage.path = (await askPath("Where do you want to store your files?", "/"));
+            config.storage.options.path = (await askPath("Where do you want to store your files?", "/"));
         } else {
-            config.storage.accessID = (await ask(`What is your ${config.storage.provider} ${accessIDName}?`));
+            config.storage.options.accessID = (await ask(`What is your ${config.storage.provider} ${accessIDName}?`));
             if (config.storage.provider === "gcs") {
-                config.storage.secret = (await askPath("Where is your GCS JSON keyfile stored?", ".json"));
+                config.storage.options.secret = (await askPath("Where is your GCS JSON keyfile stored?", ".json"));
             } else {
-                config.storage.secret = (await ask(`What is your ${config.storage.provider} ${secretName}?`));
+                config.storage.options.secret = (await ask(`What is your ${config.storage.provider} ${secretName}?`));
             }
-            config.storage.container = (await ask(`What is your ${config.storage.provider} ${containerName} name?`));
+            config.storage.options.container = (await ask(`What is your ${config.storage.provider} ${containerName} name?`, "jam-store"));
         }
 
 
@@ -94,8 +96,6 @@ async function install() {
         console.log(output);
         happy = await askYN("Are you happy with the above settings? ", true);
     }
-
-
 
     if (copyGcsConfig) {
         let dest = path.join(configPath, "gcs-config.json");
@@ -209,10 +209,16 @@ if (require.main === module) {
         })
         .then(() => {
             let installDB = require("../db/tools/installDB");
-            installDB.install(installDB.flags.clean | installDB.flags.install);
+            return installDB.install(installDB.flags.clean | installDB.flags.install);
+        })
+        .then(() => {
+            console.log(colourText("\nInstallation complete!", "green", "italic"));
+            process.exit(0);
         })
         .catch(exit);
 } else module.exports = {
+    checkInstall,
     install,
-    checkInstall
+    colour,
+    colourText
 };
