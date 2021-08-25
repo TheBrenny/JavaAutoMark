@@ -1,8 +1,9 @@
 (async () => {
     const fs = require('fs');
     const path = require("path");
-    let forceInstall = (process.argv.length > 2 && process.argv[2] === "--install");
-    if (!fs.existsSync(path.resolve(".", "install", "install.lock")) || forceInstall) {
+    let skipInstall = (process.argv.length > 2 && process.argv.includes("--skipInstall"));
+    let forceInstall = (process.argv.length > 2 && process.argv.includes("--forceInstall"));
+    if (!skipInstall && (!fs.existsSync(path.resolve(".", "install", "install.lock")) || forceInstall)) {
         console.log("\x1b[3;34mInstalling...\x1b[0m");
         let installer = require("./install/install");
         let run = await installer.checkInstall();

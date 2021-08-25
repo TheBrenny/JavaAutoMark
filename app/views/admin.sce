@@ -2,7 +2,7 @@
 
 [[i= partials/header]]
 
-<!-- <div id="adminContainer">
+<div id="adminContainer">
     <div class="column"  id="teachCon">
         <div class="tile" id="viewTeach">
             <a href="/teachers/view">
@@ -31,7 +31,7 @@
 
         <div class="tile" id="newClass">
             <a href="/">
-                <!-- Using 3x here instead of 6x is because fa doubles the size anyway!
+                <!-- Using 3x here instead of 6x is because fa doubles the size anyway! -->
                 <span class="fa-stack fa-3x">
                     <i class="fas fa-stack-2x fa-chalkboard"></i>
                     <i class="fas fa-stack-1x fa-plus"></i>
@@ -40,7 +40,7 @@
             </a>
         </div>
     </div>
-</div> -->
+</div>
 
 <div id="adminContent">
     

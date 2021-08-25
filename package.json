@@ -7,7 +7,10 @@
     "jam": "node server.js"
   },
   "scripts": {
-    "heroku-postbuild": "node ./db/tools/installDB.js cleanDB installDB demoDB"
+    "dormant.heroku-postbuild": "node ./db/tools/installDB.js cleanDB installDB demoDB",
+    "skipInstall": "node ./server.js --skipInstall",
+    "forceInstall": "node ./server.js --forceInstall",
+    "start": "node ./server.js"
   },
   "repository": {
     "type": "git",
@@ -62,8 +65,8 @@
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "nodemon": "^2.0.12",
-    "sass": "^1.37.5",
-    "sql-cli-repl": "^1.2.0"
+    "sass": "^1.38.1",
+    "sql-cli-repl": "^1.2.1"
   },
   "private": "true"
 }
