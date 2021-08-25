@@ -3,3 +3,4 @@
 !.gitignore
 !README.md
 !_sample.config.json
+!configLoader.js

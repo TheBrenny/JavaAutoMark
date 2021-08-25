@@ -1,18 +1,18 @@
 require("dotenv").config();
 
-const appConfig = require("./config/config.json");
+const appConfig = require("./config/configLoader");
 
 const forceDev = false;
 
 module.exports = {};
 
 module.exports.db = {
-    url: new URL(process.env.MYSQL_URL) || new URL(appConfig.sql.url) || undefined
+    url: new URL(process.env.MYSQL_URL) || new URL(appConfig.sql.url)
 };
 
 module.exports.session = {
-    secret: process.env.SESSION_SECRET || appConfig.session.secret || "this is the encryption secret",
-    cookieName: process.env.SESSION_COOKIE || appConfig.session.cookieName || "session",
+    secret: process.env.SESSION_SECRET || appConfig.session.secret,
+    cookieName: process.env.SESSION_COOKIE || appConfig.session.cookieName,
 };
 
 module.exports.env = {
@@ -49,8 +49,6 @@ module.exports.serverInfo = {
 };
 
 module.exports.storage = {
-    provider: process.env.STORAGE || appConfig.storage.provider || "localstorage",
-    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : appConfig.storage.options || {
-        path: "storage/data"
-    }
+    provider: process.env.STORAGE || appConfig.storage.provider,
+    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : appConfig.storage.options
 };
