@@ -94,8 +94,9 @@ body #login_container form input[type=submit]:hover {
 }
 body #login_container form .error {
   font-size: 13px;
-  margin: 3px;
+  margin: 0 6px;
   color: red;
+  height: 15px;
 }
 body #login_container form label {
   padding: 10px 0;
