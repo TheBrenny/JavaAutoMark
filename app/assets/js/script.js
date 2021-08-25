@@ -1,10 +1,46 @@
-function $(selector) {
-    return document.querySelector(selector);
+function $() {
+    return document.querySelector(...arguments);
 }
 
-function $$(selector) {
-    return document.querySelectorAll(selector);
+function $$() {
+    return document.querySelectorAll(...arguments);
 }
+
+Object.defineProperty(HTMLElement.prototype, "$", {
+    value: function () {
+        return this.querySelector(...arguments);
+    }
+});
+
+Object.defineProperty(HTMLElement.prototype, "$$", {
+    value: function () {
+        return this.querySelectorAll(...arguments);
+    }
+});
+
+Object.defineProperty(HTMLElement.prototype, "$up", {
+    value: function () {
+        if (this.parentElement) {
+            if (this.parentElement.matches(...arguments)) return this.parentElement;
+            return this.parentElement.$up(...arguments);
+        } else {
+            return undefined;
+        }
+    }
+});
+
+Object.defineProperty(HTMLElement.prototype, "$$up", {
+    value: function (list) {
+        if (list === undefined || list === null) list = [];
+
+        if (this.parentElement) {
+            if (this.parentElement.matches(...arguments)) list.push(this.parentElement);
+            return this.parentElement.$$up(...arguments);
+        } else {
+            return Reflect.construct(Array, list, NodeList);
+        }
+    }
+});
 
 function load(fn) {
     window.addEventListener('load', fn);

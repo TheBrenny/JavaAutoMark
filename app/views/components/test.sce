@@ -3,7 +3,7 @@
         <li class="moveButton moveUp">
             <img draggable="false" src="/assets/img/items/arrow_up_grey.svg" alt="Move Up" />
         </li>
-        <li>Task [[testID]]</li>
+        <li class="testID">Test [[testID]]</li>
         <li class="moveButton moveDown">
             <img draggable="false" src="/assets/img/items/arrow_down_grey.svg" alt="Move Down" />
         </li>
