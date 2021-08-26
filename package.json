@@ -7,7 +7,6 @@
     "jam": "node server.js"
   },
   "scripts": {
-    "dormant.heroku-postbuild": "node ./db/tools/installDB.js cleanDB installDB demoDB",
     "skipInstall": "node ./server.js --skipInstall",
     "forceInstall": "node ./server.js --forceInstall",
     "start": "node ./server.js"
