@@ -1,8 +1,20 @@
+// TODO: Allow scetch to automatically add variables to each response!
+
 const router = require("express").Router();
+const checks = require("./tools/checks");
+const session = require("./tools/session");
+
+router.use((req, res, next) => {
+    if(req.path === "/login") next();
+    else checks.isAuthed(req,res,next);
+});
 
 router.get(["/", "/home"], (req, res) => {
-    res.render("index", {
-        time: new Date().toLocaleString()
+    let s = session(req);
+
+    res.render("home", {
+        time: new Date().toLocaleString(),
+        user: s.getAccount()
     });
 });
 

@@ -1,23 +1,48 @@
-let result = {
-    morgan: {
-        stream: process.env.IS_VSCODE ? {
-            write: console.log
-        } : process.stdout
-    },
-    browsersyncActive: !!process.env.BROWSER_SYNC_ACTIVE && process.env.BROWSER_SYNC_ACTIVE.toLowerCase() !== "false",
-    helmet: {},
-    serverInfo: {
-        host: process.env.HOST || "localhost",
-        port: process.env.PORT || 80
-    },
-    session: {
-        secret: process.env.SECRET || "thisIsSecretHaHa",
-    },
-    debug: !!process.env.DEBUG && process.env.DEBUG.toLowerCase() !== "false",
+require("dotenv").config();
+
+const forceDev = false;
+
+module.exports = {};
+
+module.exports.db = {
+    url: new URL(process.env.MYSQL_URL) || undefined
 };
 
-result.helmet = result.browsersyncActive ? {
-    contentSecurityPolicy: false
-} : {};
+module.exports.session = {
+    secret: process.env.SESSION_SECRET || "this is the encryption secret",
+    cookieName: process.env.SESSION_COOKIE || "session",
+    rememberName: process.env.REMEMBER_NAME || "remme",
+};
 
-module.exports = result;
+module.exports.env = {
+    node: process.env.NODE_ENV || "production",
+    deploy: process.env.DEPLOY || "local",
+    gulping: process.env.GULPING == "true",
+    isDev: forceDev
+};
+module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
+
+module.exports.helmet = {
+    contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+            defaultSrc: ["'self'", "http:"],
+            scriptSrc: [
+                "'self'",
+                `'nonce-browsersync'`,
+                (req, res) => `'nonce-${res.locals.nonce}'`,
+            ],
+            upgradeInsecureRequests: null
+        }
+    }
+};
+
+module.exports.morgan = {
+    stream: process.stdout
+};
+
+
+module.exports.serverInfo = {
+    host: process.env.HOST || "localhost",
+    port: process.env.PORT || 80,
+};
