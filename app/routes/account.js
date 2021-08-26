@@ -23,7 +23,7 @@ router.get("/logout", async (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-    res.redirect("/teachers/" + session(req).getAccount().id);
+    res.redirect("/teachers/" + session(req).getAccount().zid);
 });
 
 router.get("/teachers/view", async (req, res) => {
