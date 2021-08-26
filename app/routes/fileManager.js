@@ -15,7 +15,7 @@ router.get("/download/*", async (req, res, next) => {
     }
 });
 
-router.put("/upload/:id", bodyParser.raw({
+router.put("/upload/*", bodyParser.raw({
     limit: "5mb"
 }), async (req, res) => {
     let path = req.path.substring("/upload/".length);
