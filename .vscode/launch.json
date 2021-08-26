@@ -15,9 +15,12 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node",
-            "port": 9229,
             "console": "integratedTerminal",
-            "preLaunchTask": "startMysql"
+            "preLaunchTask": "startMysql",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ],
         },
         {
             "type": "node",
@@ -28,11 +31,34 @@
                 "run-script",
                 "start"
             ],
-            "port": 9229,
+            "console": "integratedTerminal",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "preLaunchTask": "startMysql"
+            "preLaunchTask": "startMysql",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "name": "run installer",
+            "program": "${workspaceFolder}/install/install.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "type": "pwa-node"
+        },
+        {
+            "name": "Attach",
+            "port": 3230,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
         }
     ]
 }

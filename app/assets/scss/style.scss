@@ -5,9 +5,19 @@ $pistachio: #8acd6dff;
 $highlighted-pistachio: #5aa739ff;
 $tomato: #fe6448ff;
 $highlighted-tomato: #f42601ff;
+$button-blue: #4b7ce6ff;
+$highlighted-button-blue: #3559a7ff;
 $gray-web: #7e7f83ff;
 $almond: #d9c5b2ff;
 $cultured: #f3f3f4ff;
+$task-button: #c4c4c4ff;
+$highlighted-task-button: #888890ff;
+
+@function ease($property) {
+    $transition: 0.3s ease $property;
+
+    @return $transition;
+}
 
 @mixin content-font {
     font-family: roboto, sans-serif;
@@ -21,13 +31,32 @@ $cultured: #f3f3f4ff;
     font-style: normal;
 }
 
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+  
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     margin: 0;
 }
 
-body, html {
+html {
     width: 100%;
     height: 100%;
 }
@@ -39,11 +68,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../img/splash.svg');
+    background-image: url('/assets/img/splash.svg');
     background-position: center;
     background-repeat: no-repeat;
 
     #login_container {
+        margin-top: calc(50vh - 159px);
         background-color: $cultured;
         @include content-font();
         letter-spacing: 1px;
@@ -61,13 +91,14 @@ body {
         }
 
         form {
-            padding: 20px 50px;
+            padding: 20px 30px;
             display: flex;
             flex-direction: column;
 
-            input[type="text"], input[type="password"] {
-                width: 200px;
-                font-size: 20px;
+            input[type="text"],
+            input[type="password"] {
+                width: 225px;
+                font-size: 18px;
                 padding: 5px;
                 border-radius: 5px;
                 border: 1px solid $gray-web;
@@ -76,7 +107,7 @@ body {
                 @include content-font();
                 letter-spacing: 2px;
                 font-style: normal;
-                
+
             }
 
             input[type="submit"] {
@@ -98,9 +129,11 @@ body {
                 cursor: pointer;
             }
 
-            #forgotPass {
+            .error {
                 font-size: 13px;
-                margin: 3px;
+                margin: 0 6px;
+                color: red;
+                height: 15px;
             }
 
             label {
@@ -111,21 +144,24 @@ body {
 }
 
 #header {
+    $header-height: 75px;
+    $header-buffer: 30px;
+
     position: fixed;
     top: 0;
     width: 100%;
     background-color: $cultured;
     box-shadow: 0 0 10px black;
-    height:75px;
+    height: $header-height;
     display: flex;
     justify-content: space-between;
+    z-index: 10;
 
     a.home {
-        background-image: url("../img/jam_jar_coloured.svg");
+        background-image: url("/assets/img/jam_jar_coloured.png");
         background-repeat: no-repeat;
-        background-position-x: -70px;
         display: inline-block;
-        background-size: 400px 90px;
+        background-size: 250px 90px;
         width: 80px;
         height: 100px;
         margin-left: 50px;
@@ -133,7 +169,7 @@ body {
     }
 
     a.home:hover {
-        width: 200px;
+        width: 220px;
     }
 
     #menu {
@@ -155,16 +191,22 @@ body {
             background-color: rgba(255, 209, 71, 0.8);
         }
 
-        span {
-            height: 30px;
-            width: 1px;
-            background-color: $smoky-black;
-        }
+        // span {
+        //     height: 30px;
+        //     width: 1px;
+        //     background-color: $smoky-black;
+        // }
 
         a {
             text-decoration: none;
             color: inherit;
+            border-right: 1px solid $smoky-black;
+            display: inline-block;
         }
+    }
+
+    +* {
+        margin-top: $header-height+$header-buffer;
     }
 }
 
@@ -178,10 +220,10 @@ body {
     font-family: 'Roboto', sans-serif;
 
     #groupNames {
-        
+
         display: flex;
         flex-direction: row;
-        
+
         .name {
             display: flex;
             flex-direction: column;
@@ -196,7 +238,8 @@ body {
         }
     }
 
-    input[type="text"], input[type="password"] {
+    input[type="text"],
+    input[type="password"] {
         font-size: 15px;
         padding: 10px;
         border-radius: 5px;
@@ -207,9 +250,9 @@ body {
         @include content-font();
         letter-spacing: 1px;
         font-style: normal;
-        
+
     }
-    
+
     input[type="submit"] {
         margin: 20px 0 10px 0;
         padding: 10px 0;
@@ -273,5 +316,412 @@ body {
         h3 {
             font-weight: 600;
         }
+    }
+}
+
+.block {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: $cultured;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px $gray-web;
+    margin-bottom: 35px;
+}
+
+.wrap {
+    width: 700px;
+    @include content-font();
+    margin-bottom: 50px;
+}
+
+#error {
+    @extend .block;
+    @extend .wrap;
+    flex-direction: column;
+
+    .preWrap {
+        background: #c4c4c4ff;
+        border-radius: 0.5em;
+        box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+        padding-bottom: 0.6em;
+
+        pre {
+            overflow-x: scroll;
+            padding: 1em;
+
+            &::-webkit-scrollbar {
+                width: 0.5em;
+                height: 0.5em;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $highlighted-task-button;
+                border-radius: 10em;
+                margin: 2em;
+            }
+
+            &::-webkit-scrollbar-button {
+                background: transparent;
+                width: 1em;
+            }
+        }
+    }
+}
+
+#newassignment {
+    @extend .wrap;
+
+    div#details {
+        @extend .block;
+
+        label {
+            @include content-font();
+        }
+
+        input[type="text"],
+        select {
+            width: 200px;
+            font-size: 20px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-style: normal;
+        }
+
+    }
+
+    div.task {
+        background-color: $cultured;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 50px;
+
+        display: flex;
+        flex-direction: column;
+
+        .taskHead {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+            .del {
+                height: 30px;
+                width: 30px;
+                margin: 5px;
+                background-color: $tomato;
+                border-radius: 5px;
+                margin: 5px 15px;
+                transition: ease(background-color), ease(box-shadow);
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 5px $jet;
+                text-align: center;
+
+                img {
+                    width: 98%;
+                    height: 100%;
+                    transition: ease(filter);
+                }
+            }
+
+            .del:hover {
+                background-color: $highlighted-tomato;
+
+                img {
+                    filter: brightness(2);
+                }
+
+            }
+
+            .del:active {
+                box-shadow: 0 0 5px $jet;
+            }
+        }
+
+        .test,
+        .instr {
+            display: flex;
+            order: attr(data-order);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $almond;
+            border-radius: 10px;
+            margin-bottom: 15px;
+
+
+            .editor {
+                flex-grow: 1;
+                align-self: stretch;
+                margin: 10px 0;
+                min-height: 50px;
+            }
+
+            ul {
+                align-self: stretch;
+                list-style: none;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 0;
+                width: 50px;
+                background-color: $button-blue;
+                color: white;
+                text-align: center;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+
+                li {
+                    display: flex;
+                    margin: 0;
+                    padding: 0;
+                    border-bottom: 1px solid #efefef;
+                    border-top: 1px solid #efefef;
+                    flex-grow: 1;
+                    align-items: center;
+                    justify-content: center;
+                    transition: 0.5s ease background-color;
+
+                    &:first-of-type {
+                        border-top: 0px;
+                    }
+
+                    &:last-of-type {
+                        border-bottom: 0px;
+                    }
+                }
+
+                .testID {
+                    flex-grow: 0;
+                    padding: 10px 0;
+                }
+
+                .moveUp {
+                    align-items: flex-start;
+                    padding-top: 10px;
+                    border-top-left-radius: 10px;
+                    padding: 5px 0;
+                }
+
+                .moveDown {
+                    border-bottom-left-radius: 10px;
+                    align-items: flex-end;
+                    padding-bottom: 10px;
+                    padding: 5px 0;
+                }
+
+                .moveButton {
+                    cursor: pointer;
+                    transition: ease(background-color);
+
+                    img {
+                        width: 20px;
+                        transition: ease(filter);
+                    }
+                }
+
+                .moveButton:hover {
+                    img {
+                        filter: brightness(2);
+                    }
+
+                    background-color: $highlighted-button-blue;
+                }
+            }
+
+            .del {
+                height: 30px;
+                width: 30px;
+                margin: 5px;
+                background-color: $tomato;
+                border-radius: 5px;
+                margin: 5px 15px;
+                transition: ease(background-color), ease(box-shadow);
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 5px $jet;
+                text-align: center;
+
+                img {
+                    width: 98%;
+                    height: 100%;
+                    transition: ease(filter);
+                }
+            }
+
+            .del:hover {
+                background-color: $highlighted-tomato;
+
+                img {
+                    filter: brightness(2);
+                }
+
+            }
+
+            .del:active {
+                box-shadow: 0 0 5px $jet;
+            }
+
+            .testCenter {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                flex-grow: 2;
+                margin-bottom: 15px;
+
+                .case {
+                    flex-grow: 2;
+                }
+
+                .editor {
+                    height: 60px;
+                }
+
+                .testDeets {
+                    display: flex;
+
+                    .small {
+                        margin-right: 15px;
+                    }
+
+                    .num {
+                        max-width: 60px;
+                    }
+
+                    .out {
+                        max-width: 120px;
+                    }
+
+                    .desc {
+                        flex-grow: 1;
+                    }
+                }
+            }
+
+            input[type="text"],
+            input[type="number"] {
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid $gray-web;
+                border-color: #8f8f8f;
+                @include content-font();
+                font-weight: 200;
+                letter-spacing: 1px;
+                font-style: normal;
+                width: auto;
+            }
+        }
+
+        #taskFoot {
+            order: 9999999999;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+
+            input[type="button"] {
+                margin: 20px 0 10px 0;
+                padding: 10px 20px;
+                width: 180px;
+                background-color: $task-button;
+                border: none;
+                border-radius: 5px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                font-size: 15px;
+                @include content-font();
+                transition: .5s ease background-color, 0.2s ease color;
+                cursor: pointer;
+            }
+
+            input[type="button"]:hover {
+                background-color: $highlighted-task-button;
+                color: white;
+                font-weight: 400;
+            }
+        }
+    }
+
+    #assignmentFooter {
+        display: flex;
+        justify-content: space-around;
+
+        input[type="button"] {
+            margin: 20px 0 10px 0;
+            padding: 15px 20px;
+            width: 250px;
+            background-color: $pistachio;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 15px;
+            @include content-font();
+            transition: .5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 1em;
+            box-shadow: 0 5px 10px $gray-web;
+        }
+
+        input[type="button"]:hover {
+            background-color: $highlighted-pistachio;
+            color: white;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-align: center;
+            box-shadow: 0 5px 5px $gray-web;
+        }
+
+        input[type="button"]:active {
+            box-shadow: 0 0px 5px $gray-web;
+        }
+    }
+}
+
+#adminContainer {
+    display: flex;
+    @include content-font();
+
+    .column {
+
+        .tile {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-transform: uppercase;
+            text-align: center;
+            background-color: $cultured;
+            box-shadow: 5px 5px 10px $gray-web;
+            border-radius: 10px;
+            margin: 50px;
+            padding: 25px;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            h1 {
+                padding-top: 0.5em;
+            }
+        }
+    }
+
+    .separator {
+        width: 1px;
+        background-color: $gray-web;
+        margin: 25px 0;
     }
 }
