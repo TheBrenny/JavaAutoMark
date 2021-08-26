@@ -1,5 +1,8 @@
-ace.config.set("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/");
-globalThis.allEditors = [];
+var require = {
+    paths: {
+        'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs'
+    }
+};
 
 function getAllUninitialisedEditors() {
     return $$(".editor:not(.initialised)");
@@ -13,32 +16,50 @@ function createEditor(selector, type) {
     const minHeight = selector.clientHeight;
     const value = selector.innerText;
     selector.innerText = "";
-    let editor = ace.edit(selector);
-    editor.setOptions({
+    let editor = monaco.editor.create(selector, {
         value,
+        language: 'java',
+        minimap: {
+            enabled: false
+        },
         fontSize: 12,
-        mode: "ace/mode/java",
-        theme: "ace/theme/eclipse",
-        showFoldWidgets: false,
-        minLines: 3,
-        maxLines: Infinity,
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true
+        folding: false,
+        glyphMargin: false,
+        lineNumbersMinChars: 2,
+        lineDecorationsWidth: 5,
+        overviewRulerLanes: 0,
+        scrollBeyondLastLine: false
     });
 
-    // editor.addAction({
-    //     id: 'save',
-    //     label: 'Save',
-    //     keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
-    //     run: function () {
-    //         // TODO: SAVE
-    //         console.log("save");
-    //     }
-    // });
-    
+    editor.addAction({
+        id: 'save',
+        label: 'Save',
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
+        run: function () {
+            // TODO: SAVE
+            console.log("save");
+        }
+    });
+
+    let ignoreEvent = false;
+    const updateHeight = () => {
+        const contentHeight = Math.min(1000, Math.max(minHeight, editor.getContentHeight()));
+        selector.style.width = `${selector.clientWidth}px`;
+        selector.style.height = `${contentHeight}px`;
+        try {
+            ignoreEvent = true;
+            editor.layout({
+                width,
+                height: contentHeight
+            });
+        } finally {
+            ignoreEvent = false;
+        }
+    };
+    editor.onDidContentSizeChange(updateHeight);
+    updateHeight();
     selector.classList.toggle("initialised");
-    allEditors.push(editor);
+
     return editor;
 }
 
