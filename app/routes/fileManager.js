@@ -11,7 +11,7 @@ router.get("/download/*", async (req, res, next) => {
         stream.on("end", () => res.end());
         stream.pipe(res);
     } catch (err) {
-        throw errors[404].fromReq(req);
+        throw err; // errors[404].fromReq(req);
     }
 });
 
@@ -21,10 +21,10 @@ router.put("/upload/*", bodyParser.raw({
     let path = req.path.substring("/upload/".length);
 
     try {
-        await storage.putObject(storage.container, token.public_urls_path, req.body);
+        await storage.putObject(storage.container, path, req.body);
         res.send("done").end();
-    } catch (e) {
-        throw errors[404].fromReq(req);
+    } catch (err) {
+        throw err; //errors[404].fromReq(req);
     }
 });
 

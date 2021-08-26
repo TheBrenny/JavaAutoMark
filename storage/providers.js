@@ -2,7 +2,7 @@
 // This means we can (sort of) keep the memory footprint down.
 module.exports = {
     "localstorage": () => require("smcloudstore-localstorage"),
-    "aws": () => require("@smcloudstore/aws-s3"),
+    "aws": () => require("smcloudstore-aws-s3"),
     "gcs": () => require("@smcloudstore/google-cloud-storage"),
     "azure": () => require("@smcloudstore/azure-storage"),
 };
@@ -27,7 +27,8 @@ module.exports.createOptions = function createOptions(provider, opts) {
 module.exports.createOptions.aws = function (accessKeyId, secretAccessKey) {
     return {
         accessKeyId,
-        secretAccessKey
+        secretAccessKey,
+        region: "ap-southeast-2"
     };
 };
 module.exports.createOptions.azure = function (storageAccount, storageAccessKey) {

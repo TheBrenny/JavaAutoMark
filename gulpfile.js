@@ -171,7 +171,7 @@ gulp.task("nodemon", function (cb) {
 
     nodemon({
         script: 'server.js',
-        exec: "node --inspect=9229",
+        exec: "node --trace-warnings --inspect=9229",
         env: {
             "NODE_ENV": 'development',
             "HOST": host,

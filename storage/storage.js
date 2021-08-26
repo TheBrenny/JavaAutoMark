@@ -6,29 +6,6 @@ const db = require("../db/db");
 
 const localStorageTableName = Database.publicUrls.table;
 
-const storageProviders = {
-    "aws": {
-        id: "aws",
-        provider: "aws-s3",
-        name: "Amazon S3"
-    },
-    "azure": {
-        id: "azure",
-        provider: "azure",
-        name: "Azure Storage"
-    },
-    "gcs": {
-        id: "gcs",
-        provider: "google-cloud-storage",
-        name: "Google Cloud Storage"
-    },
-    "localstorage": {
-        id: "localstorage",
-        provider: require("smcloudstore-localstorage"),
-        name: "Local Storage"
-    }
-};
-
 // Signing function
 async function localStorageSigningFunction(method, path, ttl) {
     let token;
@@ -77,7 +54,6 @@ module.exports = (function () {
     return global.storage;
 })();
 
-module.exports.storageProviders = storageProviders;
 Object.defineProperty(module.exports, "container", {
     get: () => config.storage.options.container
 });
