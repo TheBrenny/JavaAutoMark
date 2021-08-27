@@ -7,7 +7,7 @@ const forceDev = false;
 module.exports = {};
 
 module.exports.db = {
-    url: new URL(process.env.MYSQL_URL) || new URL(appConfig.sql.url)
+    url: tryNew(URL, process.env.MYSQL_URL) || new URL(appConfig.sql.url)
 };
 
 module.exports.session = {
@@ -50,5 +50,19 @@ module.exports.serverInfo = {
 
 module.exports.storage = {
     provider: process.env.STORAGE || appConfig.storage.provider,
-    options: !!process.env.STORAGE_OPTS ? JSON.parse(process.env.STORAGE_OPTS) : appConfig.storage.options
+    options: tryDo(JSON.parse, process.env.STORAGE_OPTS) || appConfig.storage.options
 };
+
+function tryDo(fn, param, thisArg) {
+    try {
+        if (!!param) return fn.call(thisArg, param);
+    } catch (e) {}
+    return false;
+}
+
+function tryNew(clazz, param) {
+    try {
+        if (!!param) return new clazz(param);
+    } catch (e) {}
+    return false;
+}
