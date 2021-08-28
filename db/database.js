@@ -3,8 +3,12 @@ const db = require("./db");
 class Database {
     constructor() {
         this.db = db;
-        this.teachers = new(require("./models/teachers"))(this);
+        this.assignments = new(require("./models/assignments"))(this);
+        this.courses = new(require("./models/courses"))(this);
         this.publicUrls = new(require("./models/publicUrls"))(this);
+        this.reports = new(require("./models/reports"))(this);
+        this.teachers = new(require("./models/teachers"))(this);
+        this.testCases = new(require("./models/testCases"))(this);
     }
 
     async query(query, ...args) {
