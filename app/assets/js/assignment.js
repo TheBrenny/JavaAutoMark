@@ -1,5 +1,6 @@
 // The following gets the sorted order of instructions and tests based on the order css style:
 function sortTask(task) {
+    if (["number", "string"].includes(typeof task)) task = $("#task" + task);
     return Array.from(task.$$(".test, .instr")).sort((a, b) => a.dataset.order - b.dataset.order);
 }
 
@@ -133,9 +134,28 @@ function deleteItem(task, target) {
     }
 }
 
-// === Edit Tasks and stuff ===
+function saveAssignment() {
+    let assignment = $("#newassignment");
+
+    let assignmentName = assignment.$("#assName").value;
+    let assignmentClass = assignment.$("#class").value;
+
+    let assignmentDetails = {
+        name: assignmentName,
+        class: assignmentClass
+    };
+
+    let tasks = assignment.$$(".task");
+
+    // for all tasks, generate a list of tests and instrs in the right order.
+    // from the lists generate code objects to pump into the db
+    // redirect to assignments/edit/{id}
+    // this will also prove to see if the code gen works
+}
+
 load(function () {
     addTask();
 
     $("#addTask").addEventListener("click", () => addTask());
+    $("#subAssignment").addEventListener("click", () => saveAssignment());
 });
