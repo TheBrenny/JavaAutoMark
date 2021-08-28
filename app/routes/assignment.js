@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const checks = require("./tools/checks");
 const session = require("./tools/session");
+const Database = require("../../db/database");
 
-router.get(["/assignments/create"], (req, res) => {
-    let s = session(req);
+router.get("/assignments/create", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
 
     res.render("newassignment", {
-        classes: ["ZEIT3101","ZEIT3102", "ZEIT3121", "ZEIT1104"]
+        classes: courses
     });
 });
 

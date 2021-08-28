@@ -28,6 +28,10 @@ class CourseModel extends Model {
         let sql = `SELECT * FROM ${this.table} WHERE course_id=?`;
         return this.db.query(sql, courseID);
     }
+    async getAllCourses() {
+        let sql = `SELECT * FROM ${this.table}`;
+        return this.db.query(sql);
+    }
 
     async updateCourse(uuid, options) {
         let vars = [];

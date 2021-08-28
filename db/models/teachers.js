@@ -17,7 +17,7 @@ class TeacherModel extends Model {
 
     async getAllTeachers() {
         let sql = `SELECT * FROM ${this.table}`;
-        return this.db.query(sql).then(this.db.allRecords);
+        return this.db.query(sql);
     }
 
     async updateTeacher(zid, newDetails) {
