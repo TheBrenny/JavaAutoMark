@@ -3,6 +3,7 @@ const checks = require("./tools/checks");
 const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
+const errors = require("./errors/generic").errors;
 
 router.get("/login", [
     checks.isGuest,
@@ -23,12 +24,11 @@ router.get("/logout", async (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-    res.redirect("/teachers/" + session(req).getAccount().zid);
+    res.redirect("/teachers/view/" + session(req).getAccount().zid);
 });
 
 router.get("/teachers/view", async (req, res) => {
-    // TODO: IMPLEMENT THIS!
-    return res.status(501).send("not implemented").end();
+    throw errors[501].fromReq(req);
 
     let teachers = await Database.teachers.getAll();
     teachers = Database.teachers.toObject(teachers);
@@ -37,7 +37,7 @@ router.get("/teachers/view", async (req, res) => {
     });
 });
 
-router.get("/teachers/:id", async (req, res) => {
+router.get("/teachers/view/:id", async (req, res) => {
     let id = req.params.id;
     let t = await Database.teachers.getUser(id);
     t = Database.teachers.toObject(t);
