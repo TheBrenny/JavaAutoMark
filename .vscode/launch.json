@@ -53,12 +53,25 @@
         },
         {
             "name": "Attach",
-            "port": 3230,
+            "port": "${input:askForPort}",
+            "address": "${input:askForHost}",
             "request": "attach",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "askForPort",
+            "type": "promptString",
+            "description": "Enter the port to attach to",
+        },
+        {
+            "id": "askForHost",
+            "type": "promptString",
+            "description": "Enter the host to attach to",
         }
     ]
 }
