@@ -20,15 +20,27 @@ class CourseModel extends Model {
             return this.db.query(sql, courseID, runningYear).then(this.db.firstRecord);
         }
     }
-    async getAllCoursesByYear(runningYear) {
+    async getAllCoursesByYear(runningYear, sort) {
+        if (sort === undefined) sort = true;
+        if (sort === true) sort = "ORDER BY course_id";
+        else if (sort === false) sort = "";
+
         let sql = `SELECT * FROM ${this.table} WHERE running_year=?`;
         return this.db.query(sql, runningYear);
     }
-    async getAllCoursesById(courseID) {
+    async getAllCoursesById(courseID, sort) {
+        if (sort === undefined) sort = true;
+        if (sort === true) sort = "ORDER BY running_year DESC";
+        else if (sort === false) sort = "";
+
         let sql = `SELECT * FROM ${this.table} WHERE course_id=?`;
         return this.db.query(sql, courseID);
     }
-    async getAllCourses() {
+    async getAllCourses(sort) {
+        if (sort === undefined) sort = true;
+        if (sort === true) sort = "ORDER BY running_year DESC, course_id";
+        else if (sort === false) sort = "";
+
         let sql = `SELECT * FROM ${this.table}`;
         return this.db.query(sql);
     }
