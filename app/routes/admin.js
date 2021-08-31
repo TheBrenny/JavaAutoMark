@@ -12,8 +12,6 @@ router.use("/admin/*", (req, res, next) => {
 });
 
 router.get("/admin", (req, res) => {
-    let s = session(req);
-
     res.render("admin", {});
 });
 
