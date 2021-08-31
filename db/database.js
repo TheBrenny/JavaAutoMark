@@ -8,7 +8,7 @@ class Database {
         this.publicUrls = new(require("./models/publicUrls"))(this);
         this.reports = new(require("./models/reports"))(this);
         this.teachers = new(require("./models/teachers"))(this);
-        this.testCases = new(require("./models/testCases"))(this);
+        // this.testCases = new(require("./models/testCases"))(this);
     }
 
     async query(query, ...args) {
