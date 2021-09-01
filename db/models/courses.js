@@ -25,7 +25,7 @@ class CourseModel extends Model {
         if (sort === true) sort = "ORDER BY course_id";
         else if (sort === false) sort = "";
 
-        let sql = `SELECT * FROM ${this.table} WHERE running_year=?`;
+        let sql = `SELECT * FROM ${this.table} WHERE running_year=? ` + sort;
         return this.db.query(sql, runningYear);
     }
     async getAllCoursesById(courseID, sort) {
@@ -33,7 +33,7 @@ class CourseModel extends Model {
         if (sort === true) sort = "ORDER BY running_year DESC";
         else if (sort === false) sort = "";
 
-        let sql = `SELECT * FROM ${this.table} WHERE course_id=?`;
+        let sql = `SELECT * FROM ${this.table} WHERE course_id=? ` + sort;
         return this.db.query(sql, courseID);
     }
     async getAllCourses(sort) {
@@ -41,7 +41,7 @@ class CourseModel extends Model {
         if (sort === true) sort = "ORDER BY running_year DESC, course_id";
         else if (sort === false) sort = "";
 
-        let sql = `SELECT * FROM ${this.table}`;
+        let sql = `SELECT * FROM ${this.table} ` + sort;
         return this.db.query(sql);
     }
 
