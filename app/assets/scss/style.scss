@@ -32,23 +32,29 @@ $highlighted-task-button: #888890ff;
 }
 
 @keyframes shake {
-    10%, 90% {
+
+    10%,
+    90% {
         transform: translate3d(-1px, 0, 0);
     }
 
-    20%, 80% {
+    20%,
+    80% {
         transform: translate3d(2px, 0, 0);
     }
 
-    30%, 50%, 70% {
+    30%,
+    50%,
+    70% {
         transform: translate3d(-4px, 0, 0);
     }
 
-    40%, 60% {
+    40%,
+    60% {
         transform: translate3d(4px, 0, 0);
     }
 }
-  
+
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
@@ -123,7 +129,7 @@ body {
                 transition: .5s ease background-color, 0.2s ease color;
             }
 
-            input[type="submit"]:hover {
+            input[type="submit"]:hover:not(:disabled) {
                 background-color: $highlighted-pistachio;
                 color: white;
                 cursor: pointer;
@@ -278,7 +284,7 @@ body {
         margin-left: 10px;
     }
 
-    input[type="submit"]:hover {
+    input[type="submit"]:hover:not(:disabled) {
         background-color: $highlighted-pistachio;
         color: white;
         cursor: pointer;
@@ -331,9 +337,10 @@ body {
 }
 
 .wrap {
-    width: 700px;
+    width: 70%;
     @include content-font();
     margin-bottom: 50px;
+    max-width: 1020px;
 }
 
 #error {
@@ -375,15 +382,20 @@ body {
 
     div#details {
         @extend .block;
+        gap: 2em;
+
+        >span {
+            flex: 1 1 0px
+        }
 
         label {
             @include content-font();
+            display: block;
         }
 
         input[type="text"],
         select {
-            width: 200px;
-            font-size: 20px;
+            font-size: 1.2em;
             padding: 5px;
             border-radius: 5px;
             border: 1px solid $gray-web;
@@ -393,6 +405,8 @@ body {
             font-weight: 200;
             letter-spacing: 2px;
             font-style: normal;
+            box-sizing: border-box;
+            width: 100%;
         }
 
     }
@@ -505,7 +519,7 @@ body {
                 }
 
                 .moveUp {
-                    align-items: flex-start;
+                    // align-items: flex-start;
                     padding-top: 10px;
                     border-top-left-radius: 10px;
                     padding: 5px 0;
@@ -513,7 +527,7 @@ body {
 
                 .moveDown {
                     border-bottom-left-radius: 10px;
-                    align-items: flex-end;
+                    // align-items: flex-end;
                     padding-bottom: 10px;
                     padding: 5px 0;
                 }
@@ -642,7 +656,7 @@ body {
                 cursor: pointer;
             }
 
-            input[type="button"]:hover {
+            input[type="button"]:hover:not(:disabled) {
                 background-color: $highlighted-task-button;
                 color: white;
                 font-weight: 400;
@@ -672,7 +686,7 @@ body {
             box-shadow: 0 5px 10px $gray-web;
         }
 
-        input[type="button"]:hover {
+        input[type="button"]:hover:not(:disabled) {
             background-color: $highlighted-pistachio;
             color: white;
             font-weight: 400;
@@ -724,4 +738,9 @@ body {
         background-color: $gray-web;
         margin: 25px 0;
     }
+}
+
+input[type="button"]:disabled {
+    background-color: $gray-web !important;
+    cursor: unset !important;
 }
