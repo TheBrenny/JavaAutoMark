@@ -21,6 +21,9 @@
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
             ],
+            "runtimeArgs": [
+                "--preserve-symlinks",
+            ]
         },
         {
             "type": "node",
@@ -28,6 +31,7 @@
             "name": "just run",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
+                "--preserve-symlinks",
                 "run-script",
                 "start"
             ],

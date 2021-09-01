@@ -28,9 +28,9 @@ router.get("/user", (req, res) => {
 });
 
 router.get("/teachers/view", async (req, res) => {
-    throw errors[501].fromReq(req);
+    throw errors.notImplemented.fromReq(req);
 
-    let teachers = await Database.teachers.getAll();
+    let teachers = await Database.teachers.getAllTeachers();
     teachers = Database.teachers.toObject(teachers);
     res.render("allteachers", {
         teachers: teachers,
@@ -38,8 +38,11 @@ router.get("/teachers/view", async (req, res) => {
 });
 
 router.get("/teachers/view/:id", async (req, res) => {
-    let id = req.params.id;
-    let t = await Database.teachers.getUser(id);
+    let id = req.params.id.replace(/^z/g, "");
+    let t = await Database.teachers.getTeacher(id);
+
+    if (t == undefined) throw errors.notFound.fromReq(req);
+
     t = Database.teachers.toObject(t);
 
     res.render("viewuser", {
@@ -54,7 +57,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
     session(req).loginAttempt();
 
     let bad = false;
-    let target = (await Database.teachers.getUser(zid));
+    let target = (await Database.teachers.getTeacher(zid));
 
     // found user
     if (target != undefined) {

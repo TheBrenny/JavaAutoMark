@@ -5,7 +5,7 @@ module.exports = {};
 
 // 404
 module.exports.notFound = ((req, res, _) => {
-    throw errors[404].fromReq(req);
+    throw errors.notFound.fromReq(req);
 });
 // Catches errors
 module.exports.handler = ((err, req, res, next) => {
