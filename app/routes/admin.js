@@ -27,12 +27,12 @@ router.post("/admin/teachers/create", async (req, res) => {
     let password = req.body.pass;
 
     let bad = false;
-    let target = (await Database.teachers.getUser(zid));
+    let target = (await Database.teachers.getTeacher(zid));
 
     // not found user
     if (target == undefined) {
         const passHash = crypto.hashSync(password, 12);
-        bad = !(await Database.teachers.addUser(zid, email, fname, lname, passHash));
+        bad = !(await Database.teachers.addTeacher(zid, email, fname, lname, passHash));
     } else {
         bad = true;
     }
