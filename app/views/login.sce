@@ -33,7 +33,7 @@
         element.innerHTML = message || "Something went wrong!";
         element.style.animation = ".5s shake";
     }
-    wrongPassword($("#wrongPassword"), "[[badLogin]]");
+    onLoad(() => wrongPassword($("#wrongPassword"), "[[badLogin]]"));
 </script>
 [[?==]]
 

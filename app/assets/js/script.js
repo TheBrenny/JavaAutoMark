@@ -42,11 +42,21 @@ Object.defineProperty(HTMLElement.prototype, "$$up", {
     }
 });
 
-function load(fn) {
+/**
+ * Adds an event listener for the window.load event.
+ * 
+ * Window.load occurs when the whole page is loaded (including style sheets, images, iframes, etc.).
+ */
+function onLoad(fn) {
     window.addEventListener('load', fn);
 }
 
-function ready(fn) {
+/**
+ * Adds an event listener for the document.DOMContentLoaded event.
+ * 
+ * Document.DOMContentLoaded occurs when the page has been loaded and parsed (EXCLUDING the parsing of style sheets, images, iframes, etc.).
+ */
+function onReady(fn) {
     if (document.readyState != 'loading') {
         fn();
     } else {
