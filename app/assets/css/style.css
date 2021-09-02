@@ -74,8 +74,8 @@ body #login_container form input[type=password] {
   font-style: normal;
 }
 body #login_container form input[type=submit] {
-  margin: 50px 0 20px 0;
-  padding: 10px 0;
+  margin: 20px 0 20px 0;
+  padding: 17px 0;
   background-color: #8acd6dff;
   border: none;
   border-radius: 5px;

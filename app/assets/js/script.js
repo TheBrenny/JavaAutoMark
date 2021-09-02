@@ -53,8 +53,3 @@ function ready(fn) {
         document.addEventListener('DOMContentLoaded', fn);
     }
 }
-
-function wrongPassword(element, message) {
-    element.innerHTML = message || "Something went wrong!";
-    element.style.animation = ".5s shake";
-}
