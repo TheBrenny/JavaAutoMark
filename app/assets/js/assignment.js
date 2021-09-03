@@ -12,7 +12,7 @@ function bindActions(task, elem) {
 }
 
 // === New Tasks and stuff ===
-function addTask() {
+function addTask(items) {
     let tasks = Array.from($("#newassignment").$$(".task"));
     let lastTask = (tasks.length > 0) ? tasks[tasks.length - 1] : null;
 
@@ -25,7 +25,13 @@ function addTask() {
         taskID: taskNum
     });
 
-    addInstruction(taskNum);
+    if (items === undefined) addInstruction(taskNum);
+    else if (Array.isArray(items)) {
+        items.forEach(item => {
+            if (item.testID !== undefined) addTest(task, item);
+            else addInstruction(task, item);
+        });
+    }
 
     // Add handlers to the buttons
     task.$(".addInstruction").addEventListener("click", () => addInstruction(task));
@@ -35,39 +41,42 @@ function addTask() {
     return task;
 }
 
-function addInstruction(task) {
+function addInstruction(task, defaults) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
 
-    let order = Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
-    let instruction = scetchInsert(task, "beforeEnd", scetch.instr, {
-        order,
+    defaults = Object.assign({
+        order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
         code: `// Add instruction code here`
-    });
-    instruction.style.order = order;
+    }, defaults || {});
+
+    let instruction = scetchInsert(task, "beforeEnd", scetch.instr, defaults);
+    instruction.style.order = defaults.order;
     bindActions(task, instruction);
 
-    createEditor(instruction.$(".editor"));
+    let e = createEditor(instruction.$(".editor"));
+    bindSaveAction(e, saveAssignment);
 
     return instruction;
 }
 
-function addTest(task) {
+function addTest(task, defaults) {
     if (["number", "string"].includes(typeof task)) task = $("#task" + task);
 
-    let order = Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1;
-    let testID = Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1;
-    let test = scetchInsert(task, "beforeEnd", scetch.test, {
-        order,
+    defaults = Object.assign({
+        order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
+        testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
         code: `// Add test code here`,
         expected: ``,
         description: ``,
-        marks: 1,
-        testID
-    });
-    test.style.order = order;
+        marks: 1
+    }, defaults || {});
+
+    let test = scetchInsert(task, "beforeEnd", scetch.test, defaults);
+    test.style.order = defaults.order;
     bindActions(task, test);
 
-    createEditor(test.$(".editor"));
+    let e = createEditor(test.$(".editor"));
+    bindSaveAction(e, saveAssignment);
 
     return test;
 }
@@ -142,20 +151,58 @@ function saveAssignment() {
 
     let assignmentDetails = {
         name: assignmentName,
-        class: assignmentClass
+        class: assignmentClass,
+        tasks: []
     };
 
     let tasks = assignment.$$(".task");
+
+    for (let task of tasks) {
+        let taskDetails = {
+            taskID: parseInt(task.dataset.taskid),
+            tests: []
+        };
+
+        for (let item of task.$$(".instr, .test")) {
+            let itemDetails = {};
+            itemDetails = {
+                order: parseInt(item.dataset.order),
+                code: item.$(".editor").value
+            };
+            if (item.classList.contains("test")) {
+                Object.assign(itemDetails, {
+                    expected: item.$(`input[name="expectedOutput"]`).value,
+                    description: item.$(`input[name="description"]`).value,
+                    marks: parseInt(item.$(`input[name="marks"]`).value),
+                    testID: parseInt(item.dataset.testid)
+                });
+            }
+            taskDetails.tests.push(itemDetails);
+        }
+
+        taskDetails.tests.sort((a, b) => a.order - b.order);
+        assignmentDetails.tasks.push(taskDetails);
+    }
+
+    return fetch("/assignments/create", {
+        method: "POST",
+        body: assignmentDetails
+    }).then(async r => {
+        console.log(r);
+        if (r.status === 201) {
+            return r.headers.get("Location");
+        } else {
+            throw await r.json();
+        }
+    }).then((location) => {
+        window.location = location;
+    }).catch(e => {
+        console.error(e);
+        alert("Error: " + e.message);
+    });
 
     // for all tasks, generate a list of tests and instrs in the right order.
     // from the lists generate code objects to pump into the db
     // redirect to assignments/edit/{id}
     // this will also prove to see if the code gen works
 }
-
-load(function () {
-    addTask();
-
-    $("#addTask").addEventListener("click", () => addTask());
-    $("#subAssignment").addEventListener("click", () => saveAssignment());
-});

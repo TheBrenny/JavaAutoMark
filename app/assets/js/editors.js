@@ -28,16 +28,9 @@ function createEditor(selector, type) {
         lineNumbersMinChars: 2,
         lineDecorationsWidth: 5,
         overviewRulerLanes: 0,
-        scrollBeyondLastLine: false
-    });
-
-    editor.addAction({
-        id: 'save',
-        label: 'Save',
-        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
-        run: function () {
-            // TODO: SAVE
-            console.log("save");
+        scrollBeyondLastLine: false,
+        scrollbar: {
+            alwaysConsumeMouseWheel: false
         }
     });
 
@@ -60,6 +53,19 @@ function createEditor(selector, type) {
     updateHeight();
     selector.classList.toggle("initialised");
 
+    return editor;
+}
+
+function bindSaveAction(editor, action) {
+    editor.addAction({
+        id: 'save',
+        label: 'Save',
+        keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S],
+        run: function () {
+            console.log("save");
+            action();
+        }
+    });
     return editor;
 }
 
