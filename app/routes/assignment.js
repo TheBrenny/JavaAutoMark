@@ -21,8 +21,16 @@ router.post("/assignments/create", async (req, res) => {
     // JSON of the assignment will be saved next to the actual Java file in our Storage Provider.
     // The DB will hold the location of the JSON file (the Java file will be the same name but .java).
 
-    let id = Math.floor(Math.random() * 10);
+    let assignment = req.body;
+    
+    let code = `public class ${assignment.name} {\n`;
+    code += `public void task1() {\n`;
+    code += `${assignment.tasks[0].tests[0].code}`;
 
+    code += `System.out.println(${assignment.tasks[0].tests[0].code})`;
+    code += `System.out.println(${assignment.tasks[0].tests[0].code}.equals(${assignment.tas.asd.expected}))`;
+
+    let id = (await Daabase.assignments.addAssignment(assignment.class, "somehwere")).id;
     res.setHeader("Location", "/assignments/edit/" + id);
     res.status(201).end();
 });
