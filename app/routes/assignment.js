@@ -18,6 +18,8 @@ router.post("/assignments/create", async (req, res) => {
     // throw errors[501].fromReq(req);
 
     // TODO: Save to DB and save to file
+    // JSON of the assignment will be saved next to the actual Java file in our Storage Provider.
+    // The DB will hold the location of the JSON file (the Java file will be the same name but .java).
 
     let id = Math.floor(Math.random() * 10);
 
