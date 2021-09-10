@@ -6,9 +6,9 @@ class AssignmentModel extends Model {
         super(databaseModel);
     }
 
-    async addAssignment(courseUUID, codeLocation) {
-        let sql = `INSERT INTO ${this.table} (course_uuid, code_location) VALUES(?, ?)`;
-        return this.db.query(sql, courseUUID, codeLocation).then(this.db.changedResponse).then(r => r.success);
+    async addAssignment(assignmentName, courseUUID, codeLocation) {
+        let sql = `INSERT INTO ${this.table} (assignment_name, course_uuid, code_location) VALUES(?, ?)`;
+        return this.db.query(sql, assignmentName, courseUUID, codeLocation).then(this.db.changedResponse).then(r => r.success);
     }
 
     async getAssignment(assignmentID) {
@@ -19,7 +19,7 @@ class AssignmentModel extends Model {
         if (runningYear === undefined) {
             // treat this as a uuid search
             let sql = `SELECT * FROM ${this.table} WHERE course_uuid=?`;
-            return this.db.query(sql, courseID).then(this.db.firstRecord);
+            return this.db.query(sql, courseID);
         } else {
             let sql = `SELECT * FROM ${this.table} `;
             sql += `INNER JOIN ${CourseModel.table} ON `;
@@ -51,7 +51,7 @@ class AssignmentModel extends Model {
         return "assignments";
     }
     static get fields() {
-        return ["assignment_id", "course_uuid", "code_location"];
+        return ["assignment_id", "assignment_name", "course_uuid", "code_location"];
     }
 }
 
