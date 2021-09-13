@@ -31,6 +31,10 @@ function addTask(items) {
             if (item.testID !== undefined) addTest(task, item);
             else addInstruction(task, item);
         });
+    } else {
+        console.error("Something went wrong. items isn't an array or undefined: ");
+        console.error(items);
+        throw new Error("Something went wrong. items isn't an array or undefined.");
     }
 
     // Add handlers to the buttons
@@ -46,7 +50,7 @@ function addInstruction(task, defaults) {
 
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
-        code: `// Add instruction code here`
+        code: `// This is valid Java code!\n// Don't forget your semicolons!\n`
     }, defaults || {});
 
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, defaults);
@@ -65,7 +69,7 @@ function addTest(task, defaults) {
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
         testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
-        code: `// Add test code here`,
+        code: `// This is a valid Java variable or expression!\n// Don't use semicolons!\n`,
         expected: ``,
         description: ``,
         marks: 1

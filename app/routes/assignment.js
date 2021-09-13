@@ -34,9 +34,7 @@ router.get("/assignments/create", async (req, res) => {
 
     res.render("assignments/create", {
         courses: courses,
-        tasks: "{}",
-        assName: "",
-        selectedUUID: null,
+        assign: "{}",
     });
 });
 
@@ -51,10 +49,10 @@ router.post("/assignments/create", async (req, res) => {
 
         for (let j = 0; j < assignment.tasks[i].tests.length; j++) {
             let insertCode = assignment.tasks[i].tests[j].code;
-            insertCode = insertCode.replace(/\\r?\\n/g, "\n").trim(); // strip crlf to just lf
+            insertCode = insertCode.replace(/\r\n/gm, "\n").trim(); // strip crlf to just lf
 
             if (assignment.tasks[i].tests[j].testID !== undefined) {
-                insertCode.replace(/;$/g, ""); // strip trailing semicolon
+                insertCode.replace(/;$/gm, ""); // strip trailing semicolon
                 code += `System.out.println(${insertCode});\n`;
                 code += `System.out.println(((Object) ${insertCode}).equals(${assignment.tasks[i].tests[j].expected}));\n`; // Object casting is needed to compare primitives
             } else {
@@ -85,13 +83,17 @@ router.get("/assignments/edit/:id", async (req, res) => {
     courses = Database.courses.toObject(courses);
 
     let assPath = Database.assignments.toObject(await Database.assignments.getAssignment(req.params.id)).code_location;
-    let assJson = await storage.getObject(storage.container, assPath + ".json");
+    let assJsonStream = await storage.getObject(storage.container, assPath + ".json");
+
+    let chunks = [];
+    for await (let chunk of assJsonStream) chunks.push(Buffer.from(chunk));
+    chunks = Buffer.concat(chunks);
+    chunks = chunks.toString("utf-8");
+    chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
 
     res.render("assignments/create", {
         courses: courses,
-        assName: "",
-        selectedUUID: "",
-        tasks: "{}",
+        assign: chunks,
     });
 });
 

@@ -6,13 +6,13 @@
     <div id="details">
         <span>
             <label for="assName">Assignment Name:</label>
-            <input type="text" name="assName" id="assName" />
+            <input type="text" name="assName" id="assName" [[?=!!assign.name ]] value="[[assign.name]]" [[?==]] />
         </span>
         <span>
             <label for="class">Choose class:</label>
             <select id="class" name="class">
                 [[e= course in courses ]]
-                <option [[?=course.uuid==selectedUUID ]] selected [[?==]] value="[[course.uuid]]">
+                <option [[?=course.uuid==assign.class ]] selected [[?==]] value="[[course.uuid]]">
                     [[course.course_name]] - [[course.running_year]]
                 </option>
                 [[?==]]
@@ -28,14 +28,14 @@
 
 <script id="taskInjector" nonce="[[nonce]]">
     onLoad(function () {
-        let tasks = JSON.parse("[[tasks]]");
-        console.log(tasks);
-        if (Object.keys(tasks).length === 0) {
+        let assignment = JSON.parse(`[[assign]]`);
+        console.log(assignment);
+        if (Object.keys(assignment).length === 0) {
             addTask();
         } else {
-            // You're injecting tasks here using scetchInsert.
-            // What the tasks object looks like is still TBA
-            // once you get that, you can manipulate it to inject
+            for (let task of assignment.tasks) {
+                addTask(task.tests);
+            }
         }
 
         $("#addTask").addEventListener("click", () => addTask());
@@ -52,6 +52,6 @@
 [[l= components/task]]
 [[l= components/test]]
 [[l= components/instr]]
-<script src="../assets/js/assignment.js"></script>
+<script src="/assets/js/assignment.js"></script>
 
 [[i= partials/footer]]
