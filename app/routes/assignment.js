@@ -4,6 +4,18 @@ const session = require("./tools/session");
 const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
 
+router.get("/assignments", async (req, res) => {
+    throw errors.notImplemented.fromReq(req);
+});
+
+router.get("/assignments/:id", async (req, res) => {
+    throw errors.notImplemented.fromReq(req);
+});
+
+router.get("/assignments/submit/:id", (req, res) => {
+    throw errors.notImplemented.fromReq(req);
+});
+
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
