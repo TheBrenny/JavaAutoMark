@@ -41,7 +41,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^5.0.0-alpha.8",
-    "express-mysql-session": "^2.1.6",
+    "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
     "express-validator": "^6.12.1",
     "helmet": "^4.6.0",
@@ -64,7 +64,7 @@
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "nodemon": "^2.0.12",
-    "sass": "^1.38.2",
+    "sass": "^1.39.2",
     "sql-cli-repl": "^1.2.1"
   },
   "private": "true"
