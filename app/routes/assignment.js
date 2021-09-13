@@ -35,6 +35,7 @@ router.get("/assignments/create", async (req, res) => {
     res.render("assignments/create", {
         courses: courses,
         assign: "{}",
+        isCreate: true,
     });
 });
 
@@ -94,6 +95,7 @@ router.get("/assignments/edit/:id", async (req, res) => {
     res.render("assignments/create", {
         courses: courses,
         assign: chunks,
+        assignObj: JSON.parse(chunks)
     });
 });
 
