@@ -25,7 +25,7 @@ class Database {
     async changedResponse(results) {
         return {
             success: results.affectedRows > 0,
-            affectedRows: results.affectedRows,
+            affectedRows: results.changedRows || results.affectedRows,
             affectedID: results.insertId
         };
     }

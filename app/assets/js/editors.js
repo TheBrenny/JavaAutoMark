@@ -4,6 +4,16 @@ var require = {
     }
 };
 
+function* generateEditorID() {
+    let i = 1;
+    while (i < 10000) { // big number but still catching in case of infinite loop
+        yield i++;
+    }
+}
+
+var editors = {};
+editors.generator = generateEditorID();
+
 function getAllUninitialisedEditors() {
     return $$(".editor:not(.initialised)");
 }
@@ -53,6 +63,11 @@ function createEditor(selector, type) {
     updateHeight();
     selector.classList.toggle("initialised");
 
+    // store the editor
+    let eid = editors.generator.next().value;
+    selector.setAttribute("editor-id", eid);
+    editors[eid] = editor;
+
     return editor;
 }
 
@@ -67,6 +82,10 @@ function bindSaveAction(editor, action) {
         }
     });
     return editor;
+}
+
+function getEditor(eid) {
+    return editors[eid];
 }
 
 function makeEditors() {

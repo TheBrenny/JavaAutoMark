@@ -167,7 +167,7 @@ function saveAssignment() {
             let itemDetails = {};
             itemDetails = {
                 order: parseInt(item.dataset.order),
-                code: item.$(".editor").value
+                code: getEditor(item.$(".editor").getAttribute("editor-id")).getValue(),
             };
             if (item.classList.contains("test")) {
                 Object.assign(itemDetails, {

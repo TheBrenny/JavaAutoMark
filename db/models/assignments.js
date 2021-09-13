@@ -7,8 +7,8 @@ class AssignmentModel extends Model {
     }
 
     async addAssignment(assignmentName, courseUUID, codeLocation) {
-        let sql = `INSERT INTO ${this.table} (assignment_name, course_uuid, code_location) VALUES(?, ?)`;
-        return this.db.query(sql, assignmentName, courseUUID, codeLocation).then(this.db.changedResponse).then(r => r.success);
+        let sql = `INSERT INTO ${this.table} (assignment_name, course_uuid, code_location) VALUES(?, ?, ?)`;
+        return this.db.query(sql, assignmentName, courseUUID, codeLocation).then(this.db.changedResponse);
     }
 
     async getAssignment(assignmentID) {
