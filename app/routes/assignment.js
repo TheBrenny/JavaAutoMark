@@ -8,7 +8,7 @@ router.get("/assignments", async (req, res) => {
     throw errors.notImplemented.fromReq(req);
 });
 
-router.get("/assignments/:id", async (req, res) => {
+router.get("/assignments/view/:id", async (req, res) => {
     throw errors.notImplemented.fromReq(req);
 });
 
