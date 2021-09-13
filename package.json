@@ -6,6 +6,9 @@
   "bin": {
     "jam": "node server.js"
   },
+  "engines": {
+    "node": ">14.0.0"
+  },
   "scripts": {
     "skipInstall": "node ./server.js --skipInstall",
     "forceInstall": "node ./server.js --forceInstall",
