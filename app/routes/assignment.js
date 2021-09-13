@@ -21,7 +21,17 @@ router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
 
-    res.render("newassignment", {
+    res.render("assignments/create", {
+        courses: courses,
+        tasks: "{}"
+    });
+});
+
+router.get("/assignments/view", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+
+    res.render("assignments/view", {
         courses: courses,
         tasks: "{}"
     });

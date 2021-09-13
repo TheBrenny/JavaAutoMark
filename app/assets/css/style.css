@@ -255,7 +255,7 @@ body #login_container form label {
   font-weight: 600;
 }
 
-.block, #newassignment div#details, #error {
+.block, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -265,7 +265,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #newassignment, #error {
+.wrap, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -644,5 +644,104 @@ body #login_container form label {
 input[type=button]:disabled {
   background-color: #7e7f83ff !important;
   cursor: unset !important;
+}
+
+#viewAss div#head {
+  gap: 2em;
+}
+#viewAss div#head > span {
+  flex: 1 1 0px;
+}
+#viewAss div#head label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+}
+#viewAss div#head select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
+#viewAss div#head h1 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+#viewAss div#table {
+  padding: 0;
+  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  max-height: 600px;
+  overflow-y: auto;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#viewAss div#table span {
+  display: flex;
+  justify-content: space-between;
+}
+#viewAss div#table .tHead {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+#viewAss div#table .tHead h3 {
+  text-align: center;
+  background-color: #4b7ce6ff;
+  padding: 20px;
+  color: white;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  position: sticky;
+}
+#viewAss div#table .tCell p {
+  padding: 20px;
+}
+#viewAss div#table .tCell p:not(:first-child) {
+  border-left: 1px solid #7e7f83ff;
+  text-align: center;
+}
+#viewAss div#table .tCell:nth-child(odd) {
+  background-color: #c4c4c4ff;
+}
+#viewAss div#table h3:first-child {
+  border-top-left-radius: 10px;
+}
+#viewAss div#table h3:last-child {
+  border-top-right-radius: 10px;
+}
+#viewAss div#table h3:not(:first-child) {
+  border-left: 1px solid #f3f3f4ff;
+}
+#viewAss div#table .name {
+  width: 40%;
+}
+#viewAss div#table .course {
+  width: 20%;
+}
+#viewAss div#table .year {
+  width: 10%;
+}
+#viewAss div#table .marked {
+  width: 30%;
 }
 /*# sourceMappingURL=style.css.map */

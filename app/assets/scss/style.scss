@@ -745,3 +745,124 @@ input[type="button"]:disabled {
     background-color: $gray-web !important;
     cursor: unset !important;
 }
+
+#viewAss {
+    @extend .wrap;
+
+    div#head {
+        @extend .block;
+        gap: 2em;
+
+        >span {
+            flex: 1 1 0px
+        }
+
+        label {
+            @include content-font();
+            display: block;
+        }
+
+        select {
+            font-size: 1.2em;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-style: normal;
+            box-sizing: border-box;
+            width: 250px;
+        }
+
+        h1 {
+            font-weight: normal;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+    }
+
+    div#table {
+        padding: 0;
+        border-radius: 5px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        max-height: 600px;
+        overflow-y: auto;
+
+        background-color: $cultured;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 35px;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
+
+        span {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tHead {
+            position: sticky;
+            top: 0;
+            width: 100%;
+        }
+
+        .tHead h3 {
+            text-align: center;
+            background-color: $button-blue;
+            padding: 20px;
+            color: white;
+            @include content-font();
+            text-transform: uppercase;
+            position: sticky;
+        }
+
+        .tCell p {
+            padding: 20px;
+
+        }
+
+        .tCell p:not(:first-child) {
+            border-left: 1px solid $gray-web;
+            text-align: center;
+        }
+
+        .tCell:nth-child(odd) {
+            background-color: $task-button;
+        }
+
+        h3:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        h3:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        h3:not(:first-child) {
+            border-left: 1px solid $cultured;
+        }
+
+        .name {
+            width: 40%;
+        }
+
+        .course {
+            width: 20%;
+        }
+
+        .year {
+            width: 10%;
+        }
+
+        .marked {
+            width: 30%;
+        }
+    }
+}
