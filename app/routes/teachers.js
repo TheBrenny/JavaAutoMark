@@ -10,6 +10,7 @@ router.get("/login", [
 ], async (req, res) => {
     res.format({
         "json": () => res.json({
+            success: false,
             message: "POST to /login"
         }),
         "html": () => res.render("login", {
