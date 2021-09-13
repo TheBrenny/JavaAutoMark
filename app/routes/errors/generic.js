@@ -6,8 +6,8 @@ class ErrorGeneric extends Error {
         this.name = name;
     }
 
-    static fromReq(req) {
-        let e = new(this.prototype.constructor)(req.method, req.url);
+    static fromReq(req, ...args) {
+        let e = new(this.prototype.constructor)(req.method, req.url, ...args);
         let stack = e.stack.split("\n");
         stack.splice(1, 1);
         e.stack = stack.join("\n");
@@ -18,11 +18,14 @@ class ErrorGeneric extends Error {
 module.exports = ErrorGeneric;
 
 const notFound = require("./404");
+const internalServerError = require("./500");
 const notImplemented = require("./501");
 
 module.exports.errors = {
     404: notFound,
+    500: internalServerError,
     501: notImplemented,
     notFound,
-    notImplemented
+    notImplemented,
+    internalServerError,
 };

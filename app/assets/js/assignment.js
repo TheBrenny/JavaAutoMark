@@ -147,7 +147,7 @@ function deleteItem(task, target) {
     }
 }
 
-function saveAssignment() {
+function saveAssignment(editID) {
     let assignment = $("#newassignment");
 
     let assignmentName = assignment.$("#assName").value;
@@ -188,8 +188,11 @@ function saveAssignment() {
         assignmentDetails.tasks.push(taskDetails);
     }
 
-    return fetch("/assignments/create", {
-        method: "POST",
+    let url = !!editID ? "edit/" + editID : "create"; 
+    let method = !!editID ? "PUT" : "POST";
+
+    return fetch("/assignments/" + url, {
+        method: method,
         body: JSON.stringify(assignmentDetails),
         headers: {
             "Content-Type": "application/json"

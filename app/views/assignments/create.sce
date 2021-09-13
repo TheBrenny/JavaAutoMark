@@ -49,7 +49,7 @@
         subAssignmentBtn?.addEventListener("click", () => saveAssignment());
         subAssignmentBtn && (subAssignmentBtn.disabled = false);
         let updateAssignmentBtn = $('#updateAssignment');
-        updateAssignmentBtn?.addEventListener("click", () => saveAssignment());
+        updateAssignmentBtn?.addEventListener("click", () => saveAssignment("[[assign.id]]"));
         updateAssignmentBtn && (updateAssignmentBtn.disabled = false);
 
         // // Delete this script!
