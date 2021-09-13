@@ -186,7 +186,10 @@ function saveAssignment() {
 
     return fetch("/assignments/create", {
         method: "POST",
-        body: assignmentDetails
+        body: JSON.stringify(assignmentDetails),
+        headers: {
+            "Content-Type": "application/json"
+        }
     }).then(async r => {
         console.log(r);
         if (r.status === 201) {

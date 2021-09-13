@@ -21,6 +21,9 @@
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
             ],
+            "env": {
+                "NODE_ENV": "dev"
+            },
             "runtimeArgs": [
                 "--preserve-symlinks",
             ]

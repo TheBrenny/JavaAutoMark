@@ -45,24 +45,29 @@ router.post("/assignments/create", async (req, res) => {
     // The DB will hold the location of the JSON file (the Java file will be the same name but .java).
 
     let assignment = req.body;
-    
+
     let code = `public class ${assignment.name} {\n`;
-    
+
     // for loop for all tasks in the assignment
     for (let i = 0; i < assignment.tasks.length; i++) {
-        code += `public void ${assignment.tasks[0]} {\n`;
-        code += `${assignment.tasks[0].tests[0].code}`;
+        code += `public static void task${i} {\n`;
+        for (let j = 0; j < assignment.tasks.tests.length; j++) {
+            code += `${assignment.tasks[i].tests[j].code}`;
 
-        code += `System.out.println(${assignment.tasks[0].tests[0].code})`;
-        code += `System.out.println(${assignment.tasks[0].tests[0].code}.equals(${assignment.tasks[0].tests[0].expected}))`; 
+            code += `System.out.println(${assignment.tasks[i].tests[j].code});`;
+            code += `System.out.println(${assignment.tasks[i].tests[j].code}.equals(${assignment.tasks[i].tests[j].expected}));`;
+        }
+
+        code += `}`;
     }
 
+    code += `}`;
 
-    let path = assignment.class + "/" + assignmen.year + "/" + assignment.name;
 
-    await Database.assignments.addAssignment(assignment.class, path);
+    let path = assignment.class + "/" + assignment.name;
+    // await Database.assignments.addAssignment(assignment.name, assignment.class, path);
     await storage.putObject(storage.container, path + ".java", code);
-    await storage.putObject(storage.container, path + ".json", assignment);
+    await storage.putObject(storage.container, path + ".json", JSON.stringify(assignment));
 
     let id = (await Database.assignments.addAssignment(assignment.class, "somehwere")).id;
     res.setHeader("Location", "/assignments/edit/" + id);
@@ -70,7 +75,7 @@ router.post("/assignments/create", async (req, res) => {
 });
 
 //router.get("/assignments/edit/:id", (req, res) => {
- //   throw errors.notImplemented.fromReq(req);
+//   throw errors.notImplemented.fromReq(req);
 //});
 
 module.exports = router;
