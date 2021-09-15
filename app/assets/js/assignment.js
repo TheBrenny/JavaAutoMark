@@ -201,14 +201,23 @@ function saveAssignment(editID) {
         console.log(r);
         if (r.status === 201) {
             return r.headers.get("Location");
+        } else if(r.status === 200) {
+            return await r.json();
         } else {
             throw await r.json();
         }
-    }).then((location) => {
-        window.location = location;
+    }).then((response) => {
+        if(typeof response === "string") { // we have a location
+            window.location = response;
+        } else if(typeof response === "object") { // we have a JSON object
+            console.log(response);
+            // show an alert box saying the response.message
+        } else {
+            throw response;
+        }
     }).catch(e => {
         console.error(e);
-        alert("Error: " + e.message);
+        alert("Error: " + e.message); // TODO: change this to an error alert box that's built with our colour scheme
     });
 
     // for all tasks, generate a list of tests and instrs in the right order.
