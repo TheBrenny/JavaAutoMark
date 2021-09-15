@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 
 const appConfig = require("./config/configLoader");
 
@@ -11,8 +12,8 @@ module.exports.db = {
 };
 
 module.exports.session = {
-    secret: process.env.SESSION_SECRET || appConfig.session.secret,
-    cookieName: process.env.SESSION_COOKIE || appConfig.session.cookieName,
+    secret: appConfig.session.secret,
+    cookieName: appConfig.session.cookieName,
 };
 
 module.exports.env = {
@@ -51,6 +52,11 @@ module.exports.serverInfo = {
 module.exports.storage = {
     provider: process.env.STORAGE || appConfig.storage.provider,
     options: tryDo(JSON.parse, process.env.STORAGE_OPTS) || appConfig.storage.options
+};
+
+module.exports.java = {
+    java: appConfig.java.path || "java",
+    compiler: appConfig.java.compiler || "javac",
 };
 
 function tryDo(fn, param, thisArg) {
