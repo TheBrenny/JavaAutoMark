@@ -18,17 +18,17 @@ module.exports.handler = ((err, req, res, next) => {
         message: err.message
     };
 
-    console.error(e);
-
-    if (res.headersSent) {
-        return next(err);
-    }
-
     // don't send the stack because of security risk!
     if (!isProd) {
         e.stack = err.stack;
     }
 
+    console.error(e);
+
+    if (res.headersSent) {
+        return next(err);
+    }
+    
     // req.headers.accept = req.headers.accept.replace(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // this actually deletes the catch-all accept header
 
     res.format({

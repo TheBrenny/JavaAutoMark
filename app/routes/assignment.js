@@ -45,8 +45,9 @@ router.post("/assignments/create", async (req, res) => {
     let code = generateJavaCode(assignment);
     let path = assignment.class + "/" + assignment.name;
 
+    let id;
     try {
-        let id = (await Database.assignments.addAssignment(assignment.name, assignment.class, path)).affectedID;
+        id = (await Database.assignments.addAssignment(assignment.name, assignment.class, path)).affectedID;
         Object.assign(assignment, {
             id: id
         });
