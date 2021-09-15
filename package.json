@@ -1,13 +1,13 @@
 {
   "name": "javaautomark",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A web-based tool which automatically marks Java assignments.",
   "main": "server.js",
   "bin": {
     "jam": "node server.js"
   },
   "engines": {
-    "node": ">14.0.0"
+    "node": ">=14"
   },
   "scripts": {
     "skipInstall": "node ./server.js --skipInstall",
@@ -41,7 +41,9 @@
     "@smcloudstore/azure-storage": "^0.2.0",
     "@smcloudstore/google-cloud-storage": "^0.2.1",
     "bcrypt": "^5.0.1",
+    "cli-progress": "^3.9.0",
     "cors": "^2.8.5",
+    "decompress": "^4.2.1",
     "dotenv": "^10.0.0",
     "express": "^5.0.0-alpha.8",
     "express-mysql-session": "^2.1.7",
@@ -57,7 +59,8 @@
     "semver": "^7.3.5",
     "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/dist",
     "smcloudstore-aws-s3": "https://github.com/TheBrenny/SMCloudStore/tarball/awss3",
-    "smcloudstore-localstorage": "https://github.com/TheBrenny/smcloudstore-localstorage/tarball/main"
+    "smcloudstore-localstorage": "https://github.com/TheBrenny/smcloudstore-localstorage/tarball/main",
+    "wget-improved": "^3.2.1"
   },
   "devDependencies": {
     "browser-sync": "^2.27.5",
