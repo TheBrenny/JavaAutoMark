@@ -18,6 +18,7 @@ const path = require("path");
 const inquirer = require("inquirer");
 inquirer.registerPrompt('fts', require("inquirer-file-tree-selection-prompt"));
 
+const driveRoot = path.resolve(...process.cwd().split(path.sep).map(() => ".."));
 let oldVersion = "0.0.0";
 const lockfile = path.join(__dirname, "install.lock");
 const configPath = path.resolve(__dirname, "..", "config");
@@ -192,7 +193,7 @@ async function install(method) {
             config.java = {};
 
             if(await askYN("Do you want to locate your own Java Executable (saying no will download our recommended executable)?", true)) {
-                config.java.java = await askPath("Where is your java executable located?");
+                config.java.java = await askPath("Where is your java executable located?", undefined, driveRoot);
             } else {
                 const exeExt = (process.platform === "win32" ? ".exe" : ""); // used to add .exe on windows
                 const javaLink = await getJavaLink(process.platform, process.arch);
@@ -209,7 +210,7 @@ async function install(method) {
             }
 
             if(await askYN("Do you want to locate your own Java Compiler (saying no will download our recommended compiler)?", false)) {
-                config.java.compiler = await askPath("Where is your java compiler located?");
+                config.java.compiler = await askPath("Where is your java compiler located?", undefined, driveRoot);
             } else {
                 const compilerLink = "https://mirror.aarnet.edu.au/pub/eclipse/eclipse/downloads/drops4/R-4.20-202106111600/ecj-4.20.jar";
                 const compilerLoc = path.resolve(__dirname, "..", "app", "jenv", "bin", "compiler.jar");
@@ -398,7 +399,7 @@ const attribs = {
 
 function colour(c, a) {
     if(c === 'reset' || (Array.isArray(c) && c.includes('reset'))) return "\033[0m";
-    if(!a) a = "reset";
+    if(!a) a = [];
     if(!Array.isArray(c)) c = [c];
     if(!Array.isArray(a)) a = [a];
     let cos = c.map(c => colours[c]);
@@ -443,12 +444,20 @@ async function askMultiList(message, list, best, val) {
     })).d;
 }
 
-async function askPath(message, ext) {
+async function askPath(message, ext, root) {
     return (await inquirer.prompt({
         type: "fts",
         name: "d",
         message: message,
+        onlyShowValid: true,
+        root: root,
         validate: (item) => {
+            try {
+                fs.accessSync(item, fs.constants.R_OK | fs.constants.X_OK);
+            } catch(e) {
+                return false;
+            }
+
             if(ext == undefined) return true;
             if(["/", "\\"].includes(ext)) return fs.statSync(item).isDirectory();
             if(typeof ext === "string") return path.extname(item) === ext;

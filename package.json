@@ -51,7 +51,7 @@
     "express-validator": "^6.12.1",
     "helmet": "^4.6.0",
     "inquirer": "^8.1.2",
-    "inquirer-file-tree-selection-prompt": "^1.0.12",
+    "inquirer-file-tree-selection-prompt": "https://github.com/TheBrenny/inquirer-file-tree-selection/tarball/main",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
