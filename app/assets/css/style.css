@@ -321,7 +321,7 @@ body #login_container form label {
   font-weight: 600;
 }
 
-.block, #viewAss div#head, #newassignment div#details, #error {
+.block, #submitAss .inputForm .border, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -331,7 +331,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #viewAss, #newassignment, #error {
+.wrap, #submitAss, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -810,5 +810,97 @@ input[type=button]:disabled {
 }
 #viewAss div#table .marked {
   width: 30%;
+}
+
+#submitAss .details .class {
+  font-weight: normal;
+}
+#submitAss .metaAss {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+#submitAss .metaAss .content {
+  flex-grow: 1;
+  margin: 0;
+  margin-right: 35px;
+}
+#submitAss .metaAss input[type=button] {
+  padding: 10px 20px;
+  width: 150px;
+  background-color: #4b7ce6ff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  cursor: pointer;
+}
+#submitAss .metaAss input[type=button]:hover:not(:disabled) {
+  background-color: #3559a7ff;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+#submitAss .inputForm {
+  width: 100%;
+}
+#submitAss .inputForm .border {
+  outline: dashed 2px #7e7f83ff;
+  outline-offset: -10px;
+  transition: 0.3s ease outline-offset, 0.3s ease background-color;
+}
+#submitAss .inputForm .file-over {
+  outline-offset: -20px;
+  background-color: white;
+}
+#submitAss .inputForm .inputBox {
+  display: block;
+  padding: 100px 0;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+#submitAss .inputForm .inputBox .inputFile {
+  display: none;
+}
+#submitAss .inputForm .inputBox label[for=file] {
+  margin-top: 35px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  color: #888890ff;
+}
+#submitAss .inputForm .inputBox label[for=file]:hover strong {
+  color: #4b7ce6ff;
+}
+#submitAss .inputForm .inputBox .upload-icon {
+  color: #7e7f83ff;
+  opacity: 0.3;
+  width: 100%;
+}
+#submitAss .inputForm .uploading, #submitAss .inputForm .success, #submitAss .inputForm .error, #submitAss .inputForm .dropText {
+  display: none;
+}
+#submitAss .enabled .dropText {
+  display: inline !important;
+}
+#submitAss .isUpload .border {
+  visibility: none;
+}
+#submitAss .isUpload .uploading {
+  display: block !important;
+}
+#submitAss .isSuccess .sucess {
+  display: block !important;
+}
+#submitAss .isError .error {
+  display: block !important;
 }
 /*# sourceMappingURL=style.css.map */

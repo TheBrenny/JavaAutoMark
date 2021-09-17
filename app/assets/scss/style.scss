@@ -930,3 +930,121 @@ input[type="button"]:disabled {
         }
     }
 }
+
+#submitAss {
+    @extend .wrap;
+
+    .details {
+        .class {
+            font-weight: normal;
+        }
+    }
+
+    .metaAss {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px;
+
+        .content {
+            flex-grow: 1;
+            margin: 0;
+            margin-right: 35px;
+        }
+
+        input[type="button"] {
+            padding: 10px 20px;
+            width: 150px;
+            background-color: $button-blue;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 15px;
+            @include content-font();
+            text-transform: uppercase;
+            transition: .5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
+            box-shadow: 0 5px 10px $gray-web;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover:not(:disabled) {
+            background-color: $highlighted-button-blue;
+            color: white;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+    }
+
+    .inputForm {
+        width: 100%;
+
+        .border {
+            @extend .block;
+            outline: dashed 2px $gray-web;
+            outline-offset: -10px;
+            transition: ease(outline-offset), ease(background-color);
+            // padding: 10px;
+        }
+
+        .file-over {
+            outline-offset: -20px;
+            background-color: white;
+        }
+        
+        .inputBox {
+            display: block;
+            padding: 100px 0;
+            text-align: center;
+            width: 100%;
+            margin: 0;
+
+            .inputFile {    
+                display: none;
+            }
+
+            label[for="file"] {
+                margin-top: 35px;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 20px;
+                color: $highlighted-task-button;
+                
+            }
+
+            label[for="file"]:hover strong {
+                color: $button-blue;
+            }
+
+            .upload-icon {
+                color: $gray-web;
+                opacity: 0.3;
+                width: 100%;
+            }
+        }
+
+        .uploading, .success, .error, .dropText {
+            display: none;
+        }
+    }
+
+    .enabled .dropText {
+        display: inline !important;
+    }
+
+    .isUpload{
+        .border {
+            visibility: none;
+        }
+        .uploading {
+            display: block !important;
+        }
+    }
+
+    .isSuccess .sucess {
+        display: block !important;
+    }
+
+    .isError .error {
+        display: block !important;
+    }
+}
