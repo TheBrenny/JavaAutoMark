@@ -11,9 +11,9 @@ const sqlFolder = path.join(dbFolder, "scripts");
 const templateFolder = path.join(dbFolder, "templates");
 
 module.exports = (async function () {
-    if (!global.hasOwnProperty('db')) {
+    if(!global.hasOwnProperty('db')) {
         let dbUrl = config.db.url;
-        if (config.db.isDev) {
+        if(config.db.isDev) {
             dbUrl.searchParams.append("debug", "true");
         }
 
@@ -25,11 +25,12 @@ module.exports = (async function () {
     return global.db;
 })();
 
+// TODO: When the DB connection closes, we might need to find a way to attepmt to reconnect
 let dbOps = ["query", "end", "execute"];
 dbOps.forEach(op => {
     global.db[op] = module.exports[op] = async function () {
         let theDB = (await global.db);
-        return theDB[op].apply(theDB, arguments);
+        return (theDB[op].apply(theDB, arguments));
     };
 });
 
@@ -41,7 +42,7 @@ module.exports.sqlFromFile = function (filename, values) {
     filename = path.join(sqlFolder, filename + ".sql"); // add our own!
 
     let out = compressSQL(fs.readFileSync(filename).toString());
-    if (values != undefined) out = module.exports.insertVariables(out, values);
+    if(values != undefined) out = module.exports.insertVariables(out, values);
 
     return out;
 };
@@ -51,7 +52,7 @@ module.exports.templateFromFile = function (filename, values) {
     filename = path.join(templateFolder, filename + ".template.sql"); // add our own!
     let template = compressSQL(fs.readFileSync(filename).toString());
 
-    if (!Array.isArray(values)) values = [values];
+    if(!Array.isArray(values)) values = [values];
 
     let out = [];
 
@@ -73,7 +74,7 @@ module.exports.templateFromFile = function (filename, values) {
     return compressSQL(out.join(" "));
 };
 module.exports.insertVariables = function (query, values) {
-    for (let e of Object.entries(values)) {
+    for(let e of Object.entries(values)) {
         let r = new RegExp("\\$\\{" + e[0] + "\\}", "g"); // lucky this is only run by trusted sources using trusted sources...
         query = query.replace(r, e[1]);
     }
