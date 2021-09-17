@@ -93,9 +93,9 @@ router.put("/assignments/edit/:id", async (req, res) => {
     try {
         // TODO: delete the old code if name or class has changed!
         await Database.assignments.updateAssignment(id, {
-            name: assignment.name,
-            class: assignment.class,
-            path: path
+            assignment_name: assignment.name,
+            course_uuid: assignment.class,
+            code_location: path
         });
         Object.assign(assignment, {
             id: id

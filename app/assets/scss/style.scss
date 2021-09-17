@@ -13,6 +13,11 @@ $cultured: #f3f3f4ff;
 $task-button: #c4c4c4ff;
 $highlighted-task-button: #888890ff;
 
+$header-height: 75px;
+$header-buffer: 30px;
+$notifier-width: 300px;
+$notifier-margin: 25px;
+
 @function ease($property) {
     $transition: 0.3s ease $property;
 
@@ -32,7 +37,6 @@ $highlighted-task-button: #888890ff;
 }
 
 @keyframes shake {
-
     10%,
     90% {
         transform: translate3d(-1px, 0, 0);
@@ -55,8 +59,7 @@ $highlighted-task-button: #888890ff;
     }
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 * {
     margin: 0;
@@ -74,7 +77,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/assets/img/splash.svg');
+    background-image: url("/assets/img/splash.svg");
     background-position: center;
     background-repeat: no-repeat;
 
@@ -113,7 +116,6 @@ body {
                 @include content-font();
                 letter-spacing: 2px;
                 font-style: normal;
-
             }
 
             input[type="submit"] {
@@ -126,7 +128,7 @@ body {
                 letter-spacing: 1px;
                 font-size: 15px;
                 @include header-font();
-                transition: .5s ease background-color, 0.2s ease color;
+                transition: 0.5s ease background-color, 0.2s ease color;
             }
 
             input[type="submit"]:hover:not(:disabled) {
@@ -149,10 +151,79 @@ body {
     }
 }
 
-#header {
-    $header-height: 75px;
-    $header-buffer: 30px;
+#notifier-tray {
+    overflow: visible;
+    right: $notifier-margin;
+    top: $header-height + $notifier-margin;
+    position: fixed;
+    width: $notifier-width;
+    height: fit-content;
 
+    .notification {
+        @include content-font();
+        border-radius: 0.3em;
+        display: block;
+        height: fit-content;
+        background: $pistachio;
+        z-index: 20;
+        left: calc(100% + #{$notifier-margin});
+        transition: left 0.3s ease-in-out;
+        overflow: hidden;
+        padding: 0.4em 0em;
+        position: relative;
+        margin-bottom: 1em;
+
+        &.bad {
+            background: $tomato;
+        }
+
+        &.show {
+            left: 0;
+
+            .timer {
+                transition: width 5s linear;
+                width: 100%;
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4em;
+
+            p {
+                padding-left: 0.2em;
+            }
+            .del {
+                width: 20px;
+                height: 20px;
+                padding: 0;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+
+                img {
+                    width: 98%;
+                    height: 100%;
+                    transition: ease(filter);
+                }
+                &:hover img {
+                    filter: brightness(0.65);
+                }
+            }
+        }
+
+        .timer {
+            bottom: 0%;
+            height: 7px;
+            position: absolute;
+            width: 0%;
+            background: #ffffff80;
+        }
+    }
+}
+
+#header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -211,8 +282,8 @@ body {
         }
     }
 
-    +* {
-        margin-top: $header-height+$header-buffer;
+    + * {
+        margin-top: $header-height + $header-buffer;
     }
 }
 
@@ -223,10 +294,9 @@ body {
     padding: 30px;
     box-shadow: 0 5px 10px black;
     border-radius: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 
     #groupNames {
-
         display: flex;
         flex-direction: row;
 
@@ -256,7 +326,6 @@ body {
         @include content-font();
         letter-spacing: 1px;
         font-style: normal;
-
     }
 
     input[type="submit"] {
@@ -269,7 +338,7 @@ body {
         letter-spacing: 1px;
         font-size: 15px;
         @include header-font();
-        transition: .5s ease background-color, 0.2s ease color;
+        transition: 0.5s ease background-color, 0.2s ease color;
     }
 
     label[for="pass"] {
@@ -385,8 +454,8 @@ body {
         @extend .block;
         gap: 2em;
 
-        >span {
-            flex: 1 1 0px
+        > span {
+            flex: 1 1 0px;
         }
 
         label {
@@ -409,7 +478,6 @@ body {
             box-sizing: border-box;
             width: 100%;
         }
-
     }
 
     div.task {
@@ -453,7 +521,6 @@ body {
                 img {
                     filter: brightness(2);
                 }
-
             }
 
             .del:active {
@@ -471,7 +538,6 @@ body {
             background-color: $almond;
             border-radius: 10px;
             margin-bottom: 15px;
-
 
             .editor {
                 white-space: pre;
@@ -579,7 +645,6 @@ body {
                 img {
                     filter: brightness(2);
                 }
-
             }
 
             .del:active {
@@ -654,7 +719,7 @@ body {
                 letter-spacing: 1px;
                 font-size: 15px;
                 @include content-font();
-                transition: .5s ease background-color, 0.2s ease color;
+                transition: 0.5s ease background-color, 0.2s ease color;
                 cursor: pointer;
             }
 
@@ -681,7 +746,7 @@ body {
             letter-spacing: 1px;
             font-size: 15px;
             @include content-font();
-            transition: .5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+            transition: 0.5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
             cursor: pointer;
             text-transform: uppercase;
             font-size: 1em;
@@ -708,7 +773,6 @@ body {
     @include content-font();
 
     .column {
-
         .tile {
             width: 150px;
             height: 150px;
@@ -754,8 +818,8 @@ input[type="button"]:disabled {
         @extend .block;
         gap: 2em;
 
-        >span {
-            flex: 1 1 0px
+        > span {
+            flex: 1 1 0px;
         }
 
         label {
@@ -826,7 +890,6 @@ input[type="button"]:disabled {
 
         .tCell p {
             padding: 20px;
-
         }
 
         .tCell p:not(:first-child) {

@@ -7,7 +7,7 @@
     "jam": "node server.js"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "skipInstall": "node ./server.js --skipInstall",
@@ -55,7 +55,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
     "nonce-express": "^1.0.2",
-    "scetch": "^1.5.1",
+    "scetch": "^1.5.3",
     "semver": "^7.3.5",
     "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/dist",
     "smcloudstore-aws-s3": "https://github.com/TheBrenny/SMCloudStore/tarball/awss3",
@@ -70,7 +70,7 @@
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
     "nodemon": "^2.0.12",
-    "sass": "^1.39.2",
+    "sass": "^1.41.1",
     "sql-cli-repl": "^1.2.1"
   },
   "private": "true"
