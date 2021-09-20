@@ -66,6 +66,7 @@ function onReady(fn) {
 
 // Creates a listener
 onReady(() => {
+    // Setup the notifier
     const notifier = {};
     notifier.tray = $('#notifier-tray');
     notifier.idGen = (function* () {
@@ -96,14 +97,10 @@ onReady(() => {
     };
     globalThis.notifier = notifier;
 
-    // let realConsoleError = console.error;
-    // console.error = function () {
-    //     notifier.notify(Array.from(arguments).join(" "), true);
-    //     realConsoleError.apply(console, arguments);
-    // };
-    // let realConsoleInfo = console.info;
-    // console.info = function () {
-    //     notifier.notify(Array.from(arguments).join(" "), false);
-    //     realConsoleInfo.apply(console, arguments);
-    // };
+    // Change buttons with HREF to buttons with onclick
+    $$("button, .btn").forEach(btn => {
+        if(btn.hasAttribute("href")) {
+            btn.addEventListener("click", e => window.location.href = btn.getAttribute("href"));
+        }
+    });
 });

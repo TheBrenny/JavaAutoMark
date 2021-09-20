@@ -36,7 +36,7 @@ class AssignmentModel extends Model {
         sql += where.length > 0 ? ` WHERE ${where.join(" AND ")} ` : "";
 
         // Order clause and run
-        let order = "ORDER BY assignment_id DESC";
+        let order = `ORDER BY ${CourseModel.table}.running_year DESC, ${CourseModel.table}.course_id ASC`;
         return this.db.query(sql + order, ...vars);
     }
 

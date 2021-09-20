@@ -31,10 +31,22 @@
             <p class="name">[[assignment.assignment_name]]</p>
             <p class="course">[[assignment.joins.courses.course_name]]</p>
             <p class="year">[[assignment.joins.courses.running_year]]</p>
-            <p class="marked">No</p>
+            <p class="marked">
+                <button href="/assignments/edit/[[assignment.assignment_id]]">
+                    Edit
+                </button>
+                <button href="/assignments/view/[[assignment.assignment_id]]">
+                    View
+                </button>
+            </p>
         </span>
         [[?==]]
     </div>
+    
+    <button id="subAssignment" href="/assignments/create">
+        New Assignment
+    </button>
+
 </div>
 
 [[i= partials/footer]]
