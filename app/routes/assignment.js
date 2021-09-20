@@ -5,6 +5,7 @@ const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
 const storage = require("../../storage/storage");
 const config = require("../../config");
+const CourseModel = require("../../db/models/courses");
 
 router.get("/assignments", async (req, res) => {
     throw errors.notImplemented.fromReq(req);
@@ -13,10 +14,11 @@ router.get("/assignments", async (req, res) => {
 router.get("/assignments/view", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
+    let assignments = Database.assignments.toObject(await Database.assignments.getAllAssignments(), CourseModel);
 
     res.render("assignments/view", {
         courses: courses,
-        tasks: "{}"
+        assignments
     });
 });
 
@@ -52,7 +54,7 @@ router.get("/assignments/submit", async (req, res) => {
 
 router.post("/assignments/create", async (req, res) => {
     let assignment = req.body;
-    
+
     assignment.javaName = assignment.javaName ?? assignment.name.replace(/\s/g, "_");
 
     let code = generateJavaCode(assignment);

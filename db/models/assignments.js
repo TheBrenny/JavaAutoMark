@@ -15,18 +15,29 @@ class AssignmentModel extends Model {
         let sql = `SELECT * FROM ${this.table} WHERE assignment_id=?`;
         return this.db.query(sql, assignmentID).then(this.db.firstRecord);
     }
-    async getAllAsignments(courseID, runningYear) {
-        if (runningYear === undefined) {
-            // treat this as a uuid search
-            let sql = `SELECT * FROM ${this.table} WHERE course_uuid=?`;
-            return this.db.query(sql, courseID);
-        } else {
-            let sql = `SELECT * FROM ${this.table} `;
-            sql += `INNER JOIN ${CourseModel.table} ON `;
-            sql += `${this.table}.course_uuid = ${CourseModel.table}.uuid `;
-            sql += `WHERE ${CourseModel.table}.course_id=? AND ${CourseModel.table}.running_year=?`;
-            return this.db.query(sql, courseID, runningYear);
+    async getAllAssignments(courseID, runningYear) {
+        let sql = `SELECT * FROM ${this.table} `;
+
+        // Inner Join
+        sql += `INNER JOIN ${CourseModel.table} ON `;
+        sql += `${this.table}.course_uuid = ${CourseModel.table}.uuid `;
+        
+        // Where clause
+        let where = [];
+        let vars = [];
+        if(courseID !== undefined) {
+            where.push(`course_uuid=?`);
+            vars.push(courseID);
         }
+        if(runningYear !== undefined) {
+            where.push(`running_year=?`);
+            vars.push(runningYear);
+        }
+        sql += where.length > 0 ? ` WHERE ${where.join(" AND ")} ` : "";
+
+        // Order clause and run
+        let order = "ORDER BY assignment_id DESC";
+        return this.db.query(sql + order, ...vars);
     }
 
     async updateAssignment(id, options) {

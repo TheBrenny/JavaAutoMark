@@ -5,9 +5,10 @@ class Model {
         this.fields = this.constructor.fields;
     }
 
-    toObject(obj) {
-        if (Array.isArray(obj)) return Array.from(obj).map(o => this.toObject(o));
-        return this.db.toObject(this.table, obj, this.fields);
+    toObject(obj, ...includeTables) {
+        if(!!includeTables) includeTables = Array.from(includeTables);
+        if(Array.isArray(obj)) return Array.from(obj).map(o => this.toObject(o, ...includeTables));
+        return this.db.toObject(this.table, obj, this.fields, ...includeTables);
     }
 
     static get fields() {

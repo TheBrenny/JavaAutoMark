@@ -26,12 +26,14 @@
             <h3 class="tHead marked">Marked</h3>
         </span>
 
+        [[e= assignment in assignments ]]
         <span class="tCell">
-            <p class="name">FIRST text 1</p>
-            <p class="course">Filler text 1</p>
-            <p class="year">2021</p>
-            <p class="marked">Filler text 1</p> 
+            <p class="name">[[assignment.assignment_name]]</p>
+            <p class="course">[[assignment.joins.courses.course_name]]</p>
+            <p class="year">[[assignment.joins.courses.running_year]]</p>
+            <p class="marked">No</p>
         </span>
+        [[?==]]
     </div>
 </div>
 
