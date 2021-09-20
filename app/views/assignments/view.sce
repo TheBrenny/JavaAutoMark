@@ -20,10 +20,10 @@
 
     <div id="table">
         <span class="tHead">
-            <h3 class="tHead name">Name</h3>
-            <h3 class="tHead course">Course</h3>
-            <h3 class="tHead year">Year</h3>
-            <h3 class="tHead marked">Marked</h3>
+            <h3 class="name">Name</h3>
+            <h3 class="course">Course</h3>
+            <h3 class="year">Year</h3>
+            <h3 class="marked">Marked</h3>
         </span>
 
         [[e= assignment in assignments ]]

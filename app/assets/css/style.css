@@ -757,8 +757,6 @@ input[type=button]:disabled, a.btn.disabled, button:disabled {
   border-radius: 5px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  max-height: 600px;
-  overflow-y: auto;
   background-color: #f3f3f4ff;
   box-shadow: 0 5px 10px #7e7f83ff;
   margin-bottom: 35px;
@@ -772,7 +770,7 @@ input[type=button]:disabled, a.btn.disabled, button:disabled {
 }
 #viewAss div#table .tHead {
   position: sticky;
-  top: 0;
+  top: calc(75px - 8px);
   width: 100%;
 }
 #viewAss div#table .tHead h3 {

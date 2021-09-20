@@ -861,10 +861,6 @@ input[type="button"]:disabled, a.btn.disabled, button:disabled {
         border-radius: 5px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-
-        max-height: 600px;
-        overflow-y: auto;
-
         background-color: $cultured;
         box-shadow: 0 5px 10px $gray-web;
         margin-bottom: 35px;
@@ -881,7 +877,7 @@ input[type="button"]:disabled, a.btn.disabled, button:disabled {
 
         .tHead {
             position: sticky;
-            top: 0;
+            top: calc(#{$header-height} - 8px);
             width: 100%;
         }
 
