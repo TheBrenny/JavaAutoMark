@@ -789,13 +789,18 @@ body {
             padding: 25px;
             flex-flow: column;
             text-decoration: none;
-            color: inherit;
             outline: none;
             border: none;
             cursor: pointer;
+            transform: scale(1.0);
+            transition: ease(transform);
 
             h1 {
                 padding-top: 0.5em;
+            }
+
+            &:hover:not(:disabled) {
+                transform: scale(1.1);
             }
         }
     }
@@ -807,9 +812,10 @@ body {
     }
 }
 
-input[type="button"]:disabled, a.btn.disabled {
+input[type="button"]:disabled, a.btn.disabled, button:disabled {
     background-color: $gray-web !important;
     cursor: unset !important;
+    // color: -internal-light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
 }
 
 #viewAss {

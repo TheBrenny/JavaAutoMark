@@ -10,7 +10,7 @@
             </div>
             <h1>View Teachers</h1>
         </button>
-        <button id="newTeach" class="tile btn" href="/admin/teachers/create">
+        <button id="newTeach" class="tile btn" href="/admin/teachers/create" [[?= isAdmin ]] disabled [[?==]]>
             <div class="faWrap">
                 <i class="fas fa-user-plus fa-6x"></i>
             </div>
