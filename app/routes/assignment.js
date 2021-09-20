@@ -52,6 +52,8 @@ router.get("/assignments/submit", async (req, res) => {
 
 router.post("/assignments/create", async (req, res) => {
     let assignment = req.body;
+    
+    assignment.javaName = assignment.javaName ?? assignment.name.replace(/\s/g, "_");
 
     let code = generateJavaCode(assignment);
     let path = assignment.class + "/" + assignment.name;
@@ -97,6 +99,8 @@ router.put("/assignments/edit/:id", async (req, res) => {
     let id = req.params.id;
     let assignment = req.body;
 
+    assignment.javaName = assignment.javaName ?? assignment.name.replace(/\s/g, "_");
+
     let code = generateJavaCode(assignment);
     let path = assignment.class + "/" + assignment.name;
     let err = null;
@@ -124,11 +128,15 @@ router.put("/assignments/edit/:id", async (req, res) => {
     });
 });
 
+// TODO: it would be cool if this could be exported and reused client side so
+//       the client can get a live preview of what the resulting code looks like
 function generateJavaCode(assignment) {
-    let code = `public class ${assignment.name} {\n`;
+    let code = `public class ${assignment.javaName} {\n`;
 
     // for loop for all tasks in the assignment
+    let main = "public static void main(String[] args) {\n";
     for(let i = 0; i < assignment.tasks.length; i++) {
+        main += `task${i + 1}();\n`;
         code += `public static void task${i + 1}() {\n`;
 
         for(let j = 0; j < assignment.tasks[i].tests.length; j++) {
@@ -150,6 +158,9 @@ function generateJavaCode(assignment) {
 
         code += `}\n`;
     }
+
+    main += "}\n";
+    code += main;
 
     code += `}\n`;
 
