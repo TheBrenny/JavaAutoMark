@@ -676,15 +676,15 @@ body #login_container form label {
 
 #adminContainer {
   display: flex;
+}
+#adminContainer .column .tile {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
-}
-#adminContainer .column .tile {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   align-content: center;
   text-transform: uppercase;
@@ -694,10 +694,12 @@ body #login_container form label {
   border-radius: 10px;
   margin: 50px;
   padding: 25px;
-}
-#adminContainer .column .tile a {
+  flex-flow: column;
   text-decoration: none;
   color: inherit;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 #adminContainer .column .tile h1 {
   padding-top: 0.5em;
@@ -708,7 +710,7 @@ body #login_container form label {
   margin: 25px 0;
 }
 
-input[type=button]:disabled {
+input[type=button]:disabled, a.btn.disabled {
   background-color: #7e7f83ff !important;
   cursor: unset !important;
 }
@@ -885,7 +887,10 @@ input[type=button]:disabled {
   opacity: 0.3;
   width: 100%;
 }
-#submitAss .inputForm .uploading, #submitAss .inputForm .success, #submitAss .inputForm .error, #submitAss .inputForm .dropText {
+#submitAss .inputForm .uploading,
+#submitAss .inputForm .success,
+#submitAss .inputForm .error,
+#submitAss .inputForm .dropText {
   display: none;
 }
 #submitAss .enabled .dropText {

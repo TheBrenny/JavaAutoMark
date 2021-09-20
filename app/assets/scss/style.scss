@@ -770,14 +770,14 @@ body {
 
 #adminContainer {
     display: flex;
-    @include content-font();
-
+    
     .column {
         .tile {
-            width: 150px;
-            height: 150px;
+            @include content-font();
+            width: 200px;
+            height: 200px;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             align-content: center;
             text-transform: uppercase;
@@ -787,11 +787,12 @@ body {
             border-radius: 10px;
             margin: 50px;
             padding: 25px;
-
-            a {
-                text-decoration: none;
-                color: inherit;
-            }
+            flex-flow: column;
+            text-decoration: none;
+            color: inherit;
+            outline: none;
+            border: none;
+            cursor: pointer;
 
             h1 {
                 padding-top: 0.5em;
@@ -806,7 +807,7 @@ body {
     }
 }
 
-input[type="button"]:disabled {
+input[type="button"]:disabled, a.btn.disabled {
     background-color: $gray-web !important;
     cursor: unset !important;
 }
@@ -962,7 +963,7 @@ input[type="button"]:disabled {
             font-size: 15px;
             @include content-font();
             text-transform: uppercase;
-            transition: .5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
+            transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
             box-shadow: 0 5px 10px $gray-web;
             cursor: pointer;
         }
@@ -990,7 +991,7 @@ input[type="button"]:disabled {
             outline-offset: -20px;
             background-color: white;
         }
-        
+
         .inputBox {
             display: block;
             padding: 100px 0;
@@ -998,7 +999,7 @@ input[type="button"]:disabled {
             width: 100%;
             margin: 0;
 
-            .inputFile {    
+            .inputFile {
                 display: none;
             }
 
@@ -1008,7 +1009,6 @@ input[type="button"]:disabled {
                 display: inline-block;
                 font-size: 20px;
                 color: $highlighted-task-button;
-                
             }
 
             label[for="file"]:hover strong {
@@ -1022,7 +1022,10 @@ input[type="button"]:disabled {
             }
         }
 
-        .uploading, .success, .error, .dropText {
+        .uploading,
+        .success,
+        .error,
+        .dropText {
             display: none;
         }
     }
@@ -1031,7 +1034,7 @@ input[type="button"]:disabled {
         display: inline !important;
     }
 
-    .isUpload{
+    .isUpload {
         .border {
             visibility: none;
         }
