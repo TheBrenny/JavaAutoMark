@@ -10,7 +10,7 @@ const dbFolder = path.join(__dirname);
 const sqlFolder = path.join(dbFolder, "scripts");
 const templateFolder = path.join(dbFolder, "templates");
 
-module.exports = (async function () {
+module.exports = (async function createDB() {
     if(!global.hasOwnProperty('db')) {
         let dbUrl = config.db.url;
         if(config.db.isDev) {
@@ -20,6 +20,15 @@ module.exports = (async function () {
         global.db = mysql.createConnection({
             uri: dbUrl.href,
             multipleStatements: true
+        });
+
+        global.db.then(db => {
+            db.on("error", err => {
+                if(["PROTOCOL_CONNECTION_LOST", "ECONNREFUSED"].includes(err.code)) {
+                    console.log("Lost connection to database. Attempting to reconnect...");
+                    createDB();
+                }
+            });
         });
     }
     return global.db;
