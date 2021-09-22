@@ -48,5 +48,7 @@ if(dropEnabled) {
 
     border.addEventListener('drop', function(e) {
         drag(false);
+
+        droppedFiles = e.originalEvent.dataTransfer.files;
     });
 } 
