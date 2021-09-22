@@ -393,7 +393,7 @@ input[type=submit]:disabled {
   font-weight: 600;
 }
 
-.block, #submitAss .inputForm .border, #viewAss div#head, #newassignment div#details, #error {
+.block, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -811,47 +811,38 @@ input[type=submit]:disabled {
   font-weight: 400;
   letter-spacing: 2px;
 }
-#submitAss .inputForm {
-  width: 100%;
-}
-#submitAss .inputForm .border {
-  outline: dashed 2px #7e7f83ff;
-  outline-offset: -10px;
-  transition: 0.3s ease outline-offset, 0.3s ease background-color;
-}
-#submitAss .inputForm .file-over {
-  outline-offset: -20px;
-  background-color: white;
-}
-#submitAss .inputForm .inputBox {
+#submitAss .inputBox {
   display: block;
   padding: 100px 0;
   text-align: center;
   width: 100%;
   margin: 0;
+  outline: dashed 2px #7e7f83ff;
+  outline-offset: -10px;
+  transition: 0.3s ease outline-offset, 0.3s ease background-color;
 }
-#submitAss .inputForm .inputBox .inputFile {
+#submitAss .inputBox .inputFile {
   display: none;
 }
-#submitAss .inputForm .inputBox label[for=file] {
+#submitAss .inputBox label[for=file] {
   margin-top: 35px;
   cursor: pointer;
   display: inline-block;
   font-size: 20px;
   color: #888890ff;
 }
-#submitAss .inputForm .inputBox label[for=file]:hover strong {
+#submitAss .inputBox label[for=file]:hover strong {
   color: #4b7ce6ff;
 }
-#submitAss .inputForm .inputBox .upload-icon {
+#submitAss .inputBox .upload-icon {
   color: #7e7f83ff;
   opacity: 0.3;
   width: 100%;
 }
-#submitAss .inputForm .uploading,
-#submitAss .inputForm .success,
-#submitAss .inputForm .error,
-#submitAss .inputForm .dropText {
+#submitAss .uploading,
+#submitAss .success,
+#submitAss .error,
+#submitAss .dropText {
   display: none;
 }
 #submitAss .enabled .dropText {
@@ -868,5 +859,9 @@ input[type=submit]:disabled {
 }
 #submitAss .isError .error {
   display: block !important;
+}
+#submitAss .file-over {
+  outline-offset: -20px;
+  background-color: #c4c4c4ff;
 }
 /*# sourceMappingURL=style.css.map */

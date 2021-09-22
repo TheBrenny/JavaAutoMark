@@ -916,64 +916,52 @@ input[type="submit"] {
         }
     }
 
-    .inputForm {
+    .inputBox {
+        display: block;
+        padding: 100px 0;
+        text-align: center;
         width: 100%;
+        margin: 0;
 
-        .border {
-            @extend .block;
-            outline: dashed 2px $gray-web;
-            outline-offset: -10px;
-            transition: ease(outline-offset), ease(background-color);
-            // padding: 10px;
-        }
+        @extend .block;
+        outline: dashed 2px $gray-web;
+        outline-offset: -10px;
+        transition: ease(outline-offset), ease(background-color);
 
-        .file-over {
-            outline-offset: -20px;
-            background-color: white;
-        }
-
-        .inputBox {
-            display: block;
-            padding: 100px 0;
-            text-align: center;
-            width: 100%;
-            margin: 0;
-
-            .inputFile {
-                display: none;
-            }
-
-            label[for="file"] {
-                margin-top: 35px;
-                cursor: pointer;
-                display: inline-block;
-                font-size: 20px;
-                color: $highlighted-task-button;
-            }
-
-            label[for="file"]:hover strong {
-                color: $button-blue;
-            }
-
-            .upload-icon {
-                color: $gray-web;
-                opacity: 0.3;
-                width: 100%;
-            }
-        }
-
-        .uploading,
-        .success,
-        .error,
-        .dropText {
+        .inputFile {
             display: none;
+        }
+
+        label[for="file"] {
+            margin-top: 35px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 20px;
+            color: $highlighted-task-button;
+        }
+
+        label[for="file"]:hover strong {
+            color: $button-blue;
+        }
+
+        .upload-icon {
+            color: $gray-web;
+            opacity: 0.3;
+            width: 100%;
         }
     }
 
+    .uploading,
+    .success,
+    .error,
+    .dropText {
+        display: none;
+    }
+    
     .enabled .dropText {
         display: inline !important;
     }
-
+    
     .isUpload {
         .border {
             visibility: none;
@@ -982,12 +970,20 @@ input[type="submit"] {
             display: block !important;
         }
     }
-
+    
     .isSuccess .sucess {
         display: block !important;
     }
-
+    
     .isError .error {
         display: block !important;
     }
+
+    .file-over {
+        outline-offset: -20px;
+        background-color: $task-button;
+    }
 }
+
+
+
