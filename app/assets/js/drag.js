@@ -17,7 +17,7 @@ function drag(type) {
 if(dropEnabled) {
     form.classList.add('enabled');
 
-    var droppedFiles = false;
+    var droppedFile = false;
 
     var border = $('.inputBox');
 
@@ -49,6 +49,8 @@ if(dropEnabled) {
     border.addEventListener('drop', function(e) {
         drag(false);
 
-        droppedFiles = e.originalEvent.dataTransfer.files;
+        let dt = e.dataTransfer;
+
+        droppedFile = dt.files[0];
     });
 } 
