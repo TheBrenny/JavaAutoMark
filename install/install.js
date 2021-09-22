@@ -261,7 +261,7 @@ async function installDB() {
 
     return dbInstaller.install(modes).then(() => {
         if(modes & dbInstaller.flags.install) {
-            console.log(`The admin account is ${colour("yellow")}root${colour("reset")}:${colour("yellow")}toor${colour("reset")}.`);
+            console.log(`The admin account is ${colour("yellow")}admin${colour("reset")}:${colour("yellow")}admin${colour("reset")}.`);
         }
     });
 }

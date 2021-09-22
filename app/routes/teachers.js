@@ -42,7 +42,7 @@ router.get("/teachers/view/:id", async (req, res) => {
     let id = req.params.id.replace(/^z/g, "");
     let t = await Database.teachers.getTeacher(id);
 
-    if (t == undefined) throw errors.notFound.fromReq(req);
+    if(t == undefined) throw errors.notFound.fromReq(req);
 
     t = Database.teachers.toObject(t);
 
@@ -53,6 +53,7 @@ router.get("/teachers/view/:id", async (req, res) => {
 
 router.post("/login", checks.isGuest, async (req, res) => {
     let zid = req.body.user.replace(/^z/g, "");
+    zid = zid === "admin" ? 0 : zid; // converts admin to 0 as the account id for the db
     let password = req.body.pass;
 
     session(req).loginAttempt();
@@ -61,10 +62,11 @@ router.post("/login", checks.isGuest, async (req, res) => {
     let target = (await Database.teachers.getTeacher(zid));
 
     // found user
-    if (target != undefined) {
+    if(target != undefined) {
         const passMatch = crypto.compareSync(password, target.teachers_password);
-        if (passMatch) {
+        if(passMatch) {
             session(req).setAccount(target.teachers_zid, target.teachers_fname, target.teachers_lname);
+            session(req).getAccount().admin = target.teachers_zid === 0;
         } else {
             bad = true;
         }
@@ -73,7 +75,7 @@ router.post("/login", checks.isGuest, async (req, res) => {
         bad = true;
     }
 
-    if (bad) {
+    if(bad) {
         session(req).badLogin("Invalid id or password!");
         res.status(401).redirect("/login");
     } else {
