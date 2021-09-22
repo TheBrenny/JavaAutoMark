@@ -259,7 +259,11 @@ async function installDB() {
     modes = modes.map(mode => choiceToModeMap[choices.indexOf(mode)]);
     modes = modes.reduce((a, c) => a | dbInstaller.flags[c], 0);
 
-    return dbInstaller.install(modes);
+    return dbInstaller.install(modes).then(() => {
+        if(modes & dbInstaller.flags.install) {
+            console.log(`The admin account is ${colour("yellow")}root${colour("reset")}:${colour("yellow")}toor${colour("reset")}.`);
+        }
+    });
 }
 
 function getFileExtension(archive) {

@@ -7,6 +7,8 @@ CREATE TABLE `teachers` (
   `password` CHAR(60) NOT NULL,
   PRIMARY KEY (`zid`)
 );
+INSERT INTO `teachers` (`zid`, `email`, `fname`, `lname`, `password`) VALUES
+  (0, "admin@change-me.com", "admin", "admin", "$2b$12$qXsJqM7ZzGI9E3YTxm4wteqDc7A7dF8uJ0Lc8u0dBEoIPlzKFg6k6"); -- login with admin:admin
 
 -- Create Course Table
 CREATE TABLE `courses` (
