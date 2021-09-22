@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require('express');
+const router = express.Router();
 const checks = require("./tools/checks");
 const session = require("./tools/session");
 const Database = require("../../db/database");
@@ -26,7 +27,10 @@ router.get("/assignments/view/:id", async (req, res) => {
     throw errors.notImplemented.fromReq(req);
 });
 
-router.get("/assignments/submit/:id", (req, res) => {
+router.get("/assignments/submit/:id", express.raw({
+    limit: "5mb"
+}), (req, res) => {
+    
     throw errors.notImplemented.fromReq(req);
 });
 
