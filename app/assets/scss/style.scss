@@ -168,7 +168,8 @@ body {
         background: $pistachio;
         z-index: 20;
         left: calc(100% + #{$notifier-margin});
-        transition: left 0.3s ease-in-out;
+        transition: left 0.25s;
+        transition-timing-function: ease-in-out;
         overflow: hidden;
         padding: 0.4em 0em;
         position: relative;
@@ -180,6 +181,7 @@ body {
 
         &.show {
             left: 0;
+            transition-timing-function: cubic-bezier(0.75, 1.48, 0.68, 0.96);
 
             .timer {
                 transition: width 5s linear;
@@ -957,11 +959,11 @@ input[type="submit"] {
     .dropText {
         display: none;
     }
-    
+
     .enabled .dropText {
         display: inline !important;
     }
-    
+
     .isUpload {
         .border {
             visibility: none;
@@ -970,11 +972,11 @@ input[type="submit"] {
             display: block !important;
         }
     }
-    
+
     .isSuccess .sucess {
         display: block !important;
     }
-    
+
     .isError .error {
         display: block !important;
     }
@@ -984,6 +986,3 @@ input[type="submit"] {
         background-color: $task-button;
     }
 }
-
-
-
