@@ -53,4 +53,17 @@ if(dropEnabled) {
 
         droppedFile = dt.files[0];
     });
+    //upload file to server
+    function uploadFile(droppedFile){
+        let url = '';
+        let formData = new FormData();
+
+        formData.append('file', droppedFile);
+
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(())
+    }
 } 
