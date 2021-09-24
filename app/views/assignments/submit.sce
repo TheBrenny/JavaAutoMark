@@ -4,8 +4,8 @@
 
 <div id="submitAss">
     <div class="block details">
-        <h1 class="title">[[assignmentTitle]]</h1>
-        <h1 class="class">[[assClass]]</h1>
+        <h1 class="title">[[assignment.assignment_name]]</h1>
+        <h1 class="class">[[assignment.from.courses.course_name]]-[[assignment.from.courses.running_year]]</h1>
     </div>
 
     <div class="metaAss">
@@ -13,7 +13,7 @@
 
         <input class="edit" type="button" value="Edit" />
     </div>
-    
+
     <div class="inputBox">
         <i class="upload-icon far fa-8x fa-file-archive"></i>
         <input class="inputFile" type="file" name="files" id="file" />

@@ -10,14 +10,14 @@
             </div>
             <h2>View Teachers</h2>
         </button>
-        <button id="newTeach" class="tile " [[?= !user.admin ]] disabled [[?=]] href="/admin/teachers/create" [[?==]]>
+        <button id="newTeach" class="tile " [[?= !user.admin ]] disabled [[3=]] href="/admin/teachers/create" [[?==]]>
             <div class="faWrap">
                 <i class="fas fa-user-plus fa-6x"></i>
             </div>
             <h2>New Teacher</h2>
         </button>
     </div>
-    <div class="separator"></div>
+    <vr></vr>
     <div class="column" id="classCon">
         <button id="viewClass" class="tile " href="/">
             <div class="faWrap">
@@ -36,7 +36,7 @@
             <h2>New Class</h2>
         </button>
     </div>
-    <div class="separator"></div>
+    <vr></vr>
     <div class="column" id="assignCon">
         <button id="viewAssign" class="tile " href="/assignments/view">
             <div class="faWrap">

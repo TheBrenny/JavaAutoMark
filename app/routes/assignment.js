@@ -9,7 +9,7 @@ const config = require("../../config");
 const CourseModel = require("../../db/models/courses");
 
 router.get("/assignments", async (req, res) => {
-    throw errors.notImplemented.fromReq(req);
+    res.redirect(301, "/assignments/view");
 });
 
 router.get("/assignments/view", async (req, res) => {
@@ -27,13 +27,6 @@ router.get("/assignments/view/:id", async (req, res) => {
     throw errors.notImplemented.fromReq(req);
 });
 
-router.get("/assignments/submit/:id", express.raw({
-    limit: "5mb"
-}), (req, res) => {
-    
-    throw errors.notImplemented.fromReq(req);
-});
-
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
@@ -45,15 +38,20 @@ router.get("/assignments/create", async (req, res) => {
     });
 });
 
-router.get("/assignments/submit", async (req, res) => {
-    let courses = await Database.courses.getAllCourses();
-    courses = Database.courses.toObject(courses);
-
+router.get("/assignments/submit/:id", async (req, res) => {
+    let assignment = await Database.assignments.getAssignment(req.params.id);
+    assignment = Database.assignments.toObject(assignment, CourseModel);
+    
     res.render("assignments/submit", {
-        courses: courses,
-        assign: "{}",
-        isCreate: true,
+        assignment,
     });
+});
+
+router.post("/assignments/submit/:id", express.raw({
+    limit: "5mb"
+}), (req, res) => {
+
+    throw errors.notImplemented.fromReq(req);
 });
 
 router.post("/assignments/create", async (req, res) => {

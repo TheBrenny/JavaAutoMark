@@ -12,7 +12,15 @@ class AssignmentModel extends Model {
     }
 
     async getAssignment(assignmentID) {
-        let sql = `SELECT * FROM ${this.table} WHERE assignment_id=?`;
+        let sql = `SELECT * FROM ${this.table} `;
+        
+        // Inner Join
+        sql += `INNER JOIN ${CourseModel.table} ON `;
+        sql += `${this.table}.course_uuid = ${CourseModel.table}.uuid `;
+        
+        // Where clause
+        sql += `WHERE assignment_id=?`;
+        
         return this.db.query(sql, assignmentID).then(this.db.firstRecord);
     }
     async getAllAssignments(courseID, runningYear) {
