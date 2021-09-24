@@ -77,6 +77,7 @@ h3 {
 }
 
 hr {
+    margin: 1em 0;
     border: none;
     background: rgb(254, 100, 72);
     background: linear-gradient(
@@ -109,7 +110,7 @@ vr {
     width: 1px;
     opacity: 0.75;
     margin-top: attr(offset px, 0px);
-    
+
     &.flip {
         transform: rotate(180deg);
     }
@@ -250,6 +251,36 @@ body {
             width: 0%;
             background: #ffffff80;
         }
+    }
+}
+
+#tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px $gray-web;
+    display: none;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 10px));
+    background: $cultured;
+    border: 2px solid $task-button;
+    padding: 0.5em;
+    @include content-font();
+
+    &.show {
+        display: block;
+    }
+    .arrow {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-top: 10px solid $task-button;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        transform: translateX(-50%);
     }
 }
 
@@ -450,6 +481,10 @@ input[type="submit"] {
         justify-content: space-between;
         letter-spacing: 1px;
         margin-bottom: 0.7em;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
 
         h3 {
             font-weight: 600;

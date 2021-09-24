@@ -31,6 +31,7 @@ h3 {
 }
 
 hr {
+  margin: 1em 0;
   border: none;
   background: #fe6448;
   background: linear-gradient(90deg, rgba(254, 100, 72, 0) 0%, #fe6448 20%, #fe6448 40%, #ffd147 70%, rgba(255, 209, 71, 0) 100%);
@@ -180,6 +181,37 @@ body #login_container form label {
   position: absolute;
   width: 0%;
   background: #ffffff80;
+}
+
+#tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  display: none;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 10px));
+  background: #f3f3f4ff;
+  border: 2px solid #c4c4c4ff;
+  padding: 0.5em;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#tooltip.show {
+  display: block;
+}
+#tooltip .arrow {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 10px solid #c4c4c4ff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  transform: translateX(-50%);
 }
 
 button,
@@ -392,6 +424,9 @@ input[type=submit]:disabled {
   justify-content: space-between;
   letter-spacing: 1px;
   margin-bottom: 0.7em;
+}
+#viewUser .wrapper:last-of-type {
+  margin-bottom: 0;
 }
 #viewUser .wrapper h3 {
   font-weight: 600;
