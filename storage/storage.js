@@ -32,6 +32,7 @@ async function ensurePublicUrlTable() {
         .catch(err => Promise.reject(err));
 }
 
+// TODO: At some point in this apps lifetime, it might be wise to shift from SMCloudStore to multer, just to keep storage solutions consistent
 module.exports = (function () {
     if (!global.hasOwnProperty('storage')) {
         let provider = config.storage.provider;

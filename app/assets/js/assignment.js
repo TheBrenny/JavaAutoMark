@@ -213,17 +213,11 @@ function saveAssignment(editID) {
         } else if(typeof response === "object") { // we have a JSON object
             console.log(response);
             notifier.notify(response.message);
-            // show an alert box saying the response.message
         } else {
             throw response;
         }
     }).catch(e => {
         console.error(e);
-        notifier.notify("Error: " + e.message, true); // TODO: change this to an error alert box that's built with our colour scheme
+        notifier.notify("Error: " + e.message, true);
     });
-
-    // for all tasks, generate a list of tests and instrs in the right order.
-    // from the lists generate code objects to pump into the db
-    // redirect to assignments/edit/{id}
-    // this will also prove to see if the code gen works
 }
