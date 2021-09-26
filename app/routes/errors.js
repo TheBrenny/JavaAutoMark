@@ -42,7 +42,7 @@ module.exports.handler = ((err, req, res, next) => {
             }
             res.render("error", {
                 "error": e
-            })
+            });
         },
         "default": () => res.send(JSON.stringify(e)).end()
     });
