@@ -25,6 +25,7 @@
             <h3 class="year">Year</h3>
             <h3 class="marked">Marked</h3>
         </span>
+        
         [[?= assignments == null]]
         <span class="bCell">
             No assignments found
