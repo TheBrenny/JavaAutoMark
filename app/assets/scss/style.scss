@@ -546,14 +546,18 @@ input[type="submit"] {
             padding-bottom: 0.5em;
 
             &::-webkit-scrollbar {
-                width: 0.5em;
-                height: 0.5em;
+                width: 0.75em;
+                height: 0.75em;
             }
 
             &::-webkit-scrollbar-thumb {
                 background-color: $highlighted-task-button;
                 border-radius: 10em;
                 margin: 2em;
+
+                &:hover {
+                    background-color: $gray-web;
+                }
             }
 
             &::-webkit-scrollbar-button {
