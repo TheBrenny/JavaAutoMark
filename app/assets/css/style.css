@@ -805,6 +805,11 @@ input[type=submit]:disabled {
   text-transform: uppercase;
   position: sticky;
 }
+#viewAss div#table .bCell {
+  text-align: center;
+  display: block;
+  padding: 20px;
+}
 #viewAss div#table .tCell p {
   padding: 20px;
 }
@@ -901,22 +906,29 @@ input[type=submit]:disabled {
   opacity: 0.3;
   width: 100%;
 }
-#submitAss .uploading,
-#submitAss .success,
-#submitAss .error,
-#submitAss .dropText {
+#submitAss .inputBox .uploading,
+#submitAss .inputBox .success,
+#submitAss .inputBox .error,
+#submitAss .inputBox .dropText {
   display: none;
+  margin-top: 35px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888890ff;
 }
 #submitAss .enabled .dropText {
   display: inline !important;
 }
-#submitAss .isUpload .border {
-  visibility: none;
+#submitAss .isUpload label[for=file] {
+  display: none;
 }
 #submitAss .isUpload .uploading {
   display: block !important;
 }
-#submitAss .isSuccess .sucess {
+#submitAss .isSuccess label[for=file] {
+  display: none;
+}
+#submitAss .isSuccess .success {
   display: block !important;
 }
 #submitAss .isError .error {

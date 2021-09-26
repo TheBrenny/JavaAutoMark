@@ -901,6 +901,12 @@ input[type="submit"] {
             position: sticky;
         }
 
+        .bCell {
+            text-align: center;
+            display: block;
+            padding: 20px;
+        }
+
         .tCell p {
             padding: 20px;
         }
@@ -1021,13 +1027,17 @@ input[type="submit"] {
             opacity: 0.3;
             width: 100%;
         }
-    }
-
-    .uploading,
-    .success,
-    .error,
-    .dropText {
-        display: none;
+    
+        .uploading,
+        .success,
+        .error,
+        .dropText {
+            display: none;
+            margin-top: 35px;
+            cursor: pointer;
+            font-size: 20px;
+            color: $highlighted-task-button;
+        }
     }
 
     .enabled .dropText {
@@ -1035,16 +1045,23 @@ input[type="submit"] {
     }
 
     .isUpload {
-        .border {
-            visibility: none;
+        label[for="file"] {
+            display: none;
         }
+
         .uploading {
             display: block !important;
         }
     }
-
-    .isSuccess .sucess {
-        display: block !important;
+    
+    .isSuccess {
+        label[for="file"] {
+            display: none;
+        }
+        
+        .success {
+            display: block !important;
+        }
     }
 
     .isError .error {

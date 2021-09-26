@@ -38,10 +38,21 @@ router.get("/assignments/create", async (req, res) => {
     });
 });
 
-router.get("/assignments/submit/:id", async (req, res) => {
-    let assignment = await Database.assignments.getAssignment(req.params.id);
-    assignment = Database.assignments.toObject(assignment, CourseModel);
-    
+router.get("/assignments/marked", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+
+    res.render("assignments/marked", {
+        courses: courses,
+        assign: "{}",
+        isCreate: true,
+    });
+});
+
+router.get("/assignments/submit", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+
     res.render("assignments/submit", {
         assignment,
     });
