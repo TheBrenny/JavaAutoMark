@@ -544,6 +544,7 @@ input[type="submit"] {
             overflow-x: scroll;
             padding: 1em;
             padding-bottom: 0.5em;
+            color: $gray-web;
 
             &::-webkit-scrollbar {
                 width: 0.75em;
@@ -563,6 +564,10 @@ input[type="submit"] {
             &::-webkit-scrollbar-button {
                 background: transparent;
                 width: 1em;
+            }
+
+            span.highlight {
+                color: $smoky-black;
             }
         }
     }

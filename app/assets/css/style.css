@@ -480,6 +480,7 @@ input[type=submit]:disabled {
   overflow-x: scroll;
   padding: 1em;
   padding-bottom: 0.5em;
+  color: #7e7f83ff;
 }
 #error .preWrap pre::-webkit-scrollbar {
   width: 0.75em;
@@ -496,6 +497,9 @@ input[type=submit]:disabled {
 #error .preWrap pre::-webkit-scrollbar-button {
   background: transparent;
   width: 1em;
+}
+#error .preWrap pre span.highlight {
+  color: #14110fff;
 }
 
 #newassignment div#details {

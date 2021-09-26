@@ -53,9 +53,39 @@ router.get("/teachers/view/:id", async (req, res) => {
 
     t = Database.teachers.toObject(t);
 
-    res.render("viewuser", {
+    res.render("teachers/single", {
         teacher: t
     });
+});
+
+
+router.get("/teachers/create", checks.isAdmin, (req, res) => {
+    res.render("teachers/create", {});
+});
+
+router.post("/teachers/create", checks.isAdmin, async (req, res) => {
+    let zid = req.body.zID.replace(/^z/g, "");
+    let fname = req.body.fName;
+    let lname = req.body.lName;
+    let email = req.body.email;
+    let password = req.body.pass;
+
+    let bad = false;
+    let target = (await Database.teachers.getTeacher(zid));
+
+    // not found user
+    if(target == undefined) {
+        const passHash = crypto.hashSync(password, 12);
+        bad = !(await Database.teachers.addTeacher(zid, email, fname, lname, passHash));
+    } else {
+        bad = true;
+    }
+
+    if(bad) {
+        res.status(401).redirect("/admin/teachers/create");
+    } else {
+        res.redirect("/admin");
+    }
 });
 
 router.post("/login", checks.isGuest, async (req, res) => {
