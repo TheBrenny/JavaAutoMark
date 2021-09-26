@@ -50,20 +50,65 @@ if(dropEnabled) {
         drag(false);
 
         let dt = e.dataTransfer;
+        droppedFile = dt.files;
 
-        droppedFile = dt.files[0];
+        handleFiles(droppedFile);
     });
+    //converts from filelist to array for ease of iteration
+    function handleFiles(droppedFile){
+        droppedFile = [...droppedFile];
+        initializeProgress(droppedFile.length); 
+        droppedFile.forEach(uploadFile);
+        droppedFile.forEach(previewFile);
+    }
+
     //upload file to server
     function uploadFile(droppedFile){
-        let url = '';
-        let formData = new FormData();
+        let url = window.location.href
+        let method = "POST";
 
-        formData.append('file', droppedFile);
-
-        fetch(url, {
-            method: 'POST',
-            body: formData
+        return fetch(url, {
+            method: method,
+            body: JSON.stringify(assignmentDetails),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
-        .then(())
+        .then(async r => {
+            if(r.status === 201) {
+                return r.headers.get("Location");
+            } else if(r.status === 200) {
+                return await r.json();
+            } else {
+                throw await r.json();
+            }
+        })
+        .then((response) => {
+            if(typeof response === "string") { // we have a location
+                notifier.notify("Saved successfully. Redirecting...");
+                window.location = response;
+            } else if(typeof response === "object") { // we have a JSON object
+                console.log(response);
+                notifier.notify(response.message);
+                // show an alert box saying the response.message
+            } else {
+                throw response;
+            }
+        })
+        .catch(e => {
+            console.error(e);
+            notifier.notify("Error: " + e.message, true); // TODO: change this to an error alert box that's built with our colour scheme
+        });        
     }
+    //tracks progress of upload
+    function initializeProgress(numfiles) {
+        progressBar.value = 0
+        filesDone = 0
+        filesToDo = numfiles
+      }
+    //
+    function progressDone() {
+        filesDone++
+        progressBar.value = filesDone / filesToDo * 100
+     }
 } 
