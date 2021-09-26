@@ -7,6 +7,14 @@ const errors = require("./errors/generic").errors;
 const storage = require("../../storage/storage");
 const config = require("../../config");
 const CourseModel = require("../../db/models/courses");
+const multer = require('multer');
+const path = require("path");
+
+// This sets up the page title
+router.use("/assignments/*", (req, res, next) => {
+    res.locals.pageTitle = "Assignments";
+    next();
+});
 
 router.get("/assignments", async (req, res) => {
     res.redirect(301, "/assignments/view");
@@ -23,10 +31,6 @@ router.get("/assignments/view", async (req, res) => {
     });
 });
 
-router.get("/assignments/view/:id", async (req, res) => {
-    throw errors.notImplemented.fromReq(req);
-});
-
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
@@ -38,20 +42,56 @@ router.get("/assignments/create", async (req, res) => {
     });
 });
 
+router.get("/assignments/marked", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+
+    res.render("assignments/marked", {
+        courses: courses,
+        assign: "{}",
+        isCreate: true,
+    });
+});
+
 router.get("/assignments/submit/:id", async (req, res) => {
     let assignment = await Database.assignments.getAssignment(req.params.id);
     assignment = Database.assignments.toObject(assignment, CourseModel);
-    
+
     res.render("assignments/submit", {
         assignment,
     });
 });
 
-router.post("/assignments/submit/:id", express.raw({
-    limit: "5mb"
-}), (req, res) => {
+const multerStore = path.resolve(__dirname, "..", "jenv", "context");
+router.post("/assignments/submit/:id", (req, res, next) => {
+    // TODO: Look at uploading java files only - if we do follow this, find out if we can keep dir heirarchy
+    // Dir Hierarchy can be kept with preservePath.
+    // Determine java file by fileFilter
+    // The size difference becomes 2,000,000 bytes --> 120,000 == 5% of the size we'd expect!
+    let assignmentStore = path.resolve(multerStore, req.params.id);
+    multer({
+        dest: assignmentStore,
+        preservePath: true,
+        fileFilter: (req, file, cb) => cb(null, file.originalname.endsWith(".java")),
+        limits: {
+            fileSize: 3 * 1024 * 1024 // 3MB per file
+        }
+    }).array("file")(req, res, next);
+}, (req, res) => {
+    
+    // - Save the contents to the context/assID/
+    // - Try compile and save progressively - maybe we can report back bad compilations?
+    
+    let inboundFiles = req.files;
 
-    throw errors.notImplemented.fromReq(req);
+    inboundFiles.map(file => {
+
+    });
+
+
+    Promise.all(inboundFiles).then(() => {
+        res.end();
+    });
 });
 
 router.post("/assignments/create", async (req, res) => {

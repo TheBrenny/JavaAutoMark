@@ -302,6 +302,14 @@ input[type="submit"] {
     text-transform: uppercase;
     box-shadow: 0 5px 10px $gray-web;
 
+    &.blue {
+        background-color: $button-blue;
+
+        &:hover {
+            background-color: $highlighted-button-blue;
+        }
+    }
+
     &.strong {
         @include header-font();
     }
@@ -544,21 +552,30 @@ input[type="submit"] {
             overflow-x: scroll;
             padding: 1em;
             padding-bottom: 0.5em;
+            color: $gray-web;
 
             &::-webkit-scrollbar {
-                width: 0.5em;
-                height: 0.5em;
+                width: 0.75em;
+                height: 0.75em;
             }
 
             &::-webkit-scrollbar-thumb {
                 background-color: $highlighted-task-button;
                 border-radius: 10em;
                 margin: 2em;
+
+                &:hover {
+                    background-color: $gray-web;
+                }
             }
 
             &::-webkit-scrollbar-button {
                 background: transparent;
                 width: 1em;
+            }
+
+            span.highlight {
+                color: $smoky-black;
             }
         }
     }
@@ -892,6 +909,12 @@ input[type="submit"] {
             position: sticky;
         }
 
+        .bCell {
+            text-align: center;
+            display: block;
+            padding: 20px;
+        }
+
         .tCell p {
             padding: 20px;
         }
@@ -1012,13 +1035,17 @@ input[type="submit"] {
             opacity: 0.3;
             width: 100%;
         }
-    }
-
-    .uploading,
-    .success,
-    .error,
-    .dropText {
-        display: none;
+    
+        .uploading,
+        .success,
+        .error,
+        .dropText {
+            display: none;
+            margin-top: 35px;
+            cursor: pointer;
+            font-size: 20px;
+            color: $highlighted-task-button;
+        }
     }
 
     .enabled .dropText {
@@ -1026,16 +1053,23 @@ input[type="submit"] {
     }
 
     .isUpload {
-        .border {
-            visibility: none;
+        label[for="file"] {
+            display: none;
         }
+
         .uploading {
             display: block !important;
         }
     }
-
-    .isSuccess .sucess {
-        display: block !important;
+    
+    .isSuccess {
+        label[for="file"] {
+            display: none;
+        }
+        
+        .success {
+            display: block !important;
+        }
     }
 
     .isError .error {

@@ -9,7 +9,7 @@ class ErrorGeneric extends Error {
     static fromReq(req, ...args) {
         let e = new(this.prototype.constructor)(req.method, req.url, ...args);
         let stack = e.stack.split("\n");
-        stack.splice(1, 1);
+        stack.splice(1, 2);
         e.stack = stack.join("\n");
         return e;
     }

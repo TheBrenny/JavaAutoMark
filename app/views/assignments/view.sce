@@ -26,20 +26,26 @@
             <h3 class="marked">Marked</h3>
         </span>
 
-        [[e= assignment in assignments ]]
-        <span class="tCell">
-            <p class="name">[[assignment.assignment_name]]</p>
-            <p class="course">[[assignment.joins.courses.course_name]]</p>
-            <p class="year">[[assignment.joins.courses.running_year]]</p>
-            <p class="marked">
-                <button href="/assignments/edit/[[assignment.assignment_id]]">
-                    Edit
-                </button>
-                <button href="/assignments/view/[[assignment.assignment_id]]">
-                    View
-                </button>
-            </p>
+        [[?= assignments == null]]
+        <span class="bCell">
+            No assignments found
         </span>
+        [[3=]]
+            [[e= assignment in assignments ]]
+            <span class="tCell">
+                <p class="name">[[assignment.assignment_name]]</p>
+                <p class="course">[[assignment.joins.courses.course_name]]</p>
+                <p class="year">[[assignment.joins.courses.running_year]]</p>
+                <p class="marked">
+                    <button href="/assignments/edit/[[assignment.assignment_id]]">
+                        Edit
+                    </button>
+                    <button class="blue" href="/assignments/submit/[[assignment.assignment_id]]">
+                        View
+                    </button>
+                </p>
+            </span>
+            [[?==]]
         [[?==]]
     </div>
     

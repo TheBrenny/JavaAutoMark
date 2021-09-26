@@ -20,7 +20,7 @@
         <label for="file"><strong>Choose a file</strong><span class="dropText"> or drag and drop</span></label>
         <div class="uploading">Uploading…</div>
         <div class="success">Done!</div>
-        <div class="error">Error! <span></span>.</div>
+        <div class="error">Error!</div>
     </div>
 </div>
 

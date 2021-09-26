@@ -8,9 +8,9 @@ var form = $(".inputBox");
 function drag(type) {
 
     if(type) {
-        border.classList.add('file-over');
+        form.classList.add('file-over');
     } else {
-        border.classList.remove('file-over');
+        form.classList.remove('file-over');
     }
 }
 
@@ -19,40 +19,46 @@ if(dropEnabled) {
 
     var droppedFile = false;
 
-    var border = $('.inputBox');
-
     var events = ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"];
 
     events.forEach(function(ev) {
-        border.addEventListener(ev, function(e) {
+        form.addEventListener(ev, function(e) {
             e.preventDefault();
             e.stopPropagation();
         })
     });
  
-    border.addEventListener('dragover', function(e) {
+    form.addEventListener('dragover', function(e) {
         drag(true);
     });
  
-    border.addEventListener('dragenter', function(e) {
+    form.addEventListener('dragenter', function(e) {
         drag(true);
     });
 
-    border.addEventListener('dragleave', function(e) {
+    form.addEventListener('dragleave', function(e) {
         drag(false);
     });
 
-    border.addEventListener('dragend', function(e) {
+    form.addEventListener('dragend', function(e) {
         drag(false);
     });
 
-    border.addEventListener('drop', function(e) {
+    form.addEventListener('drop', function(e) {
         drag(false);
 
         let dt = e.dataTransfer;
         droppedFile = dt.files;
 
         handleFiles(droppedFile);
+        form.classList.add('isUpload');
+
+        let dt = e.dataTransfer;
+ 
+        droppedFile = dt.files[0];
+
+        form.classList.remove('isUpload');
+        form.classList.add('isSuccess');
     });
     //converts from filelist to array for ease of iteration
     function handleFiles(droppedFile){
@@ -99,6 +105,7 @@ if(dropEnabled) {
             console.error(e);
             notifier.notify("Error: " + e.message, true); // TODO: change this to an error alert box that's built with our colour scheme
         });        
+        .then();
     }
     //tracks progress of upload
     function initializeProgress(numfiles) {

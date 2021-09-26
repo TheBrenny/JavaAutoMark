@@ -480,19 +480,26 @@ input[type=submit]:disabled {
   overflow-x: scroll;
   padding: 1em;
   padding-bottom: 0.5em;
+  color: #7e7f83ff;
 }
 #error .preWrap pre::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.75em;
+  height: 0.75em;
 }
 #error .preWrap pre::-webkit-scrollbar-thumb {
   background-color: #888890ff;
   border-radius: 10em;
   margin: 2em;
 }
+#error .preWrap pre::-webkit-scrollbar-thumb:hover {
+  background-color: #7e7f83ff;
+}
 #error .preWrap pre::-webkit-scrollbar-button {
   background: transparent;
   width: 1em;
+}
+#error .preWrap pre span.highlight {
+  color: #14110fff;
 }
 
 #newassignment div#details {
@@ -798,6 +805,11 @@ input[type=submit]:disabled {
   text-transform: uppercase;
   position: sticky;
 }
+#viewAss div#table .bCell {
+  text-align: center;
+  display: block;
+  padding: 20px;
+}
 #viewAss div#table .tCell p {
   padding: 20px;
 }
@@ -894,22 +906,29 @@ input[type=submit]:disabled {
   opacity: 0.3;
   width: 100%;
 }
-#submitAss .uploading,
-#submitAss .success,
-#submitAss .error,
-#submitAss .dropText {
+#submitAss .inputBox .uploading,
+#submitAss .inputBox .success,
+#submitAss .inputBox .error,
+#submitAss .inputBox .dropText {
   display: none;
+  margin-top: 35px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888890ff;
 }
 #submitAss .enabled .dropText {
   display: inline !important;
 }
-#submitAss .isUpload .border {
-  visibility: none;
+#submitAss .isUpload label[for=file] {
+  display: none;
 }
 #submitAss .isUpload .uploading {
   display: block !important;
 }
-#submitAss .isSuccess .sucess {
+#submitAss .isSuccess label[for=file] {
+  display: none;
+}
+#submitAss .isSuccess .success {
   display: block !important;
 }
 #submitAss .isError .error {
