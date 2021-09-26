@@ -25,7 +25,7 @@
             <h3 class="year">Year</h3>
             <h3 class="marked">Marked</h3>
         </span>
-        
+
         [[?= assignments == null]]
         <span class="bCell">
             No assignments found
@@ -40,7 +40,7 @@
                     <button href="/assignments/edit/[[assignment.assignment_id]]">
                         Edit
                     </button>
-                    <button href="/assignments/submit/[[assignment.assignment_id]]">
+                    <button class="blue" href="/assignments/submit/[[assignment.assignment_id]]">
                         View
                     </button>
                 </p>

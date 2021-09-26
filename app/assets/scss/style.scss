@@ -302,6 +302,14 @@ input[type="submit"] {
     text-transform: uppercase;
     box-shadow: 0 5px 10px $gray-web;
 
+    &.blue {
+        background-color: $button-blue;
+
+        &:hover {
+            background-color: $highlighted-button-blue;
+        }
+    }
+
     &.strong {
         @include header-font();
     }
