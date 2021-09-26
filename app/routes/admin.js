@@ -5,6 +5,12 @@ const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const config = require("../../config");
 
+// This sets up the page title
+router.use(["/admin", "/admin/*"], (req, res, next) => {
+    res.locals.pageTitle = "Admin Panel";
+    next();
+});
+
 // This is used to make sure that the user access these pages are admins
 router.use("/admin/*", (req, res, next) => {
     if (config.env.isDev) next(); // TODO: TEST THIS BEFORE PRODUCTION!

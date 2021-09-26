@@ -15,14 +15,11 @@ router.use((req, res, next) => {
 
 // This is the home route
 router.get(["/", "/home"], (req, res) => {
-    res.locals.pageTitle = "Home";
     let s = session(req);
 
     res.format({
         html: () => {
-            res.render("home", {
-                title: "Home",
-            });
+            res.render("home");
         },
         json: () => {
             res.json({

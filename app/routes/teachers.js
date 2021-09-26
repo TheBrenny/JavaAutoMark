@@ -8,6 +8,7 @@ const errors = require("./errors/generic").errors;
 router.get("/login", [
     checks.isGuest,
 ], async (req, res) => {
+    res.locals.pageTitle = "Login";
     res.format({
         "json": () => res.json({
             success: false,
@@ -22,6 +23,12 @@ router.get("/login", [
 router.get("/logout", async (req, res) => {
     session(req).setAccount(null);
     res.redirect("/");
+});
+
+// This sets up the page title
+router.use("/teachers/*", (req, res, next) => {
+    res.locals.pageTitle = "Teachers";
+    next();
 });
 
 router.get("/user", (req, res) => {
