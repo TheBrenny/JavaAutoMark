@@ -9,6 +9,7 @@ const config = require("../../config");
 const CourseModel = require("../../db/models/courses");
 const multer = require('multer');
 const path = require("path");
+const fs = require("fs");
 
 // This sets up the page title
 router.use("/assignments/*", (req, res, next) => {
@@ -69,17 +70,18 @@ router.post("/assignments/submit/:id", (req, res, next) => {
     // Determine java file by fileFilter
     // The size difference becomes 2,000,000 bytes --> 120,000 == 5% of the size we'd expect!
     let assignmentStore = path.resolve(multerStore, req.params.id);
+    fs.mkdirSync(assignmentStore, { recursive: true });
     multer({
         dest: assignmentStore,
         preservePath: true,
-        fileFilter: (req, file, cb) => cb(null, file.originalname.endsWith(".java")),
+        // fileFilter: (req, file, cb) => cb(null, file.originalname.endsWith(".java")),
         limits: {
             fileSize: 3 * 1024 * 1024 // 3MB per file
         }
     }).array("file")(req, res, next);
 }, (req, res) => {
     
-    // - Save the contents to the context/assID/
+    // - Save the contents to the context/assID/z1234567/code.java
     // - Try compile and save progressively - maybe we can report back bad compilations?
     
     let inboundFiles = req.files;
