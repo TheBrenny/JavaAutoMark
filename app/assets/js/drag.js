@@ -51,71 +51,55 @@ if(dropEnabled) {
         droppedFile = dt.files;
 
         handleFiles(droppedFile);
+        
         form.classList.add('isUpload');
-
-        let dt = e.dataTransfer;
- 
-        droppedFile = dt.files[0];
-
         form.classList.remove('isUpload');
         form.classList.add('isSuccess');
     });
+    //tracks progress of upload
+    let uploadProgress = []
+    let progressBar = document.getElementById('progress-bar')
+    function initializeProgress(numFiles) {
+        progressBar.value = 0
+        uploadProgress = []
+
+        for(let i = numFiles; i > 0; i--) {
+            uploadProgress.push(0)
+        }
+    }
+    function updateProgress(fileNumber, percent) {
+        uploadProgress[fileNumber] = percent
+        let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length
+        console.debug('update', fileNumber, percent, total)
+        progressBar.value = total
+      }
     //converts from filelist to array for ease of iteration
     function handleFiles(droppedFile){
         droppedFile = [...droppedFile];
         initializeProgress(droppedFile.length); 
         droppedFile.forEach(uploadFile);
-        droppedFile.forEach(previewFile);
     }
-
     //upload file to server
     function uploadFile(droppedFile){
-        let url = window.location.href
-        let method = "POST";
+        var url = window.location.href;
+        var xhr = new XMLHttpRequest();
+        var formData = new formData();
+        xhr.open('POST', url, true);      
+        
+        xhr.upload.addEventListener("progress", function(e) {
+            updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
+          })
 
-        return fetch(url, {
-            method: method,
-            body: JSON.stringify(assignmentDetails),
-            headers: {
-                "Content-Type": "application/json"
+        xhr.addEventListener('readystatechange', function(e) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              // Done. Inform the user
             }
-        })
-        .then(async r => {
-            if(r.status === 201) {
-                return r.headers.get("Location");
-            } else if(r.status === 200) {
-                return await r.json();
-            } else {
-                throw await r.json();
+            else if (xhr.readyState == 4 && xhr.status != 200) {
+              // Error. Inform the user
             }
-        })
-        .then((response) => {
-            if(typeof response === "string") { // we have a location
-                notifier.notify("Saved successfully. Redirecting...");
-                window.location = response;
-            } else if(typeof response === "object") { // we have a JSON object
-                console.log(response);
-                notifier.notify(response.message);
-                // show an alert box saying the response.message
-            } else {
-                throw response;
-            }
-        })
-        .catch(e => {
-            console.error(e);
-            notifier.notify("Error: " + e.message, true); // TODO: change this to an error alert box that's built with our colour scheme
-        });        
-        .then();
+          })
+        
+          formData.append('file', droppedFile)
+          xhr.send(formData)
     }
-    //tracks progress of upload
-    function initializeProgress(numfiles) {
-        progressBar.value = 0
-        filesDone = 0
-        filesToDo = numfiles
-      }
-    //
-    function progressDone() {
-        filesDone++
-        progressBar.value = filesDone / filesToDo * 100
-     }
 } 
