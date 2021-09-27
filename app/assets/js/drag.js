@@ -80,10 +80,10 @@ if(dropEnabled) {
         droppedFile.forEach(uploadFile);
     }
     //upload file to server
-    function uploadFile(droppedFile){
+    function uploadFile(droppedFile, i){
         var url = window.location.href;
         var xhr = new XMLHttpRequest();
-        var formData = new formData();
+        var formData = new FormData();
         xhr.open('POST', url, true);      
         
         xhr.upload.addEventListener("progress", function(e) {
