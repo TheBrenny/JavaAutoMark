@@ -234,6 +234,16 @@ input[type=submit] {
   text-transform: uppercase;
   box-shadow: 0 5px 10px #7e7f83ff;
 }
+button.blue,
+input[type=button].blue,
+input[type=submit].blue {
+  background-color: #4b7ce6ff;
+}
+button.blue:hover,
+input[type=button].blue:hover,
+input[type=submit].blue:hover {
+  background-color: #3559a7ff;
+}
 button.strong,
 input[type=button].strong,
 input[type=submit].strong {
