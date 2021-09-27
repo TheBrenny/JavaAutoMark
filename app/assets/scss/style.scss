@@ -306,7 +306,7 @@ input[type="submit"] {
         background-color: $button-blue;
 
         &:hover {
-            background-color: $highlighted-button-blue;
+            background-color: $highlighted-button-blue !important;
         }
     }
 

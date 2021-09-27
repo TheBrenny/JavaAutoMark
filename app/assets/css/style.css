@@ -242,7 +242,7 @@ input[type=submit].blue {
 button.blue:hover,
 input[type=button].blue:hover,
 input[type=submit].blue:hover {
-  background-color: #3559a7ff;
+  background-color: #3559a7ff !important;
 }
 button.strong,
 input[type=button].strong,
