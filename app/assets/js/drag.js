@@ -60,6 +60,9 @@ const concurrentUploads = 7;
     function promisifyReader(item) {
         return new Promise((resolve, reject) => item.createReader().readEntries(resolve, reject));
     }
+    function promisifyFile(item) {
+        return new Promise((resolve, reject) => item.file(resolve, reject));
+    }
     function getWebkitFiles(files, items) {
         // Converts a single arg call to a double arg call.
 
@@ -72,13 +75,13 @@ const concurrentUploads = 7;
             for(let i = 0; i < items.length; i++) {
                 let item = items[i];
                 if(item.isFile) {
-                    files.push(item);
+                    files.push(promisifyFile(item));
                 } else {
                     let recurse = promisifyReader(item).then(getWebkitFiles.bind(this, files));
                     proms.push(recurse);
                 }
             }
-            Promise.all(proms).then(() => resolve(files));
+            Promise.all(proms).then(() => resolve(Promise.all(files)));
         });
     }
 
