@@ -20,7 +20,7 @@ onReady(() => {
         },
         update() {
             requestAnimationFrame(tooltip.update);
-            if(tooltip.target !== null) return;
+            if(tooltip.target === null) return;
 
             let now = Date.now();
             let elem = document.elementFromPoint(tooltip.location.x, tooltip.location.y);
