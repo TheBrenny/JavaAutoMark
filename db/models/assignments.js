@@ -1,6 +1,7 @@
 const CourseModel = require("./courses");
 const Model = require("./model");
 
+const order = `ORDER BY ${CourseModel.table}.running_year DESC, ${CourseModel.table}.course_id ASC`;
 class AssignmentModel extends Model {
     constructor(databaseModel) {
         super(databaseModel);
@@ -13,14 +14,14 @@ class AssignmentModel extends Model {
 
     async getAssignment(assignmentID) {
         let sql = `SELECT * FROM ${this.table} `;
-        
+
         // Inner Join
         sql += `INNER JOIN ${CourseModel.table} ON `;
         sql += `${this.table}.course_uuid = ${CourseModel.table}.uuid `;
-        
+
         // Where clause
         sql += `WHERE assignment_id=?`;
-        
+
         return this.db.query(sql, assignmentID).then(this.db.firstRecord);
     }
     async getAllAssignments(courseID, runningYear) {
@@ -29,7 +30,7 @@ class AssignmentModel extends Model {
         // Inner Join
         sql += `INNER JOIN ${CourseModel.table} ON `;
         sql += `${this.table}.course_uuid = ${CourseModel.table}.uuid `;
-        
+
         // Where clause
         let where = [];
         let vars = [];
@@ -43,9 +44,12 @@ class AssignmentModel extends Model {
         }
         sql += where.length > 0 ? ` WHERE ${where.join(" AND ")} ` : "";
 
-        // Order clause and run
-        let order = `ORDER BY ${CourseModel.table}.running_year DESC, ${CourseModel.table}.course_id ASC`;
         return this.db.query(sql + order, ...vars);
+    }
+
+    async getAssignmentsByState(state) {
+        let sql = `SELECT * FROM ${this.table} WHERE state=? `;
+        return this.db.query(sql + order, state);
     }
 
     async updateAssignment(id, options) {
@@ -70,7 +74,7 @@ class AssignmentModel extends Model {
         return "assignments";
     }
     static get fields() {
-        return ["assignment_id", "assignment_name", "course_uuid", "code_location"];
+        return ["assignment_id", "assignment_name", "course_uuid", "code_location", "state"];
     }
 }
 

@@ -25,6 +25,7 @@ CREATE TABLE `assignments` (
   `assignment_name` VARCHAR(100) NOT NULL,
   `course_uuid` INTEGER NOT NULL,
   `code_location` VARCHAR(255) NOT NULL,
+  `state` ENUM('none', 'processing', 'finished') NOT NULL DEFAULT 'none',
   PRIMARY KEY (`assignment_id`),
   FOREIGN KEY (`course_uuid`) REFERENCES `courses` (`uuid`)
 );
