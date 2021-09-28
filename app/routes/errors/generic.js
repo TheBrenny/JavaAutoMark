@@ -18,14 +18,17 @@ class ErrorGeneric extends Error {
 module.exports = ErrorGeneric;
 
 const notFound = require("./404");
+const conflict = require("./409");
 const internalServerError = require("./500");
 const notImplemented = require("./501");
 
 module.exports.errors = {
     404: notFound,
+    409: conflict,
     500: internalServerError,
     501: notImplemented,
     notFound,
+    conflict,
     notImplemented,
     internalServerError,
 };

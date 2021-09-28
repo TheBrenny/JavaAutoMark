@@ -29,8 +29,6 @@ module.exports.handler = ((err, req, res, next) => {
         return next(err);
     }
 
-    // req.headers.accept = req.headers.accept.replace(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // this actually deletes the catch-all accept header
-
     res.format({
         "json": () => res.json(e),
         "html": () => {
