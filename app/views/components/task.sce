@@ -11,10 +11,3 @@
         <input type="button" value="Add Test" class="addTest" />
     </div>
 </div>
-
-<!-- 
-
-    You're trying to get gulp/browsersync to stream
-    the response, and not reload the page.
-
- -->

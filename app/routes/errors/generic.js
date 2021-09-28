@@ -5,9 +5,30 @@ class ErrorGeneric extends Error {
         this.status = code;
         this.name = name;
     }
+
+    static fromReq(req, ...args) {
+        let e = new(this.prototype.constructor)(req.method, req.url, ...args);
+        let stack = e.stack.split("\n");
+        stack.splice(1, 2);
+        e.stack = stack.join("\n");
+        return e;
+    }
 }
 
 module.exports = ErrorGeneric;
+
+const notFound = require("./404");
+const conflict = require("./409");
+const internalServerError = require("./500");
+const notImplemented = require("./501");
+
 module.exports.errors = {
-    404: require("./404")
+    404: notFound,
+    409: conflict,
+    500: internalServerError,
+    501: notImplemented,
+    notFound,
+    conflict,
+    notImplemented,
+    internalServerError,
 };

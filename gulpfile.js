@@ -178,7 +178,7 @@ gulp.task("nodemon", function (cb) {
             "PORT": port
         },
         watch: ["*.js", "app/routes/"],
-        ignore: "app/assets/js/"
+        ignore: ["app/assets/js/", "gulpfile.js"]
     }).on('start', function () {
         // to avoid nodemon being started multiple times
         // thanks @matthisk
@@ -189,7 +189,7 @@ gulp.task("nodemon", function (cb) {
         }
     }).on('restart', function (...args) {
         setTimeout(() => browserSync.reload({}), 3000);
-    });
+    }).on("error", (e) => cb("Server failed to start. " + e.message));
 });
 
 gulp.task("watch", gulp.series("sass", function (cb) {
@@ -197,6 +197,7 @@ gulp.task("watch", gulp.series("sass", function (cb) {
 
     // Catch and stream changes
     gulp.watch(["app/assets/**/*.*", "!**/*.map", "!app/assets/scss/**"]).on("all", streamFileChanges);
+    gulp.watch(["app/views/**/*.*"]).on("all", browserSync.reload);
     // gulp.watch("app/assets/js/**/*.js").on("all", streamFileChanges);
     // gulp.watch("app/assets/img/**/*.*").on("all", streamFileChanges);
     cb();

@@ -11,15 +11,11 @@
     <div class="testCenter">
         <div class="editor">[[code]]</div>
         <div class="testDeets">
-            <input class="out small" type="text" name="expectedOutput" placeholder="Expected output"
-                value="[[expected]]" />
+            <input class="out small" type="text" name="expectedOutput" placeholder="Expected output" value="[[expected]]" />
             <input class="num small mark" type="number" name="marks" placeholder="Marks" value="[[marks]]" />
-
-            <input class="desc" type="text" name="description" placeholder="Test Case Description"
-                value="[[description]]" />
+            <input class="desc" type="text" name="description" placeholder="Test Case Description" value="[[description]]" />
         </div>
     </div>
-    <!-- <input type="button" name="Delete" class="del" /> -->
     <button type="button" name="Delete" class="del">
         <img draggable="false" src="/assets/img/items/cross_grey.svg" alt="Delete" />
     </button>

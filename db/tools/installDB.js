@@ -17,7 +17,8 @@ const flags = {
     clean: 0b100,
     install: 0b010,
     demo: 0b001,
-    full: 0b111
+    full: 0b111,
+    skip: 0b1000
 };
 
 // installFlags is a bitcode number:
@@ -33,7 +34,7 @@ function install(installFlags) {
         return Promise.reject("No DB install actions provided");
     }
 
-    if (installFlags & 0b100 == 0b100) {
+    if (installFlags & flags.clean) {
         prom = prom.then(() => {
             let sql = readScript("clean.sql", {
                 db: config.db.url.pathname.substr(1)
@@ -42,14 +43,14 @@ function install(installFlags) {
             return sql;
         }).then((sql) => Database.db.query(sql));
     }
-    if (installFlags & 0b010 == 0b010) {
+    if (installFlags & flags.install) {
         prom = prom.then(() => {
             let sql = readScript("install.sql");
             console.log("Installing db");
             return sql;
         }).then((sql) => Database.db.query(sql));
     }
-    if (installFlags & 0b001 == 0b001) {
+    if (installFlags & flags.demo) {
         prom = prom.then(() => {
             let sql = readScript("demo.sql");
             console.log("Inserting demo db");
@@ -59,7 +60,6 @@ function install(installFlags) {
 
     prom.then(() => {
         console.log("\nAll Done!");
-        process.exit(0);
     }).catch(err => console.error(err) && process.exit(1));
 
     return prom;

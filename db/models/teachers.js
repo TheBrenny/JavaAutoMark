@@ -1,19 +1,26 @@
-class TeacherModel {
+const Model = require("./model");
+
+class TeacherModel extends Model {
     constructor(databaseModel) {
-        this.db = databaseModel;
+        super(databaseModel);
     }
 
-    async addUser(zid, email, fname, lname, password) {
+    async addTeacher(zid, email, fname, lname, password) {
         let sql = `INSERT INTO ${this.table} (zid, email, fname, lname, password) VALUES (?, ?, ?, ?, ?)`;
         return this.db.query(sql, zid, email, fname, lname, password).then(this.db.changedResponse).then(r => r.success);
     }
 
-    async getUser(zid) {
+    async getTeacher(zid) {
         let sql = `SELECT * FROM ${this.table} WHERE zid=?`;
         return this.db.query(sql, zid).then(this.db.firstRecord);
     }
 
-    async updateAccount(zid, newDetails) {
+    async getAllTeachers() {
+        let sql = `SELECT * FROM ${this.table}`;
+        return this.db.query(sql);
+    }
+
+    async updateTeacher(zid, newDetails) {
         let vars = [];
         let sql = `UPDATE ${this.table} SET `;
 
@@ -26,18 +33,16 @@ class TeacherModel {
         return this.db.query(sql, ...vars).then(this.db.changedResponse).then(r => r.success);
     }
 
-    toObject(obj) {
-        if (Array.isArray(obj)) return Array.from(obj).map(o => this.toObject(o));
-        let fields = ["zid", "email", "fname", "lname", "password"];
-        return this.db.toObject(this.table, obj, fields);
-    }
-
-    get table() {
-        return TeacherModel.table;
+    async deleteTeacher(zid) {
+        let sql = `DELETE FROM ${this.table} WHERE zid=?`;
+        return this.db.query(sql, zid).then(this.db.changedResponse).then(r => r.success);
     }
 
     static get table() {
         return "teachers";
+    }
+    static get fields() {
+        return ["zid", "email", "fname", "lname", "password"];
     }
 }
 

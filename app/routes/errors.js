@@ -5,7 +5,7 @@ module.exports = {};
 
 // 404
 module.exports.notFound = ((req, res, _) => {
-    throw errors[404].fromReq(req);
+    throw errors.notFound.fromReq(req);
 });
 // Catches errors
 module.exports.handler = ((err, req, res, next) => {
@@ -18,24 +18,30 @@ module.exports.handler = ((err, req, res, next) => {
         message: err.message
     };
 
-    console.error(e);
-
-    if (res.headersSent) {
-        return next(err);
-    }
-
     // don't send the stack because of security risk!
-    if (!isProd) {
+    if(!isProd) {
         e.stack = err.stack;
     }
 
-    // req.headers.accept = req.headers.accept.replace(/\*\/\*(;q=.+?|\s+?)(,|$)/g, ""); // this actually deletes the catch-all accept header
+    console.error(e);
+
+    if(res.headersSent) {
+        return next(err);
+    }
 
     res.format({
         "json": () => res.json(e),
-        "html": () => res.render("error", {
-            "error": e
-        }),
+        "html": () => {
+            if(!!e.stack) {
+                e.stack = e.stack.split("\n").map((line, i) => {
+                    if(i === 0 || line.indexOf("node_modules") === -1) line = `<span class="highlight">${line}</span>`;
+                    return line;
+                }).join("\n");
+            }
+            res.render("error", {
+                "error": e
+            });
+        },
         "default": () => res.send(JSON.stringify(e)).end()
     });
 });

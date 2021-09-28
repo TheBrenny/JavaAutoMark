@@ -1,15 +1,17 @@
 (async () => {
     const fs = require('fs');
     const path = require("path");
+    const installer = require("./install/install");
+
     let skipInstall = (process.argv.length > 2 && process.argv.includes("--skipInstall"));
     let forceInstall = (process.argv.length > 2 && process.argv.includes("--forceInstall"));
-    if (!skipInstall && (!fs.existsSync(path.resolve(".", "install", "install.lock")) || forceInstall)) {
-        console.log("\x1b[3;34mInstalling...\x1b[0m");
-        let installer = require("./install/install");
-        let run = await installer.checkInstall();
-        if (run) {
-            await installer.install();
-            console.log(installer.colourText("Installation complete!", "bright green", "italic"));
+
+    if(!skipInstall && (!await installer.isInstalled() || forceInstall || await installer.shouldUpdate())) {
+        let run = (forceInstall & 1) || await installer.checkInstall();
+        if(run) {
+            console.log(installer.colourText((run === 1 ? "Installing..." : "Updating..."), "blue", ["italic", "bold"]));
+            await installer.install(forceInstall);
+            console.log(installer.colourText("Finished " + (run === 1 ? "installing!" : "updating!"), "green", ["italic", "bold"]));
         } else {
             console.log(installer.colourText("Skipping installer.", "blue", "italic"));
         }
@@ -64,10 +66,10 @@
     app.use(errRoutes.handler);
 
     app.listen(serverInfo.port, serverInfo.host, () => {
-        if (config.browsersyncActive) serverInfo.port = 81;
+        if(config.browsersyncActive) serverInfo.port = 81;
         console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
     });
 })().catch(err => {
     console.error(err);
-    throw err;
+    process.exit(1);
 });

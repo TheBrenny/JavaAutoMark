@@ -8,9 +8,7 @@
             <img draggable="false" src="/assets/img/items/arrow_down_grey.svg" alt="Move Down" />
         </li>
     </ul>
-    <div class="editor">
-        [[code]]
-    </div>
+    <div class="editor">[[code]]</div>
     <button type="button" name="Delete" class="del">
         <img draggable="false" src="/assets/img/items/cross_grey.svg" alt="Delete" />
     </button>
