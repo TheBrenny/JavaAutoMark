@@ -1,0 +1,18 @@
+{
+    "storage": {
+        "provider": "localstorage",
+        "options": {
+            "accessID": "",
+            "secret": "",
+            "container": "",
+            "path": "storage/data"
+        }
+    },
+    "sql": {
+        "url": "mysql://user:pass@jamsql/jam"
+    },
+    "session": {
+        "secret": "this is the encryption secret",
+        "cookieName": "session"
+    }
+}

@@ -32,8 +32,23 @@ function isGuest(req, res, next) {
     } else next();
 }
 
+function isAdmin(req, res, next) {
+    if (session(req).isAuthed() && session(req).getAccount().isAdmin) next();
+    else {
+        res.status(403);
+        res.format({
+            "json": () => res.json({
+                success: false,
+                message: "You don't seem to be the right user to access this operation."
+            }),
+            "html": () => res.redirect("/")
+        });
+    }
+}
+
 module.exports = {
     matchingId,
     isAuthed,
     isGuest,
+    isAdmin
 };

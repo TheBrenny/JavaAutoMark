@@ -1,6 +1,9 @@
 {
     "java.project.sourcePaths": [],
     "files.associations": {
-        "*.sce": "handlebars"
+        "*.sce": "html"
     },
+    "git.rebaseWhenSync": true,
+    "git.autoStash": true,
+	"debug.onTaskErrors": "debugAnyway"
 }

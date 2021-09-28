@@ -1,8 +1,9 @@
 const sessionSchema = {
     account: {
+        zid: -1,
         fname: "",
         lname: "",
-        id: -1,
+        email: "",
         authed: false,
         badLogin: false,
         badReg: false,
@@ -24,13 +25,14 @@ const account = {
         if (this.account === undefined) this.account = Object.assign({}, sessionSchema.account);
         return this.account;
     },
-    setAccount(id, fname, lname) {
-        if (id < 0 || id == null) {
+    setAccount(zid, fname, lname, email) {
+        if (zid < 0 || zid == null) {
             this.account = Object.assign({}, sessionSchema.account);
         } else {
-            this.getAccount().id = id;
+            this.getAccount().zid = zid;
             this.getAccount().fname = fname;
             this.getAccount().lname = lname;
+            this.getAccount().email = email;
             this.getAccount().authed = true;
             this.getAccount().badLogin = false;
             this.getAccount().badRegister = false;

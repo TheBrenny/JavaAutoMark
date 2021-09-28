@@ -33,14 +33,17 @@ dbOps.forEach(op => {
     };
 });
 
-
 module.exports.sessionStore = new MySQLStore({}, global.db);
 
 module.exports.sqlFolder = sqlFolder;
-module.exports.sqlFromFile = function (filename) {
+module.exports.sqlFromFile = function (filename, values) {
     filename = path.basename(filename, path.extname(filename)); // kill the file extension
     filename = path.join(sqlFolder, filename + ".sql"); // add our own!
-    return compressSQL(fs.readFileSync(filename).toString());
+
+    let out = compressSQL(fs.readFileSync(filename).toString());
+    if (values != undefined) out = module.exports.insertVariables(out, values);
+
+    return out;
 };
 module.exports.templateFromFile = function (filename, values) {
     // filename = path.basename(filename, path.extname(filename)); // kill the file extension
@@ -58,23 +61,28 @@ module.exports.templateFromFile = function (filename, values) {
 
     let dupeArr = [];
     Array.from(values).forEach(v => { // v is an object
-        let dupe = dupeTemplate;
-        for (let e of Object.entries(v)) {
-            let r = new RegExp("\\$\\{" + e[0] + "\\}", "g"); // lucky this is only run by trusted sources using trusted sources...
-            dupe = dupe.replace(r, e[1]);
-        }
+        let dupe = module.exports.insertVariables(dupeTemplate, v);
         dupeArr.push(dupe);
     });
     out.push(dupeArr.join(", "));
 
     out.push(template.substring(template.indexOf("@{endDupe}") + "@{endDupe}".length));
 
+    console.log(compressSQL(out.join(" ")));
+
     return compressSQL(out.join(" "));
+};
+module.exports.insertVariables = function (query, values) {
+    for (let e of Object.entries(values)) {
+        let r = new RegExp("\\$\\{" + e[0] + "\\}", "g"); // lucky this is only run by trusted sources using trusted sources...
+        query = query.replace(r, e[1]);
+    }
+    return query;
 };
 module.exports.compressSQL = compressSQL;
 
 function compressSQL(data) {
-    return data.replace(/(\/\*(.|\s)+?\*\/|^\s*--.*?$)/gm, "").replace(/\n\r/, " ").replace(/\s+/, " ").trim();
+    return data.replace(/(\/\*(.|\s)+?\*\/|^\s*--.*?$)/gm, "").replace(/\n\r/gm, " ").replace(/\s+/gm, " ").trim();
 }
 
 // Returns a Promise!

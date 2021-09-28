@@ -1,9 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 * {
   margin: 0;
 }
 
-body, html {
+html {
   width: 100%;
   height: 100%;
 }
@@ -14,11 +28,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../img/splash.svg");
+  background-image: url("/assets/img/splash.svg");
   background-position: center;
   background-repeat: no-repeat;
 }
 body #login_container {
+  margin-top: calc(50vh - 159px);
   background-color: #f3f3f4ff;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -39,13 +54,14 @@ body #login_container h1 {
   color: #34312dff;
 }
 body #login_container form {
-  padding: 20px 50px;
+  padding: 20px 30px;
   display: flex;
   flex-direction: column;
 }
-body #login_container form input[type=text], body #login_container form input[type=password] {
-  width: 200px;
-  font-size: 20px;
+body #login_container form input[type=text],
+body #login_container form input[type=password] {
+  width: 225px;
+  font-size: 18px;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #7e7f83ff;
@@ -76,9 +92,11 @@ body #login_container form input[type=submit]:hover {
   color: white;
   cursor: pointer;
 }
-body #login_container form #forgotPass {
+body #login_container form .error {
   font-size: 13px;
-  margin: 3px;
+  margin: 0 6px;
+  color: red;
+  height: 15px;
 }
 body #login_container form label {
   padding: 10px 0;
@@ -93,20 +111,20 @@ body #login_container form label {
   height: 75px;
   display: flex;
   justify-content: space-between;
+  z-index: 10;
 }
 #header a.home {
-  background-image: url("../img/jam_jar_coloured.svg");
+  background-image: url("/assets/img/jam_jar_coloured.png");
   background-repeat: no-repeat;
-  background-position-x: -70px;
   display: inline-block;
-  background-size: 400px 90px;
+  background-size: 250px 90px;
   width: 80px;
   height: 100px;
   margin-left: 50px;
   transition: 0.5s ease width;
 }
 #header a.home:hover {
-  width: 200px;
+  width: 220px;
 }
 #header #menu {
   list-style: none;
@@ -127,14 +145,14 @@ body #login_container form label {
 #header #menu li:hover {
   background-color: rgba(255, 209, 71, 0.8);
 }
-#header #menu span {
-  height: 30px;
-  width: 1px;
-  background-color: #14110fff;
-}
 #header #menu a {
   text-decoration: none;
   color: inherit;
+  border-right: 1px solid #14110fff;
+  display: inline-block;
+}
+#header + * {
+  margin-top: 105px;
 }
 
 #createUser {
@@ -160,7 +178,8 @@ body #login_container form label {
 #createUser #groupNames input {
   width: 150px;
 }
-#createUser input[type=text], #createUser input[type=password] {
+#createUser input[type=text],
+#createUser input[type=password] {
   font-size: 15px;
   padding: 10px;
   border-radius: 5px;
@@ -235,3 +254,382 @@ body #login_container form label {
 #viewUser .container h3 {
   font-weight: 600;
 }
+
+.block, #newassignment div#details, #error {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+}
+
+.wrap, #newassignment, #error {
+  width: 700px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 50px;
+}
+
+#error {
+  flex-direction: column;
+}
+#error .preWrap {
+  background: #c4c4c4ff;
+  border-radius: 0.5em;
+  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+  padding-bottom: 0.6em;
+}
+#error .preWrap pre {
+  overflow-x: scroll;
+  padding: 1em;
+}
+#error .preWrap pre::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb {
+  background-color: #888890ff;
+  border-radius: 10em;
+  margin: 2em;
+}
+#error .preWrap pre::-webkit-scrollbar-button {
+  background: transparent;
+  width: 1em;
+}
+
+#newassignment div#details label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#newassignment div#details input[type=text],
+#newassignment div#details select {
+  width: 200px;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+}
+#newassignment div.task {
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+}
+#newassignment div.task .taskHead {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+#newassignment div.task .taskHead .del {
+  height: 30px;
+  width: 30px;
+  margin: 5px;
+  background-color: #fe6448ff;
+  border-radius: 5px;
+  margin: 5px 15px;
+  transition: 0.3s ease background-color, 0.3s ease box-shadow;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 5px #34312dff;
+  text-align: center;
+}
+#newassignment div.task .taskHead .del img {
+  width: 98%;
+  height: 100%;
+  transition: 0.3s ease filter;
+}
+#newassignment div.task .taskHead .del:hover {
+  background-color: #f42601ff;
+}
+#newassignment div.task .taskHead .del:hover img {
+  filter: brightness(2);
+}
+#newassignment div.task .taskHead .del:active {
+  box-shadow: 0 0 5px #34312dff;
+}
+#newassignment div.task .test,
+#newassignment div.task .instr {
+  display: flex;
+  order: attr(data-order);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9c5b2ff;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+#newassignment div.task .test .editor,
+#newassignment div.task .instr .editor {
+  flex-grow: 1;
+  align-self: stretch;
+  margin: 10px 0;
+  min-height: 50px;
+}
+#newassignment div.task .test ul,
+#newassignment div.task .instr ul {
+  align-self: stretch;
+  list-style: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 0;
+  width: 50px;
+  background-color: #4b7ce6ff;
+  color: white;
+  text-align: center;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#newassignment div.task .test ul li,
+#newassignment div.task .instr ul li {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #efefef;
+  border-top: 1px solid #efefef;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s ease background-color;
+}
+#newassignment div.task .test ul li:first-of-type,
+#newassignment div.task .instr ul li:first-of-type {
+  border-top: 0px;
+}
+#newassignment div.task .test ul li:last-of-type,
+#newassignment div.task .instr ul li:last-of-type {
+  border-bottom: 0px;
+}
+#newassignment div.task .test ul .testID,
+#newassignment div.task .instr ul .testID {
+  flex-grow: 0;
+  padding: 10px 0;
+}
+#newassignment div.task .test ul .moveUp,
+#newassignment div.task .instr ul .moveUp {
+  align-items: flex-start;
+  padding-top: 10px;
+  border-top-left-radius: 10px;
+  padding: 5px 0;
+}
+#newassignment div.task .test ul .moveDown,
+#newassignment div.task .instr ul .moveDown {
+  border-bottom-left-radius: 10px;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  padding: 5px 0;
+}
+#newassignment div.task .test ul .moveButton,
+#newassignment div.task .instr ul .moveButton {
+  cursor: pointer;
+  transition: 0.3s ease background-color;
+}
+#newassignment div.task .test ul .moveButton img,
+#newassignment div.task .instr ul .moveButton img {
+  width: 20px;
+  transition: 0.3s ease filter;
+}
+#newassignment div.task .test ul .moveButton:hover,
+#newassignment div.task .instr ul .moveButton:hover {
+  background-color: #3559a7ff;
+}
+#newassignment div.task .test ul .moveButton:hover img,
+#newassignment div.task .instr ul .moveButton:hover img {
+  filter: brightness(2);
+}
+#newassignment div.task .test .del,
+#newassignment div.task .instr .del {
+  height: 30px;
+  width: 30px;
+  margin: 5px;
+  background-color: #fe6448ff;
+  border-radius: 5px;
+  margin: 5px 15px;
+  transition: 0.3s ease background-color, 0.3s ease box-shadow;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 5px #34312dff;
+  text-align: center;
+}
+#newassignment div.task .test .del img,
+#newassignment div.task .instr .del img {
+  width: 98%;
+  height: 100%;
+  transition: 0.3s ease filter;
+}
+#newassignment div.task .test .del:hover,
+#newassignment div.task .instr .del:hover {
+  background-color: #f42601ff;
+}
+#newassignment div.task .test .del:hover img,
+#newassignment div.task .instr .del:hover img {
+  filter: brightness(2);
+}
+#newassignment div.task .test .del:active,
+#newassignment div.task .instr .del:active {
+  box-shadow: 0 0 5px #34312dff;
+}
+#newassignment div.task .test .testCenter,
+#newassignment div.task .instr .testCenter {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-grow: 2;
+  margin-bottom: 15px;
+}
+#newassignment div.task .test .testCenter .case,
+#newassignment div.task .instr .testCenter .case {
+  flex-grow: 2;
+}
+#newassignment div.task .test .testCenter .editor,
+#newassignment div.task .instr .testCenter .editor {
+  height: 60px;
+}
+#newassignment div.task .test .testCenter .testDeets,
+#newassignment div.task .instr .testCenter .testDeets {
+  display: flex;
+}
+#newassignment div.task .test .testCenter .testDeets .small,
+#newassignment div.task .instr .testCenter .testDeets .small {
+  margin-right: 15px;
+}
+#newassignment div.task .test .testCenter .testDeets .num,
+#newassignment div.task .instr .testCenter .testDeets .num {
+  max-width: 60px;
+}
+#newassignment div.task .test .testCenter .testDeets .out,
+#newassignment div.task .instr .testCenter .testDeets .out {
+  max-width: 120px;
+}
+#newassignment div.task .test .testCenter .testDeets .desc,
+#newassignment div.task .instr .testCenter .testDeets .desc {
+  flex-grow: 1;
+}
+#newassignment div.task .test input[type=text],
+#newassignment div.task .test input[type=number],
+#newassignment div.task .instr input[type=text],
+#newassignment div.task .instr input[type=number] {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-style: normal;
+  width: auto;
+}
+#newassignment div.task #taskFoot {
+  order: 9999999999;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+#newassignment div.task #taskFoot input[type=button] {
+  margin: 20px 0 10px 0;
+  padding: 10px 20px;
+  width: 180px;
+  background-color: #c4c4c4ff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.2s ease color;
+  cursor: pointer;
+}
+#newassignment div.task #taskFoot input[type=button]:hover {
+  background-color: #888890ff;
+  color: white;
+  font-weight: 400;
+}
+#newassignment #assignmentFooter {
+  display: flex;
+  justify-content: space-around;
+}
+#newassignment #assignmentFooter input[type=button] {
+  margin: 20px 0 10px 0;
+  padding: 15px 20px;
+  width: 250px;
+  background-color: #8acd6dff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1em;
+  box-shadow: 0 5px 10px #7e7f83ff;
+}
+#newassignment #assignmentFooter input[type=button]:hover {
+  background-color: #5aa739ff;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-align: center;
+  box-shadow: 0 5px 5px #7e7f83ff;
+}
+#newassignment #assignmentFooter input[type=button]:active {
+  box-shadow: 0 0px 5px #7e7f83ff;
+}
+
+#adminContainer {
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#adminContainer .column .tile {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: #f3f3f4ff;
+  box-shadow: 5px 5px 10px #7e7f83ff;
+  border-radius: 10px;
+  margin: 50px;
+  padding: 25px;
+}
+#adminContainer .column .tile a {
+  text-decoration: none;
+  color: inherit;
+}
+#adminContainer .column .tile h1 {
+  padding-top: 0.5em;
+}
+#adminContainer .separator {
+  width: 1px;
+  background-color: #7e7f83ff;
+  margin: 25px 0;
+}
+/*# sourceMappingURL=style.css.map */
