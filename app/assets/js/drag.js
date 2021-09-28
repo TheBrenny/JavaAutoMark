@@ -1,15 +1,28 @@
 const concurrentUploads = 7;
 
 (() => {
-    const dropEnabled = (() => {
-        let div = document.createElement('div');
-        return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+    const allowedToUpload = (() => {
+        let elem = document.createElement('input');
+        elem.type = 'file';
+        let domPrefixes = ["", "moz", "o", "ms", "webkit"];
+
+        let condition = false;
+        for(let prefix of domPrefixes) {
+            if(prefix + "directory" in elem) {
+                condition = true;
+                break;
+            }
+        }
+
+        condition = condition && "multiple" in elem;
+        condition = condition && "FormData" in window && "FileReader" in window;
+
+        return condition;
     })();
     const form = $(".inputBox");
     const progressBar = $("#progressBar");
-    let progressData = [];
 
-    if(dropEnabled) {
+    if(allowedToUpload) {
         form.classList.add('enabled'); // TODO: change this class to "dropEnabled"
 
         let events = ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"];
@@ -126,6 +139,11 @@ const concurrentUploads = 7;
         // TODO: if e.loaded === e.total then try make it look like a waiting bar
         progressBar.value = e.loaded;
         progressBar.max = e.total;
+
+        if(e.loaded === e.total) {
+            progressBar.removeAttribute("value");
+            progressBar.indeterminate = true;
+        }
     }
     function hideProgressBar() {
         progressBar.value = 1;
