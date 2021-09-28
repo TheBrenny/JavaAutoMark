@@ -904,12 +904,20 @@ input[type=submit]:disabled {
   font-weight: 400;
   letter-spacing: 2px;
 }
+#submitAss .markedInput {
+  height: 100px;
+  padding: 0 !important;
+}
+#submitAss .markedInput i {
+  display: none;
+}
 #submitAss .inputBox {
   display: block;
   padding: 100px 0;
   text-align: center;
   width: 100%;
   margin: 0;
+  margin-bottom: 50px;
   outline: dashed 2px #7e7f83ff;
   outline-offset: -10px;
   transition: 0.3s ease outline-offset, 0.3s ease background-color;
@@ -963,5 +971,80 @@ input[type=submit]:disabled {
 #submitAss .file-over {
   outline-offset: -20px;
   background-color: #c4c4c4ff;
+}
+#submitAss .marksTable {
+  padding: 0;
+  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+  height: auto;
+  max-height: 400px;
+  overflow-x: scroll;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#submitAss .marksTable span {
+  display: flex;
+  justify-content: flex-start;
+  align-content: stretch;
+}
+#submitAss .marksTable .tHead {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+#submitAss .marksTable .tHead h3 {
+  text-align: center;
+  background-color: #4b7ce6ff;
+  padding: 20px;
+  color: white;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  position: sticky;
+  min-width: 50px;
+}
+#submitAss .marksTable .sRow {
+  background-color: #f3f3f4ff;
+}
+#submitAss .marksTable .sRow p {
+  padding: 20px;
+  min-width: 50px;
+  background-color: inherit;
+}
+#submitAss .marksTable .frontCell {
+  min-width: 150px !important;
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 0 5px 0 #7e7f83ff;
+}
+#submitAss .marksTable .frontHead {
+  background-color: #4b7ce6ff;
+}
+#submitAss .marksTable .sRow p:not(:last-child) {
+  border-right: 1px solid #7e7f83ff;
+  text-align: center;
+}
+#submitAss .marksTable .sRow:nth-child(odd) {
+  background-color: #c4c4c4ff;
+}
+#submitAss .marksTable .sRow:nth-child(odd) .frontCell {
+  background-color: inherit !important;
+}
+#submitAss .marksTable h3:first-child {
+  border-top-left-radius: 10px;
+}
+#submitAss .marksTable h3:last-child {
+  border-top-right-radius: 10px;
+}
+#submitAss .marksTable h3:not(:last-child) {
+  border-right: 1px solid #f3f3f4ff;
 }
 /*# sourceMappingURL=style.css.map */
