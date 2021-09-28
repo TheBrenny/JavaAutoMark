@@ -50,8 +50,9 @@ if(dropEnabled) {
         let dt = e.dataTransfer;
         droppedFile = dt.files;
 
+        fileValidation(droppedFile);
         handleFiles(droppedFile);
-        
+
         form.classList.add('isUpload');
         form.classList.remove('isUpload');
         form.classList.add('isSuccess');
@@ -78,6 +79,16 @@ if(dropEnabled) {
         droppedFile = [...droppedFile];
         initializeProgress(droppedFile.length); 
         droppedFile.forEach(uploadFile);
+    }
+    function fileValidation(droppedFile){
+        var allowedExtensions = '.txt';
+        let fileName = droppedFile[0].name;
+        //var test = 
+        if (!fileName.endsWith(allowedExtensions)) {
+            alert('Invalid file type');
+            droppedFile = '';
+            return false;
+        } 
     }
     //upload file to server
     function uploadFile(droppedFile, i){
