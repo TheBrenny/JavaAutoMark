@@ -1,5 +1,6 @@
 onReady(() => {
     const tooltip = {
+        timer: 1000,
         location: {x: 0, y: 0, time: 0},
         element: $("#tooltip"),
         target: null,
@@ -9,7 +10,7 @@ onReady(() => {
                 tooltip.hide();
             }, {once: true, capture: false});
 
-            tooltip.element.$(".message").innerText = message;
+            tooltip.element.$(".message").innerHTML = message.replace(/\\n/g, "<br>");
             tooltip.element.classList.add("show");
         },
         hide() {
@@ -20,14 +21,16 @@ onReady(() => {
         },
         update() {
             requestAnimationFrame(tooltip.update);
-            if(tooltip.target === null) return;
+            if(tooltip.target !== null) return;
 
             let now = Date.now();
             let elem = document.elementFromPoint(tooltip.location.x, tooltip.location.y);
-            if(now - tooltip.location.time > 1000) {
+            if(now - tooltip.location.time > tooltip.timer) {
                 let msg = null;
                 do {
-                    msg = elem.getAttribute("tooltip");
+                    try {
+                        msg = elem.getAttribute("tooltip");
+                    }catch(e){}
                 } while(msg === null && (elem = elem.parentElement));
                 if(msg !== null) {
                     tooltip.show(msg, elem);
