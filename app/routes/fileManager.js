@@ -1,6 +1,6 @@
-const router = require("express").Router();
+const express = require('express');
+const router = express.Router();
 const storage = require("../../storage/storage");
-const bodyParser = require("body-parser");
 const errors = require("./errors/generic").errors;
 
 router.get("/download/*", async (req, res, next) => {
@@ -15,7 +15,7 @@ router.get("/download/*", async (req, res, next) => {
     }
 });
 
-router.put("/upload/*", bodyParser.raw({
+router.put("/upload/*", express.raw({
     limit: "5mb"
 }), async (req, res) => {
     let path = req.path.substring("/upload/".length);

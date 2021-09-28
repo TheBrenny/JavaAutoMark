@@ -1,9 +1,9 @@
-const router = require("express").Router();
+const express = require('express');
+const router = express.Router();
 const checks = require("./tools/checks");
 const Database = require("../../db/database");
 const storage = require("../../storage/storage");
 const session = require("./tools/session");
-const bodyParser = require("body-parser");
 const errors = require("./errors/generic").errors;
 
 router.get("/download/:id", async (req, res, next) => {
@@ -20,7 +20,7 @@ router.get("/download/:id", async (req, res, next) => {
     }
 });
 
-router.put("/upload/:id", bodyParser.raw({
+router.put("/upload/:id", express.raw({
     limit: "5mb"
 }), async (req, res) => {
     let id = req.params.id;

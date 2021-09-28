@@ -7,7 +7,8 @@ const sessionSchema = {
         authed: false,
         badLogin: false,
         badReg: false,
-        loginCount: 0
+        loginCount: 0,
+        admin: false
     },
 };
 
@@ -35,8 +36,9 @@ const account = {
             this.getAccount().email = email;
             this.getAccount().authed = true;
             this.getAccount().badLogin = false;
-            this.getAccount().badRegister = false;
+            this.getAccount().badReg = false;
             this.getAccount().loginCount = 0;
+            this.getAccount().admin = false;
         }
     },
     name() {
@@ -44,6 +46,9 @@ const account = {
     },
     isAuthed() {
         return this.getAccount().authed;
+    },
+    isAdmin() {
+        return this.getAccount().admin;
     },
     getBadLogin() {
         let b = this.getAccount().badLogin;

@@ -7,6 +7,8 @@ CREATE TABLE `teachers` (
   `password` CHAR(60) NOT NULL,
   PRIMARY KEY (`zid`)
 );
+INSERT INTO `teachers` (`zid`, `email`, `fname`, `lname`, `password`) VALUES
+  (0, "admin@change-me.com", "admin", "admin", "$2b$12$qXsJqM7ZzGI9E3YTxm4wteqDc7A7dF8uJ0Lc8u0dBEoIPlzKFg6k6"); -- login with admin:admin
 
 -- Create Course Table
 CREATE TABLE `courses` (
@@ -20,8 +22,10 @@ CREATE TABLE `courses` (
 -- Create Assignmnet Table
 CREATE TABLE `assignments` (
   `assignment_id` INTEGER AUTO_INCREMENT UNIQUE,
+  `assignment_name` VARCHAR(100) NOT NULL,
   `course_uuid` INTEGER NOT NULL,
   `code_location` VARCHAR(255) NOT NULL,
+  `state` ENUM('none', 'processing', 'finished') NOT NULL DEFAULT 'none',
   PRIMARY KEY (`assignment_id`),
   FOREIGN KEY (`course_uuid`) REFERENCES `courses` (`uuid`)
 );

@@ -21,6 +21,12 @@
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
             ],
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "runtimeArgs": [
+                "--preserve-symlinks",
+            ]
         },
         {
             "type": "node",
@@ -28,6 +34,7 @@
             "name": "just run",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
+                "--preserve-symlinks",
                 "run-script",
                 "start"
             ],
@@ -53,12 +60,25 @@
         },
         {
             "name": "Attach",
-            "port": 3230,
+            "port": "${input:askForPort}",
+            "address": "${input:askForHost}",
             "request": "attach",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "askForPort",
+            "type": "promptString",
+            "description": "Enter the port to attach to",
+        },
+        {
+            "id": "askForHost",
+            "type": "promptString",
+            "description": "Enter the host to attach to",
         }
     ]
 }

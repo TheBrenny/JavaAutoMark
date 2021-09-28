@@ -29,7 +29,11 @@
 
 [[?= badLogin ]]
 <script nonce="[[nonce]]">
-    wrongPassword($("#wrongPassword"), "[[badLogin]]");
+    function wrongPassword(element, message) {
+        element.innerHTML = message || "Something went wrong!";
+        element.style.animation = ".5s shake";
+    }
+    onLoad(() => wrongPassword($("#wrongPassword"), "[[badLogin]]"));
 </script>
 [[?==]]
 

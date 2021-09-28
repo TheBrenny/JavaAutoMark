@@ -22,6 +22,39 @@ html {
   height: 100%;
 }
 
+h1,
+h2,
+h3 {
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+hr {
+  margin: 1em 0;
+  border: none;
+  background: #fe6448;
+  background: linear-gradient(90deg, rgba(254, 100, 72, 0) 0%, #fe6448 20%, #fe6448 40%, #ffd147 70%, rgba(255, 209, 71, 0) 100%);
+  height: 1px;
+  opacity: 0.75;
+  margin-left: attr(offset px, 0px);
+}
+hr.flip {
+  transform: rotate(180deg);
+}
+
+vr {
+  border: none;
+  background: #fe6448;
+  background: linear-gradient(180deg, rgba(254, 100, 72, 0) 0%, #fe6448 20%, #fe6448 40%, #ffd147 70%, rgba(255, 209, 71, 0) 100%);
+  width: 1px;
+  opacity: 0.75;
+  margin-top: attr(offset px, 0px);
+}
+vr.flip {
+  transform: rotate(180deg);
+}
+
 body {
   background-color: white;
   color: #14110fff;
@@ -31,6 +64,7 @@ body {
   background-image: url("/assets/img/splash.svg");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 65%;
 }
 body #login_container {
   margin-top: calc(50vh - 159px);
@@ -45,9 +79,6 @@ body #login_container {
   border-radius: 5px;
 }
 body #login_container h1 {
-  font-family: roboto-slab, serif;
-  font-weight: 400;
-  font-style: normal;
   text-align: center;
   font-size: 25px;
   margin-top: 20px;
@@ -73,21 +104,7 @@ body #login_container form input[type=password] {
   letter-spacing: 2px;
   font-style: normal;
 }
-body #login_container form input[type=submit] {
-  margin: 50px 0 20px 0;
-  padding: 10px 0;
-  background-color: #8acd6dff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 15px;
-  font-family: roboto-slab, serif;
-  font-weight: 400;
-  font-style: normal;
-  transition: 0.5s ease background-color, 0.2s ease color;
-}
-body #login_container form input[type=submit]:hover {
+body #login_container form input[type=submit]:hover:not(:disabled) {
   background-color: #5aa739ff;
   color: white;
   cursor: pointer;
@@ -100,6 +117,208 @@ body #login_container form .error {
 }
 body #login_container form label {
   padding: 10px 0;
+}
+
+#notifier-tray {
+  overflow: visible;
+  right: 25px;
+  top: 100px;
+  position: fixed;
+  width: 300px;
+  height: fit-content;
+}
+#notifier-tray .notification {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  border-radius: 0.3em;
+  display: block;
+  height: fit-content;
+  background: #4b7ce6ff;
+  z-index: 20;
+  left: calc(100% + 25px);
+  transition: left 0.25s;
+  transition-timing-function: ease-in-out;
+  overflow: hidden;
+  padding: 0.4em 0em;
+  position: relative;
+  margin-bottom: 1em;
+}
+#notifier-tray .notification.info {
+  background: #4b7ce6ff;
+}
+#notifier-tray .notification.success {
+  background: #8acd6dff;
+}
+#notifier-tray .notification.warning {
+  background: #ffd147ff;
+}
+#notifier-tray .notification.error {
+  background: #fe6448ff;
+}
+#notifier-tray .notification.show {
+  left: 0;
+  transition-timing-function: cubic-bezier(0.75, 1.48, 0.68, 0.96);
+}
+#notifier-tray .notification.show .timer {
+  animation: timer 5s linear;
+}
+@keyframes timer {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+#notifier-tray .notification .content {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4em;
+}
+#notifier-tray .notification .content p {
+  padding-left: 0.2em;
+}
+#notifier-tray .notification .content .del {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: none;
+}
+#notifier-tray .notification .content .del:hover img {
+  filter: brightness(0.65);
+}
+#notifier-tray .notification .timer {
+  bottom: 0%;
+  height: 7px;
+  position: absolute;
+  width: 0%;
+  background: #ffffff80;
+}
+
+#tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  display: none;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 10px));
+  background: #f3f3f4ff;
+  border: 2px solid #c4c4c4ff;
+  padding: 0.5em;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#tooltip.show {
+  display: block;
+}
+#tooltip .arrow {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 10px solid #c4c4c4ff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  transform: translateX(-50%);
+}
+
+button,
+input[type=button],
+input[type=submit] {
+  margin: 20px 0 10px 0;
+  padding: 15px 20px;
+  width: 250px;
+  background-color: #8acd6dff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 15px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  transition: 0.5s ease background-color, 0.2s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 5px 10px #7e7f83ff;
+}
+button.blue,
+input[type=button].blue,
+input[type=submit].blue {
+  background-color: #4b7ce6ff;
+}
+button.blue:hover,
+input[type=button].blue:hover,
+input[type=submit].blue:hover {
+  background-color: #3559a7ff !important;
+}
+button.strong,
+input[type=button].strong,
+input[type=submit].strong {
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+button:hover:not(:disabled),
+input[type=button]:hover:not(:disabled),
+input[type=submit]:hover:not(:disabled) {
+  background-color: #5aa739ff;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-align: center;
+  box-shadow: 0 5px 5px #7e7f83ff;
+}
+button:active,
+input[type=button]:active,
+input[type=submit]:active {
+  box-shadow: 0 0px 5px #7e7f83ff;
+}
+button.del,
+input[type=button].del,
+input[type=submit].del {
+  height: 30px;
+  width: 30px;
+  margin: 15px;
+  background-color: #fe6448ff;
+  padding: revert;
+  box-shadow: 0 2px 5px #34312dff;
+}
+button.del img,
+input[type=button].del img,
+input[type=submit].del img {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease filter;
+}
+button.del:hover,
+input[type=button].del:hover,
+input[type=submit].del:hover {
+  background-color: #f42601ff;
+}
+button.del:hover img,
+input[type=button].del:hover img,
+input[type=submit].del:hover img {
+  filter: brightness(2);
+}
+button.del:active,
+input[type=button].del:active,
+input[type=submit].del:active {
+  box-shadow: 0 0 5px #34312dff;
+}
+button:disabled,
+input[type=button]:disabled,
+input[type=submit]:disabled {
+  background-color: #7e7f83ff !important;
+  cursor: unset !important;
 }
 
 #header {
@@ -155,31 +374,41 @@ body #login_container form label {
   margin-top: 105px;
 }
 
-#createUser {
+#createUser,
+#viewUser {
+  width: 400px;
   background-color: #f3f3f4ff;
   display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #7e7f83ff;
   flex-direction: column;
   padding: 30px;
   box-shadow: 0 5px 10px black;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
 }
-#createUser #groupNames {
+#createUser > *,
+#viewUser > * {
+  flex-grow: 1;
+}
+#createUser #groupNames,
+#viewUser #groupNames {
   display: flex;
   flex-direction: row;
+  gap: 10px;
 }
-#createUser #groupNames .name {
+#createUser #groupNames .name,
+#viewUser #groupNames .name {
   display: flex;
   flex-direction: column;
-}
-#createUser #groupNames .first {
-  margin-right: 10px;
-}
-#createUser #groupNames input {
-  width: 150px;
+  flex-grow: 1;
 }
 #createUser input[type=text],
-#createUser input[type=password] {
+#createUser input[type=password],
+#viewUser input[type=text],
+#viewUser input[type=password] {
   font-size: 15px;
   padding: 10px;
   border-radius: 5px;
@@ -193,69 +422,59 @@ body #login_container form label {
   letter-spacing: 1px;
   font-style: normal;
 }
-#createUser input[type=submit] {
-  margin: 20px 0 10px 0;
-  padding: 10px 0;
-  background-color: #8acd6dff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 15px;
-  font-family: roboto-slab, serif;
-  font-weight: 400;
-  font-style: normal;
-  transition: 0.5s ease background-color, 0.2s ease color;
+#createUser input[type=submit],
+#viewUser input[type=submit] {
+  align-self: center;
 }
-#createUser label[for=pass] {
+#createUser label[for=pass],
+#viewUser label[for=pass] {
   color: #7e7f83ff;
   margin-left: 10px;
   font-size: 14px;
   letter-spacing: 0.5px;
 }
-#createUser h3 {
+#createUser h3,
+#viewUser h3 {
   font-weight: 400;
   margin-left: 10px;
 }
-#createUser input[type=submit]:hover {
-  background-color: #5aa739ff;
-  color: white;
-  cursor: pointer;
-}
 
-#viewUser {
-  background-color: #f3f3f4ff;
-  display: flex;
-  width: 500px;
-  flex-direction: column;
-  color: #7e7f83ff;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  box-shadow: 0 5px 10px black;
-  border-radius: 10px;
-  padding: 20px;
-}
 #viewUser h2 {
   text-align: center;
   margin: 10px 0;
   color: #34312dff;
 }
-#viewUser .container {
+#viewUser .wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   letter-spacing: 1px;
-  margin: 10px 20px;
+  margin-bottom: 0.7em;
 }
-#viewUser .container .detail {
+#viewUser .wrapper:last-of-type {
+  margin-bottom: 0;
+}
+#viewUser .wrapper h3 {
+  font-weight: 600;
+  margin: 0;
+}
+#viewUser .wrapper h3.detail {
   font-weight: normal;
 }
-#viewUser .container h3 {
-  font-weight: 600;
+#viewUser form {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1em;
+}
+#viewUser form > * {
+  padding: 10px;
+  box-sizing: content-box;
+  flex: 1 1 0%;
+  height: 1.3em;
+  margin: 0 !important;
 }
 
-.block, #newassignment div#details, #error {
+.block, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -265,12 +484,13 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #newassignment, #error {
-  width: 700px;
+.wrap, #submitAss, #viewAss, #newassignment, #error {
+  width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
   margin-bottom: 50px;
+  max-width: 1020px;
 }
 
 #error {
@@ -285,30 +505,44 @@ body #login_container form label {
 #error .preWrap pre {
   overflow-x: scroll;
   padding: 1em;
+  padding-bottom: 0.5em;
+  color: #7e7f83ff;
 }
 #error .preWrap pre::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.75em;
+  height: 0.75em;
 }
 #error .preWrap pre::-webkit-scrollbar-thumb {
   background-color: #888890ff;
   border-radius: 10em;
   margin: 2em;
 }
+#error .preWrap pre::-webkit-scrollbar-thumb:hover {
+  background-color: #7e7f83ff;
+}
 #error .preWrap pre::-webkit-scrollbar-button {
   background: transparent;
   width: 1em;
 }
+#error .preWrap pre span.highlight {
+  color: #14110fff;
+}
 
+#newassignment div#details {
+  gap: 2em;
+}
+#newassignment div#details > span {
+  flex: 1 1 0px;
+}
 #newassignment div#details label {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
+  display: block;
 }
 #newassignment div#details input[type=text],
 #newassignment div#details select {
-  width: 200px;
-  font-size: 20px;
+  font-size: 1.2em;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #7e7f83ff;
@@ -320,6 +554,8 @@ body #login_container form label {
   font-weight: 200;
   letter-spacing: 2px;
   font-style: normal;
+  box-sizing: border-box;
+  width: 100%;
 }
 #newassignment div.task {
   background-color: #f3f3f4ff;
@@ -335,33 +571,6 @@ body #login_container form label {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-#newassignment div.task .taskHead .del {
-  height: 30px;
-  width: 30px;
-  margin: 5px;
-  background-color: #fe6448ff;
-  border-radius: 5px;
-  margin: 5px 15px;
-  transition: 0.3s ease background-color, 0.3s ease box-shadow;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 5px #34312dff;
-  text-align: center;
-}
-#newassignment div.task .taskHead .del img {
-  width: 98%;
-  height: 100%;
-  transition: 0.3s ease filter;
-}
-#newassignment div.task .taskHead .del:hover {
-  background-color: #f42601ff;
-}
-#newassignment div.task .taskHead .del:hover img {
-  filter: brightness(2);
-}
-#newassignment div.task .taskHead .del:active {
-  box-shadow: 0 0 5px #34312dff;
-}
 #newassignment div.task .test,
 #newassignment div.task .instr {
   display: flex;
@@ -375,6 +584,7 @@ body #login_container form label {
 }
 #newassignment div.task .test .editor,
 #newassignment div.task .instr .editor {
+  white-space: pre;
   flex-grow: 1;
   align-self: stretch;
   margin: 10px 0;
@@ -422,7 +632,6 @@ body #login_container form label {
 }
 #newassignment div.task .test ul .moveUp,
 #newassignment div.task .instr ul .moveUp {
-  align-items: flex-start;
   padding-top: 10px;
   border-top-left-radius: 10px;
   padding: 5px 0;
@@ -430,7 +639,6 @@ body #login_container form label {
 #newassignment div.task .test ul .moveDown,
 #newassignment div.task .instr ul .moveDown {
   border-bottom-left-radius: 10px;
-  align-items: flex-end;
   padding-bottom: 10px;
   padding: 5px 0;
 }
@@ -451,38 +659,6 @@ body #login_container form label {
 #newassignment div.task .test ul .moveButton:hover img,
 #newassignment div.task .instr ul .moveButton:hover img {
   filter: brightness(2);
-}
-#newassignment div.task .test .del,
-#newassignment div.task .instr .del {
-  height: 30px;
-  width: 30px;
-  margin: 5px;
-  background-color: #fe6448ff;
-  border-radius: 5px;
-  margin: 5px 15px;
-  transition: 0.3s ease background-color, 0.3s ease box-shadow;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 5px #34312dff;
-  text-align: center;
-}
-#newassignment div.task .test .del img,
-#newassignment div.task .instr .del img {
-  width: 98%;
-  height: 100%;
-  transition: 0.3s ease filter;
-}
-#newassignment div.task .test .del:hover,
-#newassignment div.task .instr .del:hover {
-  background-color: #f42601ff;
-}
-#newassignment div.task .test .del:hover img,
-#newassignment div.task .instr .del:hover img {
-  filter: brightness(2);
-}
-#newassignment div.task .test .del:active,
-#newassignment div.task .instr .del:active {
-  box-shadow: 0 0 5px #34312dff;
 }
 #newassignment div.task .test .testCenter,
 #newassignment div.task .instr .testCenter {
@@ -544,22 +720,12 @@ body #login_container form label {
   gap: 50px;
 }
 #newassignment div.task #taskFoot input[type=button] {
-  margin: 20px 0 10px 0;
   padding: 10px 20px;
   width: 180px;
   background-color: #c4c4c4ff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 15px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  transition: 0.5s ease background-color, 0.2s ease color;
-  cursor: pointer;
+  text-transform: initial;
 }
-#newassignment div.task #taskFoot input[type=button]:hover {
+#newassignment div.task #taskFoot input[type=button]:hover:not(:disabled) {
   background-color: #888890ff;
   color: white;
   font-weight: 400;
@@ -568,11 +734,157 @@ body #login_container form label {
   display: flex;
   justify-content: space-around;
 }
-#newassignment #assignmentFooter input[type=button] {
-  margin: 20px 0 10px 0;
-  padding: 15px 20px;
+
+#adminContainer {
+  display: flex;
+}
+#adminContainer .column .tile {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  background-color: #f3f3f4ff;
+  box-shadow: 5px 5px 10px #7e7f83ff;
+  border-radius: 10px;
+  margin: 50px;
+  flex-flow: column;
+  transform: scale(1);
+  transition: 0.3s ease transform;
+}
+#adminContainer .column .tile h1 {
+  padding-top: 0.5em;
+}
+#adminContainer .column .tile:hover:not(:disabled) {
+  color: initial;
+  transform: scale(1.1);
+}
+#adminContainer .separator {
+  width: 1px;
+  background-color: #7e7f83ff;
+  margin: 25px 0;
+}
+
+#viewAss div#head {
+  gap: 2em;
+}
+#viewAss div#head > span {
+  flex: 1 1 0px;
+}
+#viewAss div#head label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+}
+#viewAss div#head select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
   width: 250px;
-  background-color: #8acd6dff;
+}
+#viewAss div#head h1 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+#viewAss div#table {
+  padding: 0;
+  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+#viewAss div#table span {
+  display: flex;
+  justify-content: space-between;
+}
+#viewAss div#table .tHead {
+  position: sticky;
+  top: calc(75px - 8px);
+  width: 100%;
+}
+#viewAss div#table .tHead h3 {
+  text-align: center;
+  background-color: #4b7ce6ff;
+  padding: 20px;
+  color: white;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+  position: sticky;
+}
+#viewAss div#table .bCell {
+  text-align: center;
+  display: block;
+  padding: 20px;
+}
+#viewAss div#table .tCell p {
+  padding: 20px;
+}
+#viewAss div#table .tCell p:not(:first-child) {
+  border-left: 1px solid #7e7f83ff;
+  text-align: center;
+}
+#viewAss div#table .tCell:nth-child(odd) {
+  background-color: #c4c4c4ff;
+}
+#viewAss div#table h3:first-child {
+  border-top-left-radius: 10px;
+}
+#viewAss div#table h3:last-child {
+  border-top-right-radius: 10px;
+}
+#viewAss div#table h3:not(:first-child) {
+  border-left: 1px solid #f3f3f4ff;
+}
+#viewAss div#table .name {
+  width: 40%;
+}
+#viewAss div#table .course {
+  width: 20%;
+}
+#viewAss div#table .year {
+  width: 10%;
+}
+#viewAss div#table .marked {
+  width: 30%;
+}
+
+#submitAss .details .class {
+  font-weight: normal;
+}
+#submitAss .metaAss {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+#submitAss .metaAss .content {
+  flex-grow: 1;
+  margin: 0;
+  margin-right: 35px;
+}
+#submitAss .metaAss input[type=button] {
+  padding: 10px 20px;
+  width: 150px;
+  background-color: #4b7ce6ff;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -581,55 +893,75 @@ body #login_container form label {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
-  transition: 0.5s ease background-color, 0.3s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
-  cursor: pointer;
   text-transform: uppercase;
-  font-size: 1em;
+  transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
   box-shadow: 0 5px 10px #7e7f83ff;
+  cursor: pointer;
 }
-#newassignment #assignmentFooter input[type=button]:hover {
-  background-color: #5aa739ff;
+#submitAss .metaAss input[type=button]:hover:not(:disabled) {
+  background-color: #3559a7ff;
   color: white;
   font-weight: 400;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+}
+#submitAss .inputBox {
+  display: block;
+  padding: 100px 0;
   text-align: center;
-  box-shadow: 0 5px 5px #7e7f83ff;
+  width: 100%;
+  margin: 0;
+  outline: dashed 2px #7e7f83ff;
+  outline-offset: -10px;
+  transition: 0.3s ease outline-offset, 0.3s ease background-color;
 }
-#newassignment #assignmentFooter input[type=button]:active {
-  box-shadow: 0 0px 5px #7e7f83ff;
+#submitAss .inputBox .inputFile {
+  display: none;
 }
-
-#adminContainer {
-  display: flex;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
+#submitAss .inputBox label[for=file] {
+  margin-top: 35px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  color: #888890ff;
 }
-#adminContainer .column .tile {
-  width: 150px;
-  height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  text-transform: uppercase;
-  text-align: center;
-  background-color: #f3f3f4ff;
-  box-shadow: 5px 5px 10px #7e7f83ff;
-  border-radius: 10px;
-  margin: 50px;
-  padding: 25px;
+#submitAss .inputBox label[for=file]:hover strong {
+  color: #4b7ce6ff;
 }
-#adminContainer .column .tile a {
-  text-decoration: none;
-  color: inherit;
+#submitAss .inputBox .upload-icon {
+  color: #7e7f83ff;
+  opacity: 0.3;
+  width: 100%;
 }
-#adminContainer .column .tile h1 {
-  padding-top: 0.5em;
+#submitAss .inputBox .uploading,
+#submitAss .inputBox .success,
+#submitAss .inputBox .error,
+#submitAss .inputBox .dropText {
+  display: none;
+  margin-top: 35px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888890ff;
 }
-#adminContainer .separator {
-  width: 1px;
-  background-color: #7e7f83ff;
-  margin: 25px 0;
+#submitAss .enabled .dropText {
+  display: inline !important;
+}
+#submitAss .isUpload label[for=file] {
+  display: none;
+}
+#submitAss .isUpload .uploading {
+  display: block !important;
+}
+#submitAss .isSuccess label[for=file] {
+  display: none;
+}
+#submitAss .isSuccess .success {
+  display: block !important;
+}
+#submitAss .isError .error {
+  display: block !important;
+}
+#submitAss .file-over {
+  outline-offset: -20px;
+  background-color: #c4c4c4ff;
 }
 /*# sourceMappingURL=style.css.map */

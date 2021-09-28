@@ -4,7 +4,7 @@ const session = require("./tools/session");
 
 // This makes sure the user is logged in or 
 router.use((req, res, next) => {
-    if (req.path === "/login") next();
+    if(req.path === "/login") next();
     else checks.isAuthed(req, res, next);
 });
 router.use((req, res, next) => {
@@ -17,8 +17,16 @@ router.use((req, res, next) => {
 router.get(["/", "/home"], (req, res) => {
     let s = session(req);
 
-    res.render("home", {
-        time: new Date().toLocaleString(),
+    res.format({
+        html: () => {
+            res.render("home");
+        },
+        json: () => {
+            res.json({
+                success: true,
+                version: require("../../package.json").version,
+            });
+        }
     });
 });
 
