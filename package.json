@@ -48,7 +48,7 @@
     "express": "^5.0.0-alpha.8",
     "express-mysql-session": "^2.1.7",
     "express-session": "^1.17.2",
-    "express-validator": "^6.12.1",
+    "express-validator": "^6.12.2",
     "helmet": "^4.6.0",
     "inquirer": "^8.1.5",
     "inquirer-file-tree-selection-prompt": "https://github.com/TheBrenny/inquirer-file-tree-selection/tarball/main",
