@@ -7,10 +7,11 @@ onReady(() => {
         while(true) yield id++;
     })();
     notifier.notifications = {};
-    notifier.notify = (msg, isBad) => {
-        isBad = !!isBad; // forces to a bool value
+    notifier.notify = (msg, type) => {
+        if(type === undefined) type = 'info';
+        type = ['info', 'success', 'warning', 'error'].includes(type) ? type : 'info';
         let notification = scetchInsert(notifier.tray, 'afterBegin', scetch.notification, {
-            isBad: isBad ? "bad" : "",
+            type: type,
             message: msg
         });
         setTimeout(() => notification.classList.add('show'), 20);
@@ -20,8 +21,15 @@ onReady(() => {
             setTimeout(() => notification?.remove(), 220);
         };
 
-        notification.$(".timer").addEventListener("transitionend", deleteNotification);
+        notification.$(".timer").addEventListener("animationend", deleteNotification);
         notification.$(".del").addEventListener("click", deleteNotification);
+        notification.addEventListener("mouseover", (e) => {
+            let timer = notification.$(".timer");
+            timer.style.animationPlayState = "paused";
+            notification.addEventListener("mouseout", () => {
+                timer.style.animationPlayState = "running";
+            }, {once: true});
+        });
 
         let id = notifier.idGen.next().value;
         notification.setAttribute("notif-id", id);

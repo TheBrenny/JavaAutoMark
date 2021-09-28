@@ -1,4 +1,4 @@
-<div class="notification [[isBad]]">
+<div class="notification [[type]]">
     <div class="content">
         <p>[[message]]</p>
         <button type="button" name="Delete" class="del">

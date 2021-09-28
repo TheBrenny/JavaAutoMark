@@ -36,8 +36,9 @@ const concurrentUploads = 7;
                 })
                 .then((files) => {
                     form.classList.add('isUpload');
+                    let retFiles = fileValidation(files);
                     initProgressBar(files.length);
-                    return files;
+                    return retFiles;
                 })
                 .then((files) => processFiles(files))
                 .then(() => {
@@ -113,75 +114,31 @@ const concurrentUploads = 7;
         progressBar.value = 0;
         progressBar.max = 1;
     }
-
-        fileValidation(droppedFile);
-        handleFiles(droppedFile);
-
-        form.classList.add('isUpload');
-        form.classList.remove('isUpload');
-        form.classList.add('isSuccess');
-    });
-    //tracks progress of upload
-    let uploadProgress = []
-    let progressBar = document.getElementById('progress-bar')
-    function initializeProgress(numFiles) {
-        progressBar.value = 0
-        uploadProgress = []
     function updateProgressBar(e) {
         progressBar.value = e.loaded;
         progressBar.max = e.total;
-
-        // progressData[fileNumber] = percent;
-        // let total = progressData.reduce((tot, curr) => tot + curr, 0) / progressData.length;
-        // progressBar.value = Math.max(total, progressBar.value); // Math.max so we don't go backwards by race conditions
     }
-    function updateProgress(fileNumber, percent) {
-        uploadProgress[fileNumber] = percent
-        let total = uploadProgress.reduce((tot, curr) => tot + curr, 0) / uploadProgress.length
-        console.debug('update', fileNumber, percent, total)
-        progressBar.value = total
-      }
-    //converts from filelist to array for ease of iteration
-    function handleFiles(droppedFile){
-        droppedFile = [...droppedFile];
-        initializeProgress(droppedFile.length); 
-        droppedFile.forEach(uploadFile);
-    }
-    function fileValidation(droppedFile){
-        var allowedExtensions = '.txt';
-        let fileName = droppedFile[0].name;
-        //var test = 
-        if (!fileName.endsWith(allowedExtensions)) {
-            alert('Invalid file type');
-            droppedFile = '';
-            return false;
-        } 
-    }
-    //upload file to server
-    function uploadFile(droppedFile, i){
-        var url = window.location.href;
-        var xhr = new XMLHttpRequest();
-        var formData = new FormData();
-        xhr.open('POST', url, true);      
-        
-        xhr.upload.addEventListener("progress", function(e) {
-            updateProgress(i, (e.loaded * 100.0 / e.total) || 100)
-          })
-
-        xhr.addEventListener('readystatechange', function(e) {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              // Done. Inform the user
-            }
-            else if (xhr.readyState == 4 && xhr.status != 200) {
-              // Error. Inform the user
-            }
-          })
-        
-          formData.append('file', droppedFile)
-          xhr.send(formData)
     function hideProgressBar() {
         progressBar.value = 1;
         progressBar.max = 1;
         progressBar.setAttribute("hidden", true);
+    }
+
+    function fileValidation(files) {
+        const allowedExtensions = ['.java'];
+        const hasExtension = (filename, e) => filename.endsWith(e);
+
+        let retFiles = [];
+        for(let file of files) {
+            let fileName = file.name;
+
+            if(allowedExtensions.some(hasExtension.bind(null, fileName))) {
+                retFiles.push(file);
+            }
+        }
+
+        let diffFiles = files.length - retFiles.length;
+        if(diffFiles > 0) notifier.notify(`${diffFiles} invalid file${diffFiles === 1 ? "" : "s"} detected. Only .java files are allowed.`, "warning");
+        return retFiles;
     }
 })();

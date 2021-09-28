@@ -134,7 +134,7 @@ body #login_container form label {
   border-radius: 0.3em;
   display: block;
   height: fit-content;
-  background: #8acd6dff;
+  background: #4b7ce6ff;
   z-index: 20;
   left: calc(100% + 25px);
   transition: left 0.25s;
@@ -144,7 +144,16 @@ body #login_container form label {
   position: relative;
   margin-bottom: 1em;
 }
-#notifier-tray .notification.bad {
+#notifier-tray .notification.info {
+  background: #4b7ce6ff;
+}
+#notifier-tray .notification.success {
+  background: #8acd6dff;
+}
+#notifier-tray .notification.warning {
+  background: #ffd147ff;
+}
+#notifier-tray .notification.error {
   background: #fe6448ff;
 }
 #notifier-tray .notification.show {
@@ -152,8 +161,15 @@ body #login_container form label {
   transition-timing-function: cubic-bezier(0.75, 1.48, 0.68, 0.96);
 }
 #notifier-tray .notification.show .timer {
-  transition: width 5s linear;
-  width: 100%;
+  animation: timer 5s linear;
+}
+@keyframes timer {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 #notifier-tray .notification .content {
   display: flex;

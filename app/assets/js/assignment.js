@@ -34,7 +34,7 @@ function addTask(items) {
     } else {
         console.error("Something went wrong. items isn't an array or undefined: ");
         console.error(items);
-        notifier.notify("Something went wrong. (items had an unexpected type)", true);
+        notifier.notify("Something went wrong. (items had an unexpected type)", "error");
         throw new Error("Something went wrong. items isn't an array or undefined.");
     }
 
@@ -208,16 +208,16 @@ function saveAssignment(editID) {
         }
     }).then((response) => {
         if(typeof response === "string") { // we have a location
-            notifier.notify("Saved successfully. Redirecting...");
+            notifier.notify("Saved successfully. Redirecting...", "success");
             window.location = response;
         } else if(typeof response === "object") { // we have a JSON object
             console.log(response);
-            notifier.notify(response.message);
+            notifier.notify(response.message, response.type || "success");
         } else {
             throw response;
         }
     }).catch(e => {
         console.error(e);
-        notifier.notify("Error: " + e.message, true);
+        notifier.notify("Error: " + e.message, "error");
     });
 }
