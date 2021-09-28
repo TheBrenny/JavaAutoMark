@@ -55,7 +55,7 @@ module.exports.storage = {
 };
 
 module.exports.java = {
-    java: appConfig.java.path || "java",
+    java: appConfig.java.java || "java",
     compiler: appConfig.java.compiler || "javac",
 };
 
