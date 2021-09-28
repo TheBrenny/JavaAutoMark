@@ -14,15 +14,16 @@
         <input class="edit" type="button" value="Edit" />
     </div>
 
-    <div class="inputBox">
+    <form class="inputBox">
         <i class="upload-icon far fa-8x fa-file-archive"></i>
         <input class="inputFile" type="file" name = "files" id="file"/>
+        <input class="inputFile" type="file" name="file" id="file"/>
         <label for="file"><strong>Choose a file</strong><span class="dropText"> or drag and drop</span></label>
-        <progress id="progress-bar" max=100 value=0></progress>
-        <div class="uploading">Uploading…</div>
+        <progress id="progressBar" hidden></progress>
+        <div class="uploading">Uploading...</div>
         <div class="success">Done!</div>
         <div class="error">Error!</div>
-    </div>
+    </form>
 </div>
 
 <script src="/assets/js/drag.js"></script>

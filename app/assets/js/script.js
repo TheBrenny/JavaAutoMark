@@ -42,6 +42,17 @@ Object.defineProperty(HTMLElement.prototype, "$$up", {
     }
 });
 
+const realAddEventListener = HTMLElement.prototype.addEventListener;
+Object.defineProperty(HTMLElement.prototype, "addEventListener", {
+    value: function (type, fn, useCapture, wantsUntrusted) {
+        if(Array.isArray(type)) {
+            type.forEach(t => this.addEventListener(t, fn, useCapture, wantsUntrusted));
+        } else {
+            realAddEventListener.call(this, type, fn, useCapture, wantsUntrusted);
+        }
+    }
+});
+
 /**
  * Adds an event listener for the window.load event.
  * 
