@@ -10,6 +10,7 @@ const CourseModel = require("../../db/models/courses");
 const multer = require('multer');
 const path = require("path");
 const fs = require("fs");
+const java = require('../jenv/java');
 
 // This sets up the page title
 router.use("/assignments/*", (req, res, next) => {
@@ -64,35 +65,80 @@ router.get("/assignments/submit/:id", async (req, res) => {
 });
 
 const multerStore = path.resolve(__dirname, "..", "jenv", "context");
-router.post("/assignments/submit/:id", (req, res, next) => {
-    // TODO: Look at uploading java files only - if we do follow this, find out if we can keep dir heirarchy
-    // Dir Hierarchy can be kept with preservePath.
-    // Determine java file by fileFilter
-    // The size difference becomes 2,000,000 bytes --> 120,000 == 5% of the size we'd expect!
-    let assignmentStore = path.resolve(multerStore, req.params.id);
-    fs.mkdirSync(assignmentStore, { recursive: true });
-    multer({
-        dest: assignmentStore,
-        preservePath: true,
-        // fileFilter: (req, file, cb) => cb(null, file.originalname.endsWith(".java")),
-        limits: {
-            fileSize: 3 * 1024 * 1024 // 3MB per file
+const multerStoreEngine = multer.diskStorage({
+    destination: function (req, file, cb) {
+        let assId = req.params.id;
+        let filepath = file.originalname.split("/");
+        filepath.pop();
+
+        while(filepath.length > 0 && filepath[0].match(/^z\d{7}/) === null) filepath.shift();
+        if(filepath.length === 0) {
+            let error = new Error("Bad directory structure encountered: " + file.originalname);
+            error.code = 400;
+            return cb(error, null);
         }
-    }).array("file")(req, res, next);
-}, (req, res) => {
-    
-    // - Save the contents to the context/assID/z1234567/code.java
-    // - Try compile and save progressively - maybe we can report back bad compilations?
-    
-    let inboundFiles = req.files;
 
-    inboundFiles.map(file => {
-
+        filepath[0] = filepath[0].replace(/(z\d{7}).*/, "$1");
+        filepath = path.join(multerStore, assId, filepath[0]); // removes all other parts of the dir to make sure java files are top-most
+        fs.mkdirSync(filepath, {recursive: true});
+        cb(null, filepath);
+    },
+    filename: function (req, file, cb) {
+        cb(null, path.basename(file.originalname));
+    }
+});
+router.put("/assignments/submit/:id", async (req, res, next) => {
+    // MAKE SURE WE'RE NOT CURRENTLY PROCESSING - OTHERWISE RACES WILL OCCUR!
+    let assignment = Database.assignments.toObject(await Database.assignments.getAssignment(req.params.id));
+    if(assignment.state === "processing") throw errors.conflict.fromReq(req);
+    next();
+}, multer({
+    storage: multerStoreEngine,
+    preservePath: true,
+    fileFilter: (req, file, cb) => cb(null, file.originalname.endsWith(".java")),
+    limits: {
+        fileSize: 3 * 1024 * 1024 // 3MB per file
+    }
+}).array("file"), async (req, res) => {
+    Database.assignments.updateAssignment(req.params.id, {
+        "state": "processing"
     });
 
+    // Creates an array of just dirs (should all be student dirs)
+    let inboundFiles = req.files.reduce((acc, cur) => {
+        let curDir = path.dirname(cur.path);
+        if(!acc.includes(curDir)) acc.push(curDir);
+        return acc;
+    }, []);
+    // This runs the compiler across all those dirs - compiling every file
+    inboundFiles = inboundFiles.map(file => {
+        return (async () => {
+            let response = await java.promise.compile(file).catch(err => {
+                err.code = 500;
+                err.message = err.stdout;
+                throw err;
+            });
+            Promise.all(fs.readdirSync(file).filter(f => f.endsWith(".java")).map(f => fs.promises.unlink(path.join(file, f))));
+            return response;
+        });
+    });
+    // inboundFiles is now an array of functions that return promises
 
-    Promise.all(inboundFiles).then(() => {
-        res.end();
+    // TODO: Create a web socket to send the marks for assignments.
+
+    let responses = [];
+    while(inboundFiles.length) {
+        // this nifty hack lets us throttle the amount of promises running at once (compilations in this case)
+        responses.push(...(await Promise.all(inboundFiles.splice(0, 7).map(f => f()))));
+    }
+
+    let successes = responses.filter(r => r.code === 0).length;
+    res.status(202).json({
+        success: true,
+        socketLink: "",
+        totalFiles: responses.length,
+        compiledFiles: successes.length,
+        outputs: responses
     });
 });
 
