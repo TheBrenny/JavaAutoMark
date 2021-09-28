@@ -24,13 +24,14 @@ const concurrentUploads = 7;
         form.addEventListener('drop', async (e) => {
             drag(false);
 
+            // TODO: Show the student code as a tree in the file upload space!
             return Promise.resolve(e.dataTransfer)
                 .then(async (dt) => {
                     let files;
                     if(!!dt.items) files = await getWebkitFiles(Array.from(dt.items).map(item => item.webkitGetAsEntry()));
                     else if(!!dt.files) files = dt.files;
                     else {
-                        throw new Error("Error: Unable to upload files!");
+                        throw new Error("Unable to upload files");
                     }
                     return files;
                 })
@@ -40,16 +41,21 @@ const concurrentUploads = 7;
                     initProgressBar(files.length);
                     return retFiles;
                 })
-                .then((files) => processFiles(files))
-                .then(() => {
+                .then((files) => {
+                    return processFiles(files);
+                })
+                .then((response) => {
+                    notifier.notify("Successfully uploaded and compiled!", "success");
                     form.classList.add('isSuccess');
-                    hideProgressBar();
                 })
                 .catch((e) => {
                     form.classList.add('isError');
-                    notifier.notify(e.name + ": " + e.message, true);
+                    notifier.notify((e.name || "Error") + ": " + (e.message || "Something went wrong"), "error");
                 })
-                .finally(() => form.classList.remove('isUpload'));
+                .finally(() => {
+                    form.classList.remove('isUpload');
+                    hideProgressBar();
+                });
         });
     }
 
@@ -76,7 +82,7 @@ const concurrentUploads = 7;
             for(let i = 0; i < items.length; i++) {
                 let item = items[i];
                 if(item.isFile) {
-                    files.push(promisifyFile(item));
+                    files.push(item);
                 } else {
                     let recurse = promisifyReader(item).then(getWebkitFiles.bind(this, files));
                     proms.push(recurse);
@@ -87,34 +93,37 @@ const concurrentUploads = 7;
     }
 
     function processFiles(files) {
-        return new Promise((resolve, reject) => {
-            files = [...files]; // coerce to an array
-            let fileCount = files.length;
-            // console.log(files);
-
+        return new Promise(async (resolve, reject) => {
             let formData = new FormData(form);
             formData.delete("file");
-            files.forEach((f) => formData.append('file', f));
+            let proms = Array.from(files).map(async (f) => formData.append('file', await promisifyFile(f), f.fullPath));
+            proms = await Promise.all(proms);
 
             let xhr = new XMLHttpRequest();
             xhr.upload.addEventListener('progress', updateProgressBar);
             xhr.addEventListener('readystatechange', (e) => {
                 if(xhr.readyState === 4) {
-                    if(xhr.status === 200) resolve();
-                    else reject(e);
+                    let json = JSON.parse(xhr.responseText || "{}");
+                    if(xhr.status === 200 || xhr.status === 202) resolve(json);
+                    else {
+                        // This lets us change the message to better human readables.
+                        if(json.code === 409) json.message = "Wait until the other files have finished processing";
+                        reject(json);
+                    }
                 }
             });
-            xhr.open('POST', window.location.href, true);
+            xhr.open('PUT', window.location.href, true);
             xhr.send(formData);
         });
     }
 
     function initProgressBar() {
-        progressBar.setAttribute("hidden", false);
+        progressBar.removeAttribute("hidden");
         progressBar.value = 0;
         progressBar.max = 1;
     }
     function updateProgressBar(e) {
+        // TODO: if e.loaded === e.total then try make it look like a waiting bar
         progressBar.value = e.loaded;
         progressBar.max = e.total;
     }
