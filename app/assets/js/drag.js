@@ -68,7 +68,6 @@ const concurrentUploads = 7;
                 notifier.notify("Successfully uploaded and compiled!", "success");
                 form.classList.add('isSuccess');
                 form.classList.add('markedInput');
-                $('.marksTable').style.display = 'flex';
             })
             .catch((e) => {
                 form.classList.add('isError');
