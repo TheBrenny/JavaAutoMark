@@ -20,7 +20,6 @@ onReady(() => {
             tooltip.element.$(".message").innerText = "";
         },
         update() {
-            requestAnimationFrame(tooltip.update);
             if(tooltip.target !== null) return;
 
             let now = Date.now();
@@ -36,10 +35,27 @@ onReady(() => {
                     tooltip.show(msg, elem);
                 }
             }
+        },
+        animator: {
+            interval: 1000 / 5, // 5FPS
+            timer: 0,
+            start() {
+                if(tooltip.animator.timer === 0) {
+                    tooltip.animator.timer = setInterval(() => requestAnimationFrame(tooltip.update), tooltip.animator.interval);
+                }
+                return tooltip.animator;
+            },
+            stop() {
+                if(tooltip.animator.timer !== 0) {
+                    clearInterval(tooltip.animator.timer);
+                    tooltip.animator.timer = 0;
+                }
+                return tooltip.animator;
+            },
         }
     };
     globalThis.tooltip = tooltip;
-    requestAnimationFrame(tooltip.update);
+    globalThis.tooltip.animator.start();
 
     document.addEventListener("mousemove", (event) => {
         tooltip.location.x = event.clientX;
