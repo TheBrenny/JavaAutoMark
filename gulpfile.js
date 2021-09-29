@@ -155,9 +155,10 @@ gulp.task("browserSync", function (cb) {
         proxy: "http://" + host + "/",
         open: false,
         port: port + 1,
+        cors: true,
         snippetOptions: {
             rule: {
-                match: /<\/head>/i,
+                match: /<\/body>/i,
                 fn: function (snippet, match) {
                     return snippet.replace('id=', `nonce="browsersync" id=`) + match;
                 }
