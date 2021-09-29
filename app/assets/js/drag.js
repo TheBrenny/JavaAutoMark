@@ -22,59 +22,63 @@ const concurrentUploads = 7;
     const form = $(".inputBox");
     const progressBar = $("#progressBar");
 
-    if(allowedToUpload) {
-        form.classList.add('enabled'); // TODO: change this class to "dropEnabled"
-
-        let events = ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"];
-        form.addEventListener(events, (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-        });
-        form.addEventListener('dragover', (e) => drag(true));
-        form.addEventListener('dragenter', (e) => drag(true));
-        form.addEventListener('dragleave', (e) => drag(false));
-        form.addEventListener('dragend', (e) => drag(false));
-        form.addEventListener('drop', async (e) => {
-            drag(false);
-            form.classList.remove('isError');
-            form.classList.remove('isSuccess');
-
-            // TODO: Show the student code as a tree in the file upload space!
-            return Promise.resolve(e.dataTransfer)
-                .then(async (dt) => {
-                    let files;
-                    if(!!dt.items) files = await getWebkitFiles(Array.from(dt.items).map(item => item.webkitGetAsEntry()));
-                    else if(!!dt.files) files = dt.files;
-                    else {
-                        throw new Error("Unable to upload files");
-                    }
-                    return files;
-                })
-                .then((files) => {
-                    form.classList.add('isUpload');
-                    let retFiles = fileValidation(files);
-                    initProgressBar(files.length);
-                    return retFiles;
-                })
-                .then((files) => {
-                    return processFiles(files);
-                })
-                .then((response) => {
-                    notifier.notify("Successfully uploaded and compiled!", "success");
-                    form.classList.add('isSuccess');
-                    form.classList.add('markedInput');
-                    $('.marksTable').style.display = 'flex';
-                })
-                .catch((e) => {
-                    form.classList.add('isError');
-                    notifier.notify((e.name || "Error") + ": " + (e.message || "Something went wrong"), "error");
-                })
-                .finally(() => {
-                    form.classList.remove('isUpload');
-                    hideProgressBar();
-                });
-        });
+    if(!allowedToUpload) {
+        form.classList.add("disabled");
+        //TODO: Make some visual flair indication that the user has something wrong.
+        return;
     }
+
+    form.classList.add('enabled'); // TODO: change this class to "dropEnabled"
+
+    let events = ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"];
+    form.addEventListener(events, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+    form.addEventListener('dragover', (e) => drag(true));
+    form.addEventListener('dragenter', (e) => drag(true));
+    form.addEventListener('dragleave', (e) => drag(false));
+    form.addEventListener('dragend', (e) => drag(false));
+    form.addEventListener('drop', async (e) => {
+        drag(false);
+        form.classList.remove('isError');
+        form.classList.remove('isSuccess');
+
+        // TODO: Show the student code as a tree in the file upload space!
+        return Promise.resolve(e.dataTransfer)
+            .then(async (dt) => {
+                let files;
+                if(!!dt.items) files = await getWebkitFiles(Array.from(dt.items).map(item => item.webkitGetAsEntry()));
+                else if(!!dt.files) files = dt.files;
+                else {
+                    throw new Error("Unable to upload files");
+                }
+                return files;
+            })
+            .then((files) => {
+                form.classList.add('isUpload');
+                let retFiles = fileValidation(files);
+                initProgressBar(files.length);
+                return retFiles;
+            })
+            .then((files) => {
+                return processFiles(files);
+            })
+            .then((response) => {
+                notifier.notify("Successfully uploaded and compiled!", "success");
+                form.classList.add('isSuccess');
+                form.classList.add('markedInput');
+                $('.marksTable').style.display = 'flex';
+            })
+            .catch((e) => {
+                form.classList.add('isError');
+                notifier.notify((e.name || "Error") + ": " + (e.message || "Something went wrong"), "error");
+            })
+            .finally(() => {
+                form.classList.remove('isUpload');
+                hideProgressBar();
+            });
+    });
 
     function drag(isDragging) {
         if(isDragging) form.classList.add('file-over');
@@ -89,7 +93,6 @@ const concurrentUploads = 7;
     }
     function getWebkitFiles(files, items) {
         // Converts a single arg call to a double arg call.
-
         if(items === undefined) {
             return getWebkitFiles([], files);
         }
@@ -169,7 +172,11 @@ const concurrentUploads = 7;
         }
 
         let diffFiles = files.length - retFiles.length;
-        if(diffFiles > 0) notifier.notify(`${diffFiles} invalid file${diffFiles === 1 ? "" : "s"} detected. Only .java files are allowed.`, "warning");
+        if(diffFiles > 0) {
+            let warning = `${diffFiles} invalid file${diffFiles === 1 ? "" : "s"} detected. Only .java files are allowed.`;
+            console.warn(warning);
+            notifier.notify(warning, "warning");
+        }
         return retFiles;
     }
 })();
