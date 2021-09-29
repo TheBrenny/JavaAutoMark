@@ -10,6 +10,7 @@ const CourseModel = require("../../db/models/courses");
 const multer = require('multer');
 const path = require("path");
 const fs = require("fs");
+const stream = require("stream");
 const java = require('../jenv/java');
 
 // This sets up the page title
@@ -173,17 +174,19 @@ router.get("/assignments/edit/:id", async (req, res) => {
 
     let assPath = Database.assignments.toObject(await Database.assignments.getAssignment(req.params.id)).code_location;
     let assJsonStream = await storage.getObject(storage.container, assPath + ".json");
-
+    
     let chunks = [];
-    for await(let chunk of assJsonStream) chunks.push(Buffer.from(chunk));
-    chunks = Buffer.concat(chunks);
-    chunks = chunks.toString("utf-8");
-    chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
-
-    res.render("assignments/create", {
-        courses: courses,
-        assign: chunks,
-        assignObj: JSON.parse(chunks)
+    assJsonStream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+    assJsonStream.on("end", () => {
+        chunks = Buffer.concat(chunks);
+        chunks = chunks.toString("utf-8");
+        chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
+        
+        res.render("assignments/create", {
+            courses: courses,
+            assign: chunks,
+            assignObj: JSON.parse(chunks)
+        });
     });
 });
 
