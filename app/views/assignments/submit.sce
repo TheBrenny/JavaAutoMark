@@ -30,7 +30,7 @@
             <p class="frontCell">STUDENTS</p>
             [[f= task 1:3 ]]
                 [[f= test 1:10 ]]
-                    <p tooltip="Task [[task]] - Test [[test]]">[[task]].[[test]]</p>
+                    <p tooltip="Task [[task]]\nTest [[test]]">[[task]].[[test]]</p>
                 [[?==]]
             [[?==]]
         </span>

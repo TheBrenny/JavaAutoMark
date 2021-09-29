@@ -16,6 +16,11 @@
     &.show {
         display: block;
     }
+
+    .message {
+        white-space: pre-line;
+    }
+
     .arrow {
         position: absolute;
         top: calc(100% + 1px);

@@ -273,6 +273,9 @@ body #login_container form label {
 #tooltip.show {
   display: block;
 }
+#tooltip .message {
+  white-space: pre-line;
+}
 #tooltip .arrow {
   position: absolute;
   top: calc(100% + 1px);
