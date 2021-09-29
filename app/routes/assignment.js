@@ -181,6 +181,7 @@ router.get("/assignments/edit/:id", async (req, res) => {
         chunks = Buffer.concat(chunks);
         chunks = chunks.toString("utf-8");
         chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
+        // TODO: FIGURE OUT WHY GCS DECIDED TO DO US DIRTY, AND WHY LOCAL STORAGE DIDN"T?!
         
         res.render("assignments/create", {
             courses: courses,
