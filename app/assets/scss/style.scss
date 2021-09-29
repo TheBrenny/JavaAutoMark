@@ -284,7 +284,8 @@ body {
     border: 2px solid $task-button;
     padding: 0.5em;
     @include content-font();
-
+    z-index: 9999999;
+    
     &.show {
         display: block;
     }

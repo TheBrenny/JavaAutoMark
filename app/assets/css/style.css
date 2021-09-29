@@ -214,6 +214,7 @@ body #login_container form label {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
+  z-index: 9999999;
 }
 #tooltip.show {
   display: block;
