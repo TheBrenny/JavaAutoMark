@@ -36,6 +36,8 @@ const concurrentUploads = 7;
         form.addEventListener('dragend', (e) => drag(false));
         form.addEventListener('drop', async (e) => {
             drag(false);
+            form.classList.remove('isError');
+            form.classList.remove('isSuccess');
 
             // TODO: Show the student code as a tree in the file upload space!
             return Promise.resolve(e.dataTransfer)

@@ -1093,7 +1093,7 @@ input[type="submit"] {
         }
         
         .success {
-            display: block !important;
+            display: inline-block !important;
         }
     }
 
@@ -1119,7 +1119,7 @@ input[type="submit"] {
 
         overflow-x: scroll;
 
-        display: flex;
+        display: none;
         flex-direction: column;
 
         position: relative;

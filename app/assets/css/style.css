@@ -965,7 +965,7 @@ input[type=submit]:disabled {
   display: none;
 }
 #submitAss .isSuccess .success {
-  display: block !important;
+  display: inline-block !important;
 }
 #submitAss .isError .error {
   display: block !important;
@@ -985,7 +985,7 @@ input[type=submit]:disabled {
   height: auto;
   max-height: 400px;
   overflow-x: scroll;
-  display: flex;
+  display: none;
   flex-direction: column;
   position: relative;
 }

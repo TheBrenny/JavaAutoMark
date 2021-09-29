@@ -14,7 +14,7 @@
         <input class="edit" type="button" value="Edit" />
     </div>
 
-    <form class="inputBox markedInput">
+    <form class="inputBox">
         <i class="upload-icon far fa-8x fa-file-archive"></i>
         <input class="inputFile" type="file" name="file" id="file" multiple directory webkitdirectory mozdirectory odirectory msdirectory />
         <label for="file"><strong>Choose a file</strong><span class="dropText"> or drag and drop</span></label>
