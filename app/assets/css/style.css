@@ -385,7 +385,7 @@ input[type=submit]:disabled {
   height: 75px;
   display: flex;
   justify-content: space-between;
-  z-index: 10;
+  z-index: 100;
 }
 #header a.home {
   background-image: url("/assets/img/jam_jar_coloured.png");
@@ -427,6 +427,69 @@ input[type=submit]:disabled {
 }
 #header + * {
   margin-top: 105px;
+}
+
+div.table {
+  padding: 0;
+  border-radius: 10px 10px 5px 5px;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+  max-height: 85vh;
+}
+div.table span {
+  display: flex;
+  justify-content: space-between;
+}
+div.table p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+div.table .tHead {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  box-shadow: 0 0 10px #7e7f83ff;
+}
+div.table .tHead p {
+  background-color: #4b7ce6ff;
+  color: white;
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+div.table .tHead p:not(:last-child) {
+  border-right: 1px solid #f3f3f4ff;
+}
+div.table .bRow {
+  text-align: center;
+  display: block;
+  padding: 20px;
+}
+div.table .tRow {
+  z-index: 40;
+  position: relative;
+}
+div.table .tRow:nth-child(even) p {
+  background-color: #f3f3f4ff;
+}
+div.table .tRow:nth-child(odd) p {
+  background-color: #c4c4c4ff;
+}
+div.table .tRow p:not(:last-child) {
+  border-right: 1px solid #7e7f83ff;
+  text-align: center;
 }
 
 #createUser,
@@ -769,6 +832,13 @@ input[type=submit]:disabled {
   margin: 25px 0;
 }
 
+#viewAss {
+  display: flex;
+  flex-flow: column;
+}
+#viewAss #subAssignment {
+  align-self: center;
+}
 #viewAss div#head {
   gap: 2em;
 }
@@ -802,73 +872,24 @@ input[type=submit]:disabled {
   letter-spacing: 1px;
   display: inline-block;
 }
-#viewAss div#table {
-  padding: 0;
-  border-radius: 5px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #f3f3f4ff;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  margin-bottom: 35px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-#viewAss div#table span {
-  display: flex;
-  justify-content: space-between;
-}
-#viewAss div#table .tHead {
-  position: sticky;
-  top: calc(75px - 8px);
-  width: 100%;
-}
-#viewAss div#table .tHead h3 {
-  text-align: center;
-  background-color: #4b7ce6ff;
-  padding: 20px;
-  color: white;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
-  position: sticky;
-}
-#viewAss div#table .bCell {
-  text-align: center;
-  display: block;
-  padding: 20px;
-}
-#viewAss div#table .tCell p {
-  padding: 20px;
-}
-#viewAss div#table .tCell p:not(:first-child) {
-  border-left: 1px solid #7e7f83ff;
-  text-align: center;
-}
-#viewAss div#table .tCell:nth-child(odd) {
-  background-color: #c4c4c4ff;
-}
-#viewAss div#table h3:first-child {
-  border-top-left-radius: 10px;
-}
-#viewAss div#table h3:last-child {
-  border-top-right-radius: 10px;
-}
-#viewAss div#table h3:not(:first-child) {
-  border-left: 1px solid #f3f3f4ff;
-}
-#viewAss div#table .name {
+#viewAss div.table .name {
   width: 40%;
 }
-#viewAss div#table .course {
+#viewAss div.table .course {
   width: 20%;
 }
-#viewAss div#table .year {
+#viewAss div.table .year {
   width: 10%;
 }
-#viewAss div#table .marked {
+#viewAss div.table .marked {
   width: 30%;
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+#viewAss div.table .marked button {
+  width: 100%;
+  margin: 0;
 }
 
 #submitAss .details .class {
@@ -975,79 +996,22 @@ input[type=submit]:disabled {
   outline-offset: -20px;
   background-color: #c4c4c4ff;
 }
-#submitAss .marksTable {
-  padding: 0;
-  border-radius: 5px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #f3f3f4ff;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  margin-bottom: 35px;
-  height: auto;
-  max-height: 400px;
-  overflow-x: scroll;
-  display: none;
-  flex-direction: column;
-  position: relative;
+#submitAss div.table p {
+  min-width: 15px;
+  width: 15px;
+  max-width: 15px;
 }
-#submitAss .marksTable span {
-  display: flex;
-  justify-content: flex-start;
-  align-content: stretch;
-}
-#submitAss .marksTable .tHead {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 99;
-}
-#submitAss .marksTable .tHead h3 {
-  text-align: center;
-  background-color: #4b7ce6ff;
-  padding: 20px;
-  color: white;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
-  position: sticky;
-  min-width: 50px;
-}
-#submitAss .marksTable .sRow {
-  background-color: #f3f3f4ff;
-}
-#submitAss .marksTable .sRow p {
-  padding: 20px;
-  min-width: 50px;
-  background-color: inherit;
-}
-#submitAss .marksTable .frontCell {
-  min-width: 150px !important;
+#submitAss div.table p.frontCell {
+  min-width: 65px;
+  width: 65px;
+  max-width: 65px;
   position: sticky;
   left: 0;
-  z-index: 10;
-  box-shadow: 0 0 5px 0 #7e7f83ff;
+  box-shadow: 0 0 10px #7e7f83ff;
+  clip-path: inset(0px -10px 0px 0px);
+  z-index: 40;
 }
-#submitAss .marksTable .frontHead {
-  background-color: #4b7ce6ff;
-}
-#submitAss .marksTable .sRow p:not(:last-child) {
-  border-right: 1px solid #7e7f83ff;
-  text-align: center;
-}
-#submitAss .marksTable .sRow:nth-child(odd) {
-  background-color: #c4c4c4ff;
-}
-#submitAss .marksTable .sRow:nth-child(odd) .frontCell {
-  background-color: inherit !important;
-}
-#submitAss .marksTable h3:first-child {
-  border-top-left-radius: 10px;
-}
-#submitAss .marksTable h3:last-child {
-  border-top-right-radius: 10px;
-}
-#submitAss .marksTable h3:not(:last-child) {
-  border-right: 1px solid #f3f3f4ff;
+#submitAss .markedInput + .table {
+  display: flex !important;
 }
 /*# sourceMappingURL=style.css.map */

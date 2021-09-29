@@ -1,6 +1,13 @@
 #viewAss {
     @extend .wrap;
 
+    display: flex;
+    flex-flow: column;
+
+    #subAssignment {
+        align-self: center;
+    }
+
     div#head {
         @extend .block;
         gap: 2em;
@@ -36,72 +43,7 @@
         }
     }
 
-    div#table {
-        padding: 0;
-        border-radius: 5px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        background-color: $cultured;
-        box-shadow: 0 5px 10px $gray-web;
-        margin-bottom: 35px;
-
-        display: flex;
-        flex-direction: column;
-
-        position: relative;
-
-        span {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .tHead {
-            position: sticky;
-            top: calc(#{$header-height} - 8px);
-            width: 100%;
-        }
-
-        .tHead h3 {
-            text-align: center;
-            background-color: $button-blue;
-            padding: 20px;
-            color: white;
-            @include content-font();
-            text-transform: uppercase;
-            position: sticky;
-        }
-
-        .bCell {
-            text-align: center;
-            display: block;
-            padding: 20px;
-        }
-
-        .tCell p {
-            padding: 20px;
-        }
-
-        .tCell p:not(:first-child) {
-            border-left: 1px solid $gray-web;
-            text-align: center;
-        }
-
-        .tCell:nth-child(odd) {
-            background-color: $task-button;
-        }
-
-        h3:first-child {
-            border-top-left-radius: 10px;
-        }
-
-        h3:last-child {
-            border-top-right-radius: 10px;
-        }
-
-        h3:not(:first-child) {
-            border-left: 1px solid $cultured;
-        }
-
+    div.table {
         .name {
             width: 40%;
         }
@@ -116,6 +58,14 @@
 
         .marked {
             width: 30%;
+            display: flex;
+            flex-flow: column;
+            gap: 1em;
+
+            button {
+                width: 100%;
+                margin: 0;
+            }
         }
     }
 }

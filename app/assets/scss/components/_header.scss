@@ -7,7 +7,7 @@
     height: $header-height;
     display: flex;
     justify-content: space-between;
-    z-index: 10;
+    z-index: 100;
 
     a.home {
         background-image: url("/assets/img/jam_jar_coloured.png");

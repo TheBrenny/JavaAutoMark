@@ -18,21 +18,21 @@
         </select>
     </div>
 
-    <div id="table">
+    <div class="table">
         <span class="tHead">
-            <h3 class="name">Name</h3>
-            <h3 class="course">Course</h3>
-            <h3 class="year">Year</h3>
-            <h3 class="marked">Marked</h3>
+            <p class="name">Name</p>
+            <p class="course">Course</p>
+            <p class="year">Year</p>
+            <p class="marked">Marked</p>
         </span>
 
         [[?= assignments == null]]
-        <span class="bCell">
+        <span class="bRow">
             No assignments found
         </span>
         [[3=]]
             [[e= assignment in assignments ]]
-            <span class="tCell">
+            <span class="tRow">
                 <p class="name">[[assignment.assignment_name]]</p>
                 <p class="course">[[assignment.joins.courses.course_name]]</p>
                 <p class="year">[[assignment.joins.courses.running_year]]</p>

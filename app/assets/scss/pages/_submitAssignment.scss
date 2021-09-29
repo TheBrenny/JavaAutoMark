@@ -84,7 +84,7 @@
             opacity: 0.3;
             width: 100%;
         }
-    
+
         .uploading,
         .success,
         .error,
@@ -110,12 +110,12 @@
             display: block !important;
         }
     }
-    
+
     .isSuccess {
         label[for="file"] {
             display: none;
         }
-        
+
         .success {
             display: inline-block !important;
         }
@@ -130,93 +130,25 @@
         background-color: $task-button;
     }
 
-    .marksTable {
-        padding: 0;
-        border-radius: 5px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        background-color: $cultured;
-        box-shadow: 0 5px 10px $gray-web;
-        margin-bottom: 35px;
-        height: auto;
-        max-height: 400px;
+    div.table p {
+        min-width: 15px;
+        width: 15px;
+        max-width: 15px;
 
-        overflow-x: scroll;
-
-        display: none;
-        flex-direction: column;
-
-        position: relative;
-
-        span {
-            display: flex;
-            justify-content: flex-start;
-            align-content: stretch;
-        }
-
-        .tHead {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 99;
-        }
-
-        .tHead h3 {
-            text-align: center;
-            background-color: $button-blue;
-            padding: 20px;
-            color: white;
-            @include content-font();
-            text-transform: uppercase;
-            position: sticky;
-            min-width: 50px;
-        }
-
-        .sRow {
-            background-color: $cultured;
-        }
-
-        .sRow p {
-            padding: 20px;
-            min-width: 50px;
-            background-color: inherit;
-        }
-
-        .frontCell {
-            min-width: 150px !important;
+        &.frontCell {
+            min-width: 65px;
+            width: 65px;
+            max-width: 65px;
             position: sticky;
             left: 0;
-            z-index: 10;
-            box-shadow: 0 0 5px 0 $gray-web;
+            box-shadow: 0 0 10px $gray-web;
+            clip-path: inset(0px -10px 0px 0px);
+            z-index: 40;
         }
+    }
 
-        .frontHead {
-            background-color: $button-blue;
-        }
-
-        .sRow p:not(:last-child) {
-            border-right: 1px solid $gray-web;
-            text-align: center;
-        }
-
-        .sRow:nth-child(odd) {
-            background-color: $task-button;
-
-            .frontCell {
-                background-color: inherit !important;
-            }
-        }
-
-        h3:first-child {
-            border-top-left-radius: 10px;
-        }
-
-        h3:last-child {
-            border-top-right-radius: 10px;
-        }
-
-        h3:not(:last-child) {
-            border-right: 1px solid $cultured;
-        }
+    // THIS IS HOW WE SHOW THE TABLE WHEN THERE'S MARKED INPUT
+    .markedInput + .table {
+        display: flex !important;
     }
 }

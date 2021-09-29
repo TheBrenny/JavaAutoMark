@@ -1,0 +1,70 @@
+div.table {
+    padding: 0;
+    border-radius: 10px 10px 5px 5px;
+    background-color: $cultured;
+    box-shadow: 0 5px 10px $gray-web;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: auto;
+    max-height: 85vh;
+
+    span {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        @include content-font();
+    }
+
+    .tHead {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 50;
+            box-shadow: 0 0 10px $gray-web;
+
+
+        p {
+            background-color: $button-blue;
+            color: white;
+            @include header-font();
+            text-transform: uppercase;
+
+            &:not(:last-child) {
+                border-right: 1px solid $cultured;
+            }
+        }
+    }
+
+    .bRow {
+        text-align: center;
+        display: block;
+        padding: 20px;
+    }
+
+    .tRow {
+        z-index: 40;
+        position: relative;
+
+        &:nth-child(even) p {
+            background-color: $cultured;
+        }
+        &:nth-child(odd) p {
+            background-color: $task-button;
+        }
+
+        p {
+            &:not(:last-child) {
+                border-right: 1px solid $gray-web;
+                text-align: center;
+            }
+        }
+    }
+}

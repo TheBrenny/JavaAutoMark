@@ -25,37 +25,26 @@
     </form>
 
     
-    <div class="marksTable">
+    <div class="table">
         <span class="tHead">
-            <h3 class="frontHead frontCell">STUDENTS</h3><!--EMPTY CELL-->
-            <h3 tooltip="Task 1 - Test 1">1.1</h3>
-            <h3 tooltip="Task 1 - Test 10">1.10</h3>
-            <h3 tooltip="Task 1 - Test 11">1.11</h3>
-            <h3 tooltip="Task 1 - Test 12">1.12</h3>
-            <h3 tooltip="Task 1 - Test 13">1.13</h3>
-            <h3 tooltip="Task 1 - Test 14">1.14</h3>
-            <h3 tooltip="Task 1 - Test 15">1.15</h3>
-            <h3 tooltip="Task 1 - Test 16">1.16</h3>
-            <h3 tooltip="Task 1 - Test 17">1.17</h3>
-            <h3 tooltip="Task 1 - Test 18">1.18</h3>
-            <h3 tooltip="Task 1 - Test 19">1.19</h3>
+            <p class="frontCell">STUDENTS</p>
+            [[f= task 1:3 ]]
+                [[f= test 1:10 ]]
+                    <p tooltip="Task [[task]] - Test [[test]]">[[task]].[[test]]</p>
+                [[?==]]
+            [[?==]]
         </span>
 
-        <!-- TEMPLATE FOR INFORMATION -->
-        <span class="sRow">
-            <p class="frontCell">z5260786</p>
-            <p>X.X</p>
-            <p>1.10</p>
-            <p>1.11</p>
-            <p>1.12</p>
-            <p>1.13</p>
-            <p>1.14</p>
-            <p>1.15</p>
-            <p>1.16</p>
-            <p>1.17</p>
-            <p>1.18</p>
-            <p>1.19</p>
-        </span>
+        [[f= student 10:30 ]]
+            <span class="tRow">
+                <p class="frontCell">z00000[[student]]</p>
+                [[f= task 1:3 ]]
+                    [[f= test 1:10 ]]
+                        <p>[[task]].[[test]]</p>
+                    [[?==]]
+                [[?==]]
+            </span>
+        [[?==]]
     </div>
 </div>
 
