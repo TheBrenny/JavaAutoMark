@@ -31,7 +31,7 @@ onReady(() => {
                     try {
                         msg = elem.getAttribute("tooltip");
                     } catch(e) {}
-                } while(msg === null && (elem = (elem.parentElement ?? null)) !== null);
+                } while(msg === null && (elem = (elem?.parentElement)) !== null);
                 if(msg !== null) {
                     tooltip.show(msg, elem);
                 }
