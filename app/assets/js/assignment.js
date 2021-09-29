@@ -41,6 +41,7 @@ function addTask(items) {
     // Add handlers to the buttons
     task.$(".addInstruction").addEventListener("click", () => addInstruction(task));
     task.$(".addTest").addEventListener("click", () => addTest(task));
+    task.$(".addException").addEventListener("click", () => addException(task));
     task.$(".del").addEventListener("click", (e) => deleteTask(task));
 
     return task;
@@ -51,7 +52,7 @@ function addInstruction(task, defaults) {
 
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
-        code: `// This is valid Java code!\n// Don't forget your semicolons!\n`
+        code: `// This is valid Java code!\n// Don't forget your semicolons!`
     }, defaults || {});
 
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, defaults);
@@ -70,7 +71,7 @@ function addTest(task, defaults) {
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
         testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
-        code: `// This is a valid Java variable or expression!\n// Don't use semicolons!\n`,
+        code: `// This is a valid Java variable or expression! Don't use semicolons!`,
         expected: ``,
         description: ``,
         marks: 1
@@ -84,6 +85,28 @@ function addTest(task, defaults) {
     bindSaveAction(e, saveAssignment);
 
     return test;
+}
+
+function addException(task, defaults) {
+    if(["number", "string"].includes(typeof task)) task = $("#task" + task);
+
+    defaults = Object.assign({
+        order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
+        testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
+        code: `//This is an expression for a try/catch statement! Don't use semicolons`,
+        expected: ``,
+        description: ``,
+        marks: 1
+    }, defaults || {});
+
+    let exc = scetchInsert(task, "beforeEnd", scetch.exception, defaults);
+    exc.style.order = defaults.order;
+    bindActions(task, exc);
+
+    let e = createEditor(exc.$(".editor"));
+    bindSaveAction(e, saveAssignment);
+
+    return exc;
 }
 
 function moveItem(task, target) {

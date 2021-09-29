@@ -588,7 +588,7 @@ input[type=submit]:disabled {
   flex-grow: 1;
   align-self: stretch;
   margin: 10px 0;
-  min-height: 50px;
+  min-height: 30px;
 }
 #newassignment div.task .test ul,
 #newassignment div.task .instr ul {
@@ -611,7 +611,6 @@ input[type=submit]:disabled {
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #efefef;
-  border-top: 1px solid #efefef;
   flex-grow: 1;
   align-items: center;
   justify-content: center;
@@ -660,8 +659,9 @@ input[type=submit]:disabled {
 #newassignment div.task .instr ul .moveButton:hover img {
   filter: brightness(2);
 }
-#newassignment div.task .test .testCenter,
-#newassignment div.task .instr .testCenter {
+#newassignment div.task .test .testCenter, #newassignment div.task .test .excCenter,
+#newassignment div.task .instr .testCenter,
+#newassignment div.task .instr .excCenter {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -669,32 +669,34 @@ input[type=submit]:disabled {
   flex-grow: 2;
   margin-bottom: 15px;
 }
-#newassignment div.task .test .testCenter .case,
-#newassignment div.task .instr .testCenter .case {
+#newassignment div.task .test .testCenter .case, #newassignment div.task .test .excCenter .case,
+#newassignment div.task .instr .testCenter .case,
+#newassignment div.task .instr .excCenter .case {
   flex-grow: 2;
 }
-#newassignment div.task .test .testCenter .editor,
-#newassignment div.task .instr .testCenter .editor {
-  height: 60px;
-}
-#newassignment div.task .test .testCenter .testDeets,
-#newassignment div.task .instr .testCenter .testDeets {
+#newassignment div.task .test .testCenter .testDeets, #newassignment div.task .test .excCenter .testDeets,
+#newassignment div.task .instr .testCenter .testDeets,
+#newassignment div.task .instr .excCenter .testDeets {
   display: flex;
 }
-#newassignment div.task .test .testCenter .testDeets .small,
-#newassignment div.task .instr .testCenter .testDeets .small {
+#newassignment div.task .test .testCenter .testDeets .small, #newassignment div.task .test .excCenter .testDeets .small,
+#newassignment div.task .instr .testCenter .testDeets .small,
+#newassignment div.task .instr .excCenter .testDeets .small {
   margin-right: 15px;
 }
-#newassignment div.task .test .testCenter .testDeets .num,
-#newassignment div.task .instr .testCenter .testDeets .num {
+#newassignment div.task .test .testCenter .testDeets .num, #newassignment div.task .test .excCenter .testDeets .num,
+#newassignment div.task .instr .testCenter .testDeets .num,
+#newassignment div.task .instr .excCenter .testDeets .num {
   max-width: 60px;
 }
-#newassignment div.task .test .testCenter .testDeets .out,
-#newassignment div.task .instr .testCenter .testDeets .out {
+#newassignment div.task .test .testCenter .testDeets .out, #newassignment div.task .test .excCenter .testDeets .out,
+#newassignment div.task .instr .testCenter .testDeets .out,
+#newassignment div.task .instr .excCenter .testDeets .out {
   max-width: 120px;
 }
-#newassignment div.task .test .testCenter .testDeets .desc,
-#newassignment div.task .instr .testCenter .testDeets .desc {
+#newassignment div.task .test .testCenter .testDeets .desc, #newassignment div.task .test .excCenter .testDeets .desc,
+#newassignment div.task .instr .testCenter .testDeets .desc,
+#newassignment div.task .instr .excCenter .testDeets .desc {
   flex-grow: 1;
 }
 #newassignment div.task .test input[type=text],

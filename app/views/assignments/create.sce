@@ -52,14 +52,12 @@
         updateAssignmentBtn?.addEventListener("click", () => saveAssignment("[[assign.id]]"));
         updateAssignmentBtn && (updateAssignmentBtn.disabled = false);
 
-        // // Delete this script!
-        // let taskInjector = document.getElementById("taskInjector");
-        // taskInjector.remove();
     });
 </script>
 
 [[l= components/task]]
 [[l= components/test]]
+[[l= components/exception]]
 [[l= components/instr]]
 <script src="/assets/js/assignment.js"></script>
 
