@@ -1,0 +1,222 @@
+#submitAss {
+    @extend .wrap;
+
+    .details {
+        .class {
+            font-weight: normal;
+        }
+    }
+
+    .metaAss {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px;
+
+        .content {
+            flex-grow: 1;
+            margin: 0;
+            margin-right: 35px;
+        }
+
+        input[type="button"] {
+            padding: 10px 20px;
+            width: 150px;
+            background-color: $button-blue;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 15px;
+            @include content-font();
+            text-transform: uppercase;
+            transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
+            box-shadow: 0 5px 10px $gray-web;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover:not(:disabled) {
+            background-color: $highlighted-button-blue;
+            color: white;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+    }
+
+    .markedInput {
+        height: 100px;
+        padding: 0 !important;
+        i {
+            display: none;
+        }
+    }
+
+    .inputBox {
+        display: block;
+        padding: 100px 0;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+        margin-bottom: 50px;
+
+        @extend .block;
+        outline: dashed 2px $gray-web;
+        outline-offset: -10px;
+        transition: ease(outline-offset), ease(background-color);
+
+        .inputFile {
+            display: none;
+        }
+
+        label[for="file"] {
+            margin-top: 35px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 20px;
+            color: $highlighted-task-button;
+        }
+
+        label[for="file"]:hover strong {
+            color: $button-blue;
+        }
+
+        .upload-icon {
+            color: $gray-web;
+            opacity: 0.3;
+            width: 100%;
+        }
+    
+        .uploading,
+        .success,
+        .error,
+        .dropText {
+            display: none;
+            margin-top: 35px;
+            cursor: pointer;
+            font-size: 20px;
+            color: $highlighted-task-button;
+        }
+    }
+
+    .enabled .dropText {
+        display: inline !important;
+    }
+
+    .isUpload {
+        label[for="file"] {
+            display: none;
+        }
+
+        .uploading {
+            display: block !important;
+        }
+    }
+    
+    .isSuccess {
+        label[for="file"] {
+            display: none;
+        }
+        
+        .success {
+            display: inline-block !important;
+        }
+    }
+
+    .isError .error {
+        display: block !important;
+    }
+
+    .file-over {
+        outline-offset: -20px;
+        background-color: $task-button;
+    }
+
+    .marksTable {
+        padding: 0;
+        border-radius: 5px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background-color: $cultured;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 35px;
+        height: auto;
+        max-height: 400px;
+
+        overflow-x: scroll;
+
+        display: none;
+        flex-direction: column;
+
+        position: relative;
+
+        span {
+            display: flex;
+            justify-content: flex-start;
+            align-content: stretch;
+        }
+
+        .tHead {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+        }
+
+        .tHead h3 {
+            text-align: center;
+            background-color: $button-blue;
+            padding: 20px;
+            color: white;
+            @include content-font();
+            text-transform: uppercase;
+            position: sticky;
+            min-width: 50px;
+        }
+
+        .sRow {
+            background-color: $cultured;
+        }
+
+        .sRow p {
+            padding: 20px;
+            min-width: 50px;
+            background-color: inherit;
+        }
+
+        .frontCell {
+            min-width: 150px !important;
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            box-shadow: 0 0 5px 0 $gray-web;
+        }
+
+        .frontHead {
+            background-color: $button-blue;
+        }
+
+        .sRow p:not(:last-child) {
+            border-right: 1px solid $gray-web;
+            text-align: center;
+        }
+
+        .sRow:nth-child(odd) {
+            background-color: $task-button;
+
+            .frontCell {
+                background-color: inherit !important;
+            }
+        }
+
+        h3:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        h3:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        h3:not(:last-child) {
+            border-right: 1px solid $cultured;
+        }
+    }
+}

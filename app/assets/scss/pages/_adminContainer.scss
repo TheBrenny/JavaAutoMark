@@ -1,0 +1,36 @@
+#adminContainer {
+    display: flex;
+
+    .column {
+        .tile {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            align-content: center;
+            background-color: $cultured;
+            box-shadow: 5px 5px 10px $gray-web;
+            border-radius: 10px;
+            margin: 50px;
+            flex-flow: column;
+            transform: scale(1);
+            transition: ease(transform);
+
+            h1 {
+                padding-top: 0.5em;
+            }
+
+            &:hover:not(:disabled) {
+                color: initial;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .separator {
+        width: 1px;
+        background-color: $gray-web;
+        margin: 25px 0;
+    }
+}

@@ -119,6 +119,60 @@ body #login_container form label {
   padding: 10px 0;
 }
 
+.block, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+}
+
+.wrap, #submitAss, #viewAss, #newassignment, #error {
+  width: 70%;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 50px;
+  max-width: 1020px;
+}
+
+#error {
+  flex-direction: column;
+}
+#error .preWrap {
+  background: #c4c4c4ff;
+  border-radius: 0.5em;
+  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+  padding-bottom: 0.6em;
+}
+#error .preWrap pre {
+  overflow-x: scroll;
+  padding: 1em;
+  padding-bottom: 0.5em;
+  color: #7e7f83ff;
+}
+#error .preWrap pre::-webkit-scrollbar {
+  width: 0.75em;
+  height: 0.75em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb {
+  background-color: #888890ff;
+  border-radius: 10em;
+  margin: 2em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb:hover {
+  background-color: #7e7f83ff;
+}
+#error .preWrap pre::-webkit-scrollbar-button {
+  background: transparent;
+  width: 1em;
+}
+#error .preWrap pre span.highlight {
+  color: #14110fff;
+}
+
 #notifier-tray {
   overflow: visible;
   right: 25px;
@@ -473,60 +527,6 @@ input[type=submit]:disabled {
   flex: 1 1 0%;
   height: 1.3em;
   margin: 0 !important;
-}
-
-.block, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
-  display: flex;
-  justify-content: space-between;
-  background-color: #f3f3f4ff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  margin-bottom: 35px;
-}
-
-.wrap, #submitAss, #viewAss, #newassignment, #error {
-  width: 70%;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  margin-bottom: 50px;
-  max-width: 1020px;
-}
-
-#error {
-  flex-direction: column;
-}
-#error .preWrap {
-  background: #c4c4c4ff;
-  border-radius: 0.5em;
-  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
-  padding-bottom: 0.6em;
-}
-#error .preWrap pre {
-  overflow-x: scroll;
-  padding: 1em;
-  padding-bottom: 0.5em;
-  color: #7e7f83ff;
-}
-#error .preWrap pre::-webkit-scrollbar {
-  width: 0.75em;
-  height: 0.75em;
-}
-#error .preWrap pre::-webkit-scrollbar-thumb {
-  background-color: #888890ff;
-  border-radius: 10em;
-  margin: 2em;
-}
-#error .preWrap pre::-webkit-scrollbar-thumb:hover {
-  background-color: #7e7f83ff;
-}
-#error .preWrap pre::-webkit-scrollbar-button {
-  background: transparent;
-  width: 1em;
-}
-#error .preWrap pre span.highlight {
-  color: #14110fff;
 }
 
 #newassignment div#details {
