@@ -27,7 +27,7 @@
     
     <div class="marksTable">
         <span class="tHead">
-            <h3 class="frontHead frontCell"></h3><!--EMPTY CELL-->
+            <h3 class="frontHead frontCell">STUDENTS</h3><!--EMPTY CELL-->
             <h3>1.1</h3>
             <h3>1.10</h3>
             <h3>1.11</h3>
@@ -41,7 +41,7 @@
             <h3>1.19</h3>
         </span>
 
-        <!-- TEMPLATE FOR INFORMATION
+        <!-- TEMPLATE FOR INFORMATION -->
         <span class="sRow">
             <p class="frontCell">z5260786</p>
             <p>X.X</p>
@@ -55,7 +55,7 @@
             <p>1.17</p>
             <p>1.18</p>
             <p>1.19</p>
-        </span> -->
+        </span>
     </div>
 </div>
 
