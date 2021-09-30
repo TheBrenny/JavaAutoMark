@@ -34,7 +34,8 @@ module.exports.handler = ((err, req, res, next) => {
         "html": () => {
             if(!!e.stack) {
                 e.stack = e.stack.split("\n").map((line, i) => {
-                    if(i === 0 || line.indexOf("node_modules") === -1) line = `<span class="highlight">${line}</span>`;
+                    let isNodeInternal = line.indexOf("node_modules") !== -1 || line.indexOf("internal/") !== -1 || line.indexOf("node:internal") !== -1;
+                    if(i === 0 || !isNodeInternal) line = `<span class="highlight">${line}</span>`;
                     return line;
                 }).join("\n");
             }
