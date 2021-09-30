@@ -12,6 +12,9 @@ const path = require("path");
 const fs = require("fs");
 const stream = require("stream");
 const java = require('../jenv/java');
+const generateJavaCode = require("../assets/js/generateJavaCode");
+const ErrorGeneric = require('./errors/generic');
+const devNull = process.platform === "win32" ? "\\\\.\\nul" : "/dev/null";
 
 // This sets up the page title
 router.use("/assignments/*", (req, res, next) => {
@@ -34,36 +37,17 @@ router.get("/assignments/view", async (req, res) => {
     });
 });
 
-router.get("/assignments/create", async (req, res) => {
-    let courses = await Database.courses.getAllCourses();
-    courses = Database.courses.toObject(courses);
+// ==================== Deprecated in favour of GET /assignments/submit
+// router.get("/assignments/marked", async (req, res) => {
+//     let courses = await Database.courses.getAllCourses();
+//     courses = Database.courses.toObject(courses);
 
-    res.render("assignments/create", {
-        courses: courses,
-        assign: "{}",
-        isCreate: true,
-    });
-});
-
-router.get("/assignments/marked", async (req, res) => {
-    let courses = await Database.courses.getAllCourses();
-    courses = Database.courses.toObject(courses);
-
-    res.render("assignments/marked", {
-        courses: courses,
-        assign: "{}",
-        isCreate: true,
-    });
-});
-
-router.get("/assignments/submit/:id", async (req, res) => {
-    let assignment = await Database.assignments.getAssignment(req.params.id);
-    assignment = Database.assignments.toObject(assignment, CourseModel);
-
-    res.render("assignments/submit", {
-        assignment,
-    });
-});
+//     res.render("assignments/marked", {
+//         courses: courses,
+//         assign: "{}",
+//         isCreate: true,
+//     });
+// });
 
 const multerStore = path.resolve(__dirname, "..", "jenv", "context");
 const multerStoreEngine = multer.diskStorage({
@@ -87,6 +71,14 @@ const multerStoreEngine = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(null, path.basename(file.originalname));
     }
+});
+router.get("/assignments/submit/:id", async (req, res) => {
+    let assignment = await Database.assignments.getAssignment(req.params.id);
+    assignment = Database.assignments.toObject(assignment, CourseModel);
+
+    res.render("assignments/submit", {
+        assignment,
+    });
 });
 router.put("/assignments/submit/:id", async (req, res, next) => {
     // MAKE SURE WE'RE NOT CURRENTLY PROCESSING - OTHERWISE RACES WILL OCCUR!
@@ -143,46 +135,44 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     });
 });
 
-router.post("/assignments/create", async (req, res) => {
-    let assignment = req.body;
+router.get("/assignments/create", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
 
-    assignment.javaName = assignment.javaName ?? assignment.name.replace(/\s/g, "_");
-
-    let code = generateJavaCode(assignment);
-    let path = assignment.class + "/" + assignment.name;
-
-    let id;
-    try {
-        id = (await Database.assignments.addAssignment(assignment.name, assignment.class, path)).affectedID;
-        Object.assign(assignment, {
-            id: id
-        });
-        await storage.putObject(storage.container, path + ".java", code);
-        await storage.putObject(storage.container, path + ".json", JSON.stringify(assignment, undefined, config.env.isDev ? 2 : undefined));
-    } catch(e) {
-        err = e;
-        throw errors[500].fromReq(req, e.message);
-    }
-
-    res.setHeader("Location", "/assignments/edit/" + id);
-    res.status(201).end();
+    res.render("assignments/create", {
+        courses: courses,
+        assign: "{}",
+        isCreate: true,
+    });
 });
-
 router.get("/assignments/edit/:id", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
 
-    let assPath = Database.assignments.toObject(await Database.assignments.getAssignment(req.params.id)).code_location;
+    let ass = await Database.assignments.getAssignment(req.params.id);
+    if(ass === null || ass === undefined) throw errors.notFound.fromReq(req);
+    let assPath = Database.assignments.toObject(ass).code_location;
     let assJsonStream = await storage.getObject(storage.container, assPath + ".json");
-    
+
     let chunks = [];
     assJsonStream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
     assJsonStream.on("end", () => {
         chunks = Buffer.concat(chunks);
         chunks = chunks.toString("utf-8");
         chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
+
+
+
+
+
         // TODO: FIGURE OUT WHY GCS DECIDED TO DO US DIRTY, AND WHY LOCAL STORAGE DIDN"T?!
-        
+
+
+
+
+
+
+
         res.render("assignments/create", {
             courses: courses,
             assign: chunks,
@@ -190,77 +180,95 @@ router.get("/assignments/edit/:id", async (req, res) => {
         });
     });
 });
-
-router.put("/assignments/edit/:id", async (req, res) => {
-    let id = req.params.id;
-    let assignment = req.body;
-
-    assignment.javaName = assignment.javaName ?? assignment.name.replace(/\s/g, "_");
-
-    let code = generateJavaCode(assignment);
-    let path = assignment.class + "/" + assignment.name;
-    let err = null;
-
-    try {
-        // TODO: delete the old code if name or class has changed!
-        await Database.assignments.updateAssignment(id, {
-            assignment_name: assignment.name,
-            course_uuid: assignment.class,
-            code_location: path
+router.post("/assignments/create", async (req, res) => {
+    let save = await saveAssignment(req, res, req.body);
+    if(!!save.id && !save.err) {
+        res.status(201).json({
+            success: true,
+            id: save.id,
+            redirect: "/assignments/edit/" + save.id,
+            message: "Assignment created successfully!"
         });
-        Object.assign(assignment, {
-            id: id
+    } else {
+        res.status(save.err?.code ?? 500).json({
+            success: false,
+            id: save.id || null,
+            message: save.err?.message ?? "Something went wrong!"
         });
-        await storage.putObject(storage.container, path + ".java", code);
-        await storage.putObject(storage.container, path + ".json", JSON.stringify(assignment, undefined, config.env.isDev ? 2 : undefined));
-    } catch(e) {
-        err = e;
-        throw errors[500].fromReq(req, e.message);
     }
-
-    res.status(200).json({
-        success: !err,
-        message: !!err ? err.message : "Assignment updated successfully!"
+});
+router.put("/assignments/edit/:id", async (req, res) => {
+    let save = await saveAssignment(req, res, req.body, req.params.id);
+    if(!!save.err) {
+        save.err.code = save.err.code ?? 500;
+        save.err.message = save.err.message ?? "Something went wrong!";
+    }
+    res.status(save.err?.code ?? 200).json({
+        success: !save.err,
+        id: save.id,
+        message: save.err?.message ?? "Assignment updated successfully!"
     });
 });
 
-// TODO: it would be cool if this could be exported and reused client side so
-//       the client can get a live preview of what the resulting code looks like
-function generateJavaCode(assignment) {
-    let code = `public class ${assignment.javaName} {\n`;
+async function saveAssignment(req, res, assignment, assignmentID) {
+    if(!!assignment.id) assignmentID = assignment.id;
+    if(assignmentID === undefined || assignmentID === null) {
+        // get a new assignment id, try save then refresh page.
+        // if there's an error, then send the id back, the client
+        //     will make sure subsequent requests have the same id.
+        assignmentID = (await Database.assignments.addAssignment(assignment.name, assignment.class, devNull)).affectedID;
+        // TODO: If something bounces we need to run a cron job to remove all assignments tied to devNull
+    } else {
+        // Delete the old assignment files
+        oldAssignment = (await Database.assignments.getAssignment(assignmentID)).assignments_code_location;
+        // oldAssignment = oldAssignment === devNull ? {} : JSON.parse(await storage.getObject(storage.container, oldAssignment + ".json"));
 
-    // for loop for all tasks in the assignment
-    let main = "public static void main(String[] args) {\n";
-    for(let i = 0; i < assignment.tasks.length; i++) {
-        main += `task${i + 1}();\n`;
-        code += `public static void task${i + 1}() {\n`;
-
-        for(let j = 0; j < assignment.tasks[i].tests.length; j++) {
-            let insertCode = assignment.tasks[i].tests[j].code;
-            insertCode = insertCode.replace(/\r\n/gm, "\n").trim(); // strip crlf to just lf
-
-            if(assignment.tasks[i].tests[j].testID !== undefined) {
-                insertCode.replace(/;$/gm, ""); // strip trailing semicolon
-                code += `System.out.println(${insertCode});\n`;
-                code += `System.out.println(((Object) ${insertCode}).equals(${assignment.tasks[i].tests[j].expected}));\n`; // Object casting is needed to compare primitives
-            } else {
-                code += `${insertCode}\n`;
-            }
-
-            Object.assign(assignment.tasks[i].tests[j], {
-                code: insertCode // save the sanitised code back
-            });
+        if(oldAssignment !== null && oldAssignment !== undefined && oldAssignment !== devNull) {
+            try {
+                await Promise.all([
+                    storage.deleteObject(storage.container, oldAssignment + ".json"),
+                    storage.deleteObject(storage.container, oldAssignment + ".java"),
+                ]).catch(() => {});
+            } catch(e) {}
+            // suppress errors
         }
-
-        code += `}\n`;
     }
 
-    main += "}\n";
-    code += main;
+    // Quick sanitisation so we don't break anything on the fs
+    if(isNaN(assignmentID)) throw errors.badRequest.fromReq(req, "Invalid assignment ID: " + assignmentID);
 
-    code += `}\n`;
+    assignment.id = assignmentID;
+    const filename = `Assignment${assignmentID}`;
+    let err = null;
 
-    return code;
+    try {
+        let code = generateJavaCode(assignment, assignmentID);
+        let filesPath = assignment.class + path.sep + filename;
+
+        let ret = await Database.assignments.updateAssignment(assignmentID, {
+            assignment_name: assignment.name,
+            course_uuid: assignment.class,
+            code_location: filesPath
+        });
+
+        // Something happened and the db coundn't update!
+        if(!ret) throw errors[e.code ?? 500].fromReq(req, e.message);
+
+        await Promise.all([
+            storage.putObject(storage.container, filesPath + ".json", JSON.stringify(assignment, undefined, config.env.isDev ? 2 : undefined)),
+            storage.putObject(storage.container, filesPath + ".java", code),
+        ]).catch((e) => {
+            throw errors[500].fromReq(req, e.message);
+        });
+    } catch(e) {
+        err = e;
+        if(!(e instanceof ErrorGeneric)) Object.assign(err, errors[e.code ?? 500].fromReq(req, e.message));
+    }
+
+    return {
+        id: assignmentID,
+        err: err,
+    };
 }
 
 module.exports = router;

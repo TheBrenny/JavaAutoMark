@@ -171,7 +171,12 @@ function deleteItem(task, target) {
     }
 }
 
-function saveAssignment(editID) {
+let savedID = null;
+let saving = false;
+function saveAssignment() {
+    if(saving) return;
+    saving = true;
+
     let assignment = $("#newassignment");
 
     let assignmentName = assignment.$("#assName").value;
@@ -182,6 +187,7 @@ function saveAssignment(editID) {
         class: assignmentClass,
         tasks: []
     };
+    if(savedID !== null) assignmentDetails.id = savedID;
 
     let tasks = assignment.$$(".task");
 
@@ -212,35 +218,34 @@ function saveAssignment(editID) {
         assignmentDetails.tasks.push(taskDetails);
     }
 
-    let url = !!editID ? "edit/" + editID : "create";
-    let method = !!editID ? "PUT" : "POST";
+    let url = window.location.pathname;
+    let method = !!url.includes("edit") ? "PUT" : "POST";
 
-    return fetch("/assignments/" + url, {
+    return fetch(url, {
         method: method,
         body: JSON.stringify(assignmentDetails),
         headers: {
             "Content-Type": "application/json"
         }
     }).then(async r => {
-        if(r.status === 201) {
-            return r.headers.get("Location");
-        } else if(r.status === 200) {
-            return await r.json();
+        let json = await r.json();
+        if(r.status >= 200 && r.status < 300 && json.success === true) {
+            return json;
         } else {
-            throw await r.json();
+            throw json;
         }
     }).then((response) => {
-        if(typeof response === "string") { // we have a location
-            notifier.notify("Saved successfully. Redirecting...", "success");
-            window.location = response;
-        } else if(typeof response === "object") { // we have a JSON object
+        if(typeof response === "object") { // we have a JSON object
+            if(response.id) savedID = response.id;
             console.log(response);
-            notifier.notify(response.message, response.type || "success");
-        } else {
-            throw response;
+            notifier.notify(response.message, response.type ?? response.success ? "success" : "info");
+            if(response.redirect) setTimeout(() => window.location.href = response.redirect, 1000);
         }
     }).catch(e => {
+        if(e.id) savedID = e.id;
         console.error(e);
-        notifier.notify("Error: " + e.message, "error");
+        notifier.notify(`${e.name ?? "Error"}: ${e.message}`, "error");
+    }).finally(() => {
+        saving = false;
     });
 }
