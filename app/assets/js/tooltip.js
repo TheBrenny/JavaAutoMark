@@ -7,8 +7,6 @@ onReady(() => {
         candidates: Array.from($$("*[tooltip]")),
         show(message, element) {
             tooltip.target = element;
-            element.addEventListener("mouseleave", tooltip.hide, {once: true, capture: false});
-
             tooltip.element.style.left = `${tooltip.location.x}px`;
             tooltip.element.style.top = `${tooltip.location.y}px`;
             tooltip.element.message.innerText = message.replace(/\\n/g, "\n");
@@ -55,6 +53,11 @@ onReady(() => {
             },
         }
     };
+    tooltip.candidates.forEach(candidate => {
+        candidate.addEventListener("mouseleave", () => {
+            if(tooltip.target === candidate) tooltip.hide();
+        }, {capture: false});
+    });
     tooltip.element.message = tooltip.element.$(".message");
     globalThis.tooltip = tooltip;
     globalThis.tooltip.animator.start();
