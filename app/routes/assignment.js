@@ -117,7 +117,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     });
     // inboundFiles is now an array of functions that return promises
 
-    // TODO: Create a web socket to send the marks for assignments.
+    // FIXME: Create a web socket to send the marks for assignments.
 
     let responses = [];
     while(inboundFiles.length) {
@@ -165,7 +165,9 @@ router.get("/assignments/edit/:id", async (req, res) => {
 
 
 
-        // TODO: FIGURE OUT WHY GCS DECIDED TO DO US DIRTY, AND WHY LOCAL STORAGE DIDN"T?!
+
+
+        // FIXME: FIGURE OUT WHY GCS DECIDED TO DO US DIRTY, AND WHY LOCAL STORAGE DIDN"T?!
 
 
 

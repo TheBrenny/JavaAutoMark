@@ -34,7 +34,7 @@ module.exports = (async function createDB() {
     return global.db;
 })();
 
-// TODO: When the DB connection closes, we might need to find a way to attepmt to reconnect
+// BUG: When the DB connection closes, we might need to find a way to attepmt to reconnect
 let dbOps = ["query", "end", "execute"];
 dbOps.forEach(op => {
     global.db[op] = module.exports[op] = async function () {

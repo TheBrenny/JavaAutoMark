@@ -24,11 +24,12 @@ const concurrentUploads = 7;
 
     if(!allowedToUpload) {
         form.classList.add("disabled");
-        //TODO: Make some visual flair indication that the user has something wrong.
         return;
     }
 
-    form.classList.add('enabled'); // TODO: change this class to "dropEnabled"
+    form.classList.add('enabled');
+    const dragAndDrop = "draggable" in document.createElement("div");
+    if(dragAndDrop) form.classList.add("dragEnabled");
 
     let events = ["drag", "dragstart", "dragend", "dragover", "dragenter", "dragleave", "drop"];
     form.addEventListener(events, (e) => {
@@ -39,12 +40,12 @@ const concurrentUploads = 7;
     form.addEventListener('dragenter', (e) => drag(true));
     form.addEventListener('dragleave', (e) => drag(false));
     form.addEventListener('dragend', (e) => drag(false));
-    form.addEventListener('drop', async (e) => {
+    form.addEventListener(['drop', 'change'], async (e) => {
         drag(false);
         form.classList.remove('isError');
         form.classList.remove('isSuccess');
 
-        // TODO: Show the student code as a tree in the file upload space!
+        // MAYBE: Show the student code as a tree in the file upload space!
         return Promise.resolve(e.dataTransfer)
             .then(async (dt) => {
                 let files;
@@ -142,7 +143,6 @@ const concurrentUploads = 7;
         progressBar.max = 1;
     }
     function updateProgressBar(e) {
-        // TODO: if e.loaded === e.total then try make it look like a waiting bar
         progressBar.value = e.loaded;
         progressBar.max = e.total;
 
