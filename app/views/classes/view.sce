@@ -7,8 +7,8 @@
         <span class="tHead">
             <p class="id">ID</p>
             <p class="name">Name</p>
-            <p class="code">Code</p>
-            <p class="opt">Options</p>
+            <p class="code">Year</p>
+            <p class="opt">Actions</p>
         </span>
 
         [[?= courses == null]]
@@ -19,8 +19,8 @@
             [[e= course in courses ]]
             <span class="tRow">
                 <p class="id">[[course.course_id]]</p>
-                <p class="name">[[course.couse_name]]</p>
-                <p class="code">[[course.course_code]]</p>
+                <p class="name">[[course.course_name]]</p>
+                <p class="code">[[course.running_year]]</p>
                 <p class="opt btns">
                     <button>View</button>
                     <button class="red">Delete</button>
