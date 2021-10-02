@@ -1,0 +1,83 @@
+#viewCourse {
+    @extend .wrap;
+
+    display: flex;
+    flex-flow: column;
+
+    max-height: 850px;
+    
+    div.table {
+        .id {
+            width: 10%;
+        }
+
+        .name {
+            width: 40%;
+        }
+
+        .code {
+            width: 20%;
+        }
+        
+        .opt {
+            width: 20%;
+            
+
+        }
+
+        .btns {
+            flex-direction: column;
+
+            button {
+                width: 100%;
+                margin: 10px;
+            }
+        }
+    }
+}
+
+#createCourse {
+    width: 400px;
+    background-color: $cultured;
+    display: flex;
+    @include content-font();
+    color: $gray-web;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0 5px 10px black;
+    border-radius: 10px;
+    font-family: "Roboto", sans-serif;
+
+    > * {
+        flex-grow: 1;
+    }
+
+    input[type="text"] {
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid $gray-web;
+        margin-top: 20px;
+        border-color: #8f8f8f;
+        color: $jet;
+        @include content-font();
+        letter-spacing: 1px;
+        font-style: normal;
+    }
+
+    input[type="submit"] {
+        align-self: center;
+    }
+
+    label[for="pass"] {
+        color: $gray-web;
+        margin-left: 10px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    h3 {
+        font-weight: 400;
+        margin-left: 10px;
+    }
+}

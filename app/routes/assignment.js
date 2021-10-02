@@ -37,6 +37,16 @@ router.get("/assignments/view", async (req, res) => {
     });
 });
 
+router.get("/classes/view", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+    let assignments = Database.assignments.toObject(await Database.assignments.getAllAssignments(), CourseModel);
+    
+    res.render("classes/view", {
+        courses: courses
+    });
+});
+    
 // ==================== Deprecated in favour of GET /assignments/submit
 // router.get("/assignments/marked", async (req, res) => {
 //     let courses = await Database.courses.getAllCourses();
@@ -145,6 +155,18 @@ router.get("/assignments/create", async (req, res) => {
         isCreate: true,
     });
 });
+
+router.get("/classes/create", async (req, res) => {
+    let courses = await Database.courses.getAllCourses();
+    courses = Database.courses.toObject(courses);
+
+    res.render("classes/create", {
+        courses: courses,
+        assign: "{}",
+        isCreate: true,
+    });
+});
+
 router.get("/assignments/edit/:id", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);

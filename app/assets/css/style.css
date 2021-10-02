@@ -129,7 +129,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #submitAss, #viewAss, #newassignment, #error {
+.wrap, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -317,6 +317,16 @@ button.blue:hover,
 input[type=button].blue:hover,
 input[type=submit].blue:hover {
   background-color: #3559a7ff !important;
+}
+button.red,
+input[type=button].red,
+input[type=submit].red {
+  background-color: #fe6448ff;
+}
+button.red:hover,
+input[type=button].red:hover,
+input[type=submit].red:hover {
+  background-color: #f42601ff !important;
 }
 button.strong,
 input[type=button].strong,
@@ -1037,5 +1047,75 @@ div.table .tRow p:not(:last-child) {
 }
 #submitAss .markedInput + .table {
   display: flex !important;
+}
+
+#viewCourse {
+  display: flex;
+  flex-flow: column;
+  max-height: 850px;
+}
+#viewCourse div.table .id {
+  width: 10%;
+}
+#viewCourse div.table .name {
+  width: 40%;
+}
+#viewCourse div.table .code {
+  width: 20%;
+}
+#viewCourse div.table .opt {
+  width: 20%;
+}
+#viewCourse div.table .btns {
+  flex-direction: column;
+}
+#viewCourse div.table .btns button {
+  width: 100%;
+  margin: 10px;
+}
+
+#createCourse {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #7e7f83ff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#createCourse > * {
+  flex-grow: 1;
+}
+#createCourse input[type=text] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin-top: 20px;
+  border-color: #8f8f8f;
+  color: #34312dff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+#createCourse input[type=submit] {
+  align-self: center;
+}
+#createCourse label[for=pass] {
+  color: #7e7f83ff;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#createCourse h3 {
+  font-weight: 400;
+  margin-left: 10px;
 }
 /*# sourceMappingURL=style.css.map */

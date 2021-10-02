@@ -36,11 +36,9 @@ router.get("/user", (req, res) => {
 });
 
 router.get("/teachers/view", async (req, res) => {
-    throw errors.notImplemented.fromReq(req);
-
     let teachers = await Database.teachers.getAllTeachers();
     teachers = Database.teachers.toObject(teachers);
-    res.render("allteachers", {
+    res.render("teachers/view", {
         teachers: teachers,
     });
 });

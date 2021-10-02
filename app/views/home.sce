@@ -19,13 +19,13 @@
     </div>
     <vr></vr>
     <div class="column" id="classCon">
-        <button id="viewClass" class="tile " href="/">
+        <button id="viewClass" class="tile " href="/classes/view">
             <div class="faWrap">
                 <i class="fas fa-chalkboard fa-6x"></i>
             </div>
             <h2>View Class</h2>
         </button>
-        <button id="newClass" class="tile " href="/">
+        <button id="newClass" class="tile " href="/classes/create">
             <!-- Using 3x here instead of 6x is because fa doubles the size anyway! -->
             <div class="faWrap">
                 <i class="fa-stack fa-3x">
