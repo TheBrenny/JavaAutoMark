@@ -7,7 +7,7 @@
         <span class="tHead">
             <p class="id">ID</p>
             <p class="name">Name</p>
-            <p class="code">Year</p>
+            <p class="year">Year</p>
             <p class="opt">Actions</p>
         </span>
 
@@ -20,7 +20,7 @@
             <span class="tRow">
                 <p class="id">[[course.course_id]]</p>
                 <p class="name">[[course.course_name]]</p>
-                <p class="code">[[course.running_year]]</p>
+                <p class="year">[[course.running_year]]</p>
                 <p class="opt btns">
                     <button>View</button>
                     <button class="red">Delete</button>
@@ -31,7 +31,7 @@
     </div>
 
     <button href="create">
-        New Class
+        New Course
     </button>
 </div>
 
