@@ -67,6 +67,7 @@
 
     app.listen(serverInfo.port, serverInfo.host, () => {
         if(config.browsersyncActive) serverInfo.port = 81;
+        console.log(`Storage provider: ${storage.provider}`);
         console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
     });
 })().catch(err => {
