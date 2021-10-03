@@ -1060,7 +1060,7 @@ div.table .tRow p:not(:last-child) {
 #viewCourse div.table .name {
   width: 40%;
 }
-#viewCourse div.table .code {
+#viewCourse div.table .year {
   width: 20%;
 }
 #viewCourse div.table .opt {
