@@ -16,7 +16,7 @@
             ],
             "type": "pwa-node",
             "console": "integratedTerminal",
-            "preLaunchTask": "startMysql",
+            // "preLaunchTask": "startMysql",
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
@@ -42,7 +42,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "preLaunchTask": "startMysql",
+            // "preLaunchTask": "startMysql",
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
