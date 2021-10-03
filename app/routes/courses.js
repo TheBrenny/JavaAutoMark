@@ -5,10 +5,6 @@ const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
 
-router.get("/courses/view/:id", async (req, res) => {
-    throw errors[501].fromReq(req);
-});
-
 router.get("/courses/edit/:id", async (req, res) => {
     throw errors[501].fromReq(req);
 });
@@ -39,6 +35,15 @@ router.get("/courses/view", async (req, res) => {
     
     res.render("courses/view", {
         courses: courses
+    });
+});
+
+router.get("/courses/ind/:id", async (req, res) => {
+    let course = await Database.courses.getCourse(req.params.id);
+    course = Database.courses.toObject(course);
+
+    res.render("courses/ind", {
+        course,
     });
 });
 

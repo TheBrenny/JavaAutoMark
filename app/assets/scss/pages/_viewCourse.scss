@@ -4,7 +4,7 @@
     display: flex;
     flex-flow: column;
 
-    max-height: 850px;
+    max-height: 750px;
     
     div.table {
         .id {
@@ -80,4 +80,8 @@
         font-weight: 400;
         margin-left: 10px;
     }
+}
+
+.indCourse {
+    @extend .block;
 }

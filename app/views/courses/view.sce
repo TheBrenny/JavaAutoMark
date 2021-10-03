@@ -22,7 +22,7 @@
                 <p class="name">[[course.course_name]]</p>
                 <p class="year">[[course.running_year]]</p>
                 <p class="opt btns">
-                    <button>View</button>
+                    <button href="/courses/ind/[[course.uuid]]">View</button>
                     <button class="red">Delete</button>
                 </p>
             </span>
