@@ -842,7 +842,7 @@ div.table .tRow p:not(:last-child) {
   width: 200px;
   height: 200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   background-color: #f3f3f4ff;
@@ -853,8 +853,8 @@ div.table .tRow p:not(:last-child) {
   transform: scale(1);
   transition: 0.3s ease transform;
 }
-#adminContainer .column .tile h1 {
-  padding-top: 0.5em;
+#adminContainer .column .tile h2 {
+  margin: 0px 1px;
 }
 #adminContainer .column .tile:hover:not(:disabled) {
   color: initial;

@@ -6,7 +6,7 @@
             width: 200px;
             height: 200px;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             align-content: center;
             background-color: $cultured;
@@ -17,8 +17,9 @@
             transform: scale(1);
             transition: ease(transform);
 
-            h1 {
-                padding-top: 0.5em;
+            h2 {
+                // This is needed so "New Course" can wrap
+                margin: 0px 1px;
             }
 
             &:hover:not(:disabled) {
