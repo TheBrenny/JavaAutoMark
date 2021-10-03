@@ -224,7 +224,7 @@ async function saveAssignment(req, res, assignment, assignmentID) {
         // get a new assignment id, try save then refresh page.
         // if there's an error, then send the id back, the client
         //     will make sure subsequent requests have the same id.
-        assignmentID = (await Database.assignments.addAssignment(assignment.name, assignment.class, devNull)).affectedID;
+        assignmentID = (await Database.assignments.addAssignment(assignment.name, assignment.course, devNull)).affectedID;
         // TODO: If something bounces we need to run a cron job to remove all assignments tied to devNull
     } else {
         // Delete the old assignment files
@@ -251,11 +251,11 @@ async function saveAssignment(req, res, assignment, assignmentID) {
 
     try {
         let code = generateJavaCode(assignment, assignmentID);
-        let filesPath = assignment.class + path.sep + filename;
+        let filesPath = assignment.course + path.sep + filename;
 
         let ret = await Database.assignments.updateAssignment(assignmentID, {
             assignment_name: assignment.name,
-            course_uuid: assignment.class,
+            course_uuid: assignment.course,
             code_location: filesPath
         });
 

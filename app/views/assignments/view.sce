@@ -6,7 +6,7 @@
     <div id="head">
         <h1>Assignments</h1>
 
-        <select id="class" name="class">
+        <select id="course" name="course">
             <option>
                 All courses
             </option>

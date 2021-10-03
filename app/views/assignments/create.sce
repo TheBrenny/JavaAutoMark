@@ -9,10 +9,10 @@
             <input type="text" name="assName" id="assName" [[?=!!assignObj.name ]] value="[[assignObj.name]]" [[?==]] />
         </span>
         <span>
-            <label for="class">Choose class:</label>
-            <select id="class" name="class">
+            <label for="course">Choose course:</label>
+            <select id="course" name="course">
                 [[e= course in courses ]]
-                <option [[?=course.uuid==assignObj.class ]] selected [[?==]] value="[[course.uuid]]">
+                <option [[?=course.uuid==assignObj.course ]] selected [[?==]] value="[[course.uuid]]">
                     [[course.course_name]] - [[course.running_year]]
                 </option>
                 [[?==]]

@@ -180,11 +180,11 @@ function saveAssignment() {
     let assignment = $("#newassignment");
 
     let assignmentName = assignment.$("#assName").value;
-    let assignmentClass = assignment.$("#class").value;
+    let assignmentCourse = assignment.$("#course").value;
 
     let assignmentDetails = {
         name: assignmentName,
-        class: assignmentClass,
+        course: assignmentCourse,
         tasks: []
     };
     if(savedID !== null) assignmentDetails.id = savedID;

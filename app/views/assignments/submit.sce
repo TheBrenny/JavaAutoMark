@@ -5,7 +5,7 @@
 <div id="submitAss">
     <div class="block details">
         <h1 class="title">[[assignment.assignment_name]]</h1>
-        <h1 class="class">[[assignment.joins.courses.course_name]] // [[assignment.joins.courses.running_year]]</h1>
+        <h1 class="course">[[assignment.joins.courses.course_name]] // [[assignment.joins.courses.running_year]]</h1>
     </div>
 
     <div class="metaAss">
