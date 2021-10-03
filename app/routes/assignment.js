@@ -41,7 +41,7 @@ router.get("/assignments/view", async (req, res) => {
         assignments
     });
 });
-    
+
 // ==================== Deprecated in favour of GET /assignments/submit
 // router.get("/assignments/marked", async (req, res) => {
 //     let courses = await Database.courses.getAllCourses();
@@ -165,26 +165,23 @@ router.get("/assignments/edit/:id", async (req, res) => {
     assJsonStream.on("end", () => {
         chunks = Buffer.concat(chunks);
         chunks = chunks.toString("utf-8");
-        chunks = chunks.replace(/\\/gm, "\\\\"); // escape backslashes
+        chunks = JSON.parse(chunks);
 
-
-
-
-
-
-
-        // FIXME: FIGURE OUT WHY GCS DECIDED TO DO US DIRTY, AND WHY LOCAL STORAGE DIDN"T?!
-
-
-
-
-
-
+        // BUG: Using single quotes in the test->expected will cause the attribute to close early, and therefore not actually show the content!
+        // I've come to the sad realisation that we need to encode any textcontent that we get and decode what we send.
+        // I don't know if this is somethig that's a problem across all templating engines, though.
+        // Ultimately, we need to make a plan on **where** to encode/decode special chars.
+        // See implementation: https://stackoverflow.com/a/4835406/2238442
 
         res.render("assignments/create", {
             courses: courses,
-            assign: chunks,
-            assignObj: JSON.parse(chunks)
+            assign: JSON.stringify(chunks, (key, value) => {
+                if(typeof value === "string") {
+                    return value.replace(/\n/g, "\\n").replace(/\"/g, '\\"');
+                }
+                return value;
+            }),
+            assignObj: chunks
         });
     });
 });
