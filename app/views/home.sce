@@ -18,14 +18,14 @@
         </button>
     </div>
     <vr></vr>
-    <div class="column" id="classCon">
-        <button id="viewClass" class="tile " href="/courses/view">
+    <div class="column" id="courseCon">
+        <button id="viewCourse" class="tile " href="/courses/view">
             <div class="faWrap">
                 <i class="fas fa-chalkboard fa-6x"></i>
             </div>
-            <h2>View Class</h2>
+            <h2>View Course</h2>
         </button>
-        <button id="newClass" class="tile " href="/courses/create">
+        <button id="newCourse" class="tile " href="/courses/create">
             <!-- Using 3x here instead of 6x is because fa doubles the size anyway! -->
             <div class="faWrap">
                 <i class="fa-stack fa-3x">
@@ -33,7 +33,7 @@
                     <i class="fas fa-stack-1x fa-plus"></i>
                 </i>
             </div>
-            <h2>New Class</h2>
+            <h2>New Course</h2>
         </button>
     </div>
     <vr></vr>
