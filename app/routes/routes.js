@@ -4,7 +4,7 @@ const router = require("express").Router();
 router.use(require("./public"));
 router.use(require("./teachers"));
 router.use(require("./assignment"));
-router.use(require("./classes"));
+router.use(require("./courses"));
 router.use(require("./fileManager"));
 router.use(require("./admin"));
 

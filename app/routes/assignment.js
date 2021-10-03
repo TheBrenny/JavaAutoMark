@@ -16,36 +16,6 @@ const generateJavaCode = require("../assets/js/generateJavaCode");
 const ErrorGeneric = require('./errors/generic');
 const devNull = process.platform === "win32" ? "\\\\.\\nul" : "/dev/null";
 
-/* **************************** */
-/*      PAGES FOR COURSES       */
-/* **************************** */
-
-router.use("/courses/*", (req, res, next) => {
-    res.locals.pageTitle = "Courses";
-    next();
-});
-
-router.get("/classes/create", async (req, res) => {
-    let courses = await Database.courses.getAllCourses();
-    courses = Database.courses.toObject(courses);
-
-    res.render("classes/create", {
-        courses: courses,
-        assign: "{}",
-        isCreate: true,
-    });
-});
-
-router.get("/classes/view", async (req, res) => {
-    let courses = await Database.courses.getAllCourses();
-    courses = Database.courses.toObject(courses);
-    let assignments = Database.assignments.toObject(await Database.assignments.getAllAssignments(), CourseModel);
-    
-    res.render("classes/view", {
-        courses: courses
-    });
-});
-
 
 /* ******************************** */
 /*      PAGES FOR ASSIGNMENTS       */
