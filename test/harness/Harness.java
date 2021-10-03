@@ -14,7 +14,7 @@ public class Harness {
 
         Class<?> assignment = Harness.class.getClassLoader().loadClass("Assignment");
 
-        Method[] tasks = .getMethods();
+        Method[] tasks = meme.getMethods();
 
     }
 }
