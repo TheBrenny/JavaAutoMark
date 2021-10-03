@@ -143,9 +143,11 @@ gulp.task('updateicon', function (done) {
 
 gulp.task("sass", function () {
     return gulp.src("app/assets/scss/**/*.scss")
-        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init({largeFile: true}))
         .pipe(sass().on("error", sass.logError))
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.', {
+            destPath: './app/assets/css',
+        }))
         .pipe(gulp.dest("app/assets/css/"));
 });
 
