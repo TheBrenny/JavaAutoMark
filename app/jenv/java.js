@@ -13,9 +13,9 @@ function basename(target, ...exts) {
 }
 
 function spawn(command, args) {
-    console.log(java + " [\"" + args.join("\" \"") + "\"]");
+    // console.log(command + " [\"" + args.join("\" \"") + "\"]");
 
-    const proc = cpSpawn(java, args);
+    const proc = cpSpawn(command, args);
     return proc;
 }
 
