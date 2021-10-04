@@ -45,13 +45,22 @@
         let addTaskBtn = $('#addTask');
         addTaskBtn.addEventListener("click", () => addTask());
         addTaskBtn.disabled = false;
-        let subAssignmentBtn = $('#subAssignment');
-        subAssignmentBtn?.addEventListener("click", () => saveAssignment());
-        subAssignmentBtn && (subAssignmentBtn.disabled = false);
-        let updateAssignmentBtn = $('#updateAssignment');
-        updateAssignmentBtn?.addEventListener("click", () => saveAssignment("[[assign.id]]"));
-        updateAssignmentBtn && (updateAssignmentBtn.disabled = false);
 
+        let saveAction = saveAssignment;
+        // [[?= assign.id]]
+        saveAction = saveAssignment.bind(this, "[[assign.id]]");
+        // [[?==]]
+        
+        let saveButton = $('#subAssignment, #updateAssignment');
+        saveButton?.addEventListener("click", () => saveAction());
+        saveButton && (saveButton.disabled = false);
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "s" && e.ctrlKey) {
+                e.preventDefault();
+                saveAction();
+            }
+        });
     });
 </script>
 

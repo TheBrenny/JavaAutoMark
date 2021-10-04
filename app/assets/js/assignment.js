@@ -28,7 +28,8 @@ function addTask(items) {
     if(items === undefined) addInstruction(taskNum);
     else if(Array.isArray(items)) {
         items.forEach(item => {
-            if(item.testID !== undefined) addTest(task, item);
+            if(item.isException ?? false) addException(task, item);
+            else if(item.testID !== undefined) addTest(task, item);
             else addInstruction(task, item);
         });
     } else {
@@ -52,7 +53,7 @@ function addInstruction(task, defaults) {
 
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
-        code: `// This is valid Java code!\n// Don't forget your semicolons!`
+        code: `// This is valid Java code!\n// Use semicolons!\n`
     }, defaults || {});
 
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, defaults);
@@ -93,7 +94,7 @@ function addException(task, defaults) {
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
         testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
-        code: `//This is an expression for a try/catch statement! Don't use semicolons`,
+        code: `// This is the body for a try/catch statement!\n// Use semicolons!\n`,
         expected: ``,
         description: ``,
         marks: 1
@@ -208,7 +209,8 @@ function saveAssignment() {
                     expected: item.$(`input[name="expectedOutput"]`).value,
                     description: item.$(`input[name="description"]`).value,
                     marks: parseInt(item.$(`input[name="marks"]`).value),
-                    testID: parseInt(item.dataset.testid)
+                    testID: parseInt(item.dataset.testid),
+                    isException: Object.keys(item.dataset).includes("exception")
                 });
             }
             taskDetails.tests.push(itemDetails);

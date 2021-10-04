@@ -1,4 +1,4 @@
-<div class="test" data-order="[[order]]" data-testid="[[testID]]">
+<div class="test" data-order="[[order]]" data-testid="[[testID]]" data-exception>
     <ul>
         <li class="moveButton moveUp">
             <img draggable="false" src="/assets/img/items/arrow_up_grey.svg" alt="Move Up" />
