@@ -85,3 +85,48 @@
 .indCourse {
     @extend .block;
 }
+
+#indCourse {
+    width: 400px;
+    background-color: $cultured;
+    display: flex;
+    @include content-font();
+    color: $jet;
+    flex-direction: column;
+    padding: 30px;
+    box-shadow: 0 5px 10px black;
+    border-radius: 10px;
+    font-family: "Roboto", sans-serif; 
+    
+    h2 {
+        text-align: center;
+        margin: 10px 0;
+        color: black;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        letter-spacing: 1px;
+        margin-bottom: 0.7em;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+
+        h3 {
+            font-weight: 600;
+            margin: 0;
+
+            &.detail {
+                font-weight: normal;
+            }
+        }
+    }
+
+    .buttons {
+        justify-content: space-around;
+        gap: 50px;
+    }
+}

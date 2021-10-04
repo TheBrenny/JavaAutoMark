@@ -6,5 +6,6 @@
 </div>
 <script src="/assets/js/notifier.js"></script>
 <script src="/assets/js/tooltip.js"></script>
+<script src="/assets/js/delete.js"></script>
 </body>
 </html>

@@ -173,6 +173,10 @@ body #login_container form label {
   color: #14110fff;
 }
 
+.pre-animate-delete {
+  opacity: 0;
+}
+
 #notifier-tray {
   overflow: visible;
   right: 25px;
@@ -317,6 +321,16 @@ button.blue:hover,
 input[type=button].blue:hover,
 input[type=submit].blue:hover {
   background-color: #3559a7ff !important;
+}
+button.yellow,
+input[type=button].yellow,
+input[type=submit].yellow {
+  background-color: #ffd147ff;
+}
+button.yellow:hover,
+input[type=button].yellow:hover,
+input[type=submit].yellow:hover {
+  background-color: #fabb00ff !important;
 }
 button.red,
 input[type=button].red,
@@ -1117,5 +1131,46 @@ div.table .tRow p:not(:last-child) {
 #createCourse h3 {
   font-weight: 400;
   margin-left: 10px;
+}
+
+#indCourse {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #34312dff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#indCourse h2 {
+  text-align: center;
+  margin: 10px 0;
+  color: black;
+}
+#indCourse .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  margin-bottom: 0.7em;
+}
+#indCourse .wrapper:last-of-type {
+  margin-bottom: 0;
+}
+#indCourse .wrapper h3 {
+  font-weight: 600;
+  margin: 0;
+}
+#indCourse .wrapper h3.detail {
+  font-weight: normal;
+}
+#indCourse .buttons {
+  justify-content: space-around;
+  gap: 50px;
 }
 /*# sourceMappingURL=style.css.map */

@@ -2,8 +2,8 @@
 
 [[i= partials/header]]
 
-<div id="indCourse">
-    <h2>Course details</h2>
+<form id="indCourse" method="POST" action="/admin/courses/del/[[course.uuid]]">
+    <h2>Confirm delete:</h2>
     <div class="wrapper" id="id" tooltip="The course ID code">
         <h3>Course code: </h3>
         <h3 class="detail">[[course.course_id]]</h3>
@@ -17,10 +17,7 @@
         <h3 class="detail">[[course.running_year]]</h3>
     </div>
 
-    <div class="wrapper buttons">
-        <button class="blue" href="/courses/view">Courses</button>
-        <button class="red delete" data-delete="type, 13" >Delete</button>
-    </div>
-</div>
+    <input type="submit" value="Delete" />
+</form>
 
 [[i= partials/footer]]

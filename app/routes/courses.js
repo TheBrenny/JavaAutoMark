@@ -43,8 +43,53 @@ router.get("/courses/ind/:id", async (req, res) => {
     course = Database.courses.toObject(course);
 
     res.render("courses/ind", {
-        course,
+        course
     });
+});
+
+router.post("/admin/courses/create", async (req, res) => {
+
+    let id = req.body.id;
+    let name = req.body.name;
+    let year = req.body.year;
+
+    let bad = false;
+    let target = (await Database.courses.getCourse(id, year));
+    console.log(target);
+    // not found user
+    if(target == undefined) {
+        bad = !(await Database.courses.addCourse(id, name, year));
+    } else {
+        bad = true;
+    }
+
+    if(bad) {
+        res.status(401).redirect("/admin/courses/create");
+    } else {
+        notifier.notify(name + " added successfully!", "success");
+        res.redirect("/courses/view");
+    }
+});
+
+router.get("/courses/del/:id", async (req, res) => {
+    let course = await Database.courses.getCourse(req.params.id);
+    course = Database.courses.toObject(course);
+
+    res.render("courses/del", {
+        course
+    });
+});
+
+
+router.post("/admin/courses/del/:id", async(req, res) => {
+    // let course = await Database.courses.getCourse(req.params.id);
+    // course = Database.courses.toObject(course);
+
+    // res.render("courses/del", {
+    //     course
+    // });
+
+    console.log("DELETE");
 });
 
 module.exports = router;
