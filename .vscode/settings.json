@@ -84,5 +84,5 @@
         },
     },
     "todo-tree.highlights.useColourScheme": true,
-    "todo-tree.general.statusBar": "top three",
+    "todo-tree.general.statusBar": "tags",
 }
