@@ -1,0 +1,7 @@
+Work up for grabs:
+- Form data validation (create teacher, create course)
+- Design testing and experience (user feel)
+- Test case entry (goes with the manual)
+- Test and fix teacher pages
+- Make the dropdown on the assignments page actually filter assignments
+- Make the dropdown on the courses page actually filter courses
