@@ -15,6 +15,7 @@ const java = require('../jenv/java');
 const generateJavaCode = require("../assets/js/generateJavaCode");
 const ErrorGeneric = require('./errors/generic');
 const devNull = process.platform === "win32" ? "\\\\.\\nul" : "/dev/null";
+const plimit = import("p-limit");
 
 
 /* ******************************** */
@@ -109,26 +110,53 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
         return acc;
     }, []);
     // This runs the compiler across all those dirs - compiling every file
-    inboundFiles = inboundFiles.map(file => {
-        return (async () => {
-            let response = await java.promise.compile(file).catch(err => {
+    inboundFiles = inboundFiles.map(folder => {
+        return (() => {
+            // Compile all files in the dir
+            function onError(err) {
                 err.code = 500;
                 err.message = err.stdout;
                 throw err;
+            }
+            return Promise.resolve().then(async () => {
+                return {
+                    "dir": folder,
+                    "compileResponse": await java.promise.compile(folder).catch(onError)
+                };
+            }).then(async (response) => {
+                // delete everything that IS a ".java" file
+                // Don't worry about this not being awaited - we want it to run in the background
+                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".java")).map(f => fs.promises.unlink(path.join(folder, f))));
+                return {
+                    ...response,
+                    "unlink": {
+                        "java": true
+                    }
+                };
+            }).then(async response => {
+                // build jar from leftover files -- idk if this is even uselful
+                return {
+                    ...response,
+                    "jarResponse": await java.promise.buildJar(path.join(folder, path.basename(folder) + ".jar")).catch(onError)
+                };
+            }).then(async (response) => {
+                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".class")).map(f => fs.promises.unlink(path.join(folder, f))));
+                response.unlink.class = true;
+                return response;
             });
-            Promise.all(fs.readdirSync(file).filter(f => f.endsWith(".java")).map(f => fs.promises.unlink(path.join(file, f))));
-            return response;
         });
     });
     // inboundFiles is now an array of functions that return promises
 
+    let responses = [];
+    const limit = (await plimit)(7);
+    inboundFiles = inboundFiles.map(p => limit(p));
+    responses = Promise.all(inboundFiles); // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
+
     // FIXME: Create a web socket to send the marks for assignments.
 
-    let responses = [];
-    while(inboundFiles.length) {
-        // this nifty hack lets us throttle the amount of promises running at once (compilations in this case)
-        responses.push(...(await Promise.all(inboundFiles.splice(0, 7).map(f => f()))));
-    }
+    responses = await responses; // and now it's back to an array of responses as defined by the async fn above
+    // TODO: Keep connection alive because there's going to be hundreds of students punching thousands of files
 
     let successes = responses.filter(r => r.code === 0).length;
     res.status(202).json({
