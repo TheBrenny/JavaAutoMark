@@ -11,7 +11,7 @@
                 All courses
             </option>
             [[e= course in courses ]]
-            <option [[?=course.uuid==selectedUUID ]] selected [[?==]] value="[[course.uuid]]">
+            <option value="[[course.uuid]]">
                 [[course.course_name]] - [[course.running_year]]
             </option>
             [[?==]]

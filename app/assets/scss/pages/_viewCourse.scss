@@ -5,6 +5,41 @@
     flex-flow: column;
 
     max-height: 750px;
+
+    div#head {
+        @extend .block;
+        gap: 2em;
+
+        > span {
+            flex: 1 1 0px;
+        }
+
+        label {
+            @include content-font();
+            display: block;
+        }
+
+        select {
+            font-size: 1.2em;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-style: normal;
+            box-sizing: border-box;
+            width: 250px;
+        }
+
+        h1 {
+            font-weight: normal;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+    }
     
     div.table {
         .id {
