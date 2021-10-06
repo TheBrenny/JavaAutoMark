@@ -72,21 +72,17 @@ router.post("/admin/courses/create", async (req, res) => {
 
 router.post("/admin/courses/del", async(req, res) => {
 
-    console.log("FUCK");
-    // let bad = true;
-    // let id = req.body.id;
-    
-    // let target = (await Database.courses.getCourse(id));
-    // console.log(target);
-    // run = (await Database.courses.deleteCourse(id));
-    // console.log(bad);
+    let bad = true;
+    let id = req.body.id;
+
+    bad = !(await Database.courses.deleteCourse(id));
 
 
-    // if(bad) {
-    //     res.redirect("/courses/ind/" + id);
-    // } else {
-    //     res.redirect("/courses/view");
-    // }
+    if(bad) {
+        res.redirect("/courses/ind/" + id);
+    } else {
+        res.redirect("/courses/view");
+    }
 });
 
 module.exports = router;

@@ -17,8 +17,8 @@ onReady(() => {
                     revertButton(child);
                 });
             }, 5000);
-        }else if(button.classList.contains("yellow")) {
-            sendDeleteRequest(object, id)
+        }else if (button.classList.contains("yellow")) {
+            sendDeleteRequest(object, id);
         }
     }
 
@@ -71,7 +71,6 @@ function revertButton(button) {
 }
 
 function sendDeleteRequest(object, id) {
-    console.log("FUCKA");
     const send = fetch('/admin/' + object + '/del', {
         method: 'POST',
         headers: {

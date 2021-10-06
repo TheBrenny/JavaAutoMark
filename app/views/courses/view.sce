@@ -38,7 +38,7 @@
             <p class="year">[[course.running_year]]</p>
             <p class="opt btns">
                 <button href="/courses/ind/[[course.uuid]]">View</button>
-                <button href="" class="red delete" data-delete="courses,[[course.uuid]]">Delete</button>
+                <button class="red delete" data-delete="courses,[[course.uuid]]">Delete</button>
             </p>
         </span>
         [[?==]]
