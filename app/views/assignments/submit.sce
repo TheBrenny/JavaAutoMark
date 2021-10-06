@@ -40,7 +40,13 @@
                 <p class="frontCell">z00000[[student]]</p>
                 [[f= task 1:3 ]]
                     [[f= test 1:10 ]]
-                        <p>[[task]].[[test]]</p>
+                        [[?= task === 1 && test === 3]]
+                            <p id="z00000[[student]].[[task]].[[test]]" class="loading">
+
+                            </p>
+                        [[3=]]
+                            <p id="z00000[[student]].[[task]].[[test]]">[[task]].[[test]]</p>
+                        [[?==]]
                     [[?==]]
                 [[?==]]
             </span>
