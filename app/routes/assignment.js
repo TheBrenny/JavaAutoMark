@@ -16,6 +16,7 @@ const generateJavaCode = require("../assets/js/generateJavaCode");
 const ErrorGeneric = require('./errors/generic');
 const devNull = process.platform === "win32" ? "\\\\.\\nul" : "/dev/null";
 const plimit = import("p-limit");
+const websocket = require("./tools/websocket");
 
 
 /* ******************************** */
@@ -82,8 +83,12 @@ router.get("/assignments/submit/:id", async (req, res) => {
     let assignment = await Database.assignments.getAssignment(req.params.id);
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
+    let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
+    // TODO: get the websocket url if there is one
+
     res.render("assignments/submit", {
         assignment,
+        websockUrl,
     });
 });
 router.put("/assignments/submit/:id", async (req, res, next) => {
@@ -99,9 +104,9 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
 }).array("file"), async (req, res) => {
-    Database.assignments.updateAssignment(req.params.id, {
-        "state": "processing"
-    });
+    // Database.assignments.updateAssignment(req.params.id, {
+    //     "state": "processing"
+    // });
 
     // Creates an array of just dirs (should all be student dirs)
     let inboundFiles = req.files.reduce((acc, cur) => {
@@ -121,7 +126,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
             return Promise.resolve().then(async () => {
                 return {
                     "dir": folder,
-                    "compileResponse": await java.promise.compile(folder).catch(onError)
+                    "compileResponse": await java.promise.compile(folder)
                 };
             }).then(async (response) => {
                 // delete everything that IS a ".java" file
@@ -142,30 +147,57 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
             }).then(async (response) => {
                 await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".class")).map(f => fs.promises.unlink(path.join(folder, f))));
                 response.unlink.class = true;
+                response.success = response.compileResponse.code === 0 && response.jarResponse.code === 0;
                 return response;
-            });
+            }).catch(onError);
         });
     });
     // inboundFiles is now an array of functions that return promises
 
     let responses = [];
-    const limit = (await plimit)(7);
+    const limit = (await plimit).default(7);
     inboundFiles = inboundFiles.map(p => limit(p));
     responses = Promise.all(inboundFiles); // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 
-    // FIXME: Create a web socket to send the marks for assignments.
+    let responded = false;
+    // let marker = new JavaMarker();
+    let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`, async (ws, data) => {
+        console.log(data);
+    }, {
+        /**
+         * 
+         * @param {*} socket 
+         * @param {import("http").IncomingMessage} request 
+         */
+        onConnection(socket, request) {
+            this.send(socket, "hi there! " + request.socket.remoteAddress);
+        }
+    });
+    req.setTimeout(600000, () => { // 10 minutes
+        res.status(102).json({
+            success: false,
+            socketLink: ws.path,
+            totalFiles: 0,
+            compiledFiles: 0,
+            outputs: 0
+        });
+        responded = true;
+    });
 
     responses = await responses; // and now it's back to an array of responses as defined by the async fn above
-    // TODO: Keep connection alive because there's going to be hundreds of students punching thousands of files
 
-    let successes = responses.filter(r => r.code === 0).length;
-    res.status(202).json({
-        success: true,
-        socketLink: "",
-        totalFiles: responses.length,
-        compiledFiles: successes.length,
-        outputs: responses
-    });
+    // TODO: START THE RUNNER
+
+    if(!responded) {
+        let successes = responses.filter(r => r.success).length;
+        res.status(202).json({
+            success: true,
+            socketLink: ws.path,
+            totalFiles: responses.length,
+            compiledFiles: successes,
+            outputs: responses
+        });
+    }
 });
 
 router.get("/assignments/create", async (req, res) => {

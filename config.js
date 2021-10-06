@@ -22,11 +22,13 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
 
+// TODO: Make this more strict!
 module.exports.helmet = {
     contentSecurityPolicy: {
         useDefaults: true,
         directives: {
             defaultSrc: ["'self'", "http:"],
+            connectSrc: ["'self'", "https:", "ws:"],
             scriptSrc: [
                 "'self'",
                 "cdnjs.cloudflare.com",
@@ -61,14 +63,14 @@ module.exports.java = {
 
 function tryDo(fn, param, thisArg) {
     try {
-        if (!!param) return fn.call(thisArg, param);
-    } catch (e) {}
+        if(!!param) return fn.call(thisArg, param);
+    } catch(e) {}
     return false;
 }
 
 function tryNew(clazz, param) {
     try {
-        if (!!param) return new clazz(param);
-    } catch (e) {}
+        if(!!param) return new clazz(param);
+    } catch(e) {}
     return false;
 }

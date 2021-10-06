@@ -63,7 +63,8 @@
     "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/dist",
     "smcloudstore-aws-s3": "https://github.com/TheBrenny/SMCloudStore/tarball/awss3",
     "smcloudstore-localstorage": "https://github.com/TheBrenny/smcloudstore-localstorage/tarball/main",
-    "wget-improved": "^3.2.1"
+    "wget-improved": "^3.2.1",
+    "ws": "^8.2.3"
   },
   "devDependencies": {
     "browser-sync": "^2.27.5",

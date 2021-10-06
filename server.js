@@ -31,6 +31,7 @@
     const cors = require("cors");
     const session = require("express-session");
     const storage = require("./storage/storage");
+    const websocket = require("./app/routes/tools/websocket");
 
     // Make the app
     let app = express();
@@ -65,11 +66,13 @@
     app.all("/*", errRoutes.notFound);
     app.use(errRoutes.handler);
 
-    app.listen(serverInfo.port, serverInfo.host, () => {
+    let server = app.listen(serverInfo.port, serverInfo.host, () => {
         if(config.browsersyncActive) serverInfo.port = 81;
         console.log(`Storage provider: ${storage.provider}`);
         console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
     });
+    websocket.setup(server);
+
 })().catch(err => {
     console.error(err);
     process.exit(1);

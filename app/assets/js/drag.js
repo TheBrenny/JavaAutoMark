@@ -1,5 +1,4 @@
-const concurrentUploads = 7;
-
+// TODO: Change the name of this file to "assignmentSubmit.js"
 (() => {
     const allowedToUpload = (() => {
         let elem = document.createElement('input');
@@ -66,9 +65,22 @@ const concurrentUploads = 7;
                 return processFiles(files);
             })
             .then((response) => {
-                notifier.notify("Successfully uploaded and compiled!", "success");
-                form.classList.add('isSuccess');
-                form.classList.add('markedInput');
+                console.log(response);
+
+                if(response.status === 102) {
+                    notifier.notify("This request is taking a while to process. Stay here, and you'll see when it updates! Otherwise, come back later.", "info");
+                } else if(response.success === false) {
+                    throw new Error("Unable to upload files");
+                } else {
+                    notifier.notify(`Uploaded ${response.totalFiles} files and compiled ${response.compiledFiles}!`, "success");
+                    form.classList.add('isSuccess');
+                    form.classList.add('markedInput');
+                }
+
+                let socketUrl = response?.socketLink;
+                if(!!socketUrl) {
+                    let ws = new JAMSocket(socketUrl);
+                }
             })
             .catch((e) => {
                 form.classList.add('isError');
@@ -125,6 +137,7 @@ const concurrentUploads = 7;
                 if(xhr.readyState === 4) {
                     let json = JSON.parse(xhr.responseText || "{}");
                     if(xhr.status === 200 || xhr.status === 202) resolve(json);
+                    else if(xhr.status === 102) resolve(Object.assign({status: 102, ...json}));
                     else {
                         // This lets us change the message to better human readables.
                         if(json.code === 409) json.message = "Wait until the other files have finished processing";

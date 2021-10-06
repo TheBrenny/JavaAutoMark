@@ -154,7 +154,10 @@ gulp.task("sass", function () {
 gulp.task("browserSync", function (cb) {
     return browserSync.init({
         injectChanges: true,
-        proxy: "http://" + host + "/",
+        proxy: {
+            target: "http://" + host + "/",
+            ws: true
+        },
         open: false,
         port: port + 1,
         cors: true,
