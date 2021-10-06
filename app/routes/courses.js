@@ -4,6 +4,7 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
+const { assignments } = require("../../db/database");
 
 router.get("/courses/edit/:id", async (req, res) => {
     throw errors[501].fromReq(req);
@@ -60,13 +61,24 @@ router.post("/admin/courses/create", async (req, res) => {
     if(target == undefined) {
         bad = !(await Database.courses.addCourse(id, name, year));
     } else {
-        bad = true;
+        res.status(500).json({
+            success: false,
+            message: "Course already exists!"
+        });
+        return;
     }
 
     if(bad) {
-        res.status(401).redirect("/admin/courses/create");
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        });
     } else {
-        res.redirect("/courses/view");
+        res.status(201).json({
+            success: true,
+            redirect: "/courses/view",
+            message: "Course added successfully!"
+        });
     }
 });
 
@@ -78,10 +90,17 @@ router.post("/admin/courses/del", async(req, res) => {
     bad = !(await Database.courses.deleteCourse(id));
 
 
-    if(bad) {
-        res.redirect("/courses/ind/" + id);
+    if(!bad) {
+        res.status(201).json({
+            success: true,
+            redirect: "/courses/view",
+            message: "Course deleted successfully!"
+        });
     } else {
-        res.redirect("/courses/view");
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        });
     }
 });
 

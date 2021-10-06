@@ -79,5 +79,21 @@ function sendDeleteRequest(object, id) {
         body: JSON.stringify({
             id: id
         }),
-    }).then((res) => {});
+    }).then(async r => {
+        let json = await r.json();
+        if(r.status >= 200 && r.status < 300 && json.success === true) {
+            return json;
+        } else {
+            throw json;
+        }
+    }).then((response) => {
+        if(typeof response === "object") { // we have a JSON object
+            console.log(response);
+            notifier.notify(response.message, response.type ?? response.success ? "success" : "info");
+            if(response.redirect) setTimeout(() => window.location.href = response.redirect, 1000);
+        }
+    }).catch(e => {
+        console.error(e);
+        notifier.notify(`${e.name ?? "Error"}: ${e.message}`, "error");
+    });
 }
