@@ -55,7 +55,7 @@ router.post("/admin/courses/create", async (req, res) => {
 
     let bad = false;
     let target = (await Database.courses.getCourse(id, year));
-    console.log(target);
+
     // not found user
     if(target == undefined) {
         bad = !(await Database.courses.addCourse(id, name, year));
@@ -66,30 +66,27 @@ router.post("/admin/courses/create", async (req, res) => {
     if(bad) {
         res.status(401).redirect("/admin/courses/create");
     } else {
-        notifier.notify(name + " added successfully!", "success");
         res.redirect("/courses/view");
     }
 });
 
-router.get("/courses/del/:id", async (req, res) => {
-    let course = await Database.courses.getCourse(req.params.id);
-    course = Database.courses.toObject(course);
+router.post("/admin/courses/del", async(req, res) => {
 
-    res.render("courses/del", {
-        course
-    });
-});
+    console.log("FUCK");
+    // let bad = true;
+    // let id = req.body.id;
+    
+    // let target = (await Database.courses.getCourse(id));
+    // console.log(target);
+    // run = (await Database.courses.deleteCourse(id));
+    // console.log(bad);
 
 
-router.post("/admin/courses/del/:id", async(req, res) => {
-    // let course = await Database.courses.getCourse(req.params.id);
-    // course = Database.courses.toObject(course);
-
-    // res.render("courses/del", {
-    //     course
-    // });
-
-    console.log("DELETE");
+    // if(bad) {
+    //     res.redirect("/courses/ind/" + id);
+    // } else {
+    //     res.redirect("/courses/view");
+    // }
 });
 
 module.exports = router;

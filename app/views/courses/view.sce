@@ -4,7 +4,7 @@
 
 <div id="viewCourse">
     <div id="head">
-        <h1>Assignments</h1>
+        <h1>Courses</h1>
 
         <select id="year" name="year">
             <option>
@@ -38,7 +38,7 @@
             <p class="year">[[course.running_year]]</p>
             <p class="opt btns">
                 <button href="/courses/ind/[[course.uuid]]">View</button>
-                <button class="red delete" data-delete="course,[[course.uuid]]">Delete</button>
+                <button href="" class="red delete" data-delete="courses,[[course.uuid]]">Delete</button>
             </p>
         </span>
         [[?==]]

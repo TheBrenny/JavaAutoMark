@@ -19,7 +19,7 @@
 
     <div class="wrapper buttons">
         <button class="blue" href="/courses/view">Courses</button>
-        <button class="red delete" data-delete="type, 13" >Delete</button>
+        <button class="red delete" data-delete="courses, [[course.uuid]]" >Delete</button>
     </div>
 </div>
 
