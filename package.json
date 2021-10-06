@@ -51,7 +51,7 @@
     "express-session": "^1.17.2",
     "express-validator": "^6.12.2",
     "helmet": "^4.6.0",
-    "inquirer": "^8.1.5",
+    "inquirer": "^8.2.0",
     "inquirer-file-tree-selection-prompt": "https://github.com/TheBrenny/inquirer-file-tree-selection/tarball/main",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
