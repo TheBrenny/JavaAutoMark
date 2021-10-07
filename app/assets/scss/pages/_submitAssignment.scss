@@ -43,14 +43,6 @@
         }
     }
 
-    .markedInput {
-        height: 100px;
-        padding: 0 !important;
-        i {
-            display: none;
-        }
-    }
-
     .inputBox {
         display: block;
         padding: 100px 0;
@@ -95,6 +87,14 @@
             cursor: pointer;
             font-size: 20px;
             color: $highlighted-task-button;
+        }
+    }
+
+    .markedInput {
+        height: 100px;
+        padding: 0 !important;
+        i {
+            display: none;
         }
     }
 
@@ -150,6 +150,9 @@
     }
 
     // THIS IS HOW WE SHOW THE TABLE WHEN THERE'S MARKED INPUT
+    .inputBox + .table {
+        display: none;
+    }
     .markedInput + .table {
         display: flex !important;
     }

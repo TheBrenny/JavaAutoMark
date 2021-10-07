@@ -66,4 +66,5 @@
     });
 </script>
 
+[[l= assignments/components/submitCell ]]
 [[i= partials/footer]]
