@@ -69,6 +69,11 @@ onReady(() => {
         if(tooltip.target !== null) {
             tooltip.element.style.left = `${tooltip.location.x}px`;
             tooltip.element.style.top = `${tooltip.location.y}px`;
+            
+            let targetBounds = tooltip.target.getBoundingClientRect();
+            if(targetBounds.top > tooltip.location.y || targetBounds.bottom < tooltip.location.y || targetBounds.left > tooltip.location.x || targetBounds.right < tooltip.location.x) {
+                tooltip.hide();
+            }
         }
     });
 });
