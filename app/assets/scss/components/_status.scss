@@ -1,9 +1,15 @@
 //https://loading.io/css/
 
+@function randomise() {
+    $random: random(50) + 50;
+    $randomMath: $random / 100;
+
+    @return $randomMath + s;
+}
+
 .loading {
     display: inline-flex !important;
     width: 15px !important;
-    // height: 15px !important;
     text-align: center;
     justify-content: center;
     align-content: center;
@@ -24,7 +30,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center center;
-    animation: rotate_pink 1s linear infinite;
+    animation: rotate_pink randomise() linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -35,7 +41,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center center;
-    animation: rotate_yellow 1s linear infinite;
+    animation: rotate_yellow randomise() linear infinite;
 }
 
 @keyframes rotate_pink {

@@ -17,9 +17,20 @@ router.use("/reports/*", (req, res, next) => {
 
 router.get("/reports/assignment", async (req, res) => {
     console.log("test");
+
     res.render("reports/assignment", {
-        courses: "Red Rover"
+        course: "Red Rover"
     });
 });
+
+router.get("/reports/assignment/pdf", async (req, res) => {
+    console.log("test");
+    
+    console.log('tester');
+    res.render("reports/assignment/test.doc", {
+        course: "Red Rover"
+    });
+});
+
 
 module.exports = router;

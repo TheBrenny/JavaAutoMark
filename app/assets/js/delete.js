@@ -88,7 +88,6 @@ function sendDeleteRequest(object, id) {
         }
     }).then((response) => {
         if(typeof response === "object") { // we have a JSON object
-            console.log(response);
             notifier.notify(response.message, response.type ?? response.success ? "success" : "info");
             if(response.redirect) setTimeout(() => window.location.href = response.redirect, 1000);
         }
