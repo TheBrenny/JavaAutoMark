@@ -4,6 +4,7 @@ onReady(() => {
         location: {x: 0, y: 0, time: 0},
         element: $("#tooltip"),
         target: null,
+        mouseTarget: null,
         candidates: Array.from($$("*[tooltip]")),
         show(message, element) {
             tooltip.target = element;
@@ -22,10 +23,8 @@ onReady(() => {
 
             now = now ?? window.performance.now();
             let elem = tooltip.candidates
-                .map(e => ({element: e, bounds: e.getBoundingClientRect()}))
-                .find(o => o.bounds.top < tooltip.location.y && o.bounds.bottom > tooltip.location.y && o.bounds.left < tooltip.location.x && o.bounds.right > tooltip.location.x);
+                .find(e => e === tooltip.mouseTarget);
             if(elem !== undefined && now - tooltip.location.time > tooltip.timer) {
-                elem = elem.element;
                 let msg = elem.getAttribute("tooltip");
                 if(msg !== null) tooltip.show(msg, elem);
             }
@@ -53,11 +52,6 @@ onReady(() => {
             },
         }
     };
-    tooltip.candidates.forEach(candidate => {
-        candidate.addEventListener("mouseleave", () => {
-            if(tooltip.target === candidate) tooltip.hide();
-        }, {capture: false});
-    });
     tooltip.element.message = tooltip.element.$(".message");
     globalThis.tooltip = tooltip;
     globalThis.tooltip.animator.start();
@@ -65,15 +59,13 @@ onReady(() => {
     document.addEventListener("mousemove", (event) => {
         tooltip.location.x = event.clientX;
         tooltip.location.y = event.clientY;
+        tooltip.mouseTarget = event.target;
         tooltip.location.time = window.performance.now();
         if(tooltip.target !== null) {
             tooltip.element.style.left = `${tooltip.location.x}px`;
             tooltip.element.style.top = `${tooltip.location.y}px`;
-            
-            let targetBounds = tooltip.target.getBoundingClientRect();
-            if(targetBounds.top > tooltip.location.y || targetBounds.bottom < tooltip.location.y || targetBounds.left > tooltip.location.x || targetBounds.right < tooltip.location.x) {
-                tooltip.hide();
-            }
+
+            if(event.target !== tooltip.target) tooltip.hide();
         }
     });
 });
