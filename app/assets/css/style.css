@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 1s linear infinite;
+  animation: rotate_pink 0.81s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
