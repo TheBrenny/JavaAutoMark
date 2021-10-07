@@ -543,6 +543,65 @@ div.table .tRow p:not(:last-child) {
   text-align: center;
 }
 
+.loading {
+  display: inline-flex !important;
+  width: 15px !important;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  padding: 10px !important;
+}
+
+.tRow:nth-child(odd) p.loading::after {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background-image: url(/assets/img/items/flask_pink.svg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: rotate_pink 1s linear infinite;
+}
+
+.tRow:nth-child(even) p.loading::after {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background-image: url(/assets/img/items/flask_yellow.svg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: rotate_yellow 1s linear infinite;
+}
+
+@keyframes rotate_pink {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}
+@keyframes rotate_yellow {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+}
 #createUser,
 #viewUser {
   width: 400px;
@@ -949,6 +1008,7 @@ div.table .tRow p:not(:last-child) {
 #submitAss .metaAss {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 50px;
 }
 #submitAss .metaAss .content {
@@ -1048,9 +1108,10 @@ div.table .tRow p:not(:last-child) {
   background-color: #c4c4c4ff;
 }
 #submitAss div.table p {
-  min-width: 15px;
-  width: 15px;
-  max-width: 15px;
+  min-width: 20px;
+  width: 20px;
+  max-width: 20px;
+  height: 20px;
 }
 #submitAss div.table p.frontCell {
   min-width: 65px;

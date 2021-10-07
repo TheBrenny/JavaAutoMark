@@ -55,5 +55,15 @@
 </div>
 
 <script src="/assets/js/drag.js"></script>
+<script src="/assets/js/assignmentSocket.js"></script>
+<script nonce="[[nonce]]">
+    onReady(() => {
+        let websockUrl = "[[websockUrl]]".trim();
+
+        if(websockUrl.length > 0) {
+            let socket = new JAMSocket(websockUrl);
+        }
+    });
+</script>
 
 [[i= partials/footer]]
