@@ -33,7 +33,6 @@ module.exports.helmet = {
                 "'self'",
                 "cdnjs.cloudflare.com",
                 "kit.fontawesome.com",
-                module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],
             workerSrc: ["'self'", "blob:"],
@@ -41,6 +40,11 @@ module.exports.helmet = {
         }
     }
 };
+
+if(module.exports.env.isDev) {
+    module.exports.helmet.contentSecurityPolicy.directives.scriptSrc.push(`'nonce-browsersync'`);
+    module.exports.helmet.contentSecurityPolicy.directives.connectSrc.push("http:");
+}
 
 module.exports.morgan = {
     stream: process.stdout
