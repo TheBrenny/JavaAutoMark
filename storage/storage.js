@@ -55,7 +55,7 @@ module.exports = (function () {
     return global.storage;
 })();
 
-// TODO: Restart the storage provider when it changes!
+// BUG: Restart the storage provider when it changes!
 
 Object.defineProperty(module.exports, "container", {
     get: () => config.storage.options.container

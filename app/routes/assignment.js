@@ -84,7 +84,6 @@ router.get("/assignments/submit/:id", async (req, res) => {
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
     let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
-    // TODO: get the websocket url if there is one
 
     res.render("assignments/submit", {
         assignment,
@@ -282,7 +281,7 @@ async function saveAssignment(req, res, assignment, assignmentID) {
         // if there's an error, then send the id back, the client
         //     will make sure subsequent requests have the same id.
         assignmentID = (await Database.assignments.addAssignment(assignment.name, assignment.course, devNull)).affectedID;
-        // TODO: If something bounces we need to run a cron job to remove all assignments tied to devNull
+        // BUG: If something bounces we need to run a cron job to remove all assignments tied to devNull
     } else {
         // Delete the old assignment files
         oldAssignment = (await Database.assignments.getAssignment(assignmentID)).assignments_code_location;

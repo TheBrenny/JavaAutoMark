@@ -22,7 +22,7 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
 
-// TODO: Make this more strict!
+// BUG: Make this more strict!
 module.exports.helmet = {
     contentSecurityPolicy: {
         useDefaults: true,
