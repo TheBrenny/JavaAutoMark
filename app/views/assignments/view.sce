@@ -41,7 +41,7 @@
                         Edit
                     </button>
                     <button class="blue" href="/assignments/submit/[[assignment.assignment_id]]">
-                        View
+                        Submissions
                     </button>
                 </p>
             </span>
