@@ -1,5 +1,6 @@
 (() => {
     var form = document.getElementById("createCourse");
+    // form.onsubmit can only reference one function - you're looking for form.addEventListener("submit", fn)
     form.onsubmit = validateForm;
     form.onsubmit = validateCourseID;
     form.onsubmit = validateCourseYear;
@@ -10,7 +11,7 @@
         let courseYear = form['year'].value;
 
         if (courseID == ""){
-            alert("Please enter a Course Code");
+            alert("Please enter a Course Code"); // can you change `alert(msg)`s to `notifier.notify(msg, "error")`, 
             return false;
         }
         if (courseName == ""){
@@ -21,10 +22,18 @@
             alert("Please enter a Course Year");
             return false;
         }
+
+        // You could probably also set a condition to be true at the start, and if any of the ifs are true, set the condition to false.
+        // That way, we can notify the user of multiple errors at once, but still return false (which would be smth like `return isBad`)
+
         return true;
     }
 
     function validateCourseID(){
+        // A quick and easy regex to do all of this in one go is:
+        // /^z[a-z]{3}\d{4}$/i -- https://regexr.com/6752a
+        // Click on the tests tab to see it in action
+        // Click on the Text tab and then the Explain sub-tab (lower on the screen) to see how and why
         let  courseID = form['id'].value;
         let courseNumbers = courseID.substring(courseID.length-4, courseID.length);
         let courseLetters = courseID.substring(0, 4);
@@ -44,6 +53,7 @@
     function validateCourseYear(){
         let courseYear = form['year'].value;
 
+        // Again, a more appropriate regex would be: /^\d{4}$/
         condition1 = courseYear.match(/^[0-9]+$/) != null;
         condition2 = courseYear.length == 4;
 
