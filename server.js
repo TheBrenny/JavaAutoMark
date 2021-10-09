@@ -69,7 +69,7 @@
     let server = app.listen(serverInfo.port, serverInfo.host, () => {
         console.log(`Storage provider: ${storage.provider}`);
         console.log(`Server is listening at http://${serverInfo.host}:${serverInfo.port}...`);
-        if(config.env.isDev) console.log(`Browsersync is probably available at http://${serverInfo.host}:${serverInfo.port + 1}...`);
+        if(config.env.isDev) console.log(`Browsersync is probably available at http://${serverInfo.host}:${parseInt(serverInfo.port) + 1}...`);
     });
     websocket.setup(server);
 })().catch(err => {
