@@ -45,7 +45,7 @@
         form.classList.remove('isSuccess');
 
         // MAYBE: Show the student code as a tree in the file upload space!
-        return Promise.resolve(e.dataTransfer)
+        return Promise.resolve(e.dataTransfer ?? e.srcElement)
             .then(async (dt) => {
                 let files;
                 if(!!dt.items) files = await getWebkitFiles(Array.from(dt.items).map(item => item.webkitGetAsEntry()));
@@ -101,6 +101,7 @@
         return new Promise((resolve, reject) => item.createReader().readEntries(resolve, reject));
     }
     function promisifyFile(item) {
+        if(item instanceof File) return Promise.resolve(item);
         return new Promise((resolve, reject) => item.file(resolve, reject));
     }
     function getWebkitFiles(files, items) {
