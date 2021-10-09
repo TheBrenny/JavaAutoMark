@@ -1,0 +1,111 @@
+{
+    results: {
+        assignmentID: xx,
+        studentID: xxxxxxx,
+        possibleMarks: xx,
+        actualMarks: xx,
+        tasks: [
+            {
+                taskID: xx,
+                possibleMarks: xx,
+                actualMarks: xx,
+                tests: [
+                    {
+                        testID: xx,
+                        description: "This is a test description",
+                        possibleMarks: xx,
+                        actualMarks: x
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+
+/*************************************************************/
+
+{
+    reports: [
+        {
+            assignmentID: 1,
+            studentID: z5260786,
+            possibleMarks: 100,
+            actualMarks: 63,
+            tasks: [
+                {
+                    taskID: 1,
+                    possibleMarks: 50,
+                    actualMarks: 23,
+                    tests: [
+                        {
+                            testID: 1,
+                            description: "This is a test description",
+                            possibleMarks: 50,
+                            actualMarks: 23
+                        }
+                    ]
+                }, 
+                {
+                    taskID: 2,
+                    possibleMarks: 50,
+                    actualMarks: 40,
+                    tests: [
+                        {
+                            testID: 1,
+                            description: "This is a test description",
+                            possibleMarks: 25,
+                            actualMarks: 20
+                        },
+                        {
+                            testID: 2,
+                            description: "This is a test description",
+                            possibleMarks: 25,
+                            actualMarks: 20
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            assignmentID: 1,
+            studentID: z5260786,
+            possibleMarks: 100,
+            actualMarks: 43,
+            tasks: [
+                {
+                    taskID: 1,
+                    possibleMarks: 50,
+                    actualMarks: 13,
+                    tests: [
+                        {
+                            testID: 1,
+                            description: "This is a test description",
+                            possibleMarks: 50,
+                            actualMarks: 13
+                        }
+                    ]
+                }, 
+                {
+                    taskID: 2,
+                    possibleMarks: 50,
+                    actualMarks: 30,
+                    tests: [
+                        {
+                            testID: 1,
+                            description: "This is a test description",
+                            possibleMarks: 25,
+                            actualMarks: 15
+                        },
+                        {
+                            testID: 2,
+                            description: "This is a test description",
+                            possibleMarks: 25,
+                            actualMarks: 15
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

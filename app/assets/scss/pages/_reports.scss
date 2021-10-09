@@ -1,0 +1,7 @@
+.reportAssHead {
+    @extend .wrap;
+
+    .resultTotals {
+        @extend .block;
+    }
+}

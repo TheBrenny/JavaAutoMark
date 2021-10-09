@@ -119,7 +119,7 @@ body #login_container form label {
   padding: 10px 0;
 }
 
-.block, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
+.block, .reportAssHead .resultTotals, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -129,7 +129,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
+.wrap, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 0.81s linear infinite;
+  animation: rotate_pink 0.52s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,7 +577,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 1s linear infinite;
+  animation: rotate_yellow 0.51s linear infinite;
 }
 
 @keyframes rotate_pink {
@@ -1039,13 +1039,6 @@ div.table .tRow p:not(:last-child) {
   font-weight: 400;
   letter-spacing: 2px;
 }
-#submitAss .markedInput {
-  height: 100px;
-  padding: 0 !important;
-}
-#submitAss .markedInput i {
-  display: none;
-}
 #submitAss .inputBox {
   display: block;
   padding: 100px 0;
@@ -1085,6 +1078,13 @@ div.table .tRow p:not(:last-child) {
   font-size: 20px;
   color: #888890ff;
 }
+#submitAss .markedInput {
+  height: 100px;
+  padding: 0 !important;
+}
+#submitAss .markedInput i {
+  display: none;
+}
 #submitAss .enabled .dropText {
   display: inline !important;
 }
@@ -1122,6 +1122,9 @@ div.table .tRow p:not(:last-child) {
   box-shadow: 0 0 10px #7e7f83ff;
   clip-path: inset(0px -10px 0px 0px);
   z-index: 40;
+}
+#submitAss .inputBox + .table {
+  display: none;
 }
 #submitAss .markedInput + .table {
   display: flex !important;
