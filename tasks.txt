@@ -1,0 +1,6 @@
+- Form data validation (create teacher, create course) [MILLAR]
+- Design testing and experience (user feel) [ROSH]
+- Test case entry (goes with the manual) [ROSH]
+- Test and fix teacher pages [BILAL]
+- Make the dropdown on the assignments page actually filter assignments [MILLAR]
+- Make the dropdown on the courses page actually filter courses [BILAL]
