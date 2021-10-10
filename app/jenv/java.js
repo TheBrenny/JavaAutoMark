@@ -38,7 +38,6 @@ function run(target, ...classpaths) {
 
     let args = [];
     if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
-    args = args.concat("-classpath", targetDir);
     args = args.concat(target);
 
     return spawn(java, args);
@@ -56,7 +55,7 @@ function compile(target, ...classpaths) {
     args = args.concat("-jar", compiler);
     if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
     args = args.concat("-11");
-    args = args.concat(path.resolve(targetDir, target));
+    args = args.concat(path.resolve(targetDir, target + ext));
 
     return spawn(java, args);
 }
