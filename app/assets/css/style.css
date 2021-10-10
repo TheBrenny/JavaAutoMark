@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 0.52s linear infinite;
+  animation: rotate_pink 0.53s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,7 +577,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 0.51s linear infinite;
+  animation: rotate_yellow 0.9s linear infinite;
 }
 
 @keyframes rotate_pink {
@@ -1016,28 +1016,10 @@ div.table .tRow p:not(:last-child) {
   margin: 0;
   margin-right: 35px;
 }
-#submitAss .metaAss input[type=button] {
+#submitAss .metaAss button {
   padding: 10px 20px;
   width: 150px;
-  background-color: #4b7ce6ff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 15px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
-  transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  cursor: pointer;
-}
-#submitAss .metaAss input[type=button]:hover:not(:disabled) {
-  background-color: #3559a7ff;
-  color: white;
-  font-weight: 400;
-  letter-spacing: 2px;
+  margin: 0;
 }
 #submitAss .inputBox {
   display: block;
