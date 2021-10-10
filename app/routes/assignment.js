@@ -17,6 +17,7 @@ const ErrorGeneric = require('./errors/generic');
 const devNull = process.platform === "win32" ? "\\\\.\\nul" : "/dev/null";
 const plimit = import("p-limit");
 const websocket = require("./tools/websocket");
+const MarkerManager = require("./tools/marker").MarkerManager;
 
 
 /* ******************************** */
@@ -102,102 +103,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), async (req, res) => {
-    // Database.assignments.updateAssignment(req.params.id, {
-    //     "state": "processing"
-    // });
-
-    // Creates an array of just dirs (should all be student dirs)
-    let inboundFiles = req.files.reduce((acc, cur) => {
-        let curDir = path.dirname(cur.path);
-        if(!acc.includes(curDir)) acc.push(curDir);
-        return acc;
-    }, []);
-    // This runs the compiler across all those dirs - compiling every file
-    inboundFiles = inboundFiles.map(folder => {
-        return (() => {
-            // Compile all files in the dir
-            function onError(err) {
-                err.code = 500;
-                err.message = err.stdout;
-                throw err;
-            }
-            return Promise.resolve().then(async () => {
-                return {
-                    "dir": folder,
-                    "compileResponse": await java.promise.compile(folder)
-                };
-            }).then(async (response) => {
-                // delete everything that IS a ".java" file
-                // Don't worry about this not being awaited - we want it to run in the background
-                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".java")).map(f => fs.promises.unlink(path.join(folder, f))));
-                return {
-                    ...response,
-                    "unlink": {
-                        "java": true
-                    }
-                };
-            }).then(async response => {
-                // build jar from leftover files -- idk if this is even uselful
-                return {
-                    ...response,
-                    "jarResponse": await java.promise.buildJar(path.join(folder, path.basename(folder) + ".jar")).catch(onError)
-                };
-            }).then(async (response) => {
-                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".class")).map(f => fs.promises.unlink(path.join(folder, f))));
-                response.unlink.class = true;
-                response.success = response.compileResponse.code === 0 && response.jarResponse.code === 0;
-                return response;
-            }).catch(onError);
-        });
-    });
-    // inboundFiles is now an array of functions that return promises
-
-    let responses = [];
-    const limit = (await plimit).default(7);
-    inboundFiles = inboundFiles.map(p => limit(p));
-    responses = Promise.all(inboundFiles); // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
-
-    let responded = false;
-    // let marker = new JavaMarker();
-    let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`, async (ws, data) => {
-        console.log(data);
-    }, {
-        /**
-         * 
-         * @param {*} socket 
-         * @param {import("http").IncomingMessage} request 
-         */
-        onConnection(socket, request) {
-            this.send(socket, "hi there! " + request.socket.remoteAddress);
-        }
-    });
-    req.setTimeout(600000, () => { // 10 minutes
-        res.status(102).json({
-            success: false,
-            socketLink: ws.path,
-            totalFiles: 0,
-            compiledFiles: 0,
-            outputs: 0
-        });
-        responded = true;
-    });
-
-    responses = await responses; // and now it's back to an array of responses as defined by the async fn above
-
-    // TODO: START THE RUNNER
-
-    if(!responded) {
-        let successes = responses.filter(r => r.success).length;
-        res.status(202).json({
-            success: true,
-            socketLink: ws.path,
-            totalFiles: responses.length,
-            compiledFiles: successes,
-            outputs: responses
-        });
-    }
-});
+}).array("file"), (req, res) => onStudentAssignmentsUploaded(req, res));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
@@ -273,6 +179,143 @@ router.put("/assignments/edit/:id", async (req, res) => {
         message: save.err?.message ?? "Assignment updated successfully!"
     });
 });
+
+/**
+ * Called when the teacher uploads a bulk of assignments.
+ * 
+ * This function does a lot of stuff all in one:
+ * - Compiles the java files to .class files
+ * - Creates a Jar Archive of the .class files and a manifest (see `/app/jenv/java.js`)
+ * - Deletes all .java and .class files that are lingering
+ * - Starts a runner for each assignment
+ * 
+ * // MAYBE: This function should probably be separated into smaller functions
+ * 
+ * @param {import('http').IncomingMessage} req 
+ * @param {import('http').OutgoingMessage} res 
+ */
+async function onStudentAssignmentsUploaded(req, res) {
+    if(req.files.length === 0) throw errors.badRequest.fromReq(req);
+
+    // Database.assignments.updateAssignment(req.params.id, {
+    //     "state": "processing"
+    // });
+
+    // Creates an array of just dirs (should all be student dirs)
+    let inboundFiles = req.files.reduce((acc, cur) => {
+        let curDir = path.dirname(cur.path);
+        if(!acc.includes(curDir)) acc.push(curDir);
+        return acc;
+    }, []);
+    // This runs the compiler across all those dirs - compiling every file and deleting residuals
+    inboundFiles = inboundFiles.map(folder => {
+        return (() => {
+            // Compile all files in the dir
+            function onError(err) {
+                err.code = 500;
+                err.message = err.stdout;
+                throw err;
+            }
+            return Promise.resolve().then(async () => {
+                return {
+                    "student": path.basename(folder),
+                    "dir": folder,
+                    "compileResponse": await java.promise.compile(folder)
+                };
+            }).then(async (response) => {
+                // delete everything that IS a ".java" file
+                // Don't worry about this not being awaited - we want it to run in the background
+                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".java")).map(f => fs.promises.unlink(path.join(folder, f))));
+                return {
+                    ...response,
+                    "unlink": {
+                        "java": true
+                    }
+                };
+            }).then(async response => {
+                // build jar from leftover files -- idk if this is even uselful
+                return {
+                    ...response,
+                    "jarResponse": await java.promise.buildJar(path.join(folder, path.basename(folder) + ".jar")).catch(onError)
+                };
+            }).then(async (response) => {
+                await Promise.all(fs.readdirSync(folder).filter(f => f.endsWith(".class")).map(f => fs.promises.unlink(path.join(folder, f))));
+                response.unlink.class = true;
+                response.success = response.compileResponse.code === 0 && response.jarResponse.code === 0;
+                return response;
+            }).catch(onError);
+        });
+    });
+    // inboundFiles is now an array of functions that return promises
+
+    let responses = [];
+    const limit = (await plimit).default(7);
+    inboundFiles = inboundFiles.map(p => limit(p));
+    responses = Promise.all(inboundFiles); // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
+
+    let responded = false;
+    let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
+    let marker = createMarker(ws, req.params.id);
+
+    req.setTimeout(600000, () => { // 10 minutes
+        res.status(102).json({
+            success: false,
+            socketLink: ws.path,
+            totalFiles: 0,
+            compiledFiles: 0,
+            outputs: 0
+        });
+        responded = true;
+    });
+
+    responses = await responses; // and now it's back to an array of responses as defined by the async fn above
+    marker.then((m) => {
+        m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
+        return m.start();
+    });
+
+    if(!responded) {
+        let successes = responses.filter(r => r.success).length;
+        res.status(202).json({
+            success: true,
+            socketLink: ws.path,
+            totalFiles: responses.length,
+            compiledFiles: successes,
+            outputs: responses
+        });
+    }
+}
+
+async function createMarker(socket, assignmentID) {
+    return Database.assignments.getAssignment(assignmentID)
+        .then(a => a.assignments_code_location)
+        .then(async codeLoc => {
+            let [json, java] = await Promise.all([
+                storage.getObject(storage.container, codeLoc + ".json"),
+                storage.getObject(storage.container, codeLoc + ".java"),
+            ]);
+            return [json, java];
+        }).then(async ([json, java]) => {
+            function readStream(s) {
+                return new Promise((resolve, reject) => {
+                    let data = "";
+                    s.on("data", d => data += d);
+                    s.on("end", () => resolve(data));
+                    s.on("error", reject);
+                });
+            }
+            return Promise.all([
+                readStream(json),
+                readStream(java)
+            ]);
+        }).then(async ([json, java]) => {
+            json = JSON.parse(json.toString());
+            let javaPath = path.join(__dirname, "..", "jenv", "context", `Assignment${assignmentID}.java`);
+            await fs.promises.writeFile(javaPath, java);
+            let marker = new MarkerManager(socket, json, javaPath);
+            return marker;
+        });
+}
 
 async function saveAssignment(req, res, assignment, assignmentID) {
     if(!!assignment.id) assignmentID = assignment.id;
