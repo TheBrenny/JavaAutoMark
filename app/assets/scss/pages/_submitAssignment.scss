@@ -19,27 +19,10 @@
             margin-right: 35px;
         }
 
-        input[type="button"] {
+        button {
             padding: 10px 20px;
             width: 150px;
-            background-color: $button-blue;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            font-size: 15px;
-            @include content-font();
-            text-transform: uppercase;
-            transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
-            box-shadow: 0 5px 10px $gray-web;
-            cursor: pointer;
-        }
-
-        input[type="button"]:hover:not(:disabled) {
-            background-color: $highlighted-button-blue;
-            color: white;
-            font-weight: 400;
-            letter-spacing: 2px;
+            margin: 0;
         }
     }
 

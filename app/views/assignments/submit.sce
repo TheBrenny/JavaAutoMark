@@ -11,7 +11,7 @@
     <div class="metaAss">
         <p class="block content">3 tasks, 18 tests, 32 marks</p>
 
-        <input class="edit" type="button" value="Edit" />
+        <button class="blue" type="button" href="/assignments/edit/[[assignment.assignment_id]]">Edit</button>
     </div>
 
     <form class="inputBox">
