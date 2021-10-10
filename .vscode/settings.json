@@ -85,4 +85,5 @@
     },
     "todo-tree.highlights.useColourScheme": true,
     "todo-tree.general.statusBar": "tags",
+    "todo-tree.tree.scanMode": "workspace only",
 }
