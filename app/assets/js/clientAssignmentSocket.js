@@ -1,3 +1,5 @@
+// TODO: Expand this so it can take data from the server and display it on the page
+
 class JAMSocket extends WebSocket {
     constructor(path) {
         super("ws://" + location.host + path);
@@ -11,8 +13,9 @@ class JAMSocket extends WebSocket {
             console.error('Errored from server');
             console.error(err);
         });
-        this.addEventListener('message', (data) => {
-            console.log(data);
+        this.addEventListener('message', (event) => {
+            let msg = event.data;
+            console.log(msg);
         });
     }
 

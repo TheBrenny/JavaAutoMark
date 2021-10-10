@@ -14,7 +14,7 @@
         <button class="blue" type="button" href="/assignments/edit/[[assignment.assignment_id]]">Edit</button>
     </div>
 
-    <form class="inputBox">
+    <form id="inputBox" class="inputBox">
         <i class="upload-icon far fa-8x fa-file-archive"></i>
         <input class="inputFile" type="file" name="file" id="file" multiple directory webkitdirectory mozdirectory odirectory msdirectory />
         <label for="file"><strong>Choose a file</strong><span class="dropText"> or drag and drop</span></label>
@@ -25,7 +25,7 @@
     </form>
 
     
-    <div class="table">
+    <div id="markingTable" class="table">
         <span class="tHead">
             <p class="frontCell">STUDENTS</p>
             [[f= task 1:3 ]]
@@ -55,12 +55,13 @@
 </div>
 
 <script src="/assets/js/drag.js"></script>
-<script src="/assets/js/assignmentSocket.js"></script>
+<script src="/assets/js/clientAssignmentSocket.js"></script>
 <script nonce="[[nonce]]">
     onReady(() => {
         let websockUrl = "[[websockUrl]]".trim();
 
         if(websockUrl.length > 0) {
+            $("#inputBox").classList.add("markedInput");
             let socket = new JAMSocket(websockUrl);
         }
     });

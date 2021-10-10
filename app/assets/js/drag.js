@@ -1,4 +1,4 @@
-// TODO: Change the name of this file to "assignmentSubmit.js"
+// MAYBE: Change the name of this file to "assignmentSubmit.js"
 (() => {
     const allowedToUpload = (() => {
         let elem = document.createElement('input');
@@ -80,6 +80,8 @@
                 let socketUrl = response?.socketLink;
                 if(!!socketUrl) {
                     let ws = new JAMSocket(socketUrl);
+                    // TODO: Once the ws connects, you need to show all the students - and probably the assignments.
+                    // maybe it might be worthwhile saveing these in an object?
                 }
             })
             .catch((e) => {
