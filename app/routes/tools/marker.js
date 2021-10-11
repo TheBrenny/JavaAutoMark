@@ -181,6 +181,7 @@ class JavaMarker {
         let stderrData = [];
         const handleStdout = (line) => {
             // - emit messages on the emitter with the results
+            line = line.trim();
             if(line.startsWith("task.start")) {
                 this.timers.task = Date.now();
                 this.eventEmitter.emit("task.start", line.split(".", 3)[2]);
