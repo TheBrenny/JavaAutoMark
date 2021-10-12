@@ -25,48 +25,20 @@
         <div class="error">Error!</div>
     </form>
 
-    
+
     <div id="markingTable" class="table">
-        <span class="tHead">
-            <p class="frontCell">STUDENTS</p>
-            [[f= task 1:3 ]]
-                [[f= test 1:10 ]]
-                    <p tooltip="Task [[task]]\nTest [[test]]">[[task]].[[test]]</p>
-                [[?==]]
-            [[?==]]
-        </span>
 
-        [[f= student 10:30 ]]
-            <span class="tRow">
-                <p class="frontCell">z00000[[student]]</p>
-                [[f= task 1:3 ]]
-                    [[f= test 1:10 ]]
-                        [[?= task === 1 && test === 3]]
-                            <p id="z00000[[student]].[[task]].[[test]]" class="loading">
-
-                            </p>
-                        [[3=]]
-                            <p id="z00000[[student]].[[task]].[[test]]">[[task]].[[test]]</p>
-                        [[?==]]
-                    [[?==]]
-                [[?==]]
-            </span>
-        [[?==]]
     </div>
 </div>
 
-<script src="/assets/js/drag.js"></script>
-<script src="/assets/js/clientAssignmentSocket.js"></script>
 <script nonce="[[nonce]]">
     onReady(() => {
-        let websockUrl = "[[websockUrl]]".trim();
-
-        if(websockUrl.length > 0) {
-            $("#inputBox").classList.add("markedInput");
-            let socket = new JAMSocket(websockUrl);
-        }
+        globalThis.websockUrl = "[[websockUrl]]".trim();
     });
 </script>
+<script src="/assets/js/drag.js"></script>
+<script src="/assets/js/clientAssignmentSocket.js"></script>
 
-[[l= assignments/components/submitCell ]]
+[[l= assignments/components/submitRow ]]
+[[l= assignments/components/submitTableHeader ]]
 [[i= partials/footer]]
