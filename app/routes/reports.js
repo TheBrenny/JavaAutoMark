@@ -8,7 +8,7 @@ const { assignments } = require("../../db/database");
 const { task } = require("gulp");
 
 /* **************************** */
-/*      PAGES FOR COURSES       */
+/*      PAGES FOR REPORTS       */
 /* **************************** */
 
 router.use("/reports/*", (req, res, next) => {
@@ -19,7 +19,6 @@ router.use("/reports/*", (req, res, next) => {
 router.get("/reports/assignment", async (req, res) => {
     report = makeReport(r);
     // console.log(report);
-    console.log(report.tasks[0].tests);
 
     res.render("reports/assignment", {
         report
