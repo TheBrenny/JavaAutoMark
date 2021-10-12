@@ -21,12 +21,18 @@ class JAMSocketServer {
      * @param {import('ws').WebSocket} socket 
      * @param {any} message 
      */
-    send(socket, message) {
-        socket.send(message);
+    send(socket, messageType, message) {
+        if(message === undefined) {
+            message = messageType;
+            messageType = "unknown";
+            console.trace("[JAMSocketServer] Warning: messageType is undefined, sending as 'unknown'");
+        }
+        if(typeof message === "object") message = JSON.stringify(message);
+        socket.send(`jam:${messageType}:${message}`);
     }
 
-    sendToAll(message) {
-        this.socketServer.clients.forEach(socket => this.send(socket, message));
+    sendToAll(messageType, message) {
+        this.socketServer.clients.forEach(socket => this.send(socket, messageType, message));
     }
 
     handleUpgrade(req, sock, head) {
