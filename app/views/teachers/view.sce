@@ -31,7 +31,7 @@
                             <button href="/teachers/edit/[[teacher.teacher_id]]">
                                 Edit
                             </button>
-                            <button class="blue" href="/teachers/submit/[[teacher.teacher_id]]">
+                            <button class="blue" href="/teachers/view/[[teacher.teacher_id]]">
                                 View
                             </button>
                         </p>
@@ -44,7 +44,7 @@
                             <p class="lName">[[teacher.lname]]</p>
                             
                             <p class="buttons">
-                                <button class="green" href="/teachers/submit/[[teacher.teacher_id]]">
+                                <button class="green" href="/teachers/view/[[teacher.teacher_id]]">
                                     View
                                 </button>
                             </p>

@@ -1,8 +1,95 @@
 .reportAssHead {
     @extend .wrap;
 
-    .resultTotals {
+    .task {
         @extend .block;
+
+        flex-direction: column;
+        hr {
+            margin: 10px 0;
+        }
+
+        .wrapper {
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: $jet;
+
+            .title {
+                font-weight: bold;
+            }
+        }
+
+        h1 {
+            font-weight: bold;
+        }
+
+        h3 {
+            margin: 5px 0;
+        }
+
+        .test {
+            margin: 20px;
+            border-radius: 10px;
+            padding: 5px 10px;
+            background-color: $gray-web;
+            overflow: hidden;
+            transition: all 1s ease;
+
+            img {
+                width: 35px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+
+            .testTop {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .testDetail {
+                background-color: #e6e6e6;
+                padding: 10px 0;
+                margin: 10px 0;
+                div {
+                    display: flex;
+                    // width: 50%;
+                    justify-content: space-between;
+                    margin: 10px 20px;
+                }
+            }
+
+        }
+
+        .test.min {
+            color: $cultured;
+            letter-spacing: 1px;
+            height: 45px;
+
+            .up {
+                display: none;
+            }
+
+            .down {
+                display: initial;
+            }
+        }
+
+        .test.max {
+            max-height: auto;
+            background-color: $task-button;
+
+            .up {
+                display: initial;
+            }
+
+            .down {
+                display: none;
+            }
+        }
     }
+
+
     
 }

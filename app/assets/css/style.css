@@ -119,7 +119,7 @@ body #login_container form label {
   padding: 10px 0;
 }
 
-.block, #viewTeach #head, .reportAssHead .resultTotals, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
+.block, #viewTeach #head, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -1243,6 +1243,77 @@ div.table .tRow p {
 #indCourse .buttons {
   justify-content: space-around;
   gap: 50px;
+}
+
+.reportAssHead .task {
+  flex-direction: column;
+}
+.reportAssHead .task hr {
+  margin: 10px 0;
+}
+.reportAssHead .task .wrapper {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #34312dff;
+}
+.reportAssHead .task .wrapper .title {
+  font-weight: bold;
+}
+.reportAssHead .task h1 {
+  font-weight: bold;
+}
+.reportAssHead .task h3 {
+  margin: 5px 0;
+}
+.reportAssHead .task .test {
+  margin: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #7e7f83ff;
+  overflow: hidden;
+  transition: all 1s ease;
+}
+.reportAssHead .task .test img {
+  width: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.reportAssHead .task .test .testTop {
+  display: flex;
+  justify-content: space-between;
+}
+.reportAssHead .task .test .testDetail {
+  background-color: #e6e6e6;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+.reportAssHead .task .test .testDetail div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px;
+}
+.reportAssHead .task .test.min {
+  color: #f3f3f4ff;
+  letter-spacing: 1px;
+  height: 45px;
+}
+.reportAssHead .task .test.min .up {
+  display: none;
+}
+.reportAssHead .task .test.min .down {
+  display: initial;
+}
+.reportAssHead .task .test.max {
+  max-height: auto;
+  background-color: #c4c4c4ff;
+}
+.reportAssHead .task .test.max .up {
+  display: initial;
+}
+.reportAssHead .task .test.max .down {
+  display: none;
 }
 
 #viewTeach {

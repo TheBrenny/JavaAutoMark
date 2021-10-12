@@ -18,7 +18,7 @@ router.use("/reports/*", (req, res, next) => {
 
 router.get("/reports/assignment", async (req, res) => {
     report = makeReport(r);
-    // console.log(report);
+    // console.log(report.tasks[0].tests);
 
     res.render("reports/assignment", {
         report
@@ -81,6 +81,10 @@ function makeReport(resultSet) {
                 if(report.tasks[index].tests.length < t.tests.length) {
                     report.tasks[index].tests.push({
                         testID: 0,
+                        description: "",
+                        condition: "",
+                        expected: "",
+                        passed: 0,
                         possibleMarks: 0,
                         actualMarks: null,
                         averageMarks: 0
@@ -88,6 +92,10 @@ function makeReport(resultSet) {
                 }
 
                 report.tasks[index].tests[testIndex]["testID"] = test.testID;
+                report.tasks[index].tests[testIndex]["description"] = test.description;
+                report.tasks[index].tests[testIndex]["condition"] = test.condition;
+                report.tasks[index].tests[testIndex]["expected"] = test.expected;
+                test.actualMarks > 0 ? report.tasks[index].tests[testIndex].passed++ : report.tasks[index].tests[testIndex].passed;
                 report.tasks[index].tests[testIndex]["possibleMarks"] = test.possibleMarks;
                 report.tasks[index].tests[testIndex]["actualMarks"] === null ? report.tasks[index].tests[testIndex].actualMarks = test.actualMarks : report.tasks[index].tests[testIndex].actualMarks += test.actualMarks;
                 report.tasks[index].tests[testIndex]["averageMarks"] = report.tasks[index].tests[testIndex].actualMarks / report.totalStudents;
@@ -116,6 +124,8 @@ let r = //{reports:
                         {
                             testID: 1,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 50,
                             actualMarks: 23
                         }
@@ -129,12 +139,16 @@ let r = //{reports:
                         {
                             testID: 1,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 25,
                             actualMarks: 20
                         },
                         {
                             testID: 2,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 25,
                             actualMarks: 20
                         }
@@ -157,6 +171,8 @@ let r = //{reports:
                         {
                             testID: 1,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 50,
                             actualMarks: 13
                         }
@@ -170,12 +186,16 @@ let r = //{reports:
                         {
                             testID: 1,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 25,
                             actualMarks: 15
                         },
                         {
                             testID: 2,
                             description: "This is a test description",
+                            condition: "c",
+                            expected: "25",
                             possibleMarks: 25,
                             actualMarks: 15
                         }
