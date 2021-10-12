@@ -30,7 +30,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center center;
-    animation: rotate_pink randomise() linear infinite;
+    animation: rotate_pink linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -41,7 +41,7 @@
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: center center;
-    animation: rotate_yellow randomise() linear infinite;
+    animation: rotate_yellow linear infinite;
 }
 
 // @keyframes rotate_pink {

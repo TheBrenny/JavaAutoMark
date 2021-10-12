@@ -494,7 +494,7 @@ div.table::-webkit-scrollbar-corner {
 }
 div.table span {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 div.table p {
   display: flex;
@@ -538,7 +538,7 @@ div.table .tRow:nth-child(even) p {
 div.table .tRow:nth-child(odd) p {
   background-color: #c4c4c4ff;
 }
-div.table .tRow p:not(:last-child) {
+div.table .tRow p {
   border-right: 1px solid #7e7f83ff;
   text-align: center;
 }
@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 1.69s linear infinite;
+  animation: rotate_pink linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,7 +577,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 1.79s linear infinite;
+  animation: rotate_yellow linear infinite;
 }
 
 @keyframes rotate_yellow {
