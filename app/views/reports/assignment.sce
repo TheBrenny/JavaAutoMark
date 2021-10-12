@@ -4,7 +4,7 @@
 
 <div class="reportAssHead">
     <div class="resultTotals">
-        <h1>[[report.totalStudents]]</h1>
+        <h1>[[report.title]]</h1>
 
         
     </div>

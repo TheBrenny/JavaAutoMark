@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 0.98s linear infinite;
+  animation: rotate_pink 0.91s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,7 +577,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 0.77s linear infinite;
+  animation: rotate_yellow 0.65s linear infinite;
 }
 
 @keyframes rotate_pink {
@@ -1017,12 +1017,12 @@ div.table .tRow p:not(:last-child) {
 #submitAss .metaAss .content {
   flex-grow: 1;
   margin: 0;
-  margin-right: 35px;
+  margin-right: 15px;
 }
 #submitAss .metaAss button {
   padding: 10px 20px;
   width: 150px;
-  margin: 0;
+  margin-left: 20px;
 }
 #submitAss .inputBox {
   display: block;

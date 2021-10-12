@@ -28,6 +28,7 @@ router.get("/reports/assignment", async (req, res) => {
 function makeReport(resultSet) {
     
     let report = {
+        title: "",
 
         totalStudents: 0,
 
@@ -44,6 +45,7 @@ function makeReport(resultSet) {
     }
 
     resultSet.forEach(s => {
+        report.title = s.assignmentTitle;
         report.totalStudents++;
         //Possible marks always the same, actual marks add up for average
         report.possibleMarks = s.possibleMarks;
@@ -101,6 +103,7 @@ let r = //{reports:
     [
         {
             assignmentID: 1,
+            assignmentTitle: "Assignment",
             studentID: 5260786,
             possibleMarks: 100,
             actualMarks: 63,
@@ -141,6 +144,7 @@ let r = //{reports:
         }, 
         {
             assignmentID: 1,
+            assignmentTitle: "Assignment",
             studentID: 1000555,
             possibleMarks: 100,
             actualMarks: 43,
