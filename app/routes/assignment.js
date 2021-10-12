@@ -195,8 +195,10 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').OutgoingMessage} res 
  */
 async function onStudentAssignmentsUploaded(req, res) {
+    // TODO: Send the websocket so we're sending live updates of what we're doing because we don't need to wait for all compilation to happen
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
+    // FIXME: Uncomment this when the time is right!
     // Database.assignments.updateAssignment(req.params.id, {
     //     "state": "processing"
     // });

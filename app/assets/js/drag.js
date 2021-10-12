@@ -1,5 +1,5 @@
 // MAYBE: Change the name of this file to "assignmentSubmit.js"
-(() => {
+onReady(() => {
     const allowedToUpload = (() => {
         let elem = document.createElement('input');
         elem.type = 'file';
@@ -78,11 +78,7 @@
                 }
 
                 let socketUrl = response?.socketLink;
-                if(!!socketUrl) {
-                    let ws = new JAMSocket(socketUrl);
-                    // TODO: Once the ws connects, you need to show all the students - and probably the assignments.
-                    // maybe it might be worthwhile saveing these in an object?
-                }
+                if(!!socketUrl) listenToResponses(socketUrl);
             })
             .catch((e) => {
                 form.classList.add('isError');
@@ -194,4 +190,102 @@
         }
         return retFiles;
     }
-})();
+
+    function listenToResponses(socketUrl) {
+        let ws = new JAMSocket(socketUrl);
+        $("#inputBox").classList.add("markedInput");
+        let table = $("#markingTable");
+
+        ws.on("jam:initial", (obj) => {
+            obj = obj.data;
+            globalThis.assignment = Object.assign({}, obj, {results: []});
+            buildTable(table, obj);
+            obj.results.forEach((r) => handleProgress(r, false));
+            tooltip.findNewCandidates();
+        });
+
+        ws.on("jam:progress", (obj) => {
+            obj = obj.data;
+            handleProgress(obj);
+        });
+
+        function handleProgress(progress, updateTooltips = true) {
+            // FIXME: Handle when the progress is an error
+            if(progress.error !== undefined) {
+                return;
+            }
+            let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
+            let clone = cell.cloneNode(false);
+            clone.classList.remove("loading");
+            clone.classList.add(progress.passed ? "pass" : "fail");
+            // TODO: Tooltip: Add in the expected output
+            // TODO: Tooltip: Try add in a HR if possible
+            // TODO: Alternate colours of each row, or use borders to differentiate rows
+            // TODO: Maybe use icons to identify success/failure instead of background colour -- this means we can keep the background colour
+            //   - switch out the icon of the::after element
+            //   - keep the greys to differentiate rows
+            clone.setAttribute("tooltip", `${progress.passed ? "Passed" : "Failed"}\nOutput: ${progress.output}\nTime: ${progress.time}ms`);
+            clone.innerText = obj.passed ? "✓" : "✗";
+            // clone.innerText = progress.output;
+            cell.replaceWith(clone);
+
+            if(updateTooltips) tooltip.findNewCandidates();
+        }
+    }
+
+    function buildTable(table, obj) {
+        obj.tasks.forEach(task => {
+            task.tests.forEach(test => {
+                test.status = "loading";
+                test.value = "";
+            });
+        });
+
+        let clone = table.cloneNode();
+
+        // Create the header row
+        let row = document.createElement("span");
+        row.classList.add("tHead");
+        row.insertAdjacentHTML("afterbegin", `<p class="frontCell">STUDENTS</p>`);
+        for(let task of obj.tasks) {
+            for(let test of task.tests) {
+                let cell = document.createElement("p");
+                cell.setAttribute("tooltip", `Task ${task.taskID}\nTest ${test.testID}\nMarks: ${test.marks}\n${test.description}`);
+                cell.innerText = `${task.taskID}.${test.testID}`;
+                row.appendChild(cell);
+            }
+        }
+        clone.appendChild(row);
+
+        // Create the student rows
+        for(let student of obj.students) {
+            row = document.createElement("span");
+            row.classList.add("tRow");
+            let cell = document.createElement("p");
+            cell.classList.add("frontCell");
+            cell.innerText = student;
+            row.appendChild(cell);
+
+            for(let task of obj.tasks) {
+                for(let test of task.tests) {
+                    cell = document.createElement("p");
+                    cell.id = `${student}-${task.taskID}-${test.testID}`;
+                    cell.classList.add("resultCell");
+                    cell.classList.add(test.status);
+                    cell.setAttribute("tooltip", "Waiting to be marked...");
+                    cell.innerText = test.value;
+                    row.appendChild(cell);
+                }
+            }
+
+            clone.appendChild(row);
+        }
+
+        table.replaceWith(clone);
+        tooltip.findNewCandidates();
+    }
+
+    if(globalThis.websockUrl.length > 0) {
+        listenToResponses(globalThis.websockUrl);
+    }
+});

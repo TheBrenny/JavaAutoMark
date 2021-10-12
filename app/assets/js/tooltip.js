@@ -5,7 +5,10 @@ onReady(() => {
         element: $("#tooltip"),
         target: null,
         mouseTarget: null,
-        candidates: Array.from($$("*[tooltip]")),
+        candidates: [],
+        findNewCandidates() {
+            return (tooltip.candidates = Array.from($$("*[tooltip]")));
+        },
         show(message, element) {
             tooltip.target = element;
             tooltip.element.style.left = `${tooltip.location.x}px`;
@@ -53,6 +56,7 @@ onReady(() => {
         }
     };
     tooltip.element.message = tooltip.element.$(".message");
+    tooltip.findNewCandidates();
     globalThis.tooltip = tooltip;
     globalThis.tooltip.animator.start();
 

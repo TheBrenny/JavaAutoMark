@@ -15,25 +15,28 @@ class MarkerManager {
         this.markers = 0;
         this.state = "waiting";
         this.stopFunctions = [];
-        this.results = {};
+        this.results = [];
 
 
         // This creates an assignment object that we can send to the user when they connect to the websocket server
         this.assignment = {
             id: assignment.id,
             students: [],
-            tasks: assignment.tasks.map(task => task.tests.filter(test => test.testID !== undefined))
+            tasks: Array.from(assignment.tasks)
         };
+        this.assignment.tasks.forEach((task, i, a) => {
+            task.tests = task.tests.filter(test => test.testID !== undefined);
+        });
 
         this.socket.on("connection", (ws, req) => {
             ws.on("message", this.handleMessage.bind(this, ws));
+            this.socket.send(ws, "state", {state: this.state});
 
             switch(this.state) {
                 case "waiting":
-                    this.socket.send(ws, this.state);
                     break;
                 case "running":
-                    this.socket.send(ws, JSON.stringify(this.assignment));
+                    this.sendInitial(ws);
                     break;
             }
         });
@@ -43,6 +46,14 @@ class MarkerManager {
         this.assignment.students = students.map(s => s.student);
         students.forEach(student => this.createMarker(student));
         return this;
+    }
+
+    sendInitial(sock) {
+        if(sock === undefined) {
+            this.socket.sendToAll("initial", Object.assign({}, this.assignment, {results: this.results}));
+        } else {
+            this.socket.send(sock, "initial", Object.assign({}, this.assignment, {results: this.results}));
+        }
     }
 
     createMarker(student) {
@@ -66,6 +77,8 @@ class MarkerManager {
 
     async start() {
         if(this.state === "running") return this;
+        this.socket.sendToAll("state", "running");
+        this.sendInitial();
         this.state = "running";
 
         let harness = {
@@ -78,15 +91,15 @@ class MarkerManager {
 
         /** @param {JavaMarker} marker */
         const generateHarness = async (marker) => {
-            await tm.queue();
+            // await tm.queue();
             if(harness.dirty) {
                 await java.promise.compile(harness.javaFile, marker.student.jarFile, path.dirname(harness.javaFile))
                     .then((outs) => {
-                        if(!!outs.stderr) harness.dirty = true;
+                        if(outs.stderr?.contains("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
                         else harness.dirty = false;
                     })
                     .catch((outs) => {
-                        if(!!outs.stderr) harness.dirty = true;
+                        if(outs.stderr?.contains("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
                         else harness.dirty = false;
                     });
                 harness.harness = harness.javaFile.replace(/.java$/, ".class");
@@ -94,26 +107,17 @@ class MarkerManager {
             return harness.harness;
         };
 
-        let limit = (await plimit).default(7);
-
         /** @param {JavaMarker} marker */
         const runMarker = (marker) => {
             return () => new Promise(async (resolve, reject) => {
                 // REJECT ISN"T USED! We want to use it when there's an error with OUR code - not student code
                 marker.on("progress", (data) => {
-                    // Make the results object
-                    this.results[data.student] = this.results[data.student] ?? {};
-                    this.results[data.student][data.task] = this.results[data.student][data.task] ?? {};
-                    this.results[data.student][data.task][data.test] = {
-                        output: data.output,
-                        passed: data.passed,
-                        time: data.time
-                    };
-
-                    this.socket.sendToAll(JSON.stringify(data));
+                    this.results.push(data);
+                    this.socket.sendToAll("progress", data);
                 });
                 marker.on("error", (data) => {
-                    this.results[data.student] = data.error;
+                    this.results.push(data);
+                    this.socket.sendToAll("error", data);
                 });
                 marker.on("finish", (code) => {
                     resolve(code);
@@ -125,6 +129,7 @@ class MarkerManager {
             });
         };
 
+        let limit = (await plimit).default(2);
         Promise.all(this.javaMarkers.allMarkers.map(marker => limit(runMarker(marker))))
             .catch(console.error)
             .finally(() => {
@@ -244,6 +249,7 @@ class JavaMarker {
             let error = new Error(`Java process exited with code ${code}`);
             error.code = code;
             error.stderr = stderrData.join("\n");
+            error.stdout = stdoutData.join("\n");
             this.stop(error);
         });
 
