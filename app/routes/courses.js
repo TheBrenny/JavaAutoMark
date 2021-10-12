@@ -33,9 +33,11 @@ router.get("/courses/create", async (req, res) => {
 router.get("/courses/view", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
+    let years = courses.map(c => c.running_year).filter((v,i,a) => v === a[i]);
     
     res.render("courses/view", {
-        courses: courses
+        courses: courses,
+        years: years,
     });
 });
 
