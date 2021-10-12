@@ -14,11 +14,11 @@
         [[3=]]
 
             [[e= task in report.tasks ]]
-            <div class="resultTotals">
-                <h1>Task: [[task.taskID]]</h1>
-                <h1>Task possible marks: [[task.possibleMarks]]</h1>
-                <h1>Task average marks: [[task.averageMarks]]</h1>          
-            </div>
+                <div class="resultTotals">
+                    <h1>Task: [[task.taskID]]</h1>
+                    <h1>Task possible marks: [[task.possibleMarks]]</h1>
+                    <h1>Task average marks: [[task.averageMarks]]</h1>          
+                </div>
             [[?==]]
 
         [[?==]]

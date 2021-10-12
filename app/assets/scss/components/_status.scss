@@ -2,7 +2,7 @@
 
 @function randomise() {
     $random: random(50) + 50;
-    $randomMath: $random / 100;
+    $randomMath: 1 + ($random / 100);
 
     @return $randomMath + s;
 }
@@ -44,38 +44,50 @@
     animation: rotate_yellow randomise() linear infinite;
 }
 
-@keyframes rotate_pink {
-    0%, 50%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(-15deg);
-    }
-    75% {
-        transform: rotate(15deg);
-    }
-}
-
-@keyframes rotate_yellow {
-    0%, 50%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(15deg);
-    }
-    75% {
-        transform: rotate(-15deg);
-    }
-}
-
-// @keyframes rotate_yellow {
-//     0%, 30%, 50%, 70%, 80%, 100% {
+// @keyframes rotate_pink {
+//     0%, 50%, 100% {
 //         transform: rotate(0deg);
 //     }
-//     10%, 40%, 80% {
+//     25% {
+//         transform: rotate(-15deg);
+//     }
+//     75% {
 //         transform: rotate(15deg);
 //     }
-//     20%, 60% {
+// }
+
+// @keyframes rotate_yellow {
+//     0%, 50%, 100% {
+//         transform: rotate(0deg);
+//     }
+//     25% {
+//         transform: rotate(15deg);
+//     }
+//     75% {
 //         transform: rotate(-15deg);
 //     }
 // }
+
+@keyframes rotate_yellow {
+    0%, 15%, 25%, 35%, 45%, 100% {
+        transform: rotate(0deg);
+    }
+    5%, 20%, 40% {
+        transform: rotate(15deg);
+    }
+    10%, 30% {
+        transform: rotate(-15deg);
+    }
+}
+
+@keyframes rotate_pink {
+    0%, 15%, 25%, 35%, 45%, 100% {
+        transform: rotate(0deg);
+    }
+    5%, 20%, 40% {
+        transform: rotate(-15deg);
+    }
+    10%, 30% {
+        transform: rotate(15deg);
+    }
+}

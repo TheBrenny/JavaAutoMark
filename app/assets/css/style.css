@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 0.91s linear infinite;
+  animation: rotate_pink 1.69s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,29 +577,29 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 0.65s linear infinite;
+  animation: rotate_yellow 1.79s linear infinite;
 }
 
-@keyframes rotate_pink {
-  0%, 50%, 100% {
+@keyframes rotate_yellow {
+  0%, 15%, 25%, 35%, 45%, 100% {
     transform: rotate(0deg);
   }
-  25% {
-    transform: rotate(-15deg);
-  }
-  75% {
+  5%, 20%, 40% {
     transform: rotate(15deg);
+  }
+  10%, 30% {
+    transform: rotate(-15deg);
   }
 }
-@keyframes rotate_yellow {
-  0%, 50%, 100% {
+@keyframes rotate_pink {
+  0%, 15%, 25%, 35%, 45%, 100% {
     transform: rotate(0deg);
   }
-  25% {
-    transform: rotate(15deg);
-  }
-  75% {
+  5%, 20%, 40% {
     transform: rotate(-15deg);
+  }
+  10%, 30% {
+    transform: rotate(15deg);
   }
 }
 #createUser,
