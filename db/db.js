@@ -24,7 +24,7 @@ module.exports = (async function createDB() {
 
         global.db.then(db => {
             db.on("error", err => {
-                if(["PROTOCOL_CONNECTION_LOST", "ECONNREFUSED"].includes(err.code)) {
+                if(["PROTOCOL_CONNECTION_LOST", "ECONNREFUSED", "ETIMEDOUT"].includes(err.code)) {
                     console.log("Lost connection to database. Attempting to reconnect...");
                     createDB();
                 }
