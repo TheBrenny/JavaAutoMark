@@ -56,6 +56,18 @@ router.get("/teachers/view/:id", async (req, res) => {
     });
 });
 
+router.get("/teachers/edit/:id", async (req, res) => {
+    let id = req.params.id.replace(/^z/g, "");
+    let t = await Database.teachers.getTeacher(id);
+
+    if(t == undefined) throw errors.notFound.fromReq(req);
+
+    t = Database.teachers.toObject(t);
+
+    res.render("teachers/edit", {
+        teacher: t
+    });
+});
 
 router.get("/teachers/create", checks.isAdmin, (req, res) => {
     res.render("teachers/create", {});

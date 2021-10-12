@@ -119,7 +119,7 @@ body #login_container form label {
   padding: 10px 0;
 }
 
-.block, .reportAssHead .resultTotals, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
+.block, #viewTeach #head, .reportAssHead .resultTotals, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -129,7 +129,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
+.wrap, #viewTeach, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;
@@ -566,7 +566,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_pink 0.71s linear infinite;
+  animation: rotate_pink 0.98s linear infinite;
 }
 
 .tRow:nth-child(even) p.loading::after {
@@ -577,7 +577,7 @@ div.table .tRow p:not(:last-child) {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow 0.68s linear infinite;
+  animation: rotate_yellow 0.77s linear infinite;
 }
 
 @keyframes rotate_pink {
@@ -700,6 +700,9 @@ div.table .tRow p:not(:last-child) {
   flex: 1 1 0%;
   height: 1.3em;
   margin: 0 !important;
+}
+#viewUser .blue {
+  width: 100%;
 }
 
 #newassignment div#details {
@@ -1254,6 +1257,158 @@ div.table .tRow p:not(:last-child) {
 }
 #indCourse .buttons {
   justify-content: space-around;
+  gap: 50px;
+}
+
+#viewTeach {
+  display: flex;
+  flex-flow: column;
+}
+#viewTeach #head {
+  gap: 2em;
+}
+#viewTeach #head > span {
+  flex: 1 1 0px;
+}
+#viewTeach #head label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+}
+#viewTeach #head select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
+#viewTeach #head h1 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+#viewTeach .table .zID {
+  width: 10%;
+}
+#viewTeach .table .fName {
+  width: 25%;
+}
+#viewTeach .table .lName {
+  width: 25%;
+}
+#viewTeach .table .opts, #viewTeach .table .buttons {
+  width: 30%;
+}
+#viewTeach .table .buttons {
+  flex-direction: column;
+}
+
+#editTeach {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #7e7f83ff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#editTeach h2 {
+  text-align: center;
+  margin: 10px 0;
+  color: #34312dff;
+}
+#editTeach h3 {
+  font-weight: 400;
+  margin-left: 10px;
+}
+#editTeach form {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1em;
+}
+#editTeach form > * {
+  padding: 10px;
+  box-sizing: content-box;
+  flex: 1 1 0%;
+  height: 1.3em;
+  margin: 0 !important;
+}
+#editTeach .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 1px;
+  margin-bottom: 0.7em;
+}
+#editTeach .wrapper:last-of-type {
+  margin-bottom: 0;
+}
+#editTeach .wrapper h3 {
+  font-weight: 600;
+  margin: 0;
+}
+#editTeach .wrapper h3.detail {
+  font-weight: normal;
+}
+#editTeach > * {
+  flex-grow: 1;
+}
+#editTeach #groupNames {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+#editTeach #groupNames .name {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#editTeach input[type=text],
+#editTeach input[type=password] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  border-color: #8f8f8f;
+  color: #34312dff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+#editTeach .detail {
+  text-align: right;
+}
+#editTeach input[type=submit] {
+  align-self: center;
+}
+#editTeach label[for=pass] {
+  color: #7e7f83ff;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#editTeach .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 50px;
 }
 /*# sourceMappingURL=style.css.map */
