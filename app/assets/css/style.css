@@ -543,7 +543,7 @@ div.table .tRow p {
   text-align: center;
 }
 
-.loading {
+.resultCell {
   display: inline-flex !important;
   width: 15px !important;
   text-align: center;
@@ -556,20 +556,10 @@ div.table .tRow p {
   max-width: 40px !important;
   max-height: 40px !important;
   padding: 10px !important;
+  overflow: hidden;
+  white-space: nowrap;
 }
-
-.tRow:nth-child(odd) p.loading::after {
-  content: " ";
-  width: 100%;
-  height: 100%;
-  background-image: url(/assets/img/items/flask_pink.svg);
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-position: center center;
-  animation: rotate_pink linear infinite;
-}
-
-.tRow:nth-child(even) p.loading::after {
+.resultCell.loading::after {
   content: " ";
   width: 100%;
   height: 100%;
@@ -577,29 +567,24 @@ div.table .tRow p {
   background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center center;
-  animation: rotate_yellow linear infinite;
+  animation: shake_bottle 4s cubic-bezier(0, 1, 0.5, 1) infinite;
+}
+.resultCell.pass {
+  background: #8acd6dff !important;
+}
+.resultCell.fail {
+  background: #fe6448ff !important;
 }
 
-@keyframes rotate_yellow {
-  0%, 15%, 25%, 35%, 45%, 100% {
+@keyframes shake_bottle {
+  0%, 3%, 6%, 9%, 12%, 15%, 100% {
     transform: rotate(0deg);
   }
-  5%, 20%, 40% {
-    transform: rotate(15deg);
+  1.5%, 7.5%, 13.5% {
+    transform: rotate(7.5deg);
   }
-  10%, 30% {
-    transform: rotate(-15deg);
-  }
-}
-@keyframes rotate_pink {
-  0%, 15%, 25%, 35%, 45%, 100% {
-    transform: rotate(0deg);
-  }
-  5%, 20%, 40% {
-    transform: rotate(-15deg);
-  }
-  10%, 30% {
-    transform: rotate(15deg);
+  4.5%, 10.5% {
+    transform: rotate(-7.5deg);
   }
 }
 #createUser,

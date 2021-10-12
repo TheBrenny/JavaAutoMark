@@ -30,14 +30,14 @@ div.table {
             background-color: $gray-web;
         }
     }
-    
+
     &::-webkit-scrollbar-corner {
         opacity: 0;
     }
 
     span {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     p {
@@ -85,10 +85,8 @@ div.table {
         }
 
         p {
-            &:not(:last-child) {
-                border-right: 1px solid $gray-web;
-                text-align: center;
-            }
+            border-right: 1px solid $gray-web;
+            text-align: center;
         }
     }
 }
