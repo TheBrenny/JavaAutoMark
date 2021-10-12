@@ -1,35 +1,31 @@
 (() => {
+    console.log("We are in file");
     var form = document.getElementById("createCourse");
-    // form.onsubmit can only reference one function - you're looking for form.addEventListener("submit", fn)
-    form.onsubmit = validateForm;
-    form.onsubmit = validateCourseID;
-    form.onsubmit = validateCourseYear;
+    form.addEventListener("submit", validateForm);
+    form.addEventListener("submit", validateCourseID);
+    form.addEventListener("submit", validateCourseYear);
     
-    function validateForm(){
+    function validateForm(event){
+        
         let  courseID = form['id'].value;
         let courseName = form['name'].value;
         let courseYear = form['year'].value;
 
         if (courseID == ""){
-            alert("Please enter a Course Code"); // can you change `alert(msg)`s to `notifier.notify(msg, "error")`, 
-            return false;
+            notifier.notify("Please enter a Course Code", "error"); 
         }
-        if (courseName == ""){
-            alert("Please enter a Course Name");
-            return false;
+        else if (courseName == ""){
+            notifier.notify("Please enter a Course Name", "error");
         }
-        if(courseYear == ""){
-            alert("Please enter a Course Year");
-            return false;
+        else if(courseYear == ""){
+            notifier.notify("Please enter a Course Year", "error");
+        } else {
+            form.submit();
         }
-
-        // You could probably also set a condition to be true at the start, and if any of the ifs are true, set the condition to false.
-        // That way, we can notify the user of multiple errors at once, but still return false (which would be smth like `return isBad`)
-
-        return true;
     }
 
-    function validateCourseID(){
+    function validateCourseID(event){
+        event.preventDefault();
         // A quick and easy regex to do all of this in one go is:
         // /^z[a-z]{3}\d{4}$/i -- https://regexr.com/6752a
         // Click on the tests tab to see it in action
@@ -44,23 +40,24 @@
         let condition4 = courseID.length == 8;
 
         if(!(condition1 && condition2 && condition3 && condition4)){
-            alert("Please enter a valid course code, eg. ZEIT2306");
-            return false;
+            notifier.notify("Please enter a valid course code, eg. ZEIT2306", "error");
+        } else {
+            form.submit();
         }
-        return true;
     }
 
-    function validateCourseYear(){
+    function validateCourseYear(event){
         let courseYear = form['year'].value;
+        let isGood = true;
 
         // Again, a more appropriate regex would be: /^\d{4}$/
         condition1 = courseYear.match(/^[0-9]+$/) != null;
         condition2 = courseYear.length == 4;
 
         if(!(condition1 && condition2)){
-            alert("Please enter a valid year");
-            return false;
-        }
-        return true;
+            notifier.notify("Please enter a valid year", "error");
+        } else {
+            form.submit();
+        }    
     }
 })();
