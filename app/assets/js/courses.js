@@ -29,7 +29,6 @@
         }
     }
 
-
     function submitForm(id, name, year) {
         let submit = fetch('/admin/courses/create', {
             method: 'POST',

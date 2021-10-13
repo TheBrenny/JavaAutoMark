@@ -175,13 +175,16 @@ function deleteItem(task, target) {
 let savedID = null;
 let saving = false;
 function saveAssignment() {
-    if(saving) return;
-    saving = true;
-
     let assignment = $("#newassignment");
 
     let assignmentName = assignment.$("#assName").value;
-    let assignmentCourse = assignment.$("#course").value;
+    let assignmentCourse = assignment.$("#course").value; 
+    if(saving) return;
+    //put validation here
+    
+    saving = true;
+
+     
 
     let assignmentDetails = {
         name: assignmentName,
