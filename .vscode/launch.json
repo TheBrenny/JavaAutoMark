@@ -49,6 +49,26 @@
             ]
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "front end reloads",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "--preserve-symlinks",
+                "run-script",
+                "start"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "preLaunchTask": "frontend task",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
+        },
+        {
             "name": "run installer",
             "program": "${workspaceFolder}/install/install.js",
             "request": "launch",
