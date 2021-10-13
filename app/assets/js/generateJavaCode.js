@@ -78,4 +78,4 @@ function generateJavaCode(assignment, assignmentID) {
     return code;
 }
 
-if(!!module) module.exports = generateJavaCode;
+if(typeof module !== "undefined") module.exports = generateJavaCode;
