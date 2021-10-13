@@ -1,12 +1,12 @@
 (() => {
-    console.log("We are in file");
+   
     var form = document.getElementById("createCourse");
     form.addEventListener("submit", validateForm);
     form.addEventListener("submit", validateCourseID);
     form.addEventListener("submit", validateCourseYear);
     
     function validateForm(event){
-        
+        event.preventDefault();
         let  courseID = form['id'].value;
         let courseName = form['name'].value;
         let courseYear = form['year'].value;
@@ -47,6 +47,7 @@
     }
 
     function validateCourseYear(event){
+        event.preventDefault();
         let courseYear = form['year'].value;
         let isGood = true;
 
