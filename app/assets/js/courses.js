@@ -5,7 +5,7 @@
     function validateForm(event) {
         event.preventDefault();
 
-        let courseID = form.id.value;
+        let courseID = form.courseID.value;
         let courseName = form.name.value;
         let courseYear = form.year.value;
 

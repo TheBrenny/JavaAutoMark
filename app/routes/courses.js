@@ -52,7 +52,7 @@ router.get("/courses/ind/:id", async (req, res) => {
 
 router.post("/admin/courses/create", async (req, res) => {
 
-    let id = req.body.id;
+    let id = req.body.courseID;
     let name = req.body.name;
     let year = req.body.year;
 
