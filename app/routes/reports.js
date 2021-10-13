@@ -16,6 +16,9 @@ router.use("/reports/*", (req, res, next) => {
     next();
 });
 
+//Make reports/:id/:student
+
+//Shift to reports /:id
 router.get("/reports/assignment", async (req, res) => {
     report = makeReport(r);
     // console.log(report.tasks[0].tests);

@@ -27,7 +27,7 @@
                     <h3>[[task.averageMarks]]</h3>
                 </div>
 
-                    <div class="test min">
+                    <!-- <div class="test max">
                         <div class="testTop">
                             <h1>Test [[test.testID]]</h1>
         
@@ -61,7 +61,46 @@
                                 <h2>[[test.description]]</h2>
                             </div>
                         </div>
+                    </div> -->
+            
+                    
+                    [[e= test in task.tests]]
+                    <div class="test">
+                        <div class="testTop">
+                            <h1>Test [[test.testID]]</h1>
+        
+                            <img class="testSwitch down" draggable="false" src="/assets/img/items/arrow_down_white.svg" alt="Move Down" />
+                            <img class="testSwitch up" draggable="false" src="/assets/img/items/arrow_up_white.svg" alt="Move Down" />
+                        </div>
+
+                        <div class="testDetail">
+                            <div class="">
+                                <h2>Description: </h2>
+                                <h2>[[test.description]]</h2>
+                            </div>
+                            <div class="">
+                                <h2>Condition: </h2>
+                                <h2>[[test.condition]]</h2>
+                            </div>
+                            <div class="">
+                                <h2>Expected outcome: </h2>
+                                <h2>[[test.expected]]</h2>
+                            </div>
+                            <div class="">
+                                <h2>Possible marks: </h2>
+                                <h2>[[test.possibleMarks]]</h2>
+                            </div>
+                            <div class="">
+                                <h2>Average marks: </h2>
+                                <h2>[[test.averageMarks]]</h2>
+                            </div>
+                            <div class="">
+                                <h2>Students passed: </h2>
+                                <h2>[[test.passed]]</h2>
+                            </div>
+                        </div>
                     </div>
+                    [[?==]]
             </div>
         [[?==]]
 

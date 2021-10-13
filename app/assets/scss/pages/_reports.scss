@@ -34,8 +34,21 @@
             border-radius: 10px;
             padding: 5px 10px;
             background-color: $gray-web;
+
             overflow: hidden;
             transition: all 1s ease;
+            max-height: 45px;
+
+            color: $cultured;
+            letter-spacing: 1px;
+
+            .up {
+                display: none;
+            }
+
+            .down {
+                display: initial;
+            }
 
             img {
                 width: 35px;
@@ -62,23 +75,10 @@
 
         }
 
-        .test.min {
-            color: $cultured;
-            letter-spacing: 1px;
-            height: 45px;
-
-            .up {
-                display: none;
-            }
-
-            .down {
-                display: initial;
-            }
-        }
-
         .test.max {
-            max-height: auto;
+            max-height: 600px;
             background-color: $task-button;
+            color: $jet;
 
             .up {
                 display: initial;

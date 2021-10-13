@@ -1274,6 +1274,15 @@ div.table .tRow p {
   background-color: #7e7f83ff;
   overflow: hidden;
   transition: all 1s ease;
+  max-height: 45px;
+  color: #f3f3f4ff;
+  letter-spacing: 1px;
+}
+.reportAssHead .task .test .up {
+  display: none;
+}
+.reportAssHead .task .test .down {
+  display: initial;
 }
 .reportAssHead .task .test img {
   width: 35px;
@@ -1294,20 +1303,10 @@ div.table .tRow p {
   justify-content: space-between;
   margin: 10px 20px;
 }
-.reportAssHead .task .test.min {
-  color: #f3f3f4ff;
-  letter-spacing: 1px;
-  height: 45px;
-}
-.reportAssHead .task .test.min .up {
-  display: none;
-}
-.reportAssHead .task .test.min .down {
-  display: initial;
-}
 .reportAssHead .task .test.max {
-  max-height: auto;
+  max-height: 600px;
   background-color: #c4c4c4ff;
+  color: #34312dff;
 }
 .reportAssHead .task .test.max .up {
   display: initial;
