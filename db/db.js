@@ -29,6 +29,11 @@ module.exports = (async function createDB() {
                     createDB();
                 }
             });
+        }).catch(err => {
+            if(["PROTOCOL_CONNECTION_LOST", "ECONNREFUSED", "ETIMEDOUT"].includes(err.code)) {
+                console.log("Couldn't connect to database. Attempting to reconnect...");
+                createDB();
+            }
         });
     }
     return global.db;
