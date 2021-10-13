@@ -1,4 +1,4 @@
-const Database = require("../database");
+const db = require("../db");
 const fs = require("fs");
 const path = require("path");
 const config = require("../../config");
@@ -41,21 +41,21 @@ function install(installFlags) {
             });
             console.log("Cleaning db");
             return sql;
-        }).then((sql) => Database.db.query(sql));
+        }).then((sql) => db.query(sql));
     }
     if (installFlags & flags.install) {
         prom = prom.then(() => {
             let sql = readScript("install.sql");
             console.log("Installing db");
             return sql;
-        }).then((sql) => Database.db.query(sql));
+        }).then((sql) => db.query(sql));
     }
     if (installFlags & flags.demo) {
         prom = prom.then(() => {
             let sql = readScript("demo.sql");
             console.log("Inserting demo db");
             return sql;
-        }).then((sql) => Database.db.query(sql));
+        }).then((sql) => db.query(sql));
     }
 
     prom.then(() => {
