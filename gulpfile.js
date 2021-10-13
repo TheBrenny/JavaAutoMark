@@ -101,12 +101,12 @@ gulp.task('injecticon', function () {
             });
 
             transformStream._transform = function (file, encoding, callback) {
-                if (file.isNull()) {
+                if(file.isNull()) {
                     callback(null, file);
                     return;
                 }
 
-                if (file.isStream()) {
+                if(file.isStream()) {
                     console.log("Cannot op on stream");
                     callback(null, file);
                     return;
@@ -135,7 +135,7 @@ gulp.task('injecticon', function () {
 gulp.task('updateicon', function (done) {
     var currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
     realFavicon.checkForUpdates(currentVersion, function (err) {
-        if (err) {
+        if(err) {
             throw err;
         }
     });
@@ -188,7 +188,7 @@ gulp.task("nodemon", function (cb) {
     }).on('start', function () {
         // to avoid nodemon being started multiple times
         // thanks @matthisk
-        if (!started) {
+        if(!started) {
             started = true;
             console.log("Nodemon started.");
             setTimeout(cb, 3000);
@@ -214,3 +214,4 @@ function streamFileChanges(event, path) {
 }
 
 gulp.task("default", gulp.series("nodemon", "browserSync", "watch"));
+gulp.task("frontend", gulp.parallel("browserSync", "watch"));
