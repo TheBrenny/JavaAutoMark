@@ -28,6 +28,22 @@ router.get("/reports/assignment", async (req, res) => {
     });
 });
 
+router.get("/reports/assignment/:student", async (req, res) => {
+    let student;
+
+    r.forEach(e => {
+        if(e.studentID == req.params.student) {
+            student = e;
+            return;
+        }
+    });
+    console.log(student);
+
+    res.render("reports/student", {
+        student
+    });
+});
+
 function makeReport(resultSet) {
     
     let report = {
@@ -115,7 +131,7 @@ let r = //{reports:
         {
             assignmentID: 1,
             assignmentTitle: "Assignment",
-            studentID: 5260786,
+            studentID: "z5260786",
             possibleMarks: 100,
             actualMarks: 63,
             tasks: [
@@ -129,6 +145,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 50,
                             actualMarks: 23
                         }
@@ -144,6 +161,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 25,
                             actualMarks: 20
                         },
@@ -152,6 +170,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 25,
                             actualMarks: 20
                         }
@@ -162,7 +181,7 @@ let r = //{reports:
         {
             assignmentID: 1,
             assignmentTitle: "Assignment",
-            studentID: 1000555,
+            studentID: "z1000555",
             possibleMarks: 100,
             actualMarks: 43,
             tasks: [
@@ -176,6 +195,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 50,
                             actualMarks: 13
                         }
@@ -191,6 +211,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 25,
                             actualMarks: 15
                         },
@@ -199,6 +220,7 @@ let r = //{reports:
                             description: "This is a test description",
                             condition: "c",
                             expected: "25",
+                            given: "23",
                             possibleMarks: 25,
                             actualMarks: 15
                         }

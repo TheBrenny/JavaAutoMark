@@ -2,25 +2,31 @@
    
     var form = document.getElementById("createCourse");
     form.addEventListener("submit", validateForm);
-    form.addEventListener("submit", validateCourseID);
-    form.addEventListener("submit", validateCourseYear);
+    // form.addEventListener("submit", validateCourseID);
+    // form.addEventListener("submit", validateCourseYear);
     
     function validateForm(event){
-        event.preventDefault();
         let  courseID = form['id'].value;
         let courseName = form['name'].value;
         let courseYear = form['year'].value;
 
+        event.preventDefault();
+
+        let valid = true;
+
         if (courseID == ""){
             notifier.notify("Please enter a Course Code", "error"); 
+            valid = false;
         }
         else if (courseName == ""){
             notifier.notify("Please enter a Course Name", "error");
+            valid = false;
         }
         else if(courseYear == ""){
             notifier.notify("Please enter a Course Year", "error");
-        } else {
-            form.submit();
+            valid = false;
+        } else if(valid) {
+            submitForm(courseID, courseName, courseYear);
         }
     }
 
@@ -60,5 +66,34 @@
         } else {
             form.submit();
         }    
+    }
+
+    function submitForm(id, name, year) {
+        let submit = fetch('/admin/courses/create', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                year: year
+            }),
+        }).then(async r => {
+            let json = await r.json();
+            if(r.status >= 200 && r.status < 300 && json.success === true) {
+                return json;
+            } else {
+                throw json;
+            }
+        }).then((response) => {
+            if(typeof response === "object") { // we have a JSON object
+                notifier.notify(response.message, response.type ?? response.success ? "success" : "info");
+                if(response.redirect) setTimeout(() => window.location.href = response.redirect, 1000);
+            }
+        }).catch(e => {
+            console.error(e);
+            notifier.notify(`${e.name ?? "Error"}: ${e.message}`, "error");
+        });
     }
 })();
