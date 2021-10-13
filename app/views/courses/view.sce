@@ -6,7 +6,7 @@
     <div id="head">
         <h1>Courses</h1>
 
-        <select id="year" name="year">
+        <select id="year" name="year" filter="courseRow">
             <option>
                 All years
             </option>
@@ -26,13 +26,8 @@
             <p class="opt">Actions</p>
         </span>
 
-        [[?= courses == null]]
-        <span class="bRow">
-            No courses found
-        </span>
-        [[3=]]
         [[e= course in courses ]]
-        <span class="tRow">
+        <span filterTarget="courseRow" class="tRow">
             <p class="id">[[course.course_id]]</p>
             <p class="name">[[course.course_name]]</p>
             <p class="year">[[course.running_year]]</p>
@@ -42,7 +37,9 @@
             </p>
         </span>
         [[?==]]
-        [[?==]]
+        <span class="bRow">
+            No courses found
+        </span>
     </div>
 
     <button href="create">

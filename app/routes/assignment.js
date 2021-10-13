@@ -37,10 +37,14 @@ router.get("/assignments", async (req, res) => {
 router.get("/assignments/view", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
     courses = Database.courses.toObject(courses);
+    let years = courses.map(c => c.running_year).filter((v, i, a) => a.indexOf(v) === i);
+    let courseOpts = courses.map(c => c.course_name).filter((v, i, a) => a.indexOf(v) === i);
     let assignments = Database.assignments.toObject(await Database.assignments.getAllAssignments(), CourseModel);
-
+    
     res.render("assignments/view", {
-        courses: courses,
+        courses,
+        courseOpts,
+        years,
         assignments
     });
 });

@@ -6,13 +6,23 @@
     <div id="head">
         <h1>Assignments</h1>
 
-        <select id="course" name="course">
-            <option>
+        <select id="year" name="year" filter="assRow">
+            <option value="">
+                All years
+            </option>
+            [[e= year in years ]]
+            <option value="[[year]]">
+                [[year]]
+            </option>
+            [[?==]]
+        </select>
+        <select id="course" name="course" filter="assRow">
+            <option value="">
                 All courses
             </option>
-            [[e= course in courses ]]
-            <option value="[[course.uuid]]">
-                [[course.course_name]] - [[course.running_year]]
+            [[e= course in courseOpts ]]
+            <option value="[[course]]">
+                [[course]]
             </option>
             [[?==]]
         </select>
@@ -26,13 +36,8 @@
             <p class="marked">Marked</p>
         </span>
 
-        [[?= assignments == null]]
-        <span class="bRow">
-            No assignments found
-        </span>
-        [[3=]]
-            [[e= assignment in assignments ]]
-            <span class="tRow">
+        [[e= assignment in assignments ]]
+            <span filterTarget="assRow" class="tRow">
                 <p class="name">[[assignment.assignment_name]]</p>
                 <p class="course">[[assignment.joins.courses.course_name]]</p>
                 <p class="year">[[assignment.joins.courses.running_year]]</p>
@@ -45,8 +50,10 @@
                     </button>
                 </p>
             </span>
-            [[?==]]
         [[?==]]
+        <span class="bRow">
+            No assignments found
+        </span>
     </div>
     
     <button id="subAssignment" href="/assignments/create">

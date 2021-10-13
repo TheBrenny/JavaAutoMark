@@ -84,6 +84,13 @@ div.table {
             background-color: $task-button;
         }
 
+        &.hidden {
+            display: none !important;
+        }
+        &:not(.hidden) ~ .bRow {
+            display: none !important;
+        }
+
         p {
             border-right: 1px solid $gray-web;
             text-align: center;

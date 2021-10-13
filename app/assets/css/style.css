@@ -538,6 +538,12 @@ div.table .tRow:nth-child(even) p {
 div.table .tRow:nth-child(odd) p {
   background-color: #c4c4c4ff;
 }
+div.table .tRow.hidden {
+  display: none !important;
+}
+div.table .tRow:not(.hidden) ~ .bRow {
+  display: none !important;
+}
 div.table .tRow p {
   border-right: 1px solid #7e7f83ff;
   text-align: center;
