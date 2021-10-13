@@ -287,6 +287,9 @@ body #login_container form label {
   border-right: 10px solid transparent;
   transform: translateX(-50%);
 }
+#tooltip hr {
+  margin: 0.3em;
+}
 
 button,
 input[type=button],
@@ -531,11 +534,12 @@ div.table .bRow {
 div.table .tRow {
   z-index: 40;
   position: relative;
+  width: min-content;
 }
-div.table .tRow:nth-child(even) p {
+div.table .tRow:nth-child(even) {
   background-color: #f3f3f4ff;
 }
-div.table .tRow:nth-child(odd) p {
+div.table .tRow:nth-child(odd) {
   background-color: #c4c4c4ff;
 }
 div.table .tRow.hidden {
@@ -576,10 +580,15 @@ div.table .tRow p {
   animation: shake_bottle 4s cubic-bezier(0, 1, 0.5, 1) infinite;
 }
 .resultCell.pass {
-  background: #8acd6dff !important;
+  background: rgba(138, 205, 109, 0.7) !important;
 }
 .resultCell.fail {
-  background: #fe6448ff !important;
+  background: rgba(254, 100, 72, 0.7) !important;
+}
+
+.resultCell.error,
+.frontCell.error {
+  background: #ffd147ff !important;
 }
 
 @keyframes shake_bottle {

@@ -196,6 +196,10 @@ onReady(() => {
         $("#inputBox").classList.add("markedInput");
         let table = $("#markingTable");
 
+        ws.on("jam:state", (obj) => {
+
+        });
+
         ws.on("jam:initial", (obj) => {
             obj = obj.data;
             globalThis.assignment = Object.assign({}, obj, {results: []});
@@ -210,26 +214,66 @@ onReady(() => {
         });
 
         function handleProgress(progress, updateTooltips = true) {
-            // FIXME: Handle when the progress is an error
             if(progress.error !== undefined) {
+                let frontCell = $(`#${progress.student}`);
+                let errorReason = progress.error.stderr;
+                let clone = cloneCell(frontCell, {
+                    classList: {
+                        remove: ["loading"],
+                        add: ["error"]
+                    },
+                    tooltip: "<pre>" + errorReason.substring(0, errorReason.indexOf("\n", errorReason.indexOf("\n") + 1)) + "</pre>",
+                });
+                frontCell.replaceWith(clone);
+
+                let rowCells = $$(`*[id^="${progress.student}-"].loading`);
+                rowCells.forEach((c) => {
+                    c.replaceWith(cloneCell(c, {
+                        classList: {
+                            remove: ["loading"],
+                            add: ["error"]
+                        },
+                        tooltip: "There was an error with the student code!\\nHover over the zID to find out more!",
+                        text: "!",
+                    }));
+                });
                 return;
             }
-            let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
-            let clone = cell.cloneNode(false);
-            clone.classList.remove("loading");
-            clone.classList.add(progress.passed ? "pass" : "fail");
-            // TODO: Tooltip: Add in the expected output
-            // TODO: Tooltip: Try add in a HR if possible
-            // TODO: Alternate colours of each row, or use borders to differentiate rows
-            // TODO: Maybe use icons to identify success/failure instead of background colour -- this means we can keep the background colour
+            // MAYBE: use icons to identify success/failure instead of background colour -- this means we can keep the background colour
             //   - switch out the icon of the::after element
             //   - keep the greys to differentiate rows
-            clone.setAttribute("tooltip", `${progress.passed ? "Passed" : "Failed"}\nOutput: ${progress.output}\nTime: ${progress.time}ms`);
-            clone.innerText = progress.passed ? "✓" : "✗";
-            // clone.innerText = progress.output;
+            let test = globalThis.assignment.tasks[progress.task - 1].tests[progress.test - 1];
+            let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
+            // let clone = cell.cloneNode(false);
+            let expectedOutput = test.expected || "<i>" + (test.isException ? "Exception" : "(Empty)") + "</i>";
+            let clone = cloneCell(cell, {
+                classList: {
+                    remove: ["loading", "error"],
+                    add: [progress.passed ? "pass" : "fail"]
+                },
+                tooltip: `${progress.passed ? "Passed" : "Failed"}<hr>Output: ${progress.output}\\nExpected: ${expectedOutput}<hr>Time: ${progress.time}ms`,
+                text: progress.passed ? "✓" : "✗",
+                // text: progress.output,
+            });
             cell.replaceWith(clone);
 
             if(updateTooltips) tooltip.findNewCandidates();
+        }
+        function cloneCell(cell, data) {
+            let clone = cell.cloneNode(true);
+
+            // Modify classlist
+            data.classList?.remove?.forEach((c) => clone.classList.remove(c));
+            data.classList?.add?.forEach((c) => clone.classList.add(c));
+
+            // Modify tooltip
+            if(typeof data.tooltip !== "undefined") clone.setAttribute("tooltip", data.tooltip);
+
+            // Modify insides
+            if(typeof data.text !== "undefined") clone.innerText = data.text;
+            if(typeof data.html !== "undefined") clone.innerHTML = data.html;
+            
+            return clone;
         }
     }
 
@@ -250,7 +294,7 @@ onReady(() => {
         for(let task of obj.tasks) {
             for(let test of task.tests) {
                 let cell = document.createElement("p");
-                cell.setAttribute("tooltip", `Task ${task.taskID}\nTest ${test.testID}\nMarks: ${test.marks}\n${test.description}`);
+                cell.setAttribute("tooltip", `Task ${task.taskID}\\nTest ${test.testID}\\nMarks: ${test.marks}\n${test.description}`);
                 cell.innerText = `${task.taskID}.${test.testID}`;
                 row.appendChild(cell);
             }
@@ -263,6 +307,7 @@ onReady(() => {
             row.classList.add("tRow");
             let cell = document.createElement("p");
             cell.classList.add("frontCell");
+            cell.id = `${student}`;
             cell.innerText = student;
             row.appendChild(cell);
 

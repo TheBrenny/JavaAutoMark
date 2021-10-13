@@ -37,11 +37,18 @@
     }
 
     &.pass {
-        background: $pistachio !important;
+        background: rgba($pistachio, 0.7) !important;
     }
 
     &.fail {
-        background: $tomato !important;
+        background: rgba($tomato, 0.7) !important;
+    }
+}
+
+.resultCell,
+.frontCell {
+    &.error {
+        background: $sunglow !important;
     }
 }
 

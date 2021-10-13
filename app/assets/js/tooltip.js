@@ -13,13 +13,15 @@ onReady(() => {
             tooltip.target = element;
             tooltip.element.style.left = `${tooltip.location.x}px`;
             tooltip.element.style.top = `${tooltip.location.y}px`;
-            tooltip.element.message.innerText = message.replace(/\\n/g, "\n");
+            tooltip.element.message.innerHTML = message.replace(/\\n/g, "<br>");
+            // tooltip.element.message.innerText = message.replace(/\\n/g, "\n");
             tooltip.element.classList.add("show");
         },
         hide() {
             tooltip.target = null;
             tooltip.element.classList.remove("show");
             tooltip.element.message.innerText = "";
+            tooltip.element.message.innerHTML = "";
         },
         update(now) {
             if(tooltip.target !== null) return;
@@ -56,19 +58,29 @@ onReady(() => {
         }
     };
     tooltip.element.message = tooltip.element.$(".message");
+    tooltip.element.arrow = tooltip.element.$(".arrow");
     tooltip.findNewCandidates();
     globalThis.tooltip = tooltip;
     globalThis.tooltip.animator.start();
 
     document.addEventListener("mousemove", (event) => {
-        tooltip.location.x = event.clientX;
-        tooltip.location.y = event.clientY;
+        let mX = event.clientX;
+        let mY = event.clientY;
+        tooltip.location.x = mX;
+        tooltip.location.y = mY;
         tooltip.mouseTarget = event.target;
         tooltip.location.time = window.performance.now();
+
         if(tooltip.target !== null) {
+            let boxWidth = tooltip.element.offsetWidth;
+            let boxHeight = tooltip.element.offsetHeight;
+
+            tooltip.location.x = Math.min(Math.max(tooltip.location.x, boxWidth / 2), window.innerWidth - boxWidth / 2);
+            tooltip.location.y = Math.min(Math.max(tooltip.location.y, boxHeight / 2), window.innerHeight - boxHeight / 2);
+
             tooltip.element.style.left = `${tooltip.location.x}px`;
             tooltip.element.style.top = `${tooltip.location.y}px`;
-
+            tooltip.element.arrow.style.left = `${(0.5 + (mX - tooltip.location.x) / boxWidth) * 100}%`;
             if(event.target !== tooltip.target) tooltip.hide();
         }
     });
