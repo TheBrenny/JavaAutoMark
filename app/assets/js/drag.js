@@ -225,7 +225,7 @@ onReady(() => {
             //   - switch out the icon of the::after element
             //   - keep the greys to differentiate rows
             clone.setAttribute("tooltip", `${progress.passed ? "Passed" : "Failed"}\nOutput: ${progress.output}\nTime: ${progress.time}ms`);
-            clone.innerText = obj.passed ? "✓" : "✗";
+            clone.innerText = progress.passed ? "✓" : "✗";
             // clone.innerText = progress.output;
             cell.replaceWith(clone);
 
