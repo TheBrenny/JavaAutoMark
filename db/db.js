@@ -19,7 +19,8 @@ module.exports = (function createDB() {
 
         db = mysql.createPool({
             uri: dbUrl.href,
-            multipleStatements: true
+            multipleStatements: true,
+            connectionLimit: 1, // MAYBE: Turn this into a configuration option
         });
     }
     return db;
