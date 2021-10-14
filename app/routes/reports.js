@@ -28,7 +28,7 @@ router.get("/reports/assignment", async (req, res) => {
     });
 });
 
-router.get("/reports/assignment/:student", async (req, res) => {
+router.get("/reports/:id/:student", async (req, res) => {
     let student;
 
     r.forEach(e => {

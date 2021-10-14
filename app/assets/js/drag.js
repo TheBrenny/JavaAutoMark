@@ -308,7 +308,7 @@ onReady(() => {
             let cell = document.createElement("p");
             cell.classList.add("frontCell");
             cell.id = `${student}`;
-            cell.innerText = student;
+            cell.innerHTML = `<a href='/reports/${globalThis.assignment.id}/${student}'>${student}</a>`;
             row.appendChild(cell);
 
             for(let task of obj.tasks) {

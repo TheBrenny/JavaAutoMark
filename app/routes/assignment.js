@@ -89,7 +89,7 @@ router.get("/assignments/submit/:id", async (req, res) => {
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
     let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
-
+    
     res.render("assignments/submit", {
         assignment,
         websockUrl,
