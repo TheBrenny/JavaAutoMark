@@ -26,50 +26,87 @@
         }
     }
 
-    .inputBox {
-        display: block;
-        padding: 100px 0;
+    #inputBox {
+        @extend .block;
+        flex-flow: column;
+        justify-content: center;
         text-align: center;
-        width: 100%;
         margin: 0;
         margin-bottom: 50px;
-
-        @extend .block;
         outline: dashed 2px $gray-web;
         outline-offset: -10px;
         transition: ease(outline-offset), ease(background-color);
+        font-size: 20px;
+        color: $highlighted-task-button;
+        padding: 3em;
 
         .inputFile {
             display: none;
         }
 
+        .upload-icon {
+            color: $gray-web !important;
+            opacity: 0.3;
+            margin-bottom: 2rem;
+        }
+
         label[for="file"] {
-            margin-top: 35px;
             cursor: pointer;
             display: inline-block;
-            font-size: 20px;
-            color: $highlighted-task-button;
+
+            strong {
+                transition: ease(color);
+            }
+
+            &:hover strong {
+                color: $button-blue;
+            }
+
+            .dropText {
+                display: none;
+            }
+        }
+    }
+    #inputBox.disabled {
+        * {
+            display: none !important;
+        }
+        .status {
+            display: block !important;
+        }
+    }
+
+    .dragEnabled:not(.disabled) .dropText {
+        display: inline !important;
+    }
+
+    .file-over {
+        outline-offset: -20px !important;
+        background-color: $task-button !important;
+    }
+
+    div.table {
+        .tRow {
+            width: min-content;
         }
 
-        label[for="file"]:hover strong {
-            color: $button-blue;
-        }
+        p {
+            min-width: 20px;
+            width: 20px;
+            max-width: 20px;
+            height: 20px;
+            border-right: 1px solid $gray-web;
 
-        .upload-icon {
-            color: $gray-web;
-            opacity: 0.3;
-            width: 100%;
-        }
-
-        .uploading,
-        .success,
-        .error,
-        .dropText {
-            display: none;
-            margin-top: 35px;
-            cursor: pointer;
-            font-size: 20px;
-            color: $highlighted-task-button;
+            &.frontCell {
+                min-width: 65px;
+                width: 65px;
+                max-width: 65px;
+                position: sticky;
+                left: 0;
+                box-shadow: 0 0 10px $gray-web;
+                clip-path: inset(0px -10px 0px 0px);
+                z-index: 40;
+            }
         }
     }
 
@@ -81,59 +118,8 @@
         }
     }
 
-    .enabled .dropText {
-        display: inline !important;
-    }
-
-    .isUpload {
-        label[for="file"] {
-            display: none;
-        }
-
-        .uploading {
-            display: block !important;
-        }
-    }
-
-    .isSuccess {
-        label[for="file"] {
-            display: none;
-        }
-
-        .success {
-            display: inline-block !important;
-        }
-    }
-
-    .isError .error {
-        display: block !important;
-    }
-
-    .file-over {
-        outline-offset: -20px;
-        background-color: $task-button;
-    }
-
-    div.table p {
-        min-width: 20px;
-        width: 20px;
-        max-width: 20px;
-        height: 20px;
-
-        &.frontCell {
-            min-width: 65px;
-            width: 65px;
-            max-width: 65px;
-            position: sticky;
-            left: 0;
-            box-shadow: 0 0 10px $gray-web;
-            clip-path: inset(0px -10px 0px 0px);
-            z-index: 40;
-        }
-    }
-
     // THIS IS HOW WE SHOW THE TABLE WHEN THERE'S MARKED INPUT
-    .inputBox + .table {
+    #inputBox + .table {
         display: none;
     }
     .markedInput + .table {

@@ -119,7 +119,7 @@ body #login_container form label {
   padding: 10px 0;
 }
 
-.block, #viewTeach #head, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
+.block, #viewTeach #head, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss #inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -530,11 +530,12 @@ div.table .bRow {
   text-align: center;
   display: block;
   padding: 20px;
+  width: 100%;
 }
 div.table .tRow {
   z-index: 40;
   position: relative;
-  width: min-content;
+  width: 100%;
 }
 div.table .tRow:nth-child(even) {
   background-color: #f3f3f4ff;
@@ -549,8 +550,10 @@ div.table .tRow:not(.hidden) ~ .bRow {
   display: none !important;
 }
 div.table .tRow p {
-  border-right: 1px solid #7e7f83ff;
   text-align: center;
+}
+div.table .tRow p:not(:last-child) {
+  border-right: 1px solid #7e7f83ff;
 }
 
 .resultCell {
@@ -1024,79 +1027,62 @@ div.table .tRow p {
   width: 150px;
   margin-left: 20px;
 }
-#submitAss .inputBox {
-  display: block;
-  padding: 100px 0;
+#submitAss #inputBox {
+  flex-flow: column;
+  justify-content: center;
   text-align: center;
-  width: 100%;
   margin: 0;
   margin-bottom: 50px;
   outline: dashed 2px #7e7f83ff;
   outline-offset: -10px;
   transition: 0.3s ease outline-offset, 0.3s ease background-color;
+  font-size: 20px;
+  color: #888890ff;
+  padding: 3em;
 }
-#submitAss .inputBox .inputFile {
+#submitAss #inputBox .inputFile {
   display: none;
 }
-#submitAss .inputBox label[for=file] {
-  margin-top: 35px;
+#submitAss #inputBox .upload-icon {
+  color: #7e7f83ff !important;
+  opacity: 0.3;
+  margin-bottom: 2rem;
+}
+#submitAss #inputBox label[for=file] {
   cursor: pointer;
   display: inline-block;
-  font-size: 20px;
-  color: #888890ff;
 }
-#submitAss .inputBox label[for=file]:hover strong {
+#submitAss #inputBox label[for=file] strong {
+  transition: 0.3s ease color;
+}
+#submitAss #inputBox label[for=file]:hover strong {
   color: #4b7ce6ff;
 }
-#submitAss .inputBox .upload-icon {
-  color: #7e7f83ff;
-  opacity: 0.3;
-  width: 100%;
-}
-#submitAss .inputBox .uploading,
-#submitAss .inputBox .success,
-#submitAss .inputBox .error,
-#submitAss .inputBox .dropText {
-  display: none;
-  margin-top: 35px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #888890ff;
-}
-#submitAss .markedInput {
-  height: 100px;
-  padding: 0 !important;
-}
-#submitAss .markedInput i {
+#submitAss #inputBox label[for=file] .dropText {
   display: none;
 }
-#submitAss .enabled .dropText {
+#submitAss #inputBox.disabled * {
+  display: none !important;
+}
+#submitAss #inputBox.disabled .status {
+  display: block !important;
+}
+#submitAss .dragEnabled:not(.disabled) .dropText {
   display: inline !important;
 }
-#submitAss .isUpload label[for=file] {
-  display: none;
-}
-#submitAss .isUpload .uploading {
-  display: block !important;
-}
-#submitAss .isSuccess label[for=file] {
-  display: none;
-}
-#submitAss .isSuccess .success {
-  display: inline-block !important;
-}
-#submitAss .isError .error {
-  display: block !important;
-}
 #submitAss .file-over {
-  outline-offset: -20px;
-  background-color: #c4c4c4ff;
+  outline-offset: -20px !important;
+  background-color: #c4c4c4ff !important;
+}
+#submitAss div.table .tRow {
+  width: min-content;
 }
 #submitAss div.table p {
   min-width: 20px;
   width: 20px;
   max-width: 20px;
   height: 20px;
+  border-right: 1px solid #7e7f83ff;
 }
 #submitAss div.table p.frontCell {
   min-width: 65px;
@@ -1108,7 +1094,14 @@ div.table .tRow p {
   clip-path: inset(0px -10px 0px 0px);
   z-index: 40;
 }
-#submitAss .inputBox + .table {
+#submitAss .markedInput {
+  height: 100px;
+  padding: 0 !important;
+}
+#submitAss .markedInput i {
+  display: none;
+}
+#submitAss #inputBox + .table {
   display: none;
 }
 #submitAss .markedInput + .table {

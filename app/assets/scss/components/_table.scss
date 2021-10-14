@@ -71,12 +71,13 @@ div.table {
         text-align: center;
         display: block;
         padding: 20px;
+        width: 100%;
     }
 
     .tRow {
         z-index: 40;
         position: relative;
-        width: min-content;
+        width: 100%;
 
         &:nth-child(even) {
             background-color: $cultured;
@@ -93,8 +94,11 @@ div.table {
         }
 
         p {
-            border-right: 1px solid $gray-web;
             text-align: center;
+
+            &:not(:last-child) {
+                border-right: 1px solid $gray-web;
+            }
         }
     }
 }

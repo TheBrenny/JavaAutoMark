@@ -40,7 +40,7 @@ router.get("/assignments/view", async (req, res) => {
     let years = courses.map(c => c.running_year).filter((v, i, a) => a.indexOf(v) === i);
     let courseOpts = courses.map(c => c.course_name).filter((v, i, a) => a.indexOf(v) === i);
     let assignments = Database.assignments.toObject(await Database.assignments.getAllAssignments(), CourseModel);
-    
+
     res.render("assignments/view", {
         courses,
         courseOpts,
@@ -199,8 +199,17 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').OutgoingMessage} res 
  */
 async function onStudentAssignmentsUploaded(req, res) {
-    // TODO: Send the websocket so we're sending live updates of what we're doing because we don't need to wait for all compilation to happen
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
+    // TODO: Send the websocket so we're sending live updates of what we're doing because we don't need to wait for all compilation to happen
+
+    let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
+    let marker = createMarker(ws, req.params.id);
+    (await marker).setState("receiving");
+
+    // Respond here so we can tell the user what's going on
+    res.status(202).json({
+        socketLink: ws.path,
+    });
 
     // FIXME: Uncomment this when the time is right!
     // Database.assignments.updateAssignment(req.params.id, {
@@ -254,42 +263,20 @@ async function onStudentAssignmentsUploaded(req, res) {
     });
     // inboundFiles is now an array of functions that return promises
 
-    let responses = [];
     const limit = (await plimit).default(7);
     inboundFiles = inboundFiles.map(p => limit(p));
-    responses = Promise.all(inboundFiles); // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
-
-    let responded = false;
-    let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
-    let marker = createMarker(ws, req.params.id);
-
-    req.setTimeout(600000, () => { // 10 minutes
-        res.status(102).json({
-            success: false,
-            socketLink: ws.path,
-            totalFiles: 0,
-            compiledFiles: 0,
-            outputs: 0
+    Promise.resolve(marker)
+        .then((m) => m.setState("compiling"))
+        .then(() => Promise.all(inboundFiles))
+        .then(async (responses) => {
+            let successes = responses.filter(r => r.success).length;
+            ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes} jars!`, type: "success"});
+            m = await marker;
+            m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
+            return m.start();
+            // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
         });
-        responded = true;
-    });
-
-    responses = await responses; // and now it's back to an array of responses as defined by the async fn above
-    marker.then((m) => {
-        m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
-        return m.start();
-    });
-
-    if(!responded) {
-        let successes = responses.filter(r => r.success).length;
-        res.status(202).json({
-            success: true,
-            socketLink: ws.path,
-            totalFiles: responses.length,
-            compiledFiles: successes,
-            outputs: responses
-        });
-    }
+    // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 }
 
 async function createMarker(socket, assignmentID) {

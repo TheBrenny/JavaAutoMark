@@ -23,10 +23,10 @@ onReady(() => {
 
     if(!allowedToUpload) {
         form.classList.add("disabled");
+        setStatus("It seems that you can't upload! Try again in a different browser!");
         return;
     }
 
-    form.classList.add('enabled');
     const dragAndDrop = "draggable" in document.createElement("div");
     if(dragAndDrop) form.classList.add("dragEnabled");
 
@@ -41,8 +41,6 @@ onReady(() => {
     form.addEventListener('dragend', (e) => drag(false));
     form.addEventListener(['drop', 'change'], async (e) => {
         drag(false);
-        form.classList.remove('isError');
-        form.classList.remove('isSuccess');
 
         // MAYBE: Show the student code as a tree in the file upload space!
         return Promise.resolve(e.dataTransfer ?? e.srcElement)
@@ -56,12 +54,13 @@ onReady(() => {
                 return files;
             })
             .then((files) => {
-                form.classList.add('isUpload');
+                setStatus("Uploading...");
                 let retFiles = fileValidation(files);
                 initProgressBar(files.length);
                 return retFiles;
             })
             .then((files) => {
+                form.classList.add("disabled");
                 return processFiles(files);
             })
             .then((response) => {
@@ -72,8 +71,7 @@ onReady(() => {
                 } else if(response.success === false) {
                     throw new Error("Unable to upload files");
                 } else {
-                    notifier.notify(`Uploaded ${response.totalFiles} files and compiled ${response.compiledFiles}!`, "success");
-                    form.classList.add('isSuccess');
+                    notifier.notify(`Files have been uploaded! Wait here to see them get marked in real time!`, "info");
                     form.classList.add('markedInput');
                 }
 
@@ -81,12 +79,11 @@ onReady(() => {
                 if(!!socketUrl) listenToResponses(socketUrl);
             })
             .catch((e) => {
-                form.classList.add('isError');
                 notifier.notify((e.name || "Error") + ": " + (e.message || "Something went wrong"), "error");
             })
             .finally(() => {
-                form.classList.remove('isUpload');
                 hideProgressBar();
+                form.classList.remove("disabled");
             });
     });
 
@@ -197,7 +194,8 @@ onReady(() => {
         let table = $("#markingTable");
 
         ws.on("jam:state", (obj) => {
-
+            obj = obj.data;
+            setStatus(obj.state.substring(0, 1).toUpperCase() + obj.state.substring(1).toLowerCase() + "...");
         });
 
         ws.on("jam:initial", (obj) => {
@@ -245,7 +243,7 @@ onReady(() => {
             let test = globalThis.assignment.tasks[progress.task - 1].tests[progress.test - 1];
             let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
             // let clone = cell.cloneNode(false);
-            let expectedOutput = test.expected || "<i>" + (test.isException ? "Exception" : "(Empty)") + "</i>";
+            let expectedOutput = test.expected || "<i>" + (test.isException ? "Any Exception" : "(Empty)") + "</i>";
             let clone = cloneCell(cell, {
                 classList: {
                     remove: ["loading", "error"],
@@ -272,9 +270,13 @@ onReady(() => {
             // Modify insides
             if(typeof data.text !== "undefined") clone.innerText = data.text;
             if(typeof data.html !== "undefined") clone.innerHTML = data.html;
-            
+
             return clone;
         }
+    }
+
+    function setStatus(status) {
+        $("#inputBox .status").innerText = status;
     }
 
     function buildTable(table, obj) {

@@ -17,7 +17,6 @@ class MarkerManager {
         this.stopFunctions = [];
         this.results = [];
 
-
         // This creates an assignment object that we can send to the user when they connect to the websocket server
         this.assignment = {
             id: assignment.id,
@@ -30,22 +29,29 @@ class MarkerManager {
 
         this.socket.on("connection", (ws, req) => {
             ws.on("message", this.handleMessage.bind(this, ws));
-            this.socket.send(ws, "state", {state: this.state});
-
-            switch(this.state) {
-                case "waiting":
-                    break;
-                case "running":
-                    this.sendInitial(ws);
-                    break;
-            }
+            this.sendState(ws);
+            if(this.state === "running") this.sendInitial(ws);
         });
+    }
+
+    setState(state) {
+        this.state = state;
+        this.sendState();
+        return this;
     }
 
     setStudents(students) {
         this.assignment.students = students.map(s => s.student);
         students.forEach(student => this.createMarker(student));
         return this;
+    }
+
+    sendState(sock) {
+        if(sock === undefined) {
+            this.socket.sendToAll("state", {state: this.state});
+        } else {
+            this.socket.send(sock, "state", {state: this.state});
+        }
     }
 
     sendInitial(sock) {
@@ -77,9 +83,9 @@ class MarkerManager {
 
     async start() {
         if(this.state === "running") return this;
-        this.socket.sendToAll("state", "running");
+        this.setState("running");
+        this.sendState();
         this.sendInitial();
-        this.state = "running";
 
         let harness = {
             javaFile: this.harnessFile,  // The java file that will be compiled
@@ -117,7 +123,7 @@ class MarkerManager {
                 });
                 marker.on("error", (data) => {
                     this.results.push(data);
-                    this.socket.sendToAll("error", data);
+                    this.socket.sendToAll("progress", data);
                 });
                 marker.on("finish", (code) => {
                     resolve(code);

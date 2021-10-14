@@ -1,20 +1,20 @@
-function $() {
-    return document.querySelector(...arguments);
+function $(selector) {
+    return document.querySelector(selector);
 }
 
-function $$() {
-    return document.querySelectorAll(...arguments);
+function $$(selector) {
+    return document.querySelectorAll(selector);
 }
 
 Object.defineProperty(HTMLElement.prototype, "$", {
-    value: function () {
-        return this.querySelector(...arguments);
+    value: function (selector) {
+        return this.querySelector(selector);
     }
 });
 
 Object.defineProperty(HTMLElement.prototype, "$$", {
-    value: function () {
-        return this.querySelectorAll(...arguments);
+    value: function (selector) {
+        return this.querySelectorAll(selector);
     }
 });
 
