@@ -6,10 +6,6 @@
     Generate z5260786
 </button>
 
-<div class="block wrap" id="json"></div>
-
-<div class="block wrap" id="csv"></div>
-
-<script src="/assets/js/generate.js"></script>
+<!-- <script src="/assets/js/generateReport.js"></script> -->
 
 [[i= partials/footer]]

@@ -37,7 +37,6 @@ router.get("/reports/:id/:student", async (req, res) => {
             return;
         }
     });
-    console.log(student);
 
     res.render("reports/student", {
         student

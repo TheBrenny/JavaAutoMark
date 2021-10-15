@@ -1,34 +1,41 @@
-function generateCSV(object, assignment) {
+async function generateCSV(object, assignment, student) {
+    
     let jsonObject = JSON.stringify(object);
+    let filePath = `${assignment}/${student}/${student}`;
 
-    $('#json').innerText= jsonObject;
-    console.log(jsonObject);
+    let csv = ConvertToCSV(object);
 
-    $('#csv').innerText = ConvertToCSV(object);
-    storage.putObject(storage.container, path.join("the", "path", "to", "save", `${student}.csv`), "the string content to save");
+    const doThis = new Promise((resolve, reject) => {
+
+        storage.putObject(storage.container, `${filePath}.csv`, csv)
+    }).catch((e) => {
+        // throw errors[500].fromReq(req, e.message);
+        console.log(e.message);
+    });
 }
 
 function ConvertToCSV(toConvert) {
     let str = "\n\n";
 
-    str += `Student number:,${toConvert.studentID}\n`;
+    str += `Student number:,${toConvert.student}\n`;
     str += `Assignment:,${toConvert.assignmentTitle}\n`;
     str += `Marks:,${toConvert.actualMarks}\n`;
     str += `Possible marks:,${toConvert.possibleMarks}\n\n\n`;
     str += `Task, Test, Description, Given, Mark, Possible mark\n`;
 
     toConvert.tasks.forEach(task => {
-        str += `${task.taskID},,Task ${task.taskID}, , ${task.actualMarks}, ${task.possibleMarks}\n`;
+        str += `${task.taskID}, ,Task ${task.taskID}, , ${task.actualMarks}, ${task.possibleMarks}\n`;
 
         task.tests.forEach(test => {
             str += `${task.taskID}, ${test.testID}, ${test.description}, ${test.given}, ${test.actualMarks}, ${test.possibleMarks}\n`
         })
     });
 
-    console.log(str);
     return str;
 
 }
+
+if(typeof module !== "undefined") module.exports = generateCSV;
 
 let r = //{reports: 
     [
