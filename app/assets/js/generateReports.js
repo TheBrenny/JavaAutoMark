@@ -1,20 +1,32 @@
-async function generateCSV(object, assignment, student) {
-    
-    let jsonObject = JSON.stringify(object);
-    let filePath = `${assignment}/${student}/${student}`;
+async function generateCSV(object) {
 
-    let csv = ConvertToCSV(object);
+    let student = object.studentID;
+    let assignmentID = object.assignmentID;
 
-    const doThis = new Promise((resolve, reject) => {
+    let filePath = `${assignmentID}/${student}/${student}`;
 
-        storage.putObject(storage.container, `${filePath}.csv`, csv)
-    }).catch((e) => {
-        // throw errors[500].fromReq(req, e.message);
-        console.log(e.message);
+    let csv = convertToCSV(object);
+    storage.putObject(storage.container, `${filePath}.csv`, csv);
+}
+
+async function pullCSV(filePath) {
+    return new Promise(async (resolve,reject) => {
+        let f = await storage.getObject(storage.container, `${filePath}.csv`);
+        resolve(f);
+    }).then((file) =>{
+        function readStream(s) {
+            return new Promise((resolve, reject) => {
+                let data = "";
+                s.on("data", d => data += d);
+                s.on("end", () => resolve(data));
+                s.on("error", reject);
+            });
+        }
+        return readStream(file);
     });
 }
 
-function ConvertToCSV(toConvert) {
+function convertToCSV(toConvert) {
     let str = "\n\n";
 
     str += `Student number:,${toConvert.student}\n`;
@@ -32,10 +44,11 @@ function ConvertToCSV(toConvert) {
     });
 
     return str;
-
 }
 
+
 if(typeof module !== "undefined") module.exports = generateCSV;
+
 
 let r = //{reports: 
     [
