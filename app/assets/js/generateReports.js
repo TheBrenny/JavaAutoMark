@@ -109,7 +109,9 @@ function convertToCSV(toConvert) {
 }
 
 
-if(typeof module !== "undefined") module.exports = generateCSV;
+if(typeof module !== "undefined") module.exports = {generateCSV, pullCSV};
+
+
 
 
 let r = //{reports: 

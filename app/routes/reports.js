@@ -6,8 +6,7 @@ const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
 const { assignments } = require("../../db/database");
 const { task } = require("gulp");
-const Generate = require("../assets/js/generateReports");
-const generateCSV = require("../assets/js/generateReports");
+const generate = require("../assets/js/generateReports");
 
 /* **************************** */
 /*      PAGES FOR REPORTS       */
@@ -31,19 +30,15 @@ router.get("/reports/assignment", async (req, res) => {
 });
 
 router.get("/reports/:id/:student", async (req, res) => {
-    let student;
+    let info = {
+        student: req.params.student,
+        assignment: req.params.id
+    }
 
-    r.forEach(e => {
-        if(e.studentID == req.params.student) {
-            student = e;
-            return;
-        }
-    });
-
-    // generateCSV(student, req.params.id, req.params.student);
-
+    let report = await generate.pullCSV(info);
+    
     res.render("reports/student", {
-        student
+        report
     });
 });
 
