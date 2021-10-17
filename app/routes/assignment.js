@@ -107,7 +107,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), (req, res) => onStudentAssignmentsUploaded(req, res).catch(next));
+}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res).catch(next));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
