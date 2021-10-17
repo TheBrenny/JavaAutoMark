@@ -107,7 +107,11 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res).catch(next));
+}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res).catch((e) => {
+    console.error("Something went wrong!");
+    console.error(e);
+    next(e);
+}));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
@@ -199,25 +203,20 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').OutgoingMessage} res 
  */
 async function onStudentAssignmentsUploaded(req, res) {
-
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
     let marker = createMarker(ws, req.params.id);
-    console.log(1);
     marker.then((m) => {
         m.setState("receiving");
-        console.log(2);
 
         // Respond here so we can tell the user what's going on
         if(!res.headersSent) res.status(202).json({
             socketLink: ws.path,
         });
     }).catch((err) => {
-        console.log(999);
         throw errors.internalServerError.fromReq(req, err.message);
     });
-    console.log(3);
 
     // FIXME: Uncomment this when the time is right!
     // Database.assignments.updateAssignment(req.params.id, {
@@ -237,6 +236,8 @@ async function onStudentAssignmentsUploaded(req, res) {
             function onError(err) {
                 err.code = 500;
                 err.message = err.stdout;
+                console.log("INBOUND FILES ERROR");
+                console.error(err);
                 throw err;
             }
             return Promise.resolve().then(async () => {
@@ -284,6 +285,8 @@ async function onStudentAssignmentsUploaded(req, res) {
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
         }).catch((err) => {
+            console.log("ENDING PROMISE");
+            console.error(err);
             throw err;
         });
     // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
@@ -293,6 +296,7 @@ async function createMarker(socket, assignmentID) {
     return Database.assignments.getAssignment(assignmentID)
         .then(a => a.assignments_code_location)
         .then(async codeLoc => {
+            console.log("CODE LOC");
             let [json, java] = await Promise.all([
                 storage.getObject(storage.container, codeLoc + ".json"),
                 storage.getObject(storage.container, codeLoc + ".java"),
@@ -316,6 +320,7 @@ async function createMarker(socket, assignmentID) {
             let javaPath = path.join(__dirname, "..", "jenv", "context", `Assignment${assignmentID}.java`);
             await fs.promises.writeFile(javaPath, java);
             let marker = new MarkerManager(socket, json, javaPath);
+            console.log("MARKER");
             return marker;
         });
 }
