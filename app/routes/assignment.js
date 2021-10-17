@@ -89,7 +89,7 @@ router.get("/assignments/submit/:id", async (req, res) => {
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
     let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
-    
+
     res.render("assignments/submit", {
         assignment,
         websockUrl,
@@ -199,6 +199,7 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').OutgoingMessage} res 
  */
 async function onStudentAssignmentsUploaded(req, res) {
+
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
@@ -209,7 +210,7 @@ async function onStudentAssignmentsUploaded(req, res) {
         console.log(2);
 
         // Respond here so we can tell the user what's going on
-        res.status(202).json({
+        if(!res.headersSent) res.status(202).json({
             socketLink: ws.path,
         });
     }).catch((err) => {
@@ -272,7 +273,7 @@ async function onStudentAssignmentsUploaded(req, res) {
 
     const limit = (await plimit).default(7);
     inboundFiles = inboundFiles.map(p => limit(p));
-    Promise.resolve(marker)
+    return Promise.resolve(marker)
         .then((m) => m.setState("compiling"))
         .then(() => Promise.all(inboundFiles))
         .then(async (responses) => {
@@ -282,7 +283,9 @@ async function onStudentAssignmentsUploaded(req, res) {
             m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
-        }).catch();
+        }).catch((err) => {
+            throw err;
+        });
     // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 }
 
