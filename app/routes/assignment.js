@@ -99,6 +99,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     // MAKE SURE WE'RE NOT CURRENTLY PROCESSING - OTHERWISE RACES WILL OCCUR!
     let assignment = Database.assignments.toObject(await Database.assignments.getAssignment(req.params.id));
     if(assignment.state === "processing") throw errors.conflict.fromReq(req);
+    console.log("TESTING THIS ON HEROKU");
     next();
 }, multer({
     storage: multerStoreEngine,
@@ -199,8 +200,8 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').OutgoingMessage} res 
  */
 async function onStudentAssignmentsUploaded(req, res) {
+    console.log("TESTING ON HEROKU TOOOOOO!");
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
-    // TODO: Send the websocket so we're sending live updates of what we're doing because we don't need to wait for all compilation to happen
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
     let marker = createMarker(ws, req.params.id);
