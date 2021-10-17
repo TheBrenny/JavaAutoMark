@@ -51,13 +51,19 @@ function compile(target, ...classpaths) {
     [target, ext] = basename(target, ".java", ".class");
     targetDir = path.dirname(targetDir);
 
+    let cmd = compiler;
     let args = [];
-    args = args.concat("-jar", compiler);
+
+    if(compiler.endsWith(".jar")) {
+        cmd = java;
+        args = args.concat("-jar", compiler);
+        args = args.concat("-11");
+    }
+
     if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
-    args = args.concat("-11");
     args = args.concat(path.resolve(targetDir, target + ext));
 
-    return spawn(java, args);
+    return spawn(cmd, args);
 }
 
 // Target is the location of the output jarchive
