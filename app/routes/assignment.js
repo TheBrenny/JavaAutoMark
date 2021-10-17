@@ -107,7 +107,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), (req, res) => onStudentAssignmentsUploaded(req, res));
+}).array("file"), (req, res) => onStudentAssignmentsUploaded(req, res).catch(next));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
@@ -203,12 +203,20 @@ async function onStudentAssignmentsUploaded(req, res) {
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
     let marker = createMarker(ws, req.params.id);
-    (await marker).setState("receiving");
+    console.log(1);
+    marker.then((m) => {
+        m.setState("receiving");
+        console.log(2);
 
-    // Respond here so we can tell the user what's going on
-    res.status(202).json({
-        socketLink: ws.path,
+        // Respond here so we can tell the user what's going on
+        res.status(202).json({
+            socketLink: ws.path,
+        });
+    }).catch((err) => {
+        console.log(999);
+        throw errors.internalServerError.fromReq(req, err.message);
     });
+    console.log(3);
 
     // FIXME: Uncomment this when the time is right!
     // Database.assignments.updateAssignment(req.params.id, {
@@ -274,7 +282,7 @@ async function onStudentAssignmentsUploaded(req, res) {
             m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
-        });
+        }).catch();
     // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 }
 
