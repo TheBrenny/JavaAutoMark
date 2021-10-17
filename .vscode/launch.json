@@ -87,7 +87,17 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
-        }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Heroku",
+            "address": "localhost",
+            "port": 9229,
+            "protocol": "inspector",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+        },
     ],
     "inputs": [
         {
