@@ -40,7 +40,7 @@ router.get("/reports/:id/:student", async (req, res) => {
         }
     });
 
-    generateCSV(student, req.params.id, req.params.student);
+    // generateCSV(student, req.params.id, req.params.student);
 
     res.render("reports/student", {
         student
