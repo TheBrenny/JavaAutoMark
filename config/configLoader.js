@@ -21,8 +21,8 @@ let config = {
         cookieName: process.env.SESSION_COOKIE || "session"
     },
     java: {
-        java: process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", "java") : undefined,
-        compiler: process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", "javac") : undefined,
+        java: process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", "java") : path.resolve(__dirname, "..", "app", "jenv", "bin", "jre11", "bin", "java"),
+        compiler: process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", "javac") : path.resolve(__dirname, "..", "app", "jenv", "bin", "compiler.jar"),
     }
 };
 
