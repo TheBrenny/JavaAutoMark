@@ -99,7 +99,7 @@ class MarkerManager {
         const generateHarness = async (marker) => {
             // await tm.queue();
             if(harness.dirty) {
-                await java.promise.compile(harness.javaFile, marker.student.jarFile, path.dirname(harness.javaFile))
+                await java.promise.compile(harness.javaFile, marker.student.jarFile) //, path.dirname(harness.javaFile))
                     .then((outs) => {
                         if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
