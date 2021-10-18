@@ -101,11 +101,11 @@ class MarkerManager {
             if(harness.dirty) {
                 await java.promise.compile(harness.javaFile, marker.student.jarFile, path.dirname(harness.javaFile))
                     .then((outs) => {
-                        if(outs.stderr?.contains("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
+                        if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
                     })
                     .catch((outs) => {
-                        if(outs.stderr?.contains("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
+                        if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
                     });
                 harness.harness = harness.javaFile.replace(/.java$/, ".class");

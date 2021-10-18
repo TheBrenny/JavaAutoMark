@@ -14,6 +14,10 @@ const manifestData = Object.entries({
     "Created-By": `${jamVersion} (Java Auto Mark)`,
 }).map(entry => entry.join(": ")).join("\n") + "\n\n";
 
+const envArgs = {
+    "JAVA_TOOL_OPTIONS": undefined
+};
+
 function basename(target, ...exts) {
     let ret = path.basename(target);
     let ext = path.extname(target);
@@ -22,8 +26,10 @@ function basename(target, ...exts) {
 }
 
 function spawn(command, args) {
-    // console.log(command + " [\"" + args.join("\" \"") + "\"]");
-    const proc = cpSpawn(command, args);
+    console.log(command + " [\"" + args.join("\" \"") + "\"]");
+    const proc = cpSpawn(command, args, {
+        env: envArgs,
+    });
     return proc;
 }
 
