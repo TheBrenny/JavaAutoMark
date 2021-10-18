@@ -203,7 +203,7 @@ async function onStudentAssignmentsUploaded(req, res, next) {
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
     let marker = createMarker(ws, req.params.id);
-    marker.then((m) => {
+    await marker.then((m) => {
         m.setState("receiving");
 
         // Respond here so we can tell the user what's going on

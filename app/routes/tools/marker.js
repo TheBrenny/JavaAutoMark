@@ -148,19 +148,8 @@ class MarkerManager {
     }
 
     handleMessage(ws, message) {
-        // TODO: You're still adding the marker
-        console.log(message);
         this.socket.send(ws, "you sent me something!");
         this.socket.send(ws, message);
-
-        let a = `
-        you still need to:
-        - actually run the marker for each student  ---- I think this is done?
-            - compile the harness java file
-            - when started, start running the markers
-        - figure out a good protocol to use for sending marker data
-        - figure out a good protocol to use for establishing good connections
-        `;
     }
 
     async stop() {
