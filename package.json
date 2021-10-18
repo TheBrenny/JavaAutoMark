@@ -59,7 +59,7 @@
     "nonce-express": "^1.0.2",
     "p-limit": "^4.0.0",
     "promise-ticket": "^1.1.2",
-    "scetch": "^1.5.9",
+    "scetch": "^1.5.8",
     "semver": "^7.3.5",
     "smcloudstore": "https://github.com/TheBrenny/SMCloudStore/tarball/dist",
     "smcloudstore-aws-s3": "https://github.com/TheBrenny/SMCloudStore/tarball/awss3",
