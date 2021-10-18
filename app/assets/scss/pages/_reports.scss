@@ -97,7 +97,49 @@
 #copyReport {
     @extend .wrap;
 
-    .reportMeta {
+    .content {
         @extend .block;
+        flex-direction: column;
+        padding: 50px;
+        
+        span {
+            display: flex;
+
+            p:first-of-type {
+                width: 200px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+
+        .contentHead {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .task {
+            margin-top: 50px;
+            // flex-direction: column;
+            span {
+                justify-content: space-between;
+            }
+
+            .test {
+                margin-top: 10px;
+                margin-left: 100px;
+                display: flex;
+                flex-direction: row;
+
+                p:first-of-type {
+                    min-width: 100px;
+                }
+
+                .desc {
+                    flex-grow: 1;
+                    margin-right: 20px;
+                }
+            }
+        }
     }
 }

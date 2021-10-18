@@ -22,7 +22,6 @@ router.use("/reports/*", (req, res, next) => {
 //Shift to reports /:id
 router.get("/reports/assignment", async (req, res) => {
     report = makeReport(r);
-    // console.log(report.tasks[0].tests);
 
     res.render("reports/assignment", {
         report
@@ -36,7 +35,7 @@ router.get("/reports/:id/:student", async (req, res) => {
     }
 
     let report = await generate.pullCSV(info);
-    console.log(report);
+
     res.render("reports/student", {
         report
     });
