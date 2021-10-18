@@ -26,7 +26,7 @@ function basename(target, ...exts) {
 }
 
 function spawn(command, args) {
-    console.log(command + " [\"" + args.join("\" \"") + "\"]");
+    // console.log(command + " [\"" + args.join("\" \"") + "\"]");
     const proc = cpSpawn(command, args, {
         env: envArgs,
     });
