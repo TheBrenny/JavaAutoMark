@@ -97,6 +97,12 @@
 #copyReport {
     @extend .wrap;
 
+    .buttonBanner {
+        margin: 50px 0 ;
+        display: flex;
+        justify-content: space-between;
+    }
+
     .content {
         @extend .block;
         flex-direction: column;

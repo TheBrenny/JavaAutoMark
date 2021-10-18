@@ -321,6 +321,16 @@ input[type=button].blue:hover,
 input[type=submit].blue:hover {
   background-color: #3559a7ff !important;
 }
+button.grey,
+input[type=button].grey,
+input[type=submit].grey {
+  background-color: #c4c4c4ff;
+}
+button.grey:hover,
+input[type=button].grey:hover,
+input[type=submit].grey:hover {
+  background-color: #888890ff !important;
+}
 button.yellow,
 input[type=button].yellow,
 input[type=submit].yellow {
@@ -1323,6 +1333,11 @@ div.table .tRow p:not(:last-child) {
   display: none;
 }
 
+#copyReport .buttonBanner {
+  margin: 50px 0;
+  display: flex;
+  justify-content: space-between;
+}
 #copyReport .content {
   flex-direction: column;
   padding: 50px;

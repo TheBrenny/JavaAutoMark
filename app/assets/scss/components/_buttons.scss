@@ -27,6 +27,14 @@ input[type="submit"] {
         }
     }
 
+    &.grey {
+        background-color: $task-button;
+
+        &:hover {
+            background-color: $highlighted-task-button !important;
+        }
+    }
+
     &.yellow {
         background-color: $sunglow;
 

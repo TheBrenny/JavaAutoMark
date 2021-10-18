@@ -4,6 +4,20 @@
 
 <div id="copyReport">
 
+    <div class="buttonBanner">
+        <button class="grey copy">
+            Copy
+        </button>
+
+        <button class="green">
+            CSV
+        </button>
+
+        <button class="red">
+            PDF
+        </button>
+    </div>
+
     <div class="content">
         <div class="contentHead">
                 <span>
@@ -38,5 +52,7 @@
         [[?==]]
     </div>
 </div>
+
+<script src="/assets/js/reports.js"></script>
 
 [[i= partials/footer]]
