@@ -107,11 +107,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res).catch((e) => {
-    console.error("Something went wrong!");
-    console.error(e);
-    next(e);
-}));
+}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res, next));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
@@ -202,7 +198,7 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').IncomingMessage} req 
  * @param {import('http').OutgoingMessage} res 
  */
-async function onStudentAssignmentsUploaded(req, res) {
+async function onStudentAssignmentsUploaded(req, res, next) {
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
@@ -215,7 +211,7 @@ async function onStudentAssignmentsUploaded(req, res) {
             socketLink: ws.path,
         });
     }).catch((err) => {
-        throw errors.internalServerError.fromReq(req, err.message);
+        next(errors.internalServerError.fromReq(req, err.message));
     });
 
     // FIXME: Uncomment this when the time is right!
@@ -236,9 +232,7 @@ async function onStudentAssignmentsUploaded(req, res) {
             function onError(err) {
                 err.code = 500;
                 err.message = err.stdout;
-                console.log("INBOUND FILES ERROR");
-                console.error(err);
-                throw err;
+                next(err);
             }
             return Promise.resolve().then(async () => {
                 return {
@@ -285,9 +279,7 @@ async function onStudentAssignmentsUploaded(req, res) {
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
         }).catch((err) => {
-            console.log("ENDING PROMISE");
-            console.error(err);
-            throw err;
+            next(err);
         });
     // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 }
