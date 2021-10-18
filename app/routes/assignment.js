@@ -231,8 +231,12 @@ async function onStudentAssignmentsUploaded(req, res, next) {
             // Compile all files in the dir
             function onError(err) {
                 err.code = 500;
-                err.message = err.stdout;
+                err.message = err.stdout || err.stderr || err.message;
                 next(err);
+                return {
+                    success: false,
+                    student: path.basename(folder)
+                };
             }
             return Promise.resolve().then(async () => {
                 return {
@@ -272,10 +276,11 @@ async function onStudentAssignmentsUploaded(req, res, next) {
         .then((m) => m.setState("compiling"))
         .then(() => Promise.all(inboundFiles))
         .then(async (responses) => {
-            let successes = responses.filter(r => r?.success ?? false).length;
-            ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes} jars!`, type: "success"});
+            let successes = responses.filter(r => r?.success ?? false);
+            // console.table(responses);
+            ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes.length} jars!`, type: "success"});
             m = await marker;
-            m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
+            m.setStudents(successes.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
         }).catch((err) => {
