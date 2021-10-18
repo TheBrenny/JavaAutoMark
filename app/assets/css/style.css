@@ -119,7 +119,7 @@ body #login_container form label {
   padding: 10px 0;
 }
 
-.block, #viewTeach #head, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss #inputBox, #viewAss div#head, #newassignment div#details, #error {
+.block, #viewTeach #head, #copyReport .reportMeta, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss #inputBox, #viewAss div#head, #newassignment div#details, #error {
   display: flex;
   justify-content: space-between;
   background-color: #f3f3f4ff;
@@ -129,7 +129,7 @@ body #login_container form label {
   margin-bottom: 35px;
 }
 
-.wrap, #viewTeach, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
+.wrap, #viewTeach, #copyReport, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
   width: 70%;
   font-family: roboto, sans-serif;
   font-weight: 400;

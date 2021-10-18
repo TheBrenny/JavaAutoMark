@@ -2,10 +2,11 @@
 
 [[i= partials/header]]
 
-<button class="blue" href="/report/generate/z5260786">
-    Generate z5260786
-</button>
+<div id="copyReport">
+    <div class="reportMeta">
 
-<!-- <script src="/assets/js/generateReport.js"></script> -->
+        [[report.studentID]]
+    </div>
+</div>
 
 [[i= partials/footer]]

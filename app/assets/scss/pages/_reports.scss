@@ -93,3 +93,11 @@
 
     
 }
+
+#copyReport {
+    @extend .wrap;
+
+    .reportMeta {
+        @extend .block;
+    }
+}

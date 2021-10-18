@@ -31,12 +31,12 @@ router.get("/reports/assignment", async (req, res) => {
 
 router.get("/reports/:id/:student", async (req, res) => {
     let info = {
-        student: req.params.student,
-        assignment: req.params.id
+        studentID: req.params.student,
+        assignmentID: req.params.id
     }
 
     let report = await generate.pullCSV(info);
-    
+    console.log(report);
     res.render("reports/student", {
         report
     });
@@ -123,110 +123,5 @@ function makeReport(resultSet) {
 
     return report;
 }
-
-let r = //{reports: 
-    [
-        {
-            assignmentID: 1,
-            assignmentTitle: "Assignment",
-            studentID: "z5260786",
-            possibleMarks: 100,
-            actualMarks: 63,
-            tasks: [
-                {
-                    taskID: 1,
-                    possibleMarks: 50,
-                    actualMarks: 23,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 50,
-                            actualMarks: 23
-                        }
-                    ]
-                }, 
-                {
-                    taskID: 2,
-                    possibleMarks: 50,
-                    actualMarks: 40,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 20
-                        },
-                        {
-                            testID: 2,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 20
-                        }
-                    ]
-                }
-            ]
-        }, 
-        {
-            assignmentID: 1,
-            assignmentTitle: "Assignment",
-            studentID: "z1000555",
-            possibleMarks: 100,
-            actualMarks: 43,
-            tasks: [
-                {
-                    taskID: 1,
-                    possibleMarks: 50,
-                    actualMarks: 13,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 50,
-                            actualMarks: 13
-                        }
-                    ]
-                }, 
-                {
-                    taskID: 2,
-                    possibleMarks: 50,
-                    actualMarks: 30,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 15
-                        },
-                        {
-                            testID: 2,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 15
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-// }
 
 module.exports = router;

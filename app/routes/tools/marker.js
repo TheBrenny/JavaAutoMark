@@ -5,6 +5,7 @@ const java = require("../../jenv/java");
 const plimit = import("p-limit");
 const path = require("path");
 const TicketMachine = require("promise-ticket");
+const { generateCSV } = require('../../assets/js/generateReports');
 
 class MarkerManager {
     constructor(socket, assignment, harnessFile) {
@@ -20,6 +21,7 @@ class MarkerManager {
         // This creates an assignment object that we can send to the user when they connect to the websocket server
         this.assignment = {
             id: assignment.id,
+            title: assignment.name,
             students: [],
             tasks: Array.from(assignment.tasks)
         };
@@ -126,6 +128,8 @@ class MarkerManager {
                     this.socket.sendToAll("progress", data);
                 });
                 marker.on("finish", (code) => {
+                    //INSERT CREATION HERE
+                    generateCSV(this.assignment, marker)
                     resolve(code);
                 });
 

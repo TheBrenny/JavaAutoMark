@@ -1,9 +1,11 @@
-async function generateCSV(object) {
+async function generateCSV(objectA, objectB) {
+    //In the form of generateCSV(report) or generateCSV(assignment, marker)
+    let object = (objectB !== undefined) ? makeReport(objectA, objectB) : objectA;
 
     let student = object.studentID;
     let assignmentID = object.assignmentID;
 
-    let filePath = `${assignmentID}/${student}/${student}`;
+    let filePath = `A${assignmentID}/${student}/${student}`;
 
     let csv = convertToCSV(object);
     storage.putObject(storage.container, `${filePath}.csv`, csv);
@@ -13,7 +15,7 @@ async function pullCSV(object) {
     let student = object.studentID;
     let assignmentID = object.assignmentID;
 
-    let filePath = `${assignmentID}/${student}/${student}`;
+    let filePath = `A${assignmentID}/${student}/${student}`;
 
     return new Promise(async (resolve,reject) => {
         let f = await storage.getObject(storage.container, `${filePath}.csv`);
@@ -42,13 +44,14 @@ function convertFromCSV(toConvert) {
         assignmentTitle: split[5],
         actualMarks: split[7],
         possibleMarks: split[9],
+        teacherComment: split[11],
         tasks: []
     }
 
     //Every row is 6 elements [task, test, desc, given, mark, possible] starting at index 18
     let taskIndex = 0;
     let testIndex = 0;
-    for( let i = 18; i < split.length - 6; i += 6) {
+    for( let i = 20; i < split.length - 6; i += 6) {
 
         if(split[i] != taskIndex) {
             let t = {
@@ -94,7 +97,8 @@ function convertToCSV(toConvert) {
     str += `Student number:,${toConvert.studentID}\n`;
     str += `Assignment:,${toConvert.assignmentTitle}\n`;
     str += `Marks:,${toConvert.actualMarks}\n`;
-    str += `Possible marks:,${toConvert.possibleMarks}\n\n\n`;
+    str += `Possible marks:,${toConvert.possibleMarks}\n`;
+    str += `Teacher comment:,${toConvert.teacherComment ?? ""}\n\n\n`;
     str += `Task,Test,Description,Given,Mark,Possible mark\n`;
 
     toConvert.tasks.forEach(task => {
@@ -108,6 +112,53 @@ function convertToCSV(toConvert) {
     return str;
 }
 
+function makeReport(assignment, marker) {
+    let results = marker.results;
+
+    let report = {
+        assignmentID: assignment.id,
+        assignmentTitle: assignment.title,
+        studentID: marker.student.student,
+        teacherComment: "",
+        possibleMarks: 0,
+        actualMarks: 0,
+        tasks: []
+    }
+
+    let taskIndex = 0;
+    assignment.tasks.forEach(task => {
+        let ta = {
+            taskID: task.taskID,
+            possibleMarks: 0,
+            actualMarks: 0,
+            tests: []
+        };
+
+        task.tests.forEach(test => {
+            let te = {
+                testID: test.testID,
+                description: test.description,
+                given: results[`${task.taskID}`][`${test.testID}`].output,
+                possibleMarks: test.marks,
+                actualMarks: results[`${task.taskID}`][`${test.testID}`].passed ? test.marks : 0,
+            };
+
+            ta.tests.push(te);
+            ta.possibleMarks += te.possibleMarks;
+            ta.actualMarks += te.actualMarks;
+        });
+
+        report.possibleMarks += ta.possibleMarks;
+        report.actualMarks += ta.actualMarks;
+
+        report.tasks.push(ta);
+
+        taskIndex++;
+    });
+
+    return report;
+    
+}
 
 if(typeof module !== "undefined") module.exports = {generateCSV, pullCSV};
 
@@ -122,6 +173,7 @@ let r = //{reports:
             studentID: "z5260786",
             possibleMarks: 100,
             actualMarks: 63,
+            teacherComment: "Good work!",
             tasks: [
                 {
                     taskID: 1,
@@ -172,6 +224,7 @@ let r = //{reports:
             studentID: "z1000555",
             possibleMarks: 100,
             actualMarks: 43,
+            teacherComment: "Good work!",
             tasks: [
                 {
                     taskID: 1,
