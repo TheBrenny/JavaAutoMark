@@ -114,6 +114,7 @@ function convertToCSV(toConvert) {
 
 function makeReport(assignment, marker) {
     let results = marker.results;
+    console.log(results);
 
     let report = {
         assignmentID: assignment.id,
@@ -138,9 +139,9 @@ function makeReport(assignment, marker) {
             let te = {
                 testID: test.testID,
                 description: test.description,
-                given: results[`${task.taskID}`][`${test.testID}`].output,
+                given: results?.[`${task.taskID}`]?.[`${test.testID}`]?.output ?? "Invalid",
                 possibleMarks: test.marks,
-                actualMarks: results[`${task.taskID}`][`${test.testID}`].passed ? test.marks : 0,
+                actualMarks: results?.[`${task.taskID}`]?.[`${test.testID}`]?.passed ? test.marks : 0,
             };
 
             ta.tests.push(te);

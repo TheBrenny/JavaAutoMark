@@ -129,7 +129,8 @@ class MarkerManager {
                 });
                 marker.on("finish", (code) => {
                     //INSERT CREATION HERE
-                    generateCSV(this.assignment, marker)
+                    console.log(marker.results);
+                    generateCSV(this.assignment, marker);
                     resolve(code);
                 });
 

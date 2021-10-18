@@ -38,7 +38,7 @@
         [[e= task in report.tasks]]
         <div class="task">
             <span>
-                <p>Task [[task.taskID]]:</p> <p>[[task.actualMarks]]/[[report.tasks.0.possibleMarks]]</p>
+                <p>Task [[task.taskID]]:</p> <p>[[task.actualMarks]]/[[task.possibleMarks]]</p>
             </span>
 
             [[e= test in task.tests]]
