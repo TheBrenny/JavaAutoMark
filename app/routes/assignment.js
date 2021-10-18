@@ -211,7 +211,7 @@ async function onStudentAssignmentsUploaded(req, res, next) {
             socketLink: ws.path,
         });
     }).catch((err) => {
-        next(errors.internalServerError.fromReq(req, err.message));
+        next(err);
     });
 
     // FIXME: Uncomment this when the time is right!
@@ -272,7 +272,7 @@ async function onStudentAssignmentsUploaded(req, res, next) {
         .then((m) => m.setState("compiling"))
         .then(() => Promise.all(inboundFiles))
         .then(async (responses) => {
-            let successes = responses.filter(r => r.success).length;
+            let successes = responses.filter(r => r?.success ?? false).length;
             ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes} jars!`, type: "success"});
             m = await marker;
             m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
@@ -288,7 +288,6 @@ async function createMarker(socket, assignmentID) {
     return Database.assignments.getAssignment(assignmentID)
         .then(a => a.assignments_code_location)
         .then(async codeLoc => {
-            console.log("CODE LOC");
             let [json, java] = await Promise.all([
                 storage.getObject(storage.container, codeLoc + ".json"),
                 storage.getObject(storage.container, codeLoc + ".java"),
@@ -312,7 +311,6 @@ async function createMarker(socket, assignmentID) {
             let javaPath = path.join(__dirname, "..", "jenv", "context", `Assignment${assignmentID}.java`);
             await fs.promises.writeFile(javaPath, java);
             let marker = new MarkerManager(socket, json, javaPath);
-            console.log("MARKER");
             return marker;
         });
 }
