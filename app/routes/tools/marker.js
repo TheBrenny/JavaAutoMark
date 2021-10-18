@@ -105,6 +105,8 @@ class MarkerManager {
                         else harness.dirty = false;
                     })
                     .catch((outs) => {
+                        console.log("STDERR");
+                        console.log(outs.stderr);
                         if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
                     });
