@@ -17,7 +17,7 @@
     <input type="text" name="pass" placeholder="Password" />
     <label for="pass">Ensure you provide this password to the teacher</label>
     <input type="submit" name="submit" value="Add teacher" />
-    <script type= "text/javascript"src="/assets/js/teachers.js"></script>
 </form>
 
+<script type= "text/javascript"src="/assets/js/teachers.js"></script>
 [[i= partials/footer]]
