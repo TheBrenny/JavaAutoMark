@@ -4,8 +4,8 @@ const session = require("./tools/session");
 const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
-const { assignments } = require("../../db/database");
-const { task } = require("gulp");
+const {assignments} = require("../../db/database");
+const {task} = require("gulp");
 const generate = require("../assets/js/generateReports");
 
 /* **************************** */
@@ -19,12 +19,12 @@ router.use("/reports/*", (req, res, next) => {
 
 //Make reports/:id/:student
 
-//Shift to reports /:id
-router.get("/reports/assignment", async (req, res) => {
-    report = makeReport(r);
+router.get("/reports/:id", async (req, res) => {
+    // let report = await generate.pullCSV({assignmentID: req.params.id});
 
     res.render("reports/assignment", {
-        report
+        // report
+        // FIXME: Have an overall assignment statistics page
     });
 });
 
@@ -32,7 +32,7 @@ router.get("/reports/:id/:student", async (req, res) => {
     let info = {
         studentID: req.params.student,
         assignmentID: req.params.id
-    }
+    };
 
     let report = await generate.pullCSV(info);
 
@@ -41,8 +41,8 @@ router.get("/reports/:id/:student", async (req, res) => {
     });
 });
 
+// TODO: Maybe we can delete this?
 function makeReport(resultSet) {
-    
     let report = {
         title: "",
 
@@ -55,10 +55,8 @@ function makeReport(resultSet) {
         actualMarks: 0,
         averageMarks: 0,
 
-        tasks: [
-
-        ]
-    }
+        tasks: []
+    };
 
     resultSet.forEach(s => {
         report.title = s.assignmentTitle;
@@ -77,7 +75,6 @@ function makeReport(resultSet) {
 
         //Handle each task in each student report
         s.tasks.forEach((t, index, arr) => {
-
             //If we have less tasks than the result set, add a new task
             if(report.tasks.length < s.tasks.length) {
                 report.tasks.push({
@@ -86,13 +83,13 @@ function makeReport(resultSet) {
                     actualMarks: null,
                     averageMarks: 0,
                     tests: []
-                })
+                });
             }
             report.tasks[index].taskID = t.taskID;
             report.tasks[index].possibleMarks = t.possibleMarks;
-            report.tasks[index].actualMarks === null ? report.tasks[index].actualMarks = t.actualMarks : report.tasks[index].actualMarks += t.actualMarks;
-            report.tasks[index].averageMarks = report.tasks[index].actualMarks / report.totalStudents;;
-        
+            report.tasks[index].actualMarks = (report.tasks[index].actualMarks ?? 0) + t.actualMarks;
+            report.tasks[index].averageMarks = report.tasks[index].actualMarks / report.totalStudents;
+
             t.tests.forEach((test, testIndex, arr) => {
                 if(report.tasks[index].tests.length < t.tests.length) {
                     report.tasks[index].tests.push({
@@ -104,17 +101,17 @@ function makeReport(resultSet) {
                         possibleMarks: 0,
                         actualMarks: null,
                         averageMarks: 0
-                    })
+                    });
                 }
 
-                report.tasks[index].tests[testIndex]["testID"] = test.testID;
-                report.tasks[index].tests[testIndex]["description"] = test.description;
-                report.tasks[index].tests[testIndex]["condition"] = test.condition;
-                report.tasks[index].tests[testIndex]["expected"] = test.expected;
-                test.actualMarks > 0 ? report.tasks[index].tests[testIndex].passed++ : report.tasks[index].tests[testIndex].passed;
-                report.tasks[index].tests[testIndex]["possibleMarks"] = test.possibleMarks;
-                report.tasks[index].tests[testIndex]["actualMarks"] === null ? report.tasks[index].tests[testIndex].actualMarks = test.actualMarks : report.tasks[index].tests[testIndex].actualMarks += test.actualMarks;
-                report.tasks[index].tests[testIndex]["averageMarks"] = report.tasks[index].tests[testIndex].actualMarks / report.totalStudents;
+                report.tasks[index].tests[testIndex].testID = test.testID;
+                report.tasks[index].tests[testIndex].description = test.description;
+                report.tasks[index].tests[testIndex].condition = test.condition;
+                report.tasks[index].tests[testIndex].expected = test.expected;
+                report.tasks[index].tests[testIndex].passed += (test.actualMarks > 0 ? 1 : 0);
+                report.tasks[index].tests[testIndex].possibleMarks = test.possibleMarks;
+                report.tasks[index].tests[testIndex].actualMarks = (report.tasks[index].tests[testIndex].actualMarks ?? 0) + test.actualMarks;
+                report.tasks[index].tests[testIndex].averageMarks = report.tasks[index].tests[testIndex].actualMarks / report.totalStudents;
             });
         });
 
