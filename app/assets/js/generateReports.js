@@ -190,9 +190,9 @@ function convertFromTotalCSV(toConvert) {
                 tests: []
             };
             t.taskID = split[i];
-            t.actualMarks = split[i + 6];
-            t.possibleMarks = split[i + 7];
-            t.averageMarks = split[i + 8];
+            t.actualMarks = split[i + 5];
+            t.possibleMarks = split[i + 6];
+            t.averageMarks = split[i + 7];
             report.tasks.push(t);
             testIndex = 0;
             taskIndex++;
