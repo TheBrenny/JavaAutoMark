@@ -1,0 +1,37 @@
+#adminContainer {
+    display: flex;
+
+    .column {
+        .tile {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            align-content: center;
+            background-color: $cultured;
+            box-shadow: 5px 5px 10px $gray-web;
+            border-radius: 10px;
+            margin: 50px;
+            flex-flow: column;
+            transform: scale(1);
+            transition: ease(transform);
+
+            h2 {
+                // This is needed so "New Course" can wrap
+                margin: 0px 1px;
+            }
+
+            &:hover:not(:disabled) {
+                color: initial;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .separator {
+        width: 1px;
+        background-color: $gray-web;
+        margin: 25px 0;
+    }
+}

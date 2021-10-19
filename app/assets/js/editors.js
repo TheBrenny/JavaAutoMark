@@ -12,7 +12,11 @@ function* generateEditorID() {
 }
 
 var editors = {};
-editors.generator = generateEditorID();
+Object.defineProperty(editors, "generator", {
+    value: generateEditorID(),
+    enumerable: false,
+});
+//editors.generator = generateEditorID();
 
 function getAllUninitialisedEditors() {
     return $$(".editor:not(.initialised)");

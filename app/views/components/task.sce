@@ -9,5 +9,6 @@
     <div id="taskFoot">
         <input type="button" value="Add Instruction" class="addInstruction" />
         <input type="button" value="Add Test" class="addTest" />
+        <input type="button" value="Add Exception" class="addException" />
     </div>
 </div>

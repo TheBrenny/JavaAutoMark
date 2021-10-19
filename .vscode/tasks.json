@@ -13,6 +13,72 @@
                 "clear": false,
                 "close": true
             }
+        },
+        // {
+        //     "label": "frontend task",
+        //     "command": "node",
+        //     "args": [
+        //         "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
+        //         "frontend"
+        //     ],
+        //     "isBackground": true,
+        //     "presentation": {
+        //         "clear": false,
+        //         "close": false,
+        //         "echo": true,
+        //         "focus": false,
+        //         "reveal": "silent"
+        //     },
+        //     "problemMatcher": {
+        //         "owner": "gulp",
+        //         "pattern": [
+        //             {
+        //                 "regexp": "Error in plugin \".*\"\\nMessage:\\n    (.+)\\n(.+): (.+)\\n[\\w\\W]*?\\1 ([\\d:]+)",
+        //                 "file": 1,
+        //                 "location": 4,
+        //                 "severity": 2,
+        //                 "message": 3
+        //             }
+        //         ],
+        //         "background": {
+        //             "activeOnStart": true,
+        //             "beginsPattern": ".",
+        //             "endsPattern": ".",
+        //         }
+        //     }
+        // },
+        {
+            "label": "frontend task",
+            "command": "node",
+            "args": [
+                "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
+                "frontend"
+            ],
+            "isBackground": true,
+            "presentation": {
+                "clear": false,
+                "close": false,
+                "echo": true,
+                "focus": false,
+                "reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "gulp",
+                "pattern": [
+                    {
+                        "regexp": "Error in plugin \".*\"\\nMessage:\\n    (.+)\\n(.+): (.+)\\n[\\w\\W]*?\\1 ([\\d:]+)",
+                        "file": 1,
+                        "location": 4,
+                        "severity": 2,
+                        "message": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": false,
+                    "beginsPattern": "\\[(?<timestamp>[\\d:]*)\\] Starting 'frontend'...",
+                    "endsPattern": "\\[(?<timestamp>[\\d:]*)\\] Finished 'frontend' after (?<duration>[\\d.]*) m?s",
+                }
+            }
         }
     ]
 }

@@ -16,7 +16,7 @@
             ],
             "type": "pwa-node",
             "console": "integratedTerminal",
-            "preLaunchTask": "startMysql",
+            // "preLaunchTask": "startMysql",
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
@@ -42,7 +42,27 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "preLaunchTask": "startMysql",
+            // "preLaunchTask": "startMysql",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/**",
+                "!**/node_modules/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "front end reloads",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "--preserve-symlinks",
+                "run-script",
+                "start"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "preLaunchTask": "frontend task",
             "resolveSourceMapLocations": [
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
@@ -67,7 +87,17 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
-        }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Heroku",
+            "address": "localhost",
+            "port": 9229,
+            "protocol": "inspector",
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+        },
     ],
     "inputs": [
         {

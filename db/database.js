@@ -17,9 +17,7 @@ class Database {
             sql: query,
             nestTables: '_'
         };
-        let ret = await this.db.execute(opts, args).catch((e) => (console.error(e), [
-            []
-        ]));
+        let ret = await this.db.execute(opts, args).catch((e) => (console.error(e), [[]]));
         return (ret)[0]; // returns the result set
     }
 

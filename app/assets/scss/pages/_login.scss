@@ -1,0 +1,54 @@
+#login_container {
+    margin-top: calc(50vh - 159px);
+    background-color: $cultured;
+    @include content-font();
+    letter-spacing: 1px;
+    font-size: 20px;
+    border: 1px solid $gray-web;
+    box-shadow: 0 5px 10px $gray-web;
+    border-radius: 5px;
+
+    h1 {
+        text-align: center;
+        font-size: 25px;
+        margin-top: 20px;
+        color: $jet;
+    }
+
+    form {
+        padding: 20px 30px;
+        display: flex;
+        flex-direction: column;
+
+        input[type="text"],
+        input[type="password"] {
+            width: 225px;
+            font-size: 18px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            letter-spacing: 2px;
+            font-style: normal;
+        }
+
+        input[type="submit"]:hover:not(:disabled) {
+            background-color: $highlighted-pistachio;
+            color: white;
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: 13px;
+            margin: 0 6px;
+            color: red;
+            height: 15px;
+        }
+
+        label {
+            padding: 10px 0;
+        }
+    }
+}

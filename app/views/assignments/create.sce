@@ -9,10 +9,10 @@
             <input type="text" name="assName" id="assName" [[?=!!assignObj.name ]] value="[[assignObj.name]]" [[?==]] />
         </span>
         <span>
-            <label for="class">Choose class:</label>
-            <select id="class" name="class">
+            <label for="course">Choose course:</label>
+            <select id="course" name="course">
                 [[e= course in courses ]]
-                <option [[?=course.uuid==assignObj.class ]] selected [[?==]] value="[[course.uuid]]">
+                <option [[?=course.uuid==assignObj.course ]] selected [[?==]] value="[[course.uuid]]">
                     [[course.course_name]] - [[course.running_year]]
                 </option>
                 [[?==]]
@@ -45,21 +45,28 @@
         let addTaskBtn = $('#addTask');
         addTaskBtn.addEventListener("click", () => addTask());
         addTaskBtn.disabled = false;
-        let subAssignmentBtn = $('#subAssignment');
-        subAssignmentBtn?.addEventListener("click", () => saveAssignment());
-        subAssignmentBtn && (subAssignmentBtn.disabled = false);
-        let updateAssignmentBtn = $('#updateAssignment');
-        updateAssignmentBtn?.addEventListener("click", () => saveAssignment("[[assign.id]]"));
-        updateAssignmentBtn && (updateAssignmentBtn.disabled = false);
 
-        // // Delete this script!
-        // let taskInjector = document.getElementById("taskInjector");
-        // taskInjector.remove();
+        let saveAction = saveAssignment;
+        // [[?= assign.id]]
+        saveAction = saveAssignment.bind(this, "[[assign.id]]");
+        // [[?==]]
+        
+        let saveButton = $('#subAssignment, #updateAssignment');
+        saveButton?.addEventListener("click", () => saveAction());
+        saveButton && (saveButton.disabled = false);
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "s" && e.ctrlKey) {
+                e.preventDefault();
+                saveAction();
+            }
+        });
     });
 </script>
 
 [[l= components/task]]
 [[l= components/test]]
+[[l= components/exception]]
 [[l= components/instr]]
 <script src="/assets/js/assignment.js"></script>
 

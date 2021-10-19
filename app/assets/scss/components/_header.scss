@@ -1,0 +1,57 @@
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: $cultured;
+    box-shadow: 0 0 10px black;
+    height: $header-height;
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+
+    a.home {
+        background-image: url("/assets/img/jam_jar_coloured.png");
+        background-repeat: no-repeat;
+        display: inline-block;
+        background-size: 250px 90px;
+        width: 80px;
+        height: 100px;
+        margin-left: 50px;
+        transition: 0.5s ease width;
+    }
+
+    a.home:hover {
+        width: 220px;
+    }
+
+    #menu {
+        list-style: none;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        li {
+            float: left;
+            text-transform: uppercase;
+            margin: 0 10px;
+            padding: 10px;
+            @include content-font();
+            transition: 0.5s ease background-color;
+        }
+
+        li:hover {
+            background-color: rgba(255, 209, 71, 0.8);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            border-right: 1px solid $smoky-black;
+            display: inline-block;
+        }
+    }
+
+    + * {
+        margin-top: $header-height + $header-buffer;
+    }
+}

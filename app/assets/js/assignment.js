@@ -28,7 +28,8 @@ function addTask(items) {
     if(items === undefined) addInstruction(taskNum);
     else if(Array.isArray(items)) {
         items.forEach(item => {
-            if(item.testID !== undefined) addTest(task, item);
+            if(item.isException ?? false) addException(task, item);
+            else if(item.testID !== undefined) addTest(task, item);
             else addInstruction(task, item);
         });
     } else {
@@ -41,6 +42,7 @@ function addTask(items) {
     // Add handlers to the buttons
     task.$(".addInstruction").addEventListener("click", () => addInstruction(task));
     task.$(".addTest").addEventListener("click", () => addTest(task));
+    task.$(".addException").addEventListener("click", () => addException(task));
     task.$(".del").addEventListener("click", (e) => deleteTask(task));
 
     return task;
@@ -51,7 +53,7 @@ function addInstruction(task, defaults) {
 
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
-        code: `// This is valid Java code!\n// Don't forget your semicolons!\n`
+        code: `// This is valid Java code!\n// Use semicolons!\n`
     }, defaults || {});
 
     let instruction = scetchInsert(task, "beforeEnd", scetch.instr, defaults);
@@ -70,7 +72,7 @@ function addTest(task, defaults) {
     defaults = Object.assign({
         order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
         testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
-        code: `// This is a valid Java variable or expression!\n// Don't use semicolons!\n`,
+        code: `// This is a valid Java variable or expression! Don't use semicolons!`,
         expected: ``,
         description: ``,
         marks: 1
@@ -84,6 +86,28 @@ function addTest(task, defaults) {
     bindSaveAction(e, saveAssignment);
 
     return test;
+}
+
+function addException(task, defaults) {
+    if(["number", "string"].includes(typeof task)) task = $("#task" + task);
+
+    defaults = Object.assign({
+        order: Math.max(0, ...Array.from(task.$$(".test, .instr")).map(e => parseInt(e.dataset.order))) + 1,
+        testID: Math.max(0, ...Array.from(task.$$(".test")).map(e => e.dataset.testid)) + 1,
+        code: `// This is the body for a try/catch statement!\n// Use semicolons!\n`,
+        expected: ``,
+        description: ``,
+        marks: 1
+    }, defaults || {});
+
+    let exc = scetchInsert(task, "beforeEnd", scetch.exception, defaults);
+    exc.style.order = defaults.order;
+    bindActions(task, exc);
+
+    let e = createEditor(exc.$(".editor"));
+    bindSaveAction(e, saveAssignment);
+
+    return exc;
 }
 
 function moveItem(task, target) {
@@ -148,17 +172,26 @@ function deleteItem(task, target) {
     }
 }
 
-function saveAssignment(editID) {
+let savedID = null;
+let saving = false;
+function saveAssignment() {
     let assignment = $("#newassignment");
 
     let assignmentName = assignment.$("#assName").value;
-    let assignmentClass = assignment.$("#class").value;
+    let assignmentCourse = assignment.$("#course").value; 
+    if(saving) return;
+    //put validation here
+    
+    saving = true;
+
+     
 
     let assignmentDetails = {
         name: assignmentName,
-        class: assignmentClass,
+        course: assignmentCourse,
         tasks: []
     };
+    if(savedID !== null) assignmentDetails.id = savedID;
 
     let tasks = assignment.$$(".task");
 
@@ -179,7 +212,8 @@ function saveAssignment(editID) {
                     expected: item.$(`input[name="expectedOutput"]`).value,
                     description: item.$(`input[name="description"]`).value,
                     marks: parseInt(item.$(`input[name="marks"]`).value),
-                    testID: parseInt(item.dataset.testid)
+                    testID: parseInt(item.dataset.testid),
+                    isException: Object.keys(item.dataset).includes("exception")
                 });
             }
             taskDetails.tests.push(itemDetails);
@@ -189,35 +223,34 @@ function saveAssignment(editID) {
         assignmentDetails.tasks.push(taskDetails);
     }
 
-    let url = !!editID ? "edit/" + editID : "create";
-    let method = !!editID ? "PUT" : "POST";
+    let url = window.location.pathname;
+    let method = !!url.includes("edit") ? "PUT" : "POST";
 
-    return fetch("/assignments/" + url, {
+    return fetch(url, {
         method: method,
         body: JSON.stringify(assignmentDetails),
         headers: {
             "Content-Type": "application/json"
         }
     }).then(async r => {
-        if(r.status === 201) {
-            return r.headers.get("Location");
-        } else if(r.status === 200) {
-            return await r.json();
+        let json = await r.json();
+        if(r.status >= 200 && r.status < 300 && json.success === true) {
+            return json;
         } else {
-            throw await r.json();
+            throw json;
         }
     }).then((response) => {
-        if(typeof response === "string") { // we have a location
-            notifier.notify("Saved successfully. Redirecting...", "success");
-            window.location = response;
-        } else if(typeof response === "object") { // we have a JSON object
+        if(typeof response === "object") { // we have a JSON object
+            if(response.id) savedID = response.id;
             console.log(response);
-            notifier.notify(response.message, response.type || "success");
-        } else {
-            throw response;
+            notifier.notify(response.message, response.type ?? response.success ? "success" : "info");
+            if(response.redirect) setTimeout(() => window.location.href = response.redirect, 1000);
         }
     }).catch(e => {
+        if(e.id) savedID = e.id;
         console.error(e);
-        notifier.notify("Error: " + e.message, "error");
+        notifier.notify(`${e.name ?? "Error"}: ${e.message}`, "error");
+    }).finally(() => {
+        saving = false;
     });
 }

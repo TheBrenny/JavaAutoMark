@@ -33,7 +33,7 @@ function isGuest(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-    if (session(req).isAuthed() && session(req).getAccount().isAdmin()) next();
+    if (session(req).isAuthed() && session(req).isAdmin()) next();
     else {
         res.status(403);
         res.format({
