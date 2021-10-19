@@ -1,5 +1,3 @@
-const { assignments } = require("../../../db/database");
-
 let totalReport = {
 
     assignmentID: 0,
@@ -139,7 +137,6 @@ function convertFromCSV(toConvert) {
         }
         
     }
-    
     return report;
 }
 

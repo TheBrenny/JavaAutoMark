@@ -24,10 +24,13 @@ router.get("/reports/:id", async (req, res) => {
         assignmentID: req.params.id
     };
 
+    let filePath = `A${info.assignmentID}/`;
+  
+
     let report = await generate.pullTotalCSV(info);
 
     res.render("reports/assignment", {
-        report
+        report,
     });
 });
 
@@ -37,10 +40,17 @@ router.get("/reports/:id/:student", async (req, res) => {
         assignmentID: req.params.id
     };
 
-    let report = await generate.pullTotalCSV(info);
+    let filePath = `A${info.assignmentID}/${info.studentID}/${info.studentID}`;
+
+    let url = {
+        csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
+    }
+
+    let report = await generate.pullCSV(info);
 
     res.render("reports/student", {
-        report
+        report,
+        url,
     });
 });
 

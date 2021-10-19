@@ -5,8 +5,6 @@
 <div class="reportAssHead">
     <div class="resultTotals">
         <h1>[[report.assignmentTitle]]</h1>
-
-        
     </div>
 
     [[?= report.tasks == null]]

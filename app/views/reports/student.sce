@@ -9,13 +9,13 @@
             Copy
         </button>
 
-        <button class="green">
+        <button href="[[url.csv]]" class="green">
             CSV
         </button>
 
-        <button class="red">
+        <!-- <button class="red">
             PDF
-        </button>
+        </button> -->
     </div>
 
     <div class="content">

@@ -11,6 +11,7 @@ onReady(() => {
         window.getSelection().addRange(r);
 
         navigator.clipboard.writeText($('.content').innerText);
+        notifier.notify("Student report has been copied to clipboard.", "info");
     });
 });
 function testSwitch(button) {
