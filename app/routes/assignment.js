@@ -202,7 +202,7 @@ async function onStudentAssignmentsUploaded(req, res, next) {
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
-    let marker = createMarker(ws, req.params.id);
+    let marker = createMarker(ws, req.params.id); // BUG: This will turn into a memory leak if we don't delete markers or sockets!
     await marker.then((m) => {
         m.setState("receiving");
 
