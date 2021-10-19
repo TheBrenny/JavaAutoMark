@@ -64,6 +64,7 @@ function compile(target, ...classpaths) {
         cmd = java;
         args = args.concat("-jar", compiler);
         args = args.concat("-11");
+        args = args.concat("-proceedOnError");
     }
 
     if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
