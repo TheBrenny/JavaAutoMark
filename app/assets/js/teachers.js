@@ -1,5 +1,6 @@
 (() => {
     var form = $("form");
+    var action = form.getAttribute("action");
     form.addEventListener("submit", validateForm);
     
     function validateForm(event){
@@ -9,7 +10,9 @@
         let fName = form.fName.value;
         let lName = form.lName.value;
         let email = form.email.value;
-        let pass = form.pass?.value;
+        let pass = form.newPass?.value;
+        let conPass = form.confirmPass?.value;
+        let curPass = form.currentPass?.value;
 
         let valid = true;
 
@@ -29,14 +32,22 @@
             notifier.notify("Please only use a valid email (ie. user@exampledomain.com)", "error");
             valid = false;
         }
+        if(action.includes("edit") && (pass != conPass)) {
+            notifier.notify("Make sure both new passwords match", "error");
+            valid = false;
+        }
         
         if(valid) {
-            submitForm(zID, fName, lName, email, pass);
+            if(action.includes("edit")) {
+                submitForm(action, zID, fName, lName, email, pass, curPass);
+            } else {
+                submitForm(action, zID, fName, lName, email, pass);
+            }
         }
     }
 
-    function submitForm(zID, fName, lName, email, pass) {
-        let submit = fetch('/teachers/create', {
+    function submitForm(action, zID, fName, lName, email, pass, currentPass) {
+        let submit = fetch(action, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -46,7 +57,8 @@
                 fName: fName,
                 lName: lName,
                 email: email,
-                pass: pass
+                pass: pass,
+                currentPass: currentPass
             }),
         }).then(async r => {
             let json = await r.json();

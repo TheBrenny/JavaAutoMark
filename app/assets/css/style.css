@@ -1511,6 +1511,9 @@ div.table button {
   letter-spacing: 1px;
   font-style: normal;
 }
+#editTeach input[type=password] {
+  margin-bottom: 10px;
+}
 #editTeach .detail {
   text-align: right;
 }

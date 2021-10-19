@@ -86,18 +86,24 @@ router.post("/teachers/edit/:id", async (req, res) => {
     }
 
     let newObj = {};
-    if(req.body.fname || false) newObj.fname = req.body.fname;
-    if(req.body.lname) newObj.lname = req.body.lname;
+    if(req.body.fname) newObj.fName = req.body.fname;
+    if(req.body.lname) newObj.lName = req.body.lname;
     if(req.body.email) newObj.email = req.body.email;
     if(req.body.pass) newObj.password = req.body.pass;
+    let currentPass = req.body.currentPass;
 
     let bad = Object.keys(newObj).length > 0;
     let target = (await Database.teachers.getTeacher(zid));
 
     // not found user
-    if(!bad && target == undefined) {
-        if(!!newObj.password) newObj.password = crypto.hashSync(newObj.password, 12);
-        bad = !(await Database.teachers.updateTeacher(zid, newObj));
+    if(bad && target != undefined) {
+        const passMatch = crypto.compareSync(currentPass, target.teachers_password);
+        if(passMatch) {
+            if(!!newObj.password) newObj.password = crypto.hashSync(newObj.password, 12);
+            bad = !(await Database.teachers.updateTeacher(zid, newObj));
+        } else {
+            bad = "Incorrect password.";
+        }
     } else {
         bad = true;
     }
@@ -108,7 +114,7 @@ router.post("/teachers/edit/:id", async (req, res) => {
         res.status(201).json({
             success: true,
             redirect: "/teachers/view/" + id,
-            message: "Teacher added successfully!"
+            message: "Teacher changed successfully!"
         });
     }
 });
