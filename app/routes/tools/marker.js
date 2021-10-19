@@ -128,8 +128,6 @@ class MarkerManager {
                     this.socket.sendToAll("progress", data);
                 });
                 marker.on("finish", (code) => {
-                    //INSERT CREATION HERE
-                    console.log(marker.results);
                     generateCSV(this.assignment, marker);
                     resolve(code);
                 });
