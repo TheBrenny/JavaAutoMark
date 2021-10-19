@@ -2,7 +2,8 @@
 
 class JAMSocket extends WebSocket {
     constructor(path) {
-        super("ws://" + location.host + path);
+        // This'll give us the s: from https: and add it to ws, so it becomes wss://
+        super(`ws${location.protocol.substring("http".length)}//` + location.host + path);
 
         this.jamEvents = new JamEventEmitter();
 

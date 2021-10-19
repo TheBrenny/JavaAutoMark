@@ -14,6 +14,10 @@ const manifestData = Object.entries({
     "Created-By": `${jamVersion} (Java Auto Mark)`,
 }).map(entry => entry.join(": ")).join("\n") + "\n\n";
 
+const envArgs = {
+    "JAVA_TOOL_OPTIONS": undefined
+};
+
 function basename(target, ...exts) {
     let ret = path.basename(target);
     let ext = path.extname(target);
@@ -23,7 +27,9 @@ function basename(target, ...exts) {
 
 function spawn(command, args) {
     // console.log(command + " [\"" + args.join("\" \"") + "\"]");
-    const proc = cpSpawn(command, args);
+    const proc = cpSpawn(command, args, {
+        env: envArgs,
+    });
     return proc;
 }
 
@@ -37,7 +43,7 @@ function run(target, ...classpaths) {
     targetDir = path.dirname(targetDir);
 
     let args = [];
-    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
+    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(path.delimiter)); // adds any classpaths that are passed
     args = args.concat(target);
 
     return spawn(java, args);
@@ -51,13 +57,20 @@ function compile(target, ...classpaths) {
     [target, ext] = basename(target, ".java", ".class");
     targetDir = path.dirname(targetDir);
 
+    let cmd = compiler;
     let args = [];
-    args = args.concat("-jar", compiler);
-    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
-    args = args.concat("-11");
+
+    if(compiler.endsWith(".jar")) {
+        cmd = java;
+        args = args.concat("-jar", compiler);
+        args = args.concat("-11");
+        args = args.concat("-proceedOnError");
+    }
+
+    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(path.delimiter)); // adds any classpaths that are passed
     args = args.concat(path.resolve(targetDir, target + ext));
 
-    return spawn(java, args);
+    return spawn(cmd, args);
 }
 
 // Target is the location of the output jarchive

@@ -89,7 +89,7 @@ router.get("/assignments/submit/:id", async (req, res) => {
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
     let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
-    
+
     res.render("assignments/submit", {
         assignment,
         websockUrl,
@@ -107,7 +107,7 @@ router.put("/assignments/submit/:id", async (req, res, next) => {
     limits: {
         fileSize: 3 * 1024 * 1024 // 3MB per file
     }
-}).array("file"), (req, res) => onStudentAssignmentsUploaded(req, res));
+}).array("file"), (req, res, next) => onStudentAssignmentsUploaded(req, res, next));
 
 router.get("/assignments/create", async (req, res) => {
     let courses = await Database.courses.getAllCourses();
@@ -198,16 +198,20 @@ router.put("/assignments/edit/:id", async (req, res) => {
  * @param {import('http').IncomingMessage} req 
  * @param {import('http').OutgoingMessage} res 
  */
-async function onStudentAssignmentsUploaded(req, res) {
+async function onStudentAssignmentsUploaded(req, res, next) {
     if(req.files.length === 0) throw errors.badRequest.fromReq(req);
 
     let ws = websocket.registerNewSocket(`#${req.params.id}`, `/assignments/socket/${req.params.id}`);
-    let marker = createMarker(ws, req.params.id);
-    (await marker).setState("receiving");
+    let marker = createMarker(ws, req.params.id); // BUG: This will turn into a memory leak if we don't delete markers or sockets!
+    await marker.then((m) => {
+        m.setState("receiving");
 
-    // Respond here so we can tell the user what's going on
-    res.status(202).json({
-        socketLink: ws.path,
+        // Respond here so we can tell the user what's going on
+        if(!res.headersSent) res.status(202).json({
+            socketLink: ws.path,
+        });
+    }).catch((err) => {
+        next(err);
     });
 
     // FIXME: Uncomment this when the time is right!
@@ -227,8 +231,12 @@ async function onStudentAssignmentsUploaded(req, res) {
             // Compile all files in the dir
             function onError(err) {
                 err.code = 500;
-                err.message = err.stdout;
-                throw err;
+                err.message = err.stdout || err.stderr || err.message;
+                next(err);
+                return {
+                    success: false,
+                    student: path.basename(folder)
+                };
             }
             return Promise.resolve().then(async () => {
                 return {
@@ -264,16 +272,19 @@ async function onStudentAssignmentsUploaded(req, res) {
 
     const limit = (await plimit).default(7);
     inboundFiles = inboundFiles.map(p => limit(p));
-    Promise.resolve(marker)
+    return Promise.resolve(marker)
         .then((m) => m.setState("compiling"))
         .then(() => Promise.all(inboundFiles))
         .then(async (responses) => {
-            let successes = responses.filter(r => r.success).length;
-            ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes} jars!`, type: "success"});
+            let successes = responses.filter(r => r?.success ?? false);
+            // console.table(responses);
+            ws.sendToAll("notify", {message: `Received ${responses.length} files and compiled and created ${successes.length} jars!`, type: "success"});
             m = await marker;
-            m.setStudents(responses.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
+            m.setStudents(successes.map(r => ({student: r.student, jarFile: path.join(r.dir, r.student + ".jar")})));
             return m.start();
             // Promise.resolve(marker);// responses is now a promise in itself -- it's split so we can make a web socket while compilation happens(m => m.setState("processing"));
+        }).catch((err) => {
+            next(err);
         });
     // responses is now a promise in itself -- it's split so we can make a web socket while compilation happens
 }

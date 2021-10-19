@@ -71,6 +71,7 @@ function registerNewSocketServer(id, path, options = {}) {
     id = id.startsWith("#") ? id : "#" + id;
     registeredListeners[id] = sock;
     registeredListeners[path] = sock;
+    console.log(`Registered new socket server: ${id} <-> ${path}`);
     return sock;
 }
 function deregisterSocketServer(id, path) {

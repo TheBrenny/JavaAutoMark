@@ -101,13 +101,15 @@ class MarkerManager {
         const generateHarness = async (marker) => {
             // await tm.queue();
             if(harness.dirty) {
-                await java.promise.compile(harness.javaFile, marker.student.jarFile, path.dirname(harness.javaFile))
+                await java.promise.compile(harness.javaFile, marker.student.jarFile) //, path.dirname(harness.javaFile))
                     .then((outs) => {
-                        if(outs.stderr?.includes("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
+                        if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
                     })
                     .catch((outs) => {
-                        if(outs.stderr?.includes("ERROR")) harness.dirty = true; //true; // not doing true because I want to see if we can compile well
+                        console.log("STDERR");
+                        console.log(outs.stderr);
+                        if(outs.stderr?.includes("ERROR") || outs.stderr?.includes("Error:")) harness.dirty = true;
                         else harness.dirty = false;
                     });
                 harness.harness = harness.javaFile.replace(/.java$/, ".class");
@@ -153,19 +155,8 @@ class MarkerManager {
     }
 
     handleMessage(ws, message) {
-        // TODO: You're still adding the marker
-        console.log(message);
         this.socket.send(ws, "you sent me something!");
         this.socket.send(ws, message);
-
-        let a = `
-        you still need to:
-        - actually run the marker for each student  ---- I think this is done?
-            - compile the harness java file
-            - when started, start running the markers
-        - figure out a good protocol to use for sending marker data
-        - figure out a good protocol to use for establishing good connections
-        `;
     }
 
     async stop() {

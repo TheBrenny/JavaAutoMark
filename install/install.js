@@ -38,7 +38,7 @@ const getJavaLink = async (os, arch) => {
         "arm": "arm"
     };
     url.searchParams.append("os", map[os]);
-    url.searchParams.append("arch", map[arch]);
+    url.searchParams.append("architecture", map[arch]);
     return new Promise((resolve, reject) => {
         let req = wget.request({
             protocol: url.protocol.trim().toLowerCase().replace(/:$/, ""),
