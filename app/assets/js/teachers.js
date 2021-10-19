@@ -1,5 +1,5 @@
 (() => {
-    var form = document.getElementById("createUser");
+    var form = $("form");
     form.addEventListener("submit", validateForm);
     
     function validateForm(event){
@@ -9,7 +9,7 @@
         let fName = form.fName.value;
         let lName = form.lName.value;
         let email = form.email.value;
-        let pass = form.pass.value;
+        let pass = form.pass?.value;
 
         let valid = true;
 
