@@ -94,7 +94,11 @@ router.post("/teachers/create", checks.isAdmin, async (req, res) => {
     if(bad) {
         res.status(401).redirect("/admin/teachers/create");
     } else {
-        res.redirect("/admin");
+        res.status(201).json({
+            success: true,
+            redirect: "/teachers/view",
+            message: "Teacher added successfully!"
+        });
     }
 });
 
