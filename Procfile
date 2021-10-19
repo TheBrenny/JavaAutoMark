@@ -1,1 +1,1 @@
-web: npm run --inspect skipInstall
+web: npm run skipInstall
