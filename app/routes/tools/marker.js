@@ -1,5 +1,3 @@
-// FIXME: You still need to compile the harness class!
-
 const EventEmitter = require('events');
 const java = require("../../jenv/java");
 const plimit = import("p-limit");

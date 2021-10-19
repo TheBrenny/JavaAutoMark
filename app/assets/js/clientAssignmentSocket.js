@@ -1,5 +1,3 @@
-// TODO: Expand this so it can take data from the server and display it on the page
-
 class JAMSocket extends WebSocket {
     constructor(path) {
         // This'll give us the s: from https: and add it to ws, so it becomes wss://
