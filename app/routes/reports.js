@@ -5,7 +5,6 @@ const crypto = require("bcrypt");
 const Database = require("../../db/database");
 const errors = require("./errors/generic").errors;
 const {assignments} = require("../../db/database");
-const {task} = require("gulp");
 const generate = require("../assets/js/generateReports");
 
 /* **************************** */
@@ -20,11 +19,11 @@ router.use("/reports/*", (req, res, next) => {
 //Make reports/:id/:student
 
 router.get("/reports/:id", async (req, res) => {
+    // FIXME: Have an overall assignment statistics page
     // let report = await generate.pullCSV({assignmentID: req.params.id});
 
     res.render("reports/assignment", {
         // report
-        // FIXME: Have an overall assignment statistics page
     });
 });
 
