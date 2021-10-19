@@ -183,7 +183,7 @@ async function install(method) {
         if(semver.lt(methodVersion, "1.1.0")) {
             config.java = {};
 
-            if(await askYN("Do you want to locate your own Java Executable (saying no will download our recommended executable)?", true)) {
+            if(await askYN("Do you want to locate your own Java Executable (saying no will download our recommended executable)?", false)) {
                 config.java.java = await askPath("Where is your java executable located?", undefined, driveRoot);
             } else {
                 const exeExt = (process.platform === "win32" ? ".exe" : ""); // used to add .exe on windows
