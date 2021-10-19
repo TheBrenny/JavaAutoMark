@@ -24,13 +24,18 @@ router.get("/reports/:id", async (req, res) => {
         assignmentID: req.params.id
     };
 
-    let filePath = `A${info.assignmentID}/`;
+    let filePath = `A${info.assignmentID}/total`;
   
 
     let report = await generate.pullTotalCSV(info);
 
+    let url = {
+        csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
+    }
+
     res.render("reports/assignment", {
         report,
+        url,
     });
 });
 

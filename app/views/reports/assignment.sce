@@ -5,6 +5,9 @@
 <div class="reportAssHead">
     <div class="resultTotals">
         <h1>[[report.assignmentTitle]]</h1>
+        <button href="[[url.csv]]" class="green">
+            Download CSV
+        </button>
     </div>
 
     [[?= report.tasks == null]]
