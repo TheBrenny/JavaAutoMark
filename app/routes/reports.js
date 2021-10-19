@@ -54,6 +54,7 @@ router.get("/reports/:id/:student", async (req, res) => {
     let report = await generate.pullCSV(info);
 
     res.render("reports/student", {
+        info,
         report,
         url,
     });

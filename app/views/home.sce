@@ -23,7 +23,7 @@
             <div class="faWrap">
                 <i class="fas fa-chalkboard fa-6x"></i>
             </div>
-            <h2>View Course</h2>
+            <h2>View Courses</h2>
         </button>
         <button id="newCourse" class="tile " href="/courses/create">
             <!-- Using 3x here instead of 6x is because fa doubles the size anyway! -->

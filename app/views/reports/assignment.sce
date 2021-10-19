@@ -4,6 +4,9 @@
 
 <div class="reportAssHead">
     <div class="resultTotals">
+        <button href="/assignments/submit/[[report.assignmentID]]" class="blue">
+            Back to submissions
+        </button>
         <h1>[[report.assignmentTitle]]</h1>
         <button href="[[url.csv]]" class="green">
             Download CSV

@@ -5,6 +5,10 @@
 <div id="copyReport">
 
     <div class="buttonBanner">
+        <button href="/assignments/submit/[[info.assignmentID]]" class="blue">
+            Back to submissions
+        </button>
+
         <button class="grey copy">
             Copy
         </button>
