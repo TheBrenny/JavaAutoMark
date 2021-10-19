@@ -67,7 +67,7 @@ function compile(target, ...classpaths) {
         args = args.concat("-proceedOnError");
     }
 
-    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(";")); // adds any classpaths that are passed
+    if(classpaths.length > 0) args = args.concat("-classpath", classpaths.join(path.delimiter)); // adds any classpaths that are passed
     args = args.concat(path.resolve(targetDir, target + ext));
 
     return spawn(cmd, args);
