@@ -21,36 +21,22 @@
             </span>
         [[3=]]
             [[e= teacher in teachers]]
-                [[?= user.admin]]
-                    <span class="tRow">
-                        <p class="zID">[[teacher.zid]]</p>
-                        <p class="fName">[[teacher.fname]]</p>
-                        <p class="lName">[[teacher.lname]]</p>
-                        
-                        <p class="buttons">
-                            <button href="/teachers/edit/[[teacher.teacher_id]]">
-                                Edit
-                            </button>
-                            <button class="blue" href="/teachers/view/[[teacher.teacher_id]]">
-                                View
-                            </button>
-                        </p>
-                    </span>
-                [[3=]]
-                    [[?= teacher.zid != 0]]
-                        <span class="tRow">
-                            <p class="zID">[[teacher.zid]]</p>
-                            <p class="fName">[[teacher.fname]]</p>
-                            <p class="lName">[[teacher.lname]]</p>
-                            
-                            <p class="buttons">
-                                <button class="green" href="/teachers/view/[[teacher.teacher_id]]">
-                                    View
-                                </button>
-                            </p>
-                        </span>
+            <span class="tRow">
+                <p class="zID">[[teacher.zid]]</p>
+                <p class="fName">[[teacher.fname]]</p>
+                <p class="lName">[[teacher.lname]]</p>
+                
+                <p class="buttons">
+                    <button href="/teachers/view/[[teacher.zid]]">
+                        View
+                    </button>
+                    [[?= user.admin || user.zid == teacher.zid]]
+                        <button class="blue" href="/teachers/edit/[[teacher.zid]]">
+                            Edit
+                        </button>
                     [[?==]]
-                [[?==]]
+                    </p>
+                </span>
             [[?==]]
         [[?==]]
 

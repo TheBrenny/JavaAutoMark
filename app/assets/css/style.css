@@ -565,6 +565,9 @@ div.table .tRow p {
 div.table .tRow p:not(:last-child) {
   border-right: 1px solid #7e7f83ff;
 }
+div.table button {
+  width: 100%;
+}
 
 .resultCell {
   display: inline-flex !important;
