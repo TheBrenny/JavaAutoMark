@@ -32,7 +32,7 @@
     <input type="password" placeholder="Enter current password to confirm" name="currentPass">
 
     <div class="buttons">
-        <button class="red">Cancel</button>
+        <button href="/teachers/view/[[teacher.zid]]" class="red">Cancel</button>
         <button type="submit" class="green">Save</button>
     </div>
 </form>
