@@ -36,7 +36,7 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id: id,
+                courseID: id,
                 name: name,
                 year: year
             }),
