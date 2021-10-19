@@ -444,23 +444,59 @@ input[type=submit]:disabled {
   width: 220px;
 }
 #header #menu {
+  position: relative;
   list-style: none;
   height: 100%;
   display: flex;
   align-items: center;
+  z-index: 99;
 }
 #header #menu li {
   float: left;
   text-transform: uppercase;
   margin: 0 10px;
   padding: 10px;
+  min-width: 120px;
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
   transition: 0.5s ease background-color;
+  text-align: center;
 }
 #header #menu li:hover {
   background-color: rgba(255, 209, 71, 0.8);
+}
+#header #menu #dropHover:hover + #liAss {
+  visibility: visible;
+  transition-delay: 0s;
+}
+#header #menu #liAss {
+  position: absolute;
+  z-index: -1;
+  right: 160px;
+  top: 75px;
+  list-style: none;
+  max-width: 160px;
+  visibility: hidden;
+  background-color: #f3f3f4ff;
+  padding: 0;
+  box-shadow: 0 5px 10px black;
+  padding-bottom: 10px;
+  transition: all ease 0.5s;
+  transition-delay: 0.5s;
+}
+#header #menu #liAss li {
+  margin: 0 10px;
+  padding: 10px;
+  min-width: 120px;
+  float: initial;
+}
+#header #menu #liAss a {
+  border: none;
+  margin-top: 10px;
+}
+#header #menu #liAss:hover {
+  visibility: visible;
 }
 #header #menu a {
   text-decoration: none;

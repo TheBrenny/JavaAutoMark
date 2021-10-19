@@ -25,22 +25,65 @@
     }
 
     #menu {
+        position: relative;
         list-style: none;
         height: 100%;
         display: flex;
         align-items: center;
+        z-index: 99;
 
         li {
             float: left;
             text-transform: uppercase;
             margin: 0 10px;
             padding: 10px;
+            min-width: 120px;
             @include content-font();
             transition: 0.5s ease background-color;
+            text-align: center;
         }
 
         li:hover {
             background-color: rgba(255, 209, 71, 0.8);
+        }
+
+        #dropHover:hover+#liAss {
+            visibility: visible;
+            transition-delay: 0s;
+        }
+
+        #liAss {
+            position: absolute;
+            z-index:-1;
+            right: 160px;
+            top: $header-height;
+            list-style: none;
+            max-width: 160px;
+            visibility: hidden;
+            background-color: $cultured;
+            padding:0;
+            box-shadow: 0 5px 10px black;
+            padding-bottom: 10px;
+            transition: all ease 0.5s;
+            transition-delay: 0.5s;
+
+            li {
+                margin: 0 10px;
+                padding: 10px;
+                min-width: 120px;
+                float:initial;
+            }
+
+            a {
+                border: none;
+                margin-top: 10px;
+            }
+        }
+
+        #liAss:hover {
+
+                visibility: visible;
+
         }
 
         a {
