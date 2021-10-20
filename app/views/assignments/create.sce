@@ -26,7 +26,7 @@
             <input type="button" disabled="true" value="Submit assignment" id="subAssignment" />
         [[3=]]
             <input type="button" disabled="true" value="Update assignment" id="updateAssignment" />
-            <input type="button" class="blue" value="Submissions" href="/assignments/submit/[[assignObj.id]]" />
+            <button class="blue" href="/assignments/submit/[[assignObj.id]]">Submissions</button>
         [[?==]]
     </div>
 </div>
