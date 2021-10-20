@@ -34,9 +34,7 @@
                     <div class="test">
                         <div class="testTop">
                             <h1>Test [[test.testID]]</h1>
-        
-                            <img class="testSwitch down" draggable="false" src="/assets/img/items/arrow_down_white.svg" alt="Move Down" />
-                            <img class="testSwitch up" draggable="false" src="/assets/img/items/arrow_up_white.svg" alt="Move Down" />
+                            <img class="testSwitch" draggable="false" src="/assets/img/items/arrow_down_white.svg" alt="Move Down" />
                         </div>
 
                         <div class="testDetail">

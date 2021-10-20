@@ -57,12 +57,10 @@
             color: $cultured;
             letter-spacing: 1px;
 
-            .up {
-                display: none;
-            }
-
-            .down {
-                display: initial;
+            &.max {
+                max-height: 400px;
+                background-color: $task-button;
+                color: $jet;
             }
 
             img {
@@ -87,33 +85,15 @@
                     margin: 10px 20px;
                 }
             }
-
-        }
-
-        .test.max {
-            max-height: 600px;
-            background-color: $task-button;
-            color: $jet;
-
-            .up {
-                display: initial;
-            }
-
-            .down {
-                display: none;
-            }
         }
     }
-
-
-    
 }
 
 #copyReport {
     @extend .wrap;
 
     .buttonBanner {
-        margin: 50px 0 ;
+        margin: 50px 0;
         display: flex;
         justify-content: space-between;
     }
@@ -122,7 +102,7 @@
         @extend .block;
         flex-direction: column;
         padding: 50px;
-        
+
         span {
             display: flex;
 
@@ -141,7 +121,6 @@
 
         .task {
             margin-top: 50px;
-            // flex-direction: column;
             span {
                 justify-content: space-between;
             }
