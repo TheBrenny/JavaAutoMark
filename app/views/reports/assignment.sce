@@ -30,13 +30,6 @@
                     <h3>[[task.averageMarks]]</h3>
                 </div>
 
-                <pre>
-                    [[task.tests]]
-                </pre>
-                <script nonce="[[nonce]]">
-                    console.log((`[[task.tests.0.testID]]`));
-                </script>
-
                 [[e= test in task.tests ]]
                     <div class="test">
                         <div class="testTop">
