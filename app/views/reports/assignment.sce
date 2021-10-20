@@ -16,7 +16,6 @@
     [[?= report.tasks == null]]
         <h1>No tasks</h1>
     [[3=]]
-
         [[e= task in report.tasks ]]
             <div class="task">
                 <h1>Task [[task.taskID]]</h1>
@@ -31,7 +30,14 @@
                     <h3>[[task.averageMarks]]</h3>
                 </div>
 
-                    [[e= test in task.tests]]
+                <pre>
+                    [[task.tests]]
+                </pre>
+                <script nonce="[[nonce]]">
+                    console.log((`[[task.tests.0.testID]]`));
+                </script>
+
+                [[e= test in task.tests ]]
                     <div class="test">
                         <div class="testTop">
                             <h1>Test [[test.testID]]</h1>
@@ -63,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    [[?==]]
+                [[?==]]
             </div>
         [[?==]]
 

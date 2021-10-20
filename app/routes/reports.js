@@ -16,10 +16,7 @@ router.use("/reports/*", (req, res, next) => {
     next();
 });
 
-//Make reports/:id/:student
-
 router.get("/reports/:id", async (req, res) => {
-    // FIXME: Have an overall assignment statistics page
     let info = {
         assignmentID: req.params.id
     };
@@ -58,8 +55,5 @@ router.get("/reports/:id/:student", async (req, res) => {
         url,
     });
 });
-
-// TODO: Maybe we can delete this?
-
 
 module.exports = router;

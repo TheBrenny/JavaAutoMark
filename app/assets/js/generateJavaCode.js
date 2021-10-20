@@ -73,6 +73,7 @@ function generateJavaCode(assignment, assignmentID) {
     main += "} catch(Exception e) {\n";
     main += "e.printStackTrace();\n";
     main += "}\n";
+    main += `System.out.println("HALT");`;
     main += "}\n";
 
     code += main;
