@@ -1,10 +1,4 @@
 const router = require("express").Router();
-const checks = require("./tools/checks");
-const session = require("./tools/session");
-const crypto = require("bcrypt");
-const Database = require("../../db/database");
-const errors = require("./errors/generic").errors;
-const {assignments} = require("../../db/database");
 const generate = require("../assets/js/generateReports");
 
 /* **************************** */
@@ -27,7 +21,7 @@ router.get("/reports/:id", async (req, res) => {
 
     let url = {
         csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
-    }
+    };
 
     res.render("reports/assignment", {
         report,
@@ -45,7 +39,7 @@ router.get("/reports/:id/:student", async (req, res) => {
 
     let url = {
         csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
-    }
+    };
 
     let report = await generate.pullCSV(info);
 
