@@ -139,11 +139,11 @@ async function install(method) {
 
             config.storage.options = {};
             if(config.storage.provider === "localstorage") {
-                config.storage.options.path = (await askPath("Where do you want to store your files?", "/"));
+                config.storage.options.path = (await askPath("Where do you want to store your files? (folder)", "/", driveRoot));
             } else {
                 config.storage.options.accessID = (await ask(`What is your ${pName} ${accessIDName}?`));
                 if(config.storage.provider === "gcs") {
-                    config.storage.options.secret = (await askPath("Where is your GCS JSON keyfile stored?", ".json"));
+                    config.storage.options.secret = (await askPath("Where is your GCS JSON keyfile stored? (.json)", ".json", driveRoot));
                 } else {
                     config.storage.options.secret = (await ask(`What is your ${pName} ${secretName}?`));
                 }
@@ -184,7 +184,7 @@ async function install(method) {
             config.java = {};
 
             if(await askYN("Do you want to locate your own Java Executable (saying no will download our recommended executable)?", false)) {
-                config.java.java = await askPath("Where is your java executable located?", undefined, driveRoot);
+                config.java.java = await askPath("Where is your java executable located? (any file)", undefined, driveRoot);
             } else {
                 const exeExt = (process.platform === "win32" ? ".exe" : ""); // used to add .exe on windows
                 const javaLink = await getJavaLink(process.platform, process.arch);
@@ -201,7 +201,7 @@ async function install(method) {
             }
 
             if(await askYN("Do you want to locate your own Java Compiler (saying no will download our recommended compiler)?", false)) {
-                config.java.compiler = await askPath("Where is your java compiler located?", undefined, driveRoot);
+                config.java.compiler = await askPath("Where is your java compiler located? (any file)", undefined, driveRoot);
             } else {
                 const compilerLink = "https://mirror.aarnet.edu.au/pub/eclipse/eclipse/downloads/drops4/R-4.20-202106111600/ecj-4.20.jar";
                 const compilerLoc = path.resolve(__dirname, "..", "app", "jenv", "bin", "compiler.jar");
@@ -444,7 +444,7 @@ async function askPath(message, ext, root) {
         type: "fts",
         name: "d",
         message: message,
-        onlyShowValid: false,
+        onlyShowValid: ["/", "\\"].includes(ext), // only show valid if we're only looking for folders
         root: root,
         validate: (item) => {
             try {
@@ -452,7 +452,7 @@ async function askPath(message, ext, root) {
             } catch(e) {
                 return false;
             }
-
+            
             if(ext == undefined) return true;
             if(["/", "\\"].includes(ext)) return fs.statSync(item).isDirectory();
             if(typeof ext === "string") return path.extname(item) === ext;
