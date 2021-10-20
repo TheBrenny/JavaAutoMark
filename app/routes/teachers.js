@@ -142,7 +142,10 @@ router.post("/teachers/create", checks.isAdmin, async (req, res) => {
     }
 
     if(bad) {
-        res.status(401).redirect("/admin/teachers/create");
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong!"
+        });
     } else {
         res.status(201).json({
             success: true,

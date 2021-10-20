@@ -2,15 +2,15 @@
     var form = $("form");
     var action = form.getAttribute("action");
     form.addEventListener("submit", validateForm);
-    
-    function validateForm(event){
+
+    function validateForm(event) {
         event.preventDefault();
-        
+
         let zID = form.zID.value;
         let fName = form.fName.value;
         let lName = form.lName.value;
         let email = form.email.value;
-        let pass = form.newPass?.value;
+        let pass = form.newPass?.value ?? form.pass?.value;
         let conPass = form.confirmPass?.value;
         let curPass = form.currentPass?.value;
 
@@ -24,11 +24,11 @@
             notifier.notify("Name must be less than 50 character and contain no numbers or punctuation", "error");
             valid = false;
         }
-        if(!validate(lName, /^[a-zA-Z.\-_]+$/)){
+        if(!validate(lName, /^[a-zA-Z.\-_]+$/)) {
             notifier.notify("Name must be less than 50 character and contain no numbers", "error");
             valid = false;
         }
-        if(!validate(email,  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+        if(!validate(email, /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
             notifier.notify("Please only use a valid email (ie. user@exampledomain.com)", "error");
             valid = false;
         }
@@ -36,13 +36,9 @@
             notifier.notify("Make sure both new passwords match", "error");
             valid = false;
         }
-        
+
         if(valid) {
-            if(action.includes("edit")) {
-                submitForm(action, zID, fName, lName, email, pass, curPass);
-            } else {
-                submitForm(action, zID, fName, lName, email, pass);
-            }
+            submitForm(action, zID, fName, lName, email, pass, curPass);
         }
     }
 

@@ -43,9 +43,11 @@
            
     </div>
     
-    <button id="addTeacher" href="/teachers/create">
-        New Teacher
-    </button>
+    [[?= user.admin]]
+        <button id="addTeacher" href="/teachers/create">
+            New Teacher
+        </button>
+    [[?==]]
 
 </div>
 
