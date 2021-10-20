@@ -444,7 +444,7 @@ async function askPath(message, ext, root) {
         type: "fts",
         name: "d",
         message: message,
-        onlyShowValid: true,
+        onlyShowValid: false,
         root: root,
         validate: (item) => {
             try {
