@@ -28,8 +28,6 @@ router.get("/reports/:id", async (req, res) => {
 
     let report = await generate.pullTotalCSV(info);
 
-    console.log(report.tasks);
-
     let url = {
         csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
     }
