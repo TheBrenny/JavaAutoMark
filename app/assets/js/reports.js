@@ -5,7 +5,7 @@ onReady(() => {
         })
     });
 
-    $('.copy').addEventListener('click', (e) => {
+    $('.copy')?.addEventListener('click', (e) => {
         let r = new Range();
         r.selectNodeContents($('.content'));
         window.getSelection().addRange(r);
