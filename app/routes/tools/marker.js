@@ -97,7 +97,8 @@ class MarkerManager {
 
         /** @param {JavaMarker} marker */
         const generateHarness = async (marker) => {
-            // await tm.queue();
+            await tm.queue();
+            harness.dirty = true;
             if(harness.dirty) {
                 await java.promise.compile(harness.javaFile, marker.student.jarFile) //, path.dirname(harness.javaFile))
                     .then((outs) => {
