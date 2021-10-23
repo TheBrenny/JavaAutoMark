@@ -20,6 +20,11 @@ onReady(() => {
             el.style.maxHeight = el.clientHeight + "px";
         }
     }));
+
+    $("#studentSelect")?.addEventListener("change", (e) => {
+        if(e.target.value == "") return;
+        window.location.pathname += "/" + e.target.value;
+    });
 });
 function testSwitch(button) {
     let on = button.parentElement.parentElement.classList.toggle("max");

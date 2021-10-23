@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const generate = require("../assets/js/generateReports");
+const storage = require("../../storage/storage");
 
 /* **************************** */
 /*      PAGES FOR REPORTS       */
@@ -16,16 +17,17 @@ router.get("/reports/:id", async (req, res) => {
     };
 
     let filePath = `A${info.assignmentID}/total`;
-
     let report = await generate.pullTotalCSV(info);
-
     let url = {
         csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
     };
+    let students = await storage.listObjects(storage.container, `A${info.assignmentID}/`);
+    students = students.map(s => s.prefix?.split("/")[1]).filter(s => s !== undefined && s !== null).sort();
 
     res.render("reports/assignment", {
         report,
         url,
+        students
     });
 });
 
@@ -36,12 +38,10 @@ router.get("/reports/:id/:student", async (req, res) => {
     };
 
     let filePath = `A${info.assignmentID}/${info.studentID}/${info.studentID}`;
-
+    let report = await generate.pullCSV(info);
     let url = {
         csv: await storage.presignedGetUrl(storage.container, `${filePath}.csv`)
     };
-
-    let report = await generate.pullCSV(info);
 
     res.render("reports/student", {
         info,

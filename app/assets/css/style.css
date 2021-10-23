@@ -1315,6 +1315,22 @@ div.table button {
 .reportAssHead .resultTotals button {
   margin: 0;
 }
+.reportAssHead select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
 .reportAssHead .task {
   flex-direction: column;
 }
@@ -1377,6 +1393,9 @@ div.table button {
   margin: 50px 0;
   display: flex;
   justify-content: space-between;
+}
+#copyReport .buttonBanner > button {
+  width: 200px;
 }
 #copyReport .content {
   flex-direction: column;

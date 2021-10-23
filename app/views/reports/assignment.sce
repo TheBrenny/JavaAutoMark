@@ -7,10 +7,19 @@
         <button href="/assignments/submit/[[report.assignmentID]]" class="blue">
             Back to submissions
         </button>
-        <h1>[[report.assignmentTitle]]</h1>
         <button href="[[url.csv]]" class="green">
             Download CSV
         </button>
+    </div>
+
+    <div class="block">
+        <h1>[[report.assignmentTitle]]</h1>
+        <select name="studentSelect" id="studentSelect">
+            <option value="">Pick a student...</option>
+            [[e= student in students]]
+                <option value="[[student]]">[[student]]</option>
+            [[?==]]
+        </select>
     </div>
 
     [[?= report.tasks == null]]
