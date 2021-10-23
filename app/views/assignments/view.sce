@@ -48,6 +48,13 @@
                     <button class="blue" href="/assignments/submit/[[assignment.assignment_id]]">
                         Submissions
                     </button>
+                    [[?= assignment.marked]]
+                    <!-- FIXME: This actually won't ever work, because
+                        assignment.marked isn't the correct variable! -->
+                        <button class="yellow" href="/reports/[[assignment.assignment_id]]">
+                            Mark
+                        </button>
+                    [[?==]]
                 </p>
             </span>
         [[?==]]
