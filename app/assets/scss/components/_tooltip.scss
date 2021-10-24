@@ -1,0 +1,39 @@
+#tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px $gray-web;
+    display: none;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 10px));
+    background: $cultured;
+    border: 2px solid $task-button;
+    padding: 0.5em;
+    @include content-font();
+    z-index: 9999999;
+
+    &.show {
+        display: block;
+    }
+
+    .message {
+        white-space: pre-line;
+    }
+
+    .arrow {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-top: 10px solid $task-button;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        transform: translateX(-50%);
+    }
+
+    hr {
+        margin: 0.3em;
+    }
+}

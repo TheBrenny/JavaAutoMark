@@ -10,40 +10,31 @@ const dbFolder = path.join(__dirname);
 const sqlFolder = path.join(dbFolder, "scripts");
 const templateFolder = path.join(dbFolder, "templates");
 
-module.exports = (async function createDB() {
-    if(!global.hasOwnProperty('db')) {
+let db;
+
+module.exports = (function createDB() {
+    if(db === undefined) {
         let dbUrl = config.db.url;
-        if(config.db.isDev) {
-            dbUrl.searchParams.append("debug", "true");
-        }
+        if(config.db.isDev) dbUrl.searchParams.append("debug", "true");
 
-        global.db = mysql.createConnection({
+        db = mysql.createPool({
             uri: dbUrl.href,
-            multipleStatements: true
-        });
-
-        global.db.then(db => {
-            db.on("error", err => {
-                if(["PROTOCOL_CONNECTION_LOST", "ECONNREFUSED"].includes(err.code)) {
-                    console.log("Lost connection to database. Attempting to reconnect...");
-                    createDB();
-                }
-            });
+            multipleStatements: true,
+            connectionLimit: 1, // MAYBE: Turn this into a configuration option
         });
     }
-    return global.db;
+    return db;
 })();
 
-// TODO: When the DB connection closes, we might need to find a way to attepmt to reconnect
-let dbOps = ["query", "end", "execute"];
-dbOps.forEach(op => {
-    global.db[op] = module.exports[op] = async function () {
-        let theDB = (await global.db);
-        return (theDB[op].apply(theDB, arguments));
-    };
-});
+// let dbOps = ["query", "end", "execute"];
+// dbOps.forEach(op => {
+//     global.db[op] = module.exports[op] = async function () {
+//         let theDB = (await global.db);
+//         return (theDB[op].apply(theDB, arguments));
+//     };
+// });
 
-module.exports.sessionStore = new MySQLStore({}, global.db);
+module.exports.sessionStore = new MySQLStore({}, db);
 
 module.exports.sqlFolder = sqlFolder;
 module.exports.sqlFromFile = function (filename, values) {

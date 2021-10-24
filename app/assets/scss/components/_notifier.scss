@@ -1,0 +1,86 @@
+#notifier-tray {
+    overflow: visible;
+    right: $notifier-margin;
+    top: $header-height + $notifier-margin;
+    position: fixed;
+    width: $notifier-width;
+    height: fit-content;
+
+    .notification {
+        @include content-font();
+        border-radius: 0.3em;
+        display: block;
+        height: fit-content;
+        background: $button-blue;
+        z-index: 20;
+        left: calc(100% + #{$notifier-margin});
+        transition: left 0.25s;
+        transition-timing-function: ease-in-out;
+        overflow: hidden;
+        padding: 0.4em 0em;
+        position: relative;
+        margin-bottom: 1em;
+
+        &.info {
+            background: $button-blue;
+        }
+        &.success {
+            background: $pistachio;
+        }
+        &.warning {
+            background: $sunglow;
+        }
+        &.error {
+            background: $tomato;
+        }
+
+        &.show {
+            left: 0;
+            transition-timing-function: cubic-bezier(0.75, 1.48, 0.68, 0.96);
+
+            .timer {
+                animation: timer 5s linear;
+
+                @keyframes timer {
+                    from {
+                        width: 0%;
+                    }
+                    to {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4em;
+
+            p {
+                padding-left: 0.2em;
+            }
+            .del {
+                width: 20px;
+                height: 20px;
+                padding: 0;
+                margin: 0;
+                background: transparent;
+                cursor: pointer;
+                box-shadow: none;
+
+                &:hover img {
+                    filter: brightness(0.65);
+                }
+            }
+        }
+
+        .timer {
+            bottom: 0%;
+            height: 7px;
+            position: absolute;
+            width: 0%;
+            background: #ffffff80;
+        }
+    }
+}

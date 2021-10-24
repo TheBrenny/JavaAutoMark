@@ -119,6 +119,60 @@ body #login_container form label {
   padding: 10px 0;
 }
 
+.block, #viewTeach #head, #copyReport .content, .reportAssHead .task, .indCourse, #viewCourse div#head, #submitAss #inputBox, #viewAss div#head, #newassignment div#details, #error {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f3f3f4ff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+}
+
+.wrap, #viewTeach, #copyReport, .reportAssHead, #viewCourse, #submitAss, #viewAss, #newassignment, #error {
+  width: 70%;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 50px;
+  max-width: 1020px;
+}
+
+#error {
+  flex-direction: column;
+}
+#error .preWrap {
+  background: #c4c4c4ff;
+  border-radius: 0.5em;
+  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
+  padding-bottom: 0.6em;
+}
+#error .preWrap pre {
+  overflow-x: scroll;
+  padding: 1em;
+  padding-bottom: 0.5em;
+  color: #7e7f83ff;
+}
+#error .preWrap pre::-webkit-scrollbar {
+  width: 0.75em;
+  height: 0.75em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb {
+  background-color: #888890ff;
+  border-radius: 10em;
+  margin: 2em;
+}
+#error .preWrap pre::-webkit-scrollbar-thumb:hover {
+  background-color: #7e7f83ff;
+}
+#error .preWrap pre::-webkit-scrollbar-button {
+  background: transparent;
+  width: 1em;
+}
+#error .preWrap pre span.highlight {
+  color: #14110fff;
+}
+
 #notifier-tray {
   overflow: visible;
   right: 25px;
@@ -214,9 +268,13 @@ body #login_container form label {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
+  z-index: 9999999;
 }
 #tooltip.show {
   display: block;
+}
+#tooltip .message {
+  white-space: pre-line;
 }
 #tooltip .arrow {
   position: absolute;
@@ -228,6 +286,9 @@ body #login_container form label {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   transform: translateX(-50%);
+}
+#tooltip hr {
+  margin: 0.3em;
 }
 
 button,
@@ -245,7 +306,7 @@ input[type=submit] {
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
-  transition: 0.5s ease background-color, 0.2s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+  transition: all 0.5s ease;
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0 5px 10px #7e7f83ff;
@@ -259,6 +320,36 @@ button.blue:hover,
 input[type=button].blue:hover,
 input[type=submit].blue:hover {
   background-color: #3559a7ff !important;
+}
+button.grey,
+input[type=button].grey,
+input[type=submit].grey {
+  background-color: #c4c4c4ff;
+}
+button.grey:hover,
+input[type=button].grey:hover,
+input[type=submit].grey:hover {
+  background-color: #888890ff !important;
+}
+button.yellow,
+input[type=button].yellow,
+input[type=submit].yellow {
+  background-color: #ffd147ff;
+}
+button.yellow:hover,
+input[type=button].yellow:hover,
+input[type=submit].yellow:hover {
+  background-color: #fabb00ff !important;
+}
+button.red,
+input[type=button].red,
+input[type=submit].red {
+  background-color: #fe6448ff;
+}
+button.red:hover,
+input[type=button].red:hover,
+input[type=submit].red:hover {
+  background-color: #f42601ff !important;
 }
 button.strong,
 input[type=button].strong,
@@ -321,6 +412,13 @@ input[type=submit]:disabled {
   cursor: unset !important;
 }
 
+.animate-delete {
+  opacity: 0;
+  padding: 0;
+  height: 0;
+  width: 0;
+}
+
 #header {
   position: fixed;
   top: 0;
@@ -330,7 +428,7 @@ input[type=submit]:disabled {
   height: 75px;
   display: flex;
   justify-content: space-between;
-  z-index: 10;
+  z-index: 100;
 }
 #header a.home {
   background-image: url("/assets/img/jam_jar_coloured.png");
@@ -374,6 +472,149 @@ input[type=submit]:disabled {
   margin-top: 105px;
 }
 
+div.table {
+  padding: 0;
+  border-radius: 10px 10px 5px 5px;
+  background-color: #f3f3f4ff;
+  box-shadow: 0 5px 10px #7e7f83ff;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+  overflow: overlay;
+  max-height: 80vh;
+  margin-bottom: 0;
+}
+div.table::-webkit-scrollbar {
+  width: 1em;
+  height: 1em;
+  z-index: 60;
+}
+div.table::-webkit-scrollbar-thumb {
+  background-color: #888890ff;
+  border-radius: 10em;
+  width: 4px;
+  height: 4px;
+  background-clip: padding-box;
+  border: 4px solid rgba(0, 0, 0, 0);
+}
+div.table::-webkit-scrollbar-thumb:hover {
+  background-color: #7e7f83ff;
+}
+div.table::-webkit-scrollbar-corner {
+  opacity: 0;
+}
+div.table span {
+  display: flex;
+  justify-content: flex-start;
+}
+div.table p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+div.table .tHead {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  box-shadow: 0 0 10px #7e7f83ff;
+}
+div.table .tHead p {
+  background-color: #4b7ce6ff;
+  color: white;
+  font-family: roboto-slab, serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+div.table .tHead p:not(:last-child) {
+  border-right: 1px solid #f3f3f4ff;
+}
+div.table .bRow {
+  text-align: center;
+  display: block;
+  padding: 20px;
+  width: 100%;
+}
+div.table .tRow {
+  z-index: 40;
+  position: relative;
+  width: 100%;
+}
+div.table .tRow:nth-child(even) {
+  background-color: #f3f3f4ff;
+}
+div.table .tRow:nth-child(odd) {
+  background-color: #c4c4c4ff;
+}
+div.table .tRow.hidden {
+  display: none !important;
+}
+div.table .tRow:not(.hidden) ~ .bRow {
+  display: none !important;
+}
+div.table .tRow p {
+  text-align: center;
+}
+div.table .tRow p:not(:last-child) {
+  border-right: 1px solid #7e7f83ff;
+}
+
+.resultCell {
+  display: inline-flex !important;
+  width: 15px !important;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  padding: 10px !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.resultCell.loading::after {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background-image: url(/assets/img/items/flask_yellow.svg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: shake_bottle 4s cubic-bezier(0, 1, 0.5, 1) infinite;
+}
+.resultCell.pass {
+  background: rgba(138, 205, 109, 0.7) !important;
+}
+.resultCell.fail {
+  background: rgba(254, 100, 72, 0.7) !important;
+}
+
+.resultCell.error,
+.frontCell.error {
+  background: #ffd147ff !important;
+}
+
+@keyframes shake_bottle {
+  0%, 3%, 6%, 9%, 12%, 15%, 100% {
+    transform: rotate(0deg);
+  }
+  1.5%, 7.5%, 13.5% {
+    transform: rotate(7.5deg);
+  }
+  4.5%, 10.5% {
+    transform: rotate(-7.5deg);
+  }
+}
 #createUser,
 #viewUser {
   width: 400px;
@@ -473,59 +714,8 @@ input[type=submit]:disabled {
   height: 1.3em;
   margin: 0 !important;
 }
-
-.block, #submitAss .inputBox, #viewAss div#head, #newassignment div#details, #error {
-  display: flex;
-  justify-content: space-between;
-  background-color: #f3f3f4ff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  margin-bottom: 35px;
-}
-
-.wrap, #submitAss, #viewAss, #newassignment, #error {
-  width: 70%;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  margin-bottom: 50px;
-  max-width: 1020px;
-}
-
-#error {
-  flex-direction: column;
-}
-#error .preWrap {
-  background: #c4c4c4ff;
-  border-radius: 0.5em;
-  box-shadow: inset -5px 0 20px -5px #7e7f83ff;
-  padding-bottom: 0.6em;
-}
-#error .preWrap pre {
-  overflow-x: scroll;
-  padding: 1em;
-  padding-bottom: 0.5em;
-  color: #7e7f83ff;
-}
-#error .preWrap pre::-webkit-scrollbar {
-  width: 0.75em;
-  height: 0.75em;
-}
-#error .preWrap pre::-webkit-scrollbar-thumb {
-  background-color: #888890ff;
-  border-radius: 10em;
-  margin: 2em;
-}
-#error .preWrap pre::-webkit-scrollbar-thumb:hover {
-  background-color: #7e7f83ff;
-}
-#error .preWrap pre::-webkit-scrollbar-button {
-  background: transparent;
-  width: 1em;
-}
-#error .preWrap pre span.highlight {
-  color: #14110fff;
+#viewUser .blue {
+  width: 100%;
 }
 
 #newassignment div#details {
@@ -588,7 +778,7 @@ input[type=submit]:disabled {
   flex-grow: 1;
   align-self: stretch;
   margin: 10px 0;
-  min-height: 50px;
+  min-height: 30px;
 }
 #newassignment div.task .test ul,
 #newassignment div.task .instr ul {
@@ -611,7 +801,6 @@ input[type=submit]:disabled {
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #efefef;
-  border-top: 1px solid #efefef;
   flex-grow: 1;
   align-items: center;
   justify-content: center;
@@ -660,8 +849,9 @@ input[type=submit]:disabled {
 #newassignment div.task .instr ul .moveButton:hover img {
   filter: brightness(2);
 }
-#newassignment div.task .test .testCenter,
-#newassignment div.task .instr .testCenter {
+#newassignment div.task .test .testCenter, #newassignment div.task .test .excCenter,
+#newassignment div.task .instr .testCenter,
+#newassignment div.task .instr .excCenter {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -669,32 +859,34 @@ input[type=submit]:disabled {
   flex-grow: 2;
   margin-bottom: 15px;
 }
-#newassignment div.task .test .testCenter .case,
-#newassignment div.task .instr .testCenter .case {
+#newassignment div.task .test .testCenter .case, #newassignment div.task .test .excCenter .case,
+#newassignment div.task .instr .testCenter .case,
+#newassignment div.task .instr .excCenter .case {
   flex-grow: 2;
 }
-#newassignment div.task .test .testCenter .editor,
-#newassignment div.task .instr .testCenter .editor {
-  height: 60px;
-}
-#newassignment div.task .test .testCenter .testDeets,
-#newassignment div.task .instr .testCenter .testDeets {
+#newassignment div.task .test .testCenter .testDeets, #newassignment div.task .test .excCenter .testDeets,
+#newassignment div.task .instr .testCenter .testDeets,
+#newassignment div.task .instr .excCenter .testDeets {
   display: flex;
 }
-#newassignment div.task .test .testCenter .testDeets .small,
-#newassignment div.task .instr .testCenter .testDeets .small {
+#newassignment div.task .test .testCenter .testDeets .small, #newassignment div.task .test .excCenter .testDeets .small,
+#newassignment div.task .instr .testCenter .testDeets .small,
+#newassignment div.task .instr .excCenter .testDeets .small {
   margin-right: 15px;
 }
-#newassignment div.task .test .testCenter .testDeets .num,
-#newassignment div.task .instr .testCenter .testDeets .num {
+#newassignment div.task .test .testCenter .testDeets .num, #newassignment div.task .test .excCenter .testDeets .num,
+#newassignment div.task .instr .testCenter .testDeets .num,
+#newassignment div.task .instr .excCenter .testDeets .num {
   max-width: 60px;
 }
-#newassignment div.task .test .testCenter .testDeets .out,
-#newassignment div.task .instr .testCenter .testDeets .out {
+#newassignment div.task .test .testCenter .testDeets .out, #newassignment div.task .test .excCenter .testDeets .out,
+#newassignment div.task .instr .testCenter .testDeets .out,
+#newassignment div.task .instr .excCenter .testDeets .out {
   max-width: 120px;
 }
-#newassignment div.task .test .testCenter .testDeets .desc,
-#newassignment div.task .instr .testCenter .testDeets .desc {
+#newassignment div.task .test .testCenter .testDeets .desc, #newassignment div.task .test .excCenter .testDeets .desc,
+#newassignment div.task .instr .testCenter .testDeets .desc,
+#newassignment div.task .instr .excCenter .testDeets .desc {
   flex-grow: 1;
 }
 #newassignment div.task .test input[type=text],
@@ -742,7 +934,7 @@ input[type=submit]:disabled {
   width: 200px;
   height: 200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   background-color: #f3f3f4ff;
@@ -753,8 +945,8 @@ input[type=submit]:disabled {
   transform: scale(1);
   transition: 0.3s ease transform;
 }
-#adminContainer .column .tile h1 {
-  padding-top: 0.5em;
+#adminContainer .column .tile h2 {
+  margin: 0px 1px;
 }
 #adminContainer .column .tile:hover:not(:disabled) {
   color: initial;
@@ -766,6 +958,13 @@ input[type=submit]:disabled {
   margin: 25px 0;
 }
 
+#viewAss {
+  display: flex;
+  flex-flow: column;
+}
+#viewAss #subAssignment {
+  align-self: center;
+}
 #viewAss div#head {
   gap: 2em;
 }
@@ -799,169 +998,532 @@ input[type=submit]:disabled {
   letter-spacing: 1px;
   display: inline-block;
 }
-#viewAss div#table {
-  padding: 0;
-  border-radius: 5px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #f3f3f4ff;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  margin-bottom: 35px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-#viewAss div#table span {
-  display: flex;
-  justify-content: space-between;
-}
-#viewAss div#table .tHead {
-  position: sticky;
-  top: calc(75px - 8px);
-  width: 100%;
-}
-#viewAss div#table .tHead h3 {
-  text-align: center;
-  background-color: #4b7ce6ff;
-  padding: 20px;
-  color: white;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
-  position: sticky;
-}
-#viewAss div#table .bCell {
-  text-align: center;
-  display: block;
-  padding: 20px;
-}
-#viewAss div#table .tCell p {
-  padding: 20px;
-}
-#viewAss div#table .tCell p:not(:first-child) {
-  border-left: 1px solid #7e7f83ff;
-  text-align: center;
-}
-#viewAss div#table .tCell:nth-child(odd) {
-  background-color: #c4c4c4ff;
-}
-#viewAss div#table h3:first-child {
-  border-top-left-radius: 10px;
-}
-#viewAss div#table h3:last-child {
-  border-top-right-radius: 10px;
-}
-#viewAss div#table h3:not(:first-child) {
-  border-left: 1px solid #f3f3f4ff;
-}
-#viewAss div#table .name {
+#viewAss div.table .name {
   width: 40%;
 }
-#viewAss div#table .course {
+#viewAss div.table .course {
   width: 20%;
 }
-#viewAss div#table .year {
+#viewAss div.table .year {
   width: 10%;
 }
-#viewAss div#table .marked {
+#viewAss div.table .marked {
   width: 30%;
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+#viewAss div.table .marked button {
+  width: 100%;
+  margin: 0;
 }
 
-#submitAss .details .class {
+#submitAss .details .course {
   font-weight: normal;
 }
 #submitAss .metaAss {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 50px;
 }
 #submitAss .metaAss .content {
   flex-grow: 1;
   margin: 0;
-  margin-right: 35px;
+  margin-right: 15px;
 }
-#submitAss .metaAss input[type=button] {
+#submitAss .metaAss button {
   padding: 10px 20px;
   width: 150px;
-  background-color: #4b7ce6ff;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 15px;
-  font-family: roboto, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-transform: uppercase;
-  transition: 0.5s ease background-color, 0.2s ease color, 0.2s ease letter-spacing;
-  box-shadow: 0 5px 10px #7e7f83ff;
-  cursor: pointer;
+  margin-left: 20px;
 }
-#submitAss .metaAss input[type=button]:hover:not(:disabled) {
-  background-color: #3559a7ff;
-  color: white;
-  font-weight: 400;
-  letter-spacing: 2px;
-}
-#submitAss .inputBox {
-  display: block;
-  padding: 100px 0;
+#submitAss #inputBox {
+  flex-flow: column;
+  justify-content: center;
   text-align: center;
-  width: 100%;
   margin: 0;
+  margin-bottom: 50px;
   outline: dashed 2px #7e7f83ff;
   outline-offset: -10px;
   transition: 0.3s ease outline-offset, 0.3s ease background-color;
+  font-size: 20px;
+  color: #888890ff;
+  padding: 3em;
 }
-#submitAss .inputBox .inputFile {
+#submitAss #inputBox .inputFile {
   display: none;
 }
-#submitAss .inputBox label[for=file] {
-  margin-top: 35px;
+#submitAss #inputBox .upload-icon {
+  color: #7e7f83ff !important;
+  opacity: 0.3;
+  margin-bottom: 2rem;
+}
+#submitAss #inputBox label[for=file] {
   cursor: pointer;
   display: inline-block;
-  font-size: 20px;
-  color: #888890ff;
 }
-#submitAss .inputBox label[for=file]:hover strong {
+#submitAss #inputBox label[for=file] strong {
+  transition: 0.3s ease color;
+}
+#submitAss #inputBox label[for=file]:hover strong {
   color: #4b7ce6ff;
 }
-#submitAss .inputBox .upload-icon {
-  color: #7e7f83ff;
-  opacity: 0.3;
-  width: 100%;
-}
-#submitAss .inputBox .uploading,
-#submitAss .inputBox .success,
-#submitAss .inputBox .error,
-#submitAss .inputBox .dropText {
+#submitAss #inputBox label[for=file] .dropText {
   display: none;
-  margin-top: 35px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #888890ff;
 }
-#submitAss .enabled .dropText {
+#submitAss #inputBox.disabled * {
+  display: none !important;
+}
+#submitAss #inputBox.disabled .status {
+  display: block !important;
+}
+#submitAss .dragEnabled:not(.disabled) .dropText {
   display: inline !important;
 }
-#submitAss .isUpload label[for=file] {
-  display: none;
-}
-#submitAss .isUpload .uploading {
-  display: block !important;
-}
-#submitAss .isSuccess label[for=file] {
-  display: none;
-}
-#submitAss .isSuccess .success {
-  display: block !important;
-}
-#submitAss .isError .error {
-  display: block !important;
-}
 #submitAss .file-over {
-  outline-offset: -20px;
+  outline-offset: -20px !important;
+  background-color: #c4c4c4ff !important;
+}
+#submitAss div.table .tRow {
+  width: min-content;
+}
+#submitAss div.table p {
+  min-width: 20px;
+  width: 20px;
+  max-width: 20px;
+  height: 20px;
+  border-right: 1px solid #7e7f83ff;
+}
+#submitAss div.table p.frontCell {
+  min-width: 65px;
+  width: 65px;
+  max-width: 65px;
+  position: sticky;
+  left: 0;
+  box-shadow: 0 0 10px #7e7f83ff;
+  clip-path: inset(0px -10px 0px 0px);
+  z-index: 40;
+}
+#submitAss .markedInput {
+  height: 100px;
+  padding: 0 !important;
+}
+#submitAss .markedInput i {
+  display: none;
+}
+#submitAss #inputBox + .table {
+  display: none;
+}
+#submitAss .markedInput + .table {
+  display: flex !important;
+}
+
+#viewCourse {
+  display: flex;
+  flex-flow: column;
+  max-height: 750px;
+}
+#viewCourse div#head {
+  gap: 2em;
+}
+#viewCourse div#head > span {
+  flex: 1 1 0px;
+}
+#viewCourse div#head label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+}
+#viewCourse div#head select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
+#viewCourse div#head h1 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+#viewCourse div.table .id {
+  width: 10%;
+}
+#viewCourse div.table .name {
+  width: 40%;
+}
+#viewCourse div.table .year {
+  width: 20%;
+}
+#viewCourse div.table .opt {
+  width: 20%;
+}
+#viewCourse div.table .btns {
+  flex-direction: column;
+  height: 130px;
+}
+#viewCourse div.table .btns button {
+  width: 100%;
+  margin: 10px;
+}
+
+#createCourse {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #7e7f83ff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#createCourse > * {
+  flex-grow: 1;
+}
+#createCourse input[type=text] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin-top: 20px;
+  border-color: #8f8f8f;
+  color: #34312dff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+#createCourse input[type=submit] {
+  align-self: center;
+}
+#createCourse label[for=pass] {
+  color: #7e7f83ff;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#createCourse h3 {
+  font-weight: 400;
+  margin-left: 10px;
+}
+
+#indCourse {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #34312dff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#indCourse h2 {
+  text-align: center;
+  margin: 10px 0;
+  color: black;
+}
+#indCourse .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  letter-spacing: 1px;
+  margin-bottom: 0.7em;
+}
+#indCourse .wrapper:last-of-type {
+  margin-bottom: 0;
+}
+#indCourse .wrapper h3 {
+  font-weight: 600;
+  margin: 0;
+}
+#indCourse .wrapper h3.detail {
+  font-weight: normal;
+}
+#indCourse .buttons {
+  justify-content: space-around;
+  gap: 50px;
+}
+
+.reportAssHead .task {
+  flex-direction: column;
+}
+.reportAssHead .task hr {
+  margin: 10px 0;
+}
+.reportAssHead .task .wrapper {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #34312dff;
+}
+.reportAssHead .task .wrapper .title {
+  font-weight: bold;
+}
+.reportAssHead .task h1 {
+  font-weight: bold;
+}
+.reportAssHead .task h3 {
+  margin: 5px 0;
+}
+.reportAssHead .task .test {
+  margin: 20px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background-color: #7e7f83ff;
+  overflow: hidden;
+  transition: all 1s ease;
+  max-height: 45px;
+  color: #f3f3f4ff;
+  letter-spacing: 1px;
+}
+.reportAssHead .task .test .up {
+  display: none;
+}
+.reportAssHead .task .test .down {
+  display: initial;
+}
+.reportAssHead .task .test img {
+  width: 35px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.reportAssHead .task .test .testTop {
+  display: flex;
+  justify-content: space-between;
+}
+.reportAssHead .task .test .testDetail {
+  background-color: #e6e6e6;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+.reportAssHead .task .test .testDetail div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px;
+}
+.reportAssHead .task .test.max {
+  max-height: 600px;
   background-color: #c4c4c4ff;
+  color: #34312dff;
+}
+.reportAssHead .task .test.max .up {
+  display: initial;
+}
+.reportAssHead .task .test.max .down {
+  display: none;
+}
+
+#copyReport .buttonBanner {
+  margin: 50px 0;
+  display: flex;
+  justify-content: space-between;
+}
+#copyReport .content {
+  flex-direction: column;
+  padding: 50px;
+}
+#copyReport .content span {
+  display: flex;
+}
+#copyReport .content span p:first-of-type {
+  width: 200px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#copyReport .content .contentHead {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#copyReport .content .task {
+  margin-top: 50px;
+}
+#copyReport .content .task span {
+  justify-content: space-between;
+}
+#copyReport .content .task .test {
+  margin-top: 10px;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: row;
+}
+#copyReport .content .task .test p:first-of-type {
+  min-width: 100px;
+}
+#copyReport .content .task .test .desc {
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+#viewTeach {
+  display: flex;
+  flex-flow: column;
+}
+#viewTeach #head {
+  gap: 2em;
+}
+#viewTeach #head > span {
+  flex: 1 1 0px;
+}
+#viewTeach #head label {
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: block;
+}
+#viewTeach #head select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
+#viewTeach #head h1 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+#viewTeach .table .zID {
+  width: 10%;
+}
+#viewTeach .table .fName {
+  width: 25%;
+}
+#viewTeach .table .lName {
+  width: 25%;
+}
+#viewTeach .table .opts, #viewTeach .table .buttons {
+  width: 30%;
+}
+#viewTeach .table .buttons {
+  flex-direction: column;
+}
+
+#editTeach {
+  width: 400px;
+  background-color: #f3f3f4ff;
+  display: flex;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #7e7f83ff;
+  flex-direction: column;
+  padding: 30px;
+  box-shadow: 0 5px 10px black;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+}
+#editTeach h2 {
+  text-align: center;
+  margin: 10px 0;
+  color: #34312dff;
+}
+#editTeach h3 {
+  font-weight: 400;
+  margin-left: 10px;
+}
+#editTeach form {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1em;
+}
+#editTeach form > * {
+  padding: 10px;
+  box-sizing: content-box;
+  flex: 1 1 0%;
+  height: 1.3em;
+  margin: 0 !important;
+}
+#editTeach .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 1px;
+  margin-bottom: 0.7em;
+}
+#editTeach .wrapper:last-of-type {
+  margin-bottom: 0;
+}
+#editTeach .wrapper h3 {
+  font-weight: 600;
+  margin: 0;
+}
+#editTeach .wrapper h3.detail {
+  font-weight: normal;
+}
+#editTeach > * {
+  flex-grow: 1;
+}
+#editTeach #groupNames {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+#editTeach #groupNames .name {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#editTeach input[type=text],
+#editTeach input[type=password] {
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  border-color: #8f8f8f;
+  color: #34312dff;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  font-style: normal;
+}
+#editTeach .detail {
+  text-align: right;
+}
+#editTeach input[type=submit] {
+  align-self: center;
+}
+#editTeach label[for=pass] {
+  color: #7e7f83ff;
+  margin-left: 10px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+#editTeach .buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 50px;
 }
 /*# sourceMappingURL=style.css.map */

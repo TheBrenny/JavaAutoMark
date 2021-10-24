@@ -22,16 +22,17 @@ module.exports.env = {
 };
 module.exports.env.isDev = module.exports.env.node.startsWith("dev") || forceDev;
 
+// BUG: Make this more strict!
 module.exports.helmet = {
     contentSecurityPolicy: {
         useDefaults: true,
         directives: {
             defaultSrc: ["'self'", "http:"],
+            connectSrc: ["'self'", "https:", "ws:"],
             scriptSrc: [
                 "'self'",
                 "cdnjs.cloudflare.com",
                 "kit.fontawesome.com",
-                module.exports.env.isDev ? `'nonce-browsersync'` : "",
                 (req, res) => `'nonce-${res.locals.nonce}'`,
             ],
             workerSrc: ["'self'", "blob:"],
@@ -39,6 +40,11 @@ module.exports.helmet = {
         }
     }
 };
+
+if(module.exports.env.isDev) {
+    module.exports.helmet.contentSecurityPolicy.directives.scriptSrc.push(`'nonce-browsersync'`);
+    module.exports.helmet.contentSecurityPolicy.directives.connectSrc.push("http:");
+}
 
 module.exports.morgan = {
     stream: process.stdout
@@ -61,14 +67,14 @@ module.exports.java = {
 
 function tryDo(fn, param, thisArg) {
     try {
-        if (!!param) return fn.call(thisArg, param);
-    } catch (e) {}
+        if(!!param) return fn.call(thisArg, param);
+    } catch(e) {}
     return false;
 }
 
 function tryNew(clazz, param) {
     try {
-        if (!!param) return new clazz(param);
-    } catch (e) {}
+        if(!!param) return new clazz(param);
+    } catch(e) {}
     return false;
 }

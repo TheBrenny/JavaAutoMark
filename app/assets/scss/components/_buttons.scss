@@ -1,0 +1,107 @@
+button,
+input[type="button"],
+input[type="submit"] {
+    margin: 20px 0 10px 0;
+    padding: 15px 20px;
+    width: 250px;
+    background-color: $pistachio;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 15px;
+    @include content-font();
+    // transition: 0.5s ease background-color, 0.2s ease color, 0.5s ease letter-spacing, 0.3s ease box-shadow;
+    
+    transition: all 0.5s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 5px 10px $gray-web;
+    // overflow: hidden;
+
+    &.blue {
+        background-color: $button-blue;
+
+        &:hover {
+            background-color: $highlighted-button-blue !important;
+        }
+    }
+
+    &.grey {
+        background-color: $task-button;
+
+        &:hover {
+            background-color: $highlighted-task-button !important;
+        }
+    }
+
+    &.yellow {
+        background-color: $sunglow;
+
+        &:hover {
+            background-color: $highlighted-sunglow !important;
+        }
+    }
+
+    &.red {
+        background-color: $tomato;
+
+        &:hover {
+            background-color: $highlighted-tomato !important;
+        }
+    }
+
+    &.strong {
+        @include header-font();
+    }
+
+    &:hover:not(:disabled) {
+        background-color: $highlighted-pistachio;
+        color: white;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+        text-align: center;
+        box-shadow: 0 5px 5px $gray-web;
+    }
+
+    &:active {
+        box-shadow: 0 0px 5px $gray-web;
+    }
+    &.del {
+        height: 30px;
+        width: 30px;
+        margin: 15px;
+        background-color: $tomato;
+        padding: revert;
+        box-shadow: 0 2px 5px $jet;
+
+        img {
+            width: 100%;
+            height: 100%;
+            transition: ease(filter);
+        }
+
+        &:hover {
+            background-color: $highlighted-tomato;
+
+            img {
+                filter: brightness(2);
+            }
+        }
+
+        &:active {
+            box-shadow: 0 0 5px $jet;
+        }
+    }
+    &:disabled {
+        background-color: $gray-web !important;
+        cursor: unset !important;
+    }
+}
+
+.animate-delete {
+    opacity: 0;
+    padding: 0;
+    height: 0;
+    width: 0;
+}

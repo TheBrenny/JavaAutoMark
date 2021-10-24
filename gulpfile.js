@@ -101,12 +101,12 @@ gulp.task('injecticon', function () {
             });
 
             transformStream._transform = function (file, encoding, callback) {
-                if (file.isNull()) {
+                if(file.isNull()) {
                     callback(null, file);
                     return;
                 }
 
-                if (file.isStream()) {
+                if(file.isStream()) {
                     console.log("Cannot op on stream");
                     callback(null, file);
                     return;
@@ -135,7 +135,7 @@ gulp.task('injecticon', function () {
 gulp.task('updateicon', function (done) {
     var currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
     realFavicon.checkForUpdates(currentVersion, function (err) {
-        if (err) {
+        if(err) {
             throw err;
         }
     });
@@ -143,21 +143,27 @@ gulp.task('updateicon', function (done) {
 
 gulp.task("sass", function () {
     return gulp.src("app/assets/scss/**/*.scss")
-        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init({largeFile: true}))
         .pipe(sass().on("error", sass.logError))
-        .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.', {
+            destPath: './app/assets/css',
+        }))
         .pipe(gulp.dest("app/assets/css/"));
 });
 
 gulp.task("browserSync", function (cb) {
     return browserSync.init({
         injectChanges: true,
-        proxy: "http://" + host + "/",
+        proxy: {
+            target: "http://" + host + "/",
+            ws: true
+        },
         open: false,
         port: port + 1,
+        cors: true,
         snippetOptions: {
             rule: {
-                match: /<\/head>/i,
+                match: /<\/body>/i,
                 fn: function (snippet, match) {
                     return snippet.replace('id=', `nonce="browsersync" id=`) + match;
                 }
@@ -182,7 +188,7 @@ gulp.task("nodemon", function (cb) {
     }).on('start', function () {
         // to avoid nodemon being started multiple times
         // thanks @matthisk
-        if (!started) {
+        if(!started) {
             started = true;
             console.log("Nodemon started.");
             setTimeout(cb, 3000);
@@ -208,3 +214,4 @@ function streamFileChanges(event, path) {
 }
 
 gulp.task("default", gulp.series("nodemon", "browserSync", "watch"));
+gulp.task("frontend", gulp.parallel("browserSync", "watch"));

@@ -26,13 +26,17 @@
     </div>
 
     [[?= teacher.zid == user.zid ]]
-    <hr>
-    <form method="POST" action="/user/resetPass">
-        <input type="password" placeholder="New Password" name="newPass">
-        <input type="password" placeholder="Confirm Password" name="confirmPass">
-        <input type="password" placeholder="Current Password" name="currentPass">
-        <input type="submit" value="Change Password">
-    </form>
+        <hr>
+        <form method="POST" action="/user/resetPass">
+            <input type="password" placeholder="New Password" name="newPass">
+            <input type="password" placeholder="Confirm Password" name="confirmPass">
+            <input type="password" placeholder="Current Password" name="currentPass">
+            <input type="submit" value="Change Password">
+        </form>
+
+        <button class="blue" href="/teachers/edit/[[teacher.zid]]">
+            Edit
+        </button>
     [[?==]]
 </div>
 

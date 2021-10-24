@@ -1,0 +1,74 @@
+//https://loading.io/css/
+
+@function randomise() {
+    $random: random(50) + 50;
+    $randomMath: 1 + ($random / 100);
+
+    @return $randomMath + s;
+}
+
+.resultCell {
+    display: inline-flex !important;
+    width: 15px !important;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    padding: 10px !important;
+    overflow: hidden;
+    white-space: nowrap;
+
+    &.loading {
+        &::after {
+            content: " ";
+            width: 100%;
+            height: 100%;
+            background-image: url(/assets/img/items/flask_yellow.svg);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: center center;
+            animation: shake_bottle 4s cubic-bezier(0, 1, 0.5, 1) infinite;
+        }
+    }
+
+    &.pass {
+        background: rgba($pistachio, 0.7) !important;
+    }
+
+    &.fail {
+        background: rgba($tomato, 0.7) !important;
+    }
+}
+
+.resultCell,
+.frontCell {
+    &.error {
+        background: $sunglow !important;
+    }
+}
+
+@keyframes shake_bottle {
+    0%,
+    3%,
+    6%,
+    9%,
+    12%,
+    15%,
+    100% {
+        transform: rotate(0deg);
+    }
+    1.5%,
+    7.5%,
+    13.5% {
+        transform: rotate(7.5deg);
+    }
+    4.5%,
+    10.5% {
+        transform: rotate(-7.5deg);
+    }
+}

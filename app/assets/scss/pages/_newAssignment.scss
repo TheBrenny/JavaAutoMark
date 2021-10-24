@@ -1,0 +1,216 @@
+#newassignment {
+    @extend .wrap;
+
+    div#details {
+        @extend .block;
+        gap: 2em;
+
+        > span {
+            flex: 1 1 0px;
+        }
+
+        label {
+            @include content-font();
+            display: block;
+        }
+
+        input[type="text"],
+        select {
+            font-size: 1.2em;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid $gray-web;
+            margin: 5px 0;
+            border-color: #8f8f8f;
+            @include content-font();
+            font-weight: 200;
+            letter-spacing: 2px;
+            font-style: normal;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    }
+
+    div.task {
+        background-color: $cultured;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px $gray-web;
+        margin-bottom: 50px;
+
+        display: flex;
+        flex-direction: column;
+
+        .taskHead {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .test,
+        .instr {
+            display: flex;
+            order: attr(data-order);
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $almond;
+            border-radius: 10px;
+            margin-bottom: 15px;
+
+            .editor {
+                white-space: pre;
+                flex-grow: 1;
+                align-self: stretch;
+                margin: 10px 0;
+                min-height: 30px;
+            }
+
+            ul {
+                align-self: stretch;
+                list-style: none;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                padding: 0;
+                width: 50px;
+                background-color: $button-blue;
+                color: white;
+                text-align: center;
+                margin-right: 10px;
+                display: flex;
+                flex-direction: column;
+
+                li {
+                    display: flex;
+                    margin: 0;
+                    padding: 0;
+                    border-bottom: 1px solid #efefef;
+                    flex-grow: 1;
+                    align-items: center;
+                    justify-content: center;
+                    transition: 0.5s ease background-color;
+
+                    &:first-of-type {
+                        border-top: 0px;
+                    }
+
+                    &:last-of-type {
+                        border-bottom: 0px;
+                    }
+                }
+
+                .testID {
+                    flex-grow: 0;
+                    padding: 10px 0;
+                }
+
+                .moveUp {
+                    // align-items: flex-start;
+                    padding-top: 10px;
+                    border-top-left-radius: 10px;
+                    padding: 5px 0;
+                }
+
+                .moveDown {
+                    border-bottom-left-radius: 10px;
+                    // align-items: flex-end;
+                    padding-bottom: 10px;
+                    padding: 5px 0;
+                }
+
+                .moveButton {
+                    cursor: pointer;
+                    transition: ease(background-color);
+
+                    img {
+                        width: 20px;
+                        transition: ease(filter);
+                    }
+                }
+
+                .moveButton:hover {
+                    img {
+                        filter: brightness(2);
+                    }
+
+                    background-color: $highlighted-button-blue;
+                }
+            }
+
+            .testCenter, .excCenter {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                flex-grow: 2;
+                margin-bottom: 15px;
+
+                .case {
+                    flex-grow: 2;
+                }
+
+                // .editor {
+                //     // height: 60px;
+                // }
+
+                .testDeets {
+                    display: flex;
+
+                    .small {
+                        margin-right: 15px;
+                    }
+
+                    .num {
+                        max-width: 60px;
+                    }
+
+                    .out {
+                        max-width: 120px;
+                    }
+
+                    .desc {
+                        flex-grow: 1;
+                    }
+                }
+            }
+
+            input[type="text"],
+            input[type="number"] {
+                padding: 5px;
+                border-radius: 5px;
+                border: 1px solid $gray-web;
+                border-color: #8f8f8f;
+                @include content-font();
+                font-weight: 200;
+                letter-spacing: 1px;
+                font-style: normal;
+                width: auto;
+            }
+        }
+
+        #taskFoot {
+            order: 9999999999;
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+
+            input[type="button"] {
+                padding: 10px 20px;
+                width: 180px;
+                background-color: $task-button;
+                text-transform: initial;
+
+                &:hover:not(:disabled) {
+                    background-color: $highlighted-task-button;
+                    color: white;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+
+    #assignmentFooter {
+        display: flex;
+        justify-content: space-around;
+    }
+}

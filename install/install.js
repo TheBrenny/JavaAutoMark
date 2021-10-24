@@ -1,12 +1,3 @@
-// TODO: CHANGE THE DOWNLOAD OF THE JAVA ZIP TO A STREAM TO CREATE A PROOF OF CONCEPT
-//          FOR UNZIPPING STUDENT CODE AND PIPING IT TO OUR STORAGE LOCATION
-// TODO:                  ^^^^^^^^^
-// TODO:                  ^^^^^^^^^
-// TODO:                  ^^^^^^^^^
-// TODO:                  ^^^^^^^^^
-// TODO:                  ^^^^^^^^^
-// TODO:                  ^^^^^^^^^
-
 const semver = require("semver");
 const wget = require("wget-improved");
 const progress = require("cli-progress");
@@ -47,7 +38,7 @@ const getJavaLink = async (os, arch) => {
         "arm": "arm"
     };
     url.searchParams.append("os", map[os]);
-    url.searchParams.append("arch", map[arch]);
+    url.searchParams.append("architecture", map[arch]);
     return new Promise((resolve, reject) => {
         let req = wget.request({
             protocol: url.protocol.trim().toLowerCase().replace(/:$/, ""),
@@ -342,7 +333,7 @@ async function extract(archive, destFolder, force) {
     });
     return Promise.resolve()
         .then(() => s.start())
-        .then(() => decompress(archive, destFolder, { // TODO: try and find a way to hook in to get the count of files to extract
+        .then(() => decompress(archive, destFolder, { // MAYBE: try and find a way to hook in to get the count of files to extract
             map: (file) => {
                 // Removes the top level folder which is just
                 // the folder containing the actual contents

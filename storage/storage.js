@@ -32,7 +32,7 @@ async function ensurePublicUrlTable() {
         .catch(err => Promise.reject(err));
 }
 
-// TODO: At some point in this apps lifetime, it might be wise to shift from SMCloudStore to multer, just to keep storage solutions consistent
+// MAYBE: At some point in this apps lifetime, it might be wise to shift from SMCloudStore to multer, just to keep storage solutions consistent
 module.exports = (function () {
     if (!global.hasOwnProperty('storage')) {
         let provider = config.storage.provider;
@@ -55,6 +55,12 @@ module.exports = (function () {
     return global.storage;
 })();
 
+// BUG: Restart the storage provider when it changes!
+
 Object.defineProperty(module.exports, "container", {
     get: () => config.storage.options.container
+});
+
+Object.defineProperty(module.exports, "provider", {
+    get: () => config.storage.provider
 });

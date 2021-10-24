@@ -1,0 +1,151 @@
+.reportAssHead {
+    @extend .wrap;
+
+    .task {
+        @extend .block;
+
+        flex-direction: column;
+        hr {
+            margin: 10px 0;
+        }
+
+        .wrapper {
+            width: 30%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: $jet;
+
+            .title {
+                font-weight: bold;
+            }
+        }
+
+        h1 {
+            font-weight: bold;
+        }
+
+        h3 {
+            margin: 5px 0;
+        }
+
+        .test {
+            margin: 20px;
+            border-radius: 10px;
+            padding: 5px 10px;
+            background-color: $gray-web;
+
+            overflow: hidden;
+            transition: all 1s ease;
+            max-height: 45px;
+
+            color: $cultured;
+            letter-spacing: 1px;
+
+            .up {
+                display: none;
+            }
+
+            .down {
+                display: initial;
+            }
+
+            img {
+                width: 35px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+
+            .testTop {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .testDetail {
+                background-color: #e6e6e6;
+                padding: 10px 0;
+                margin: 10px 0;
+                div {
+                    display: flex;
+                    // width: 50%;
+                    justify-content: space-between;
+                    margin: 10px 20px;
+                }
+            }
+
+        }
+
+        .test.max {
+            max-height: 600px;
+            background-color: $task-button;
+            color: $jet;
+
+            .up {
+                display: initial;
+            }
+
+            .down {
+                display: none;
+            }
+        }
+    }
+
+
+    
+}
+
+#copyReport {
+    @extend .wrap;
+
+    .buttonBanner {
+        margin: 50px 0 ;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .content {
+        @extend .block;
+        flex-direction: column;
+        padding: 50px;
+        
+        span {
+            display: flex;
+
+            p:first-of-type {
+                width: 200px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+
+        .contentHead {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .task {
+            margin-top: 50px;
+            // flex-direction: column;
+            span {
+                justify-content: space-between;
+            }
+
+            .test {
+                margin-top: 10px;
+                margin-left: 100px;
+                display: flex;
+                flex-direction: row;
+
+                p:first-of-type {
+                    min-width: 100px;
+                }
+
+                .desc {
+                    flex-grow: 1;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+}

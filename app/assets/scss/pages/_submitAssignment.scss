@@ -1,0 +1,128 @@
+#submitAss {
+    @extend .wrap;
+
+    .details {
+        .course {
+            font-weight: normal;
+        }
+    }
+
+    .metaAss {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+
+        .content {
+            flex-grow: 1;
+            margin: 0;
+            margin-right: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            width: 150px;
+            margin-left: 20px;
+        }
+    }
+
+    #inputBox {
+        @extend .block;
+        flex-flow: column;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 50px;
+        outline: dashed 2px $gray-web;
+        outline-offset: -10px;
+        transition: ease(outline-offset), ease(background-color);
+        font-size: 20px;
+        color: $highlighted-task-button;
+        padding: 3em;
+
+        .inputFile {
+            display: none;
+        }
+
+        .upload-icon {
+            color: $gray-web !important;
+            opacity: 0.3;
+            margin-bottom: 2rem;
+        }
+
+        label[for="file"] {
+            cursor: pointer;
+            display: inline-block;
+
+            strong {
+                transition: ease(color);
+            }
+
+            &:hover strong {
+                color: $button-blue;
+            }
+
+            .dropText {
+                display: none;
+            }
+        }
+    }
+    #inputBox.disabled {
+        * {
+            display: none !important;
+        }
+        .status {
+            display: block !important;
+        }
+    }
+
+    .dragEnabled:not(.disabled) .dropText {
+        display: inline !important;
+    }
+
+    .file-over {
+        outline-offset: -20px !important;
+        background-color: $task-button !important;
+    }
+
+    div.table {
+        .tRow {
+            width: min-content;
+        }
+
+        p {
+            min-width: 20px;
+            width: 20px;
+            max-width: 20px;
+            height: 20px;
+            border-right: 1px solid $gray-web;
+
+            &.frontCell {
+                min-width: 65px;
+                width: 65px;
+                max-width: 65px;
+                position: sticky;
+                left: 0;
+                box-shadow: 0 0 10px $gray-web;
+                clip-path: inset(0px -10px 0px 0px);
+                z-index: 40;
+            }
+        }
+    }
+
+    .markedInput {
+        height: 100px;
+        padding: 0 !important;
+        i {
+            display: none;
+        }
+    }
+
+    // THIS IS HOW WE SHOW THE TABLE WHEN THERE'S MARKED INPUT
+    #inputBox + .table {
+        display: none;
+    }
+    .markedInput + .table {
+        display: flex !important;
+    }
+}
