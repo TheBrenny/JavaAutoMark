@@ -1,6 +1,36 @@
 .reportAssHead {
     @extend .wrap;
 
+    .resultTotals {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+        height: 100px;
+        h1 {
+            margin: 0;
+        }
+
+        button {
+            margin: 0;
+        }
+    }
+
+    select {
+        font-size: 1.2em;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid $gray-web;
+        margin: 5px 0;
+        border-color: #8f8f8f;
+        @include content-font();
+        font-weight: 200;
+        letter-spacing: 2px;
+        font-style: normal;
+        box-sizing: border-box;
+        width: 250px;
+    }
+
     .task {
         @extend .block;
 
@@ -42,12 +72,10 @@
             color: $cultured;
             letter-spacing: 1px;
 
-            .up {
-                display: none;
-            }
-
-            .down {
-                display: initial;
+            &.max {
+                max-height: 400px;
+                background-color: $task-button;
+                color: $jet;
             }
 
             img {
@@ -72,42 +100,28 @@
                     margin: 10px 20px;
                 }
             }
-
-        }
-
-        .test.max {
-            max-height: 600px;
-            background-color: $task-button;
-            color: $jet;
-
-            .up {
-                display: initial;
-            }
-
-            .down {
-                display: none;
-            }
         }
     }
-
-
-    
 }
 
 #copyReport {
     @extend .wrap;
 
     .buttonBanner {
-        margin: 50px 0 ;
+        margin: 50px 0;
         display: flex;
         justify-content: space-between;
+
+        > button {
+            width: 200px;
+        }
     }
 
     .content {
         @extend .block;
         flex-direction: column;
         padding: 50px;
-        
+
         span {
             display: flex;
 
@@ -126,7 +140,6 @@
 
         .task {
             margin-top: 50px;
-            // flex-direction: column;
             span {
                 justify-content: space-between;
             }

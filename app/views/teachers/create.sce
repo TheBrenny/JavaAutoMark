@@ -2,7 +2,7 @@
 
 [[i= partials/header]]
 
-<form id="createUser" method="POST" action="/admin/teachers/create">
+<form id="createUser" method="POST" action="/teachers/create">
     <h3>ADD A NEW TEACHER</h3>
     <input type="text" name="zID" placeholder="zID" />
     <div id="groupNames">
@@ -19,4 +19,5 @@
     <input type="submit" name="submit" value="Add teacher" />
 </form>
 
+<script type= "text/javascript"src="/assets/js/teachers.js"></script>
 [[i= partials/footer]]

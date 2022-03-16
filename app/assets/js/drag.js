@@ -213,6 +213,7 @@ onReady(() => {
 
         function handleProgress(progress, updateTooltips = true) {
             if(progress.error !== undefined) {
+                // THIS CHANGES THE FRONT CELL
                 let frontCell = $(`#${progress.student}`);
                 let errorReason = progress.error.stderr;
                 let clone = cloneCell(frontCell, {
@@ -220,40 +221,51 @@ onReady(() => {
                         remove: ["loading"],
                         add: ["error"]
                     },
-                    tooltip: "<pre>" + errorReason.substring(0, errorReason.indexOf("\n", errorReason.indexOf("\n") + 1)) + "</pre>",
+                    tooltip: "There was an error with the student code!\\nHover over the error test to find out more!",
                 });
                 frontCell.replaceWith(clone);
 
+                // THIS CHANGES THE ERRORED TEST
                 let rowCells = $$(`*[id^="${progress.student}-"].loading`);
-                rowCells.forEach((c) => {
+                rowCells[0].replaceWith(cloneCell(rowCells[0], {
+                    classList: {
+                        remove: ["loading"],
+                        add: ["error"]
+                    },
+                    tooltip: "<pre>" + errorReason + "</pre>",
+                    text: "!",
+                }));
+
+                // THIS CHANGES ALL TESTS AFTER THE ERROR TEST TO BE FAILED
+                Array.from(rowCells).slice(1).forEach((c) => {
+                    let test = globalThis.assignment.tasks[c.id.split("-")[1] - 1].tests[c.id.split("-")[2] - 1];
+                    let expectedOutput = test.expected || "<i>" + (test.isException ? "Any Exception" : "(Empty)") + "</i>";
                     c.replaceWith(cloneCell(c, {
                         classList: {
                             remove: ["loading"],
-                            add: ["error"]
+                            add: ["fail"]
                         },
-                        tooltip: "There was an error with the student code!\\nHover over the zID to find out more!",
-                        text: "!",
+                        tooltip: `Failed<hr>Output: Error!\\nExpected: ${expectedOutput}<hr>Time: 0ms`,
+                        text: "✗",
                     }));
                 });
-                return;
+            } else {
+                let test = globalThis.assignment.tasks[progress.task - 1].tests[progress.test - 1];
+                let expectedOutput = test.expected || "<i>" + (test.isException ? "Any Exception" : "(Empty)") + "</i>";
+
+                let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
+
+                let clone = cloneCell(cell, {
+                    classList: {
+                        remove: ["loading", "error"],
+                        add: [progress.passed ? "pass" : "fail"]
+                    },
+                    tooltip: `${progress.passed ? "Passed" : "Failed"}<hr>Output: ${progress.output}\\nExpected: ${expectedOutput}<hr>Time: ${progress.time}ms`,
+                    text: progress.passed ? "✓" : "✗",
+                    // text: progress.output,
+                });
+                cell.replaceWith(clone);
             }
-            // MAYBE: use icons to identify success/failure instead of background colour -- this means we can keep the background colour
-            //   - switch out the icon of the::after element
-            //   - keep the greys to differentiate rows
-            let test = globalThis.assignment.tasks[progress.task - 1].tests[progress.test - 1];
-            let cell = $(`#${progress.student}-${progress.task}-${progress.test}`);
-            // let clone = cell.cloneNode(false);
-            let expectedOutput = test.expected || "<i>" + (test.isException ? "Any Exception" : "(Empty)") + "</i>";
-            let clone = cloneCell(cell, {
-                classList: {
-                    remove: ["loading", "error"],
-                    add: [progress.passed ? "pass" : "fail"]
-                },
-                tooltip: `${progress.passed ? "Passed" : "Failed"}<hr>Output: ${progress.output}\\nExpected: ${expectedOutput}<hr>Time: ${progress.time}ms`,
-                text: progress.passed ? "✓" : "✗",
-                // text: progress.output,
-            });
-            cell.replaceWith(clone);
 
             if(updateTooltips) tooltip.findNewCandidates();
         }

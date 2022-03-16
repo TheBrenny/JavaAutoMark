@@ -80,3 +80,6 @@
 });
 
 // TODO: process.onExit
+// TODO: process.onError
+// TODO: Have a server-side state management system (Redis?)
+// TODO: We need to error out a task only, not the whole assignment!

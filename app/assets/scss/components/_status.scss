@@ -48,7 +48,7 @@
 .resultCell,
 .frontCell {
     &.error {
-        background: $sunglow !important;
+        background: rgba($sunglow, 0.7) !important;
     }
 }
 

@@ -9,10 +9,10 @@
     </div>
 
     <div class="metaAss">
-        <p class="block content">3 tasks, 18 tests, 32 marks </p>
+        <p class="block content">[[taskCount]] tasks, [[testCount]] tests, [[markCount]] marks </p>
 
         <button class="blue" type="button" href="/assignments/edit/[[assignment.assignment_id]]">Edit</button>
-        <button class="yellow" type="button" href="/reports/assignment">Report</button>
+        <button class="yellow" type="button" href="/reports/[[assignment.assignment_id]]">Report</button>
     </div>
 
     <form id="inputBox" class="inputBox">

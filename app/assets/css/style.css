@@ -444,23 +444,59 @@ input[type=submit]:disabled {
   width: 220px;
 }
 #header #menu {
+  position: relative;
   list-style: none;
   height: 100%;
   display: flex;
   align-items: center;
+  z-index: 99;
 }
 #header #menu li {
   float: left;
   text-transform: uppercase;
   margin: 0 10px;
   padding: 10px;
+  min-width: 120px;
   font-family: roboto, sans-serif;
   font-weight: 400;
   font-style: normal;
   transition: 0.5s ease background-color;
+  text-align: center;
 }
 #header #menu li:hover {
   background-color: rgba(255, 209, 71, 0.8);
+}
+#header #menu #dropHover:hover + #liAss {
+  visibility: visible;
+  transition-delay: 0s;
+}
+#header #menu #liAss {
+  position: absolute;
+  z-index: -1;
+  right: 160px;
+  top: 75px;
+  list-style: none;
+  max-width: 160px;
+  visibility: hidden;
+  background-color: #f3f3f4ff;
+  padding: 0;
+  box-shadow: 0 5px 10px black;
+  padding-bottom: 10px;
+  transition: all ease 0.5s;
+  transition-delay: 0.5s;
+}
+#header #menu #liAss li {
+  margin: 0 10px;
+  padding: 10px;
+  min-width: 120px;
+  float: initial;
+}
+#header #menu #liAss a {
+  border: none;
+  margin-top: 10px;
+}
+#header #menu #liAss:hover {
+  visibility: visible;
 }
 #header #menu a {
   text-decoration: none;
@@ -565,6 +601,9 @@ div.table .tRow p {
 div.table .tRow p:not(:last-child) {
   border-right: 1px solid #7e7f83ff;
 }
+div.table button {
+  width: 100%;
+}
 
 .resultCell {
   display: inline-flex !important;
@@ -601,7 +640,7 @@ div.table .tRow p:not(:last-child) {
 
 .resultCell.error,
 .frontCell.error {
-  background: #ffd147ff !important;
+  background: rgba(255, 209, 71, 0.7) !important;
 }
 
 @keyframes shake_bottle {
@@ -1263,6 +1302,35 @@ div.table .tRow p:not(:last-child) {
   gap: 50px;
 }
 
+.reportAssHead .resultTotals {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  height: 100px;
+}
+.reportAssHead .resultTotals h1 {
+  margin: 0;
+}
+.reportAssHead .resultTotals button {
+  margin: 0;
+}
+.reportAssHead select {
+  font-size: 1.2em;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #7e7f83ff;
+  margin: 5px 0;
+  border-color: #8f8f8f;
+  font-family: roboto, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 200;
+  letter-spacing: 2px;
+  font-style: normal;
+  box-sizing: border-box;
+  width: 250px;
+}
 .reportAssHead .task {
   flex-direction: column;
 }
@@ -1296,11 +1364,10 @@ div.table .tRow p:not(:last-child) {
   color: #f3f3f4ff;
   letter-spacing: 1px;
 }
-.reportAssHead .task .test .up {
-  display: none;
-}
-.reportAssHead .task .test .down {
-  display: initial;
+.reportAssHead .task .test.max {
+  max-height: 400px;
+  background-color: #c4c4c4ff;
+  color: #34312dff;
 }
 .reportAssHead .task .test img {
   width: 35px;
@@ -1321,22 +1388,14 @@ div.table .tRow p:not(:last-child) {
   justify-content: space-between;
   margin: 10px 20px;
 }
-.reportAssHead .task .test.max {
-  max-height: 600px;
-  background-color: #c4c4c4ff;
-  color: #34312dff;
-}
-.reportAssHead .task .test.max .up {
-  display: initial;
-}
-.reportAssHead .task .test.max .down {
-  display: none;
-}
 
 #copyReport .buttonBanner {
   margin: 50px 0;
   display: flex;
   justify-content: space-between;
+}
+#copyReport .buttonBanner > button {
+  width: 200px;
 }
 #copyReport .content {
   flex-direction: column;
@@ -1507,6 +1566,9 @@ div.table .tRow p:not(:last-child) {
   font-style: normal;
   letter-spacing: 1px;
   font-style: normal;
+}
+#editTeach input[type=password] {
+  margin-bottom: 10px;
 }
 #editTeach .detail {
   text-align: right;

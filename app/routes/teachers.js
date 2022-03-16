@@ -38,6 +38,7 @@ router.get("/user", (req, res) => {
 router.get("/teachers/view", async (req, res) => {
     let teachers = await Database.teachers.getAllTeachers();
     teachers = Database.teachers.toObject(teachers);
+    if(!session(req).isAdmin()) teachers = teachers.filter((e) => e.zid !== 0);
     res.render("teachers/view", {
         teachers: teachers,
     });
@@ -45,6 +46,10 @@ router.get("/teachers/view", async (req, res) => {
 
 router.get("/teachers/view/:id", async (req, res) => {
     let id = req.params.id.replace(/^z/g, "");
+    if(id == 0 && !session(req).isAdmin()) {
+        throw errors.forbidden.fromReq(req);
+    }
+
     let t = await Database.teachers.getTeacher(id);
 
     if(t == undefined) throw errors.notFound.fromReq(req);
@@ -58,6 +63,9 @@ router.get("/teachers/view/:id", async (req, res) => {
 
 router.get("/teachers/edit/:id", async (req, res) => {
     let id = req.params.id.replace(/^z/g, "");
+    if(!session(req).isAdmin() && id != session(req).getAccount().zid) {
+        throw errors.forbidden.fromReq(req);
+    }
     let t = await Database.teachers.getTeacher(id);
 
     if(t == undefined) throw errors.notFound.fromReq(req);
@@ -67,6 +75,48 @@ router.get("/teachers/edit/:id", async (req, res) => {
     res.render("teachers/edit", {
         teacher: t
     });
+});
+
+router.post("/teachers/edit/:id", async (req, res) => {
+    let id = req.params.id;
+    let zid = req.body.zID.replace(/^z/g, "");
+
+    if(!session(req).isAdmin() && (id != session(req).getAccount().zid || zid != session(req).getAccount().zid)) {
+        throw errors.forbidden.fromReq(req);
+    }
+
+    let newObj = {};
+    if(req.body.fname) newObj.fName = req.body.fname;
+    if(req.body.lname) newObj.lName = req.body.lname;
+    if(req.body.email) newObj.email = req.body.email;
+    if(req.body.pass) newObj.password = req.body.pass;
+    let currentPass = req.body.currentPass;
+
+    let bad = Object.keys(newObj).length > 0;
+    let target = (await Database.teachers.getTeacher(zid));
+
+    // not found user
+    if(bad && target != undefined) {
+        const passMatch = crypto.compareSync(currentPass, target.teachers_password);
+        if(passMatch) {
+            if(!!newObj.password) newObj.password = crypto.hashSync(newObj.password, 12);
+            bad = !(await Database.teachers.updateTeacher(zid, newObj));
+        } else {
+            bad = "Incorrect password.";
+        }
+    } else {
+        bad = true;
+    }
+
+    if(bad) {
+        throw errors.badRequest.fromReq(req, typeof bad === "boolean" ? "Unknown error" : bad);
+    } else {
+        res.status(201).json({
+            success: true,
+            redirect: "/teachers/view/" + id,
+            message: "Teacher changed successfully!"
+        });
+    }
 });
 
 router.get("/teachers/create", checks.isAdmin, (req, res) => {
@@ -92,9 +142,16 @@ router.post("/teachers/create", checks.isAdmin, async (req, res) => {
     }
 
     if(bad) {
-        res.status(401).redirect("/admin/teachers/create");
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong!"
+        });
     } else {
-        res.redirect("/admin");
+        res.status(201).json({
+            success: true,
+            redirect: "/teachers/view",
+            message: "Teacher added successfully!"
+        });
     }
 });
 

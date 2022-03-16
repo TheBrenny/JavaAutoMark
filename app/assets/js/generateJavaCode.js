@@ -10,6 +10,7 @@ function generateJavaCode(assignment, assignmentID) {
 
     // for loop for all tasks in the assignment
     let main = "public static void main(String[] args) {\n";
+    main += "try {\n";
 
     // This gives us control over the output stream because we only want to println our output
     main += `// This gives us control over the console output stream because we only want to println our harness output\n`;
@@ -30,7 +31,7 @@ function generateJavaCode(assignment, assignmentID) {
     for(let i = 0; i < assignment.tasks.length; i++) {
         let task = assignment.tasks[i];
         main += `task${i + 1}();\n`;
-        code += `public static void task${i + 1}() {\n`;
+        code += `public static void task${i + 1}() throws Exception {\n`;
         code += `System.out.println("task.start.${task.taskID}");\n`;
 
         for(let j = 0; j < task.tests.length; j++) {
@@ -69,7 +70,10 @@ function generateJavaCode(assignment, assignmentID) {
         code += `System.out.println("task.end.${task.taskID}");\n`;
         code += `}\n`;
     }
-
+    main += "} catch(Exception e) {\n";
+    main += "e.printStackTrace();\n";
+    main += "}\n";
+    main += `System.out.println("HALT");`;
     main += "}\n";
 
     code += main;

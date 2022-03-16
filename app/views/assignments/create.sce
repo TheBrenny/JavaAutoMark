@@ -26,6 +26,7 @@
             <input type="button" disabled="true" value="Submit assignment" id="subAssignment" />
         [[3=]]
             <input type="button" disabled="true" value="Update assignment" id="updateAssignment" />
+            <button class="blue" href="/assignments/submit/[[assignObj.id]]">Submissions</button>
         [[?==]]
     </div>
 </div>
@@ -47,10 +48,6 @@
         addTaskBtn.disabled = false;
 
         let saveAction = saveAssignment;
-        // [[?= assign.id]]
-        saveAction = saveAssignment.bind(this, "[[assign.id]]");
-        // [[?==]]
-        
         let saveButton = $('#subAssignment, #updateAssignment');
         saveButton?.addEventListener("click", () => saveAction());
         saveButton && (saveButton.disabled = false);

@@ -5,17 +5,25 @@
 <div id="copyReport">
 
     <div class="buttonBanner">
+        <button href="/assignments/submit/[[info.assignmentID]]" class="blue">
+            Back to Submissions
+        </button>
+
+        <button href="/reports/[[info.assignmentID]]" class="yellow">
+            Back to Whole Report
+        </button>
+
         <button class="grey copy">
-            Copy
+            Copy Report
         </button>
 
-        <button class="green">
-            CSV
+        <button href="[[url.csv]]" class="green">
+            Download CSV
         </button>
 
-        <button class="red">
+        <!-- <button class="red">
             PDF
-        </button>
+        </button> -->
     </div>
 
     <div class="content">

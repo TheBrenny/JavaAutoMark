@@ -89,10 +89,33 @@ router.get("/assignments/submit/:id", async (req, res) => {
     assignment = Database.assignments.toObject(assignment, CourseModel);
 
     let websockUrl = websocket.getSocket(`#${req.params.id}`)?.path ?? "";
+    let assJsonStream = await storage.getObject(storage.container, assignment.code_location + ".json");
+    let chunks = [];
+    assJsonStream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+    assJsonStream.on("end", () => {
+        chunks = Buffer.concat(chunks);
+        chunks = chunks.toString("utf-8");
+        chunks = JSON.parse(chunks);
 
-    res.render("assignments/submit", {
-        assignment,
-        websockUrl,
+        taskCount = chunks.tasks.length;
+        testCount = 0;
+        markCount = 0;
+        chunks.tasks.forEach(task => {
+            task.tests.forEach((t) => {
+                if(t.testID !== undefined) {
+                    testCount++;
+                    markCount += t.marks;
+                }
+            });
+        });
+
+        res.render("assignments/submit", {
+            assignment,
+            websockUrl,
+            taskCount,
+            testCount,
+            markCount
+        });
     });
 });
 router.put("/assignments/submit/:id", async (req, res, next) => {

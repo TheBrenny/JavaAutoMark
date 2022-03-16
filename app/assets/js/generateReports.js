@@ -1,3 +1,20 @@
+let totalReport = {
+
+    assignmentID: 0,
+    assignmentTitle: "",
+
+    totalStudents: 0,
+
+    minMark: null,
+    maxMark: null,
+
+    possibleMarks: 0,
+    actualMarks: 0,
+    averageMarks: 0,
+
+    tasks: []
+};
+
 async function generateCSV(objectA, objectB) {
     //In the form of generateCSV(report) or generateCSV(assignment, marker)
     let object = (objectB !== undefined) ? makeReport(objectA, objectB) : objectA;
@@ -14,9 +31,9 @@ async function generateCSV(objectA, objectB) {
 async function pullCSV(object) {
     let student = object.studentID;
     let assignmentID = object.assignmentID;
-
+    
     let filePath = `A${assignmentID}/${student}/${student}`;
-
+    
     return new Promise(async (resolve,reject) => {
         let f = await storage.getObject(storage.container, `${filePath}.csv`);
         resolve(f);
@@ -32,6 +49,39 @@ async function pullCSV(object) {
         return readStream(file);
     }).then((file) => {
         return convertFromCSV(file);
+    });
+}
+
+async function generateTotalCSV(object) {
+        
+    let assignmentID = object.assignmentID;
+
+    let filePath = `A${assignmentID}/total`;
+
+    let csv = convertTotalCSV(object);
+    storage.putObject(storage.container, `${filePath}.csv`, csv);
+}
+
+async function pullTotalCSV(object) {
+    let assignmentID = object.assignmentID;
+    
+    let filePath = `A${assignmentID}/total`;
+    
+    return new Promise(async (resolve,reject) => {
+        let f = await storage.getObject(storage.container, `${filePath}.csv`);
+        resolve(f);
+    }).then((file) =>{
+        function readStream(s) {
+            return new Promise((resolve, reject) => {
+                let data = "";
+                s.on("data", d => data += d);
+                s.on("end", () => resolve(data));
+                s.on("error", reject);
+            });
+        }
+        return readStream(file);
+    }).then((file) => {
+        return convertFromTotalCSV(file);
     });
 }
 
@@ -87,7 +137,6 @@ function convertFromCSV(toConvert) {
         }
         
     }
-    
     return report;
 }
 
@@ -112,9 +161,96 @@ function convertToCSV(toConvert) {
     return str;
 }
 
+function convertFromTotalCSV(toConvert) {
+    
+    const split = toConvert.split('\n').join(',').split(',');
+
+    let report = {
+        assignmentID: split[3],
+        assignmentTitle: split[5],
+        actualMarks: split[7],
+        averageMarks: split[9],
+        possibleMarks: split[11],
+        minMark: split[13],
+        maxMark: split[15],
+        totalStudents: split[17],
+        tasks: []
+    }
+
+    //Every row is 6 elements [task, test, desc, given, mark, possible] starting at index 18
+    let taskIndex = 0;
+    let testIndex = 0;
+    for( let i = 28; i < split.length - 8; i += 8) {
+        if(split[i] != taskIndex) {
+            let t = {
+                taskID: 0,
+                actualMarks: 0,
+                possibleMarks: 0,
+                averageMarks: 0,
+                tests: []
+            };
+            t.taskID = split[i];
+            t.actualMarks = split[i + 5];
+            t.possibleMarks = split[i + 6];
+            t.averageMarks = split[i + 7];
+            report.tasks.push(t);
+            testIndex = 0;
+            taskIndex++;
+        } else {
+            let t = {
+                testID: 0,
+                description: "",
+                expected: "",
+                passed: 0,
+                possibleMarks: 0,
+                actualMarks: null,
+                averageMarks: 0
+            };
+            
+            t.testID = split[i + 1];
+            t.description = split[i + 2];
+            t.expected = split[i + 3];
+            t.passed = split[i + 4];
+            t.actualMarks = split[i + 5];
+            t.possibleMarks = split[i + 6];
+            t.averageMarks = split[i + 7];
+
+            report.tasks[taskIndex - 1].tests.push(t);
+
+            testIndex++;
+        }
+        
+    }
+    
+    return report;
+}
+
+function convertTotalCSV(toConvert) {
+    let str = "\n\n";
+
+    str += `Assignment ID:,${toConvert.assignmentID}\n`;
+    str += `Assignment:,${toConvert.assignmentTitle}\n`;
+    str += `Total mark:,${toConvert.actualMarks}\n`;
+    str += `Average mark:,${toConvert.averageMarks}\n`;
+    str += `Possible marks:,${toConvert.possibleMarks}\n`;
+    str += `Minimum marks:,${toConvert.minMark}\n`;
+    str += `Maximum marks:,${toConvert.maxMark}\n`;
+    str += `Total students:,${toConvert.totalStudents ?? ""}\n\n\n`;
+    str += `Task,Test,Description,Expected,Students passed,Mark,Possible mark,Average Mark\n`;
+
+    toConvert.tasks.forEach(task => {
+        str += `${task.taskID},,Task ${task.taskID},,,${task.actualMarks},${task.possibleMarks},${task.averageMarks}\n`;
+
+        task.tests.forEach(test => {
+            str += `${task.taskID},${test.testID},${test.description},${test.expected},${test.passed},${test.actualMarks},${test.possibleMarks},${test.averageMarks}\n`
+        })
+    });
+
+    return str;
+}
+
 function makeReport(assignment, marker) {
     let results = marker.results;
-    console.log(results);
 
     let report = {
         assignmentID: assignment.id,
@@ -157,133 +293,71 @@ function makeReport(assignment, marker) {
         taskIndex++;
     });
 
+    makeTotalReport(report, assignment);
+    if(totalReport.totalStudents == assignment.students.length){
+        generateTotalCSV(totalReport);
+    }
     return report;
     
 }
 
-if(typeof module !== "undefined") module.exports = {generateCSV, pullCSV};
+function makeTotalReport(resultSet, assignment) {
+    
+    
+    totalReport.assignmentTitle = resultSet.assignmentTitle;
+    totalReport.assignmentID = assignment.id;
+    totalReport.totalStudents++;
+    //Possible marks always the same, actual marks add up for average
+    totalReport.possibleMarks = resultSet.possibleMarks;
+    totalReport.actualMarks += resultSet.actualMarks;
+    totalReport.averageMarks = totalReport.actualMarks / totalReport.totalStudents;
 
+    //Check max and min for evaluation
+    if(totalReport.minMark == null || resultSet.actualMarks < totalReport.minMark)
+        totalReport.minMark = resultSet.actualMarks;
 
+    if(totalReport.maxMark == null || resultSet.actualMarks > totalReport.maxMark)
+        totalReport.maxMark = resultSet.actualMarks;
 
-
-let r = //{reports: 
-    [
-        {
-            assignmentID: 56,
-            assignmentTitle: "Assignment",
-            studentID: "z5260786",
-            possibleMarks: 100,
-            actualMarks: 63,
-            teacherComment: "Good work!",
-            tasks: [
-                {
-                    taskID: 1,
-                    possibleMarks: 50,
-                    actualMarks: 23,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "1.1",
-                            condition: "c",
-                            expected: "25",
-                            given: "1.1",
-                            possibleMarks: 50,
-                            actualMarks: 23
-                        }
-                    ]
-                }, 
-                {
-                    taskID: 2,
-                    possibleMarks: 50,
-                    actualMarks: 40,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "2.1",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 20
-                        },
-                        {
-                            testID: 2,
-                            description: "2.2",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 20
-                        }
-                    ]
-                }
-            ]
-        }, 
-        {
-            assignmentID: 1,
-            assignmentTitle: "Assignment",
-            studentID: "z1000555",
-            possibleMarks: 100,
-            actualMarks: 43,
-            teacherComment: "Good work!",
-            tasks: [
-                {
-                    taskID: 1,
-                    possibleMarks: 50,
-                    actualMarks: 13,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 50,
-                            actualMarks: 13
-                        }
-                    ]
-                }, 
-                {
-                    taskID: 2,
-                    possibleMarks: 50,
-                    actualMarks: 30,
-                    tests: [
-                        {
-                            testID: 1,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 15
-                        },
-                        {
-                            testID: 2,
-                            description: "This is a test description",
-                            condition: "c",
-                            expected: "25",
-                            given: "23",
-                            possibleMarks: 25,
-                            actualMarks: 15
-                        }
-                    ]
-                }
-            ]
+    //Handle each task in each student report
+    resultSet.tasks.forEach((t, index, arr) => {
+        //If we have less tasks than the result set, add a new task
+        if(totalReport.tasks.length < resultSet.tasks.length) {
+            totalReport.tasks.push({
+                taskID: 0,
+                possibleMarks: 0,
+                actualMarks: null,
+                averageMarks: 0,
+                tests: []
+            });
         }
-    ]
-// }
+        totalReport.tasks[index].taskID = t.taskID;
+        totalReport.tasks[index].possibleMarks = t.possibleMarks;
+        totalReport.tasks[index].actualMarks = (totalReport.tasks[index].actualMarks ?? 0) + t.actualMarks;
+        totalReport.tasks[index].averageMarks = totalReport.tasks[index].actualMarks / totalReport.totalStudents;
 
-let conversionString = `
-Student number:,z5260786
-Assignment:,Assignment
-Marks:,63
-Possible marks:,100
+        t.tests.forEach((test, testIndex, arr) => {
+            if(totalReport.tasks[index].tests.length < t.tests.length) {
+                totalReport.tasks[index].tests.push({
+                    testID: 0,
+                    description: "",
+                    expected: "",
+                    passed: 0,
+                    possibleMarks: 0,
+                    actualMarks: null,
+                    averageMarks: 0
+                });
+            }
 
+            totalReport.tasks[index].tests[testIndex].testID = test.testID;
+            totalReport.tasks[index].tests[testIndex].description = test.description;
+            totalReport.tasks[index].tests[testIndex].expected = assignment.tasks[index].tests[testIndex].isException ? "Exception." : assignment.tasks[index].tests[testIndex].expected;
+            totalReport.tasks[index].tests[testIndex].passed += (test.actualMarks > 0 ? 1 : 0);
+            totalReport.tasks[index].tests[testIndex].possibleMarks = test.possibleMarks;
+            totalReport.tasks[index].tests[testIndex].actualMarks = (totalReport.tasks[index].tests[testIndex].actualMarks ?? 0) + test.actualMarks;
+            totalReport.tasks[index].tests[testIndex].averageMarks = totalReport.tasks[index].tests[testIndex].actualMarks / totalReport.totalStudents;
+        });
+    });
+}
 
-Task, Test, Description, Given, Mark, Possible mark
-1, ,Task 1, , 23, 50
-1, 1, This is a test description, 23, 23, 50
-2, ,Task 2, , 40, 50
-2, 1, This is a test description, 23, 20, 25
-2, 2, This is a test description, 23, 20, 25
-`;
+if(typeof module !== "undefined") module.exports = {generateCSV, pullCSV, generateTotalCSV, pullTotalCSV};
